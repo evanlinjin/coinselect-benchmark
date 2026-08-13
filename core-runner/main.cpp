@@ -495,6 +495,10 @@ int main(int argc, char** argv)
     size_t bnb_nodes = 0;
     bool bnb_completed = false;
     for (int i = 0; i < warmup + repeat; ++i) {
+        // Knapsack and single random draw consume the shared FastRandomContext, so without this
+        // every repeat would search from a different random state and the reported selection
+        // would depend on --repeat. Reseeding makes each repeat identical.
+        rng.Reseed(uint256::ZERO);
         auto pool = problem.positive_groups;
         const auto start = std::chrono::steady_clock::now();
         std::optional<SelectionResult> attempt;

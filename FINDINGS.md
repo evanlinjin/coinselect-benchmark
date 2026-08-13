@@ -69,10 +69,11 @@ that taking several of them pays the bump once, and finds packages costing 4648 
 
 | | coin-select | Bitcoin Core |
 | --- | --- | --- |
-| kernel, median wall clock | 6465 us | 610 us |
+| kernel, median wall clock | 6399 us | 691 us |
 | kernel, budget exhausted | 2 of 29 fixtures | **21 of 29** |
-| kernel, median cost per node | ~2200 ns/round | ~7 ns/node |
-| wallet, median wall clock | 431 us | 1606 us |
+| kernel, median cost per node | ~2180 ns/round | ~7 ns/node |
+| wallet, median wall clock | 425 us | 1375 us |
+| wallet, budget exhausted | 1 of 29 fixtures | **18 of 29** |
 
 Core's depth-first search is roughly 300x cheaper per node, and spends that speed running out its
 100,000-node budget on essentially every fixture with 50 or more candidates. coin-select's
@@ -94,7 +95,7 @@ The likely cause is visible in the branch's own source: `Changeless::change_unav
 its prune outright when `problem.has_ancestors()`, and `LowestFee::bound` swaps to the relaxed
 `bound_with_ancestors`, which never returns `None`. Both are deliberate and both are sound — but
 together they remove nearly all pruning from `Changeless<LowestFee>` exactly when ancestry is
-present. `shared_ancestry_200` hits the same wall on both tracks (630 ms, budget exhausted).
+present. `shared_ancestry_200` hits the same wall on both tracks (620 ms, budget exhausted).
 
 This is the sharpest actionable result for the branch: the ancestor-aware path is not merely
 slower per node, it can fail to answer a twenty-coin problem.
@@ -102,7 +103,7 @@ slower per node, it can fail to answer a twenty-coin problem.
 ## 5. Wallet-track outcomes
 
 On the track that reflects what a wallet would actually build, coin-select produced the cheaper
-package on **28 of 29** fixtures, with a median Core-to-coin-select package-fee ratio of **2.0x**.
+package on **28 of 29** fixtures, with a median Core-to-coin-select package-fee ratio of **1.9x**.
 
 Read with care. Core's portfolio minimises waste, not fee, and its knapsack and single-random-draw
 paths deliberately aim for a privacy-friendly change amount rather than the smallest fee — Core is
