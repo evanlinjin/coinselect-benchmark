@@ -92,17 +92,25 @@
    "parents": []
   },
   {
+   "txid": "root",
+   "weight": 8000,
+   "fee": 2000,
+   "parents": []
+  },
+  {
    "txid": "rich",
    "weight": 800,
    "fee": 8000,
-   "parents": []
+   "parents": [
+    "root"
+   ]
   },
   {
    "txid": "poor",
    "weight": 1600,
    "fee": 400,
    "parents": [
-    "rich"
+    "root"
    ]
   }
  ]

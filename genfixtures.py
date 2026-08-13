@@ -15,6 +15,8 @@ import pathlib
 import random
 import sys
 
+import bench  # for MiniMiner, to enforce the ancestors-need-bumping invariant
+
 OUT_DIR = pathlib.Path(__file__).parent / "fixtures"
 
 # Input weights in weight units, rounded up to a multiple of 4 (see fixtures/README.md).
@@ -168,24 +170,32 @@ def fam_nested_ancestry(rng, n):
 
 
 def fam_subsidizing_ancestry(rng, n):
-    """Overpaying ancestors that can subsidize underpaying ones in the same union.
+    """An overpaying ancestor inside a package that still, as a whole, needs bumping.
 
-    coin-select nets weight and fee across the union, so an ancestor paying above
-    the target rate cancels a deficit elsewhere. Core charges each UTXO its own
-    (individually floored-at-zero) bump during the search and only discounts the
-    overlap afterwards, so it cannot see the subsidy while searching.
+    Every ancestor here belongs in the ancestors-to-bump set: a fat underpaying root
+    drags each package's ancestor feerate below the target, so a miner takes none of
+    them — not even the child paying four times the target rate on its own.
+
+    That child's surplus is what the two engines account for differently. coin-select
+    nets weight and fee over the whole union, so the surplus cancels a deficit
+    elsewhere in the same selection. Core charges each UTXO
+    `max(individual shortfall, ancestor-set shortfall)` while it searches and refunds
+    the overlap only once a result is chosen, so during the search it cannot see that
+    two coins on the same root would share the cost.
     """
     n_groups = max(2, n // 10)
     ancs = []
     tips = []
     for j in range(n_groups):
-        # A rich parent (pays 4x the target rate) and a poor child that spends it.
+        # A fat, badly underpaying root, spent by a child paying 4x the target rate and
+        # by a sibling paying a tenth of it. Both packages stay below target.
+        root_w = round4(rng.randrange(6000, 10000))
         rich_w = round4(rng.randrange(800, 2000))
         poor_w = round4(rng.randrange(800, 2000))
-        rich = f"rich{j:02d}"
-        poor = f"poor{j:02d}"
-        ancs.append(anc(rich, rich_w, (rich_w // 4) * FEERATE * 4))
-        ancs.append(anc(poor, poor_w, underpaying_fee(poor_w, 1)))
+        root, rich, poor = f"root{j:02d}", f"rich{j:02d}", f"poor{j:02d}"
+        ancs.append(anc(root, root_w, underpaying_fee(root_w, 1)))
+        ancs.append(anc(rich, rich_w, (rich_w // 4) * FEERATE * 4, [root]))
+        ancs.append(anc(poor, poor_w, underpaying_fee(poor_w, 1), [root]))
         tips += [rich, poor]
     cands = []
     for i, v in enumerate(wallet_values(rng, n)):
@@ -331,10 +341,13 @@ def build_smoke() -> dict:
             cand(6, 60_000, "p2tr", "poor"),
             cand(7, 33_000, "p2wpkh"),
         ],
+        # `rich` pays 4x the target rate on its own but hangs off an underpaying root, so its
+        # package is still below target and it legitimately needs bumping.
         "ancestors": [
             anc("sh", 1200, underpaying_fee(1200, 1)),
-            anc("rich", 800, (800 // 4) * FEERATE * 4),
-            anc("poor", 1600, underpaying_fee(1600, 1), ["rich"]),
+            anc("root", 8000, underpaying_fee(8000, 1)),
+            anc("rich", 800, (800 // 4) * FEERATE * 4, ["root"]),
+            anc("poor", 1600, underpaying_fee(1600, 1), ["root"]),
         ],
     }
     return f
@@ -371,6 +384,16 @@ def validate(f: dict) -> None:
     assert f["target"]["value"] > 0, name
     assert sum(c["value"] for c in f["candidates"]) > f["target"]["value"], (
         f"{name}: pool cannot cover the target"
+    )
+    # `AncestorToBump` means what it says: the caller passes the ancestors that still require
+    # bumping, having already worked out which ones a miner would take anyway. An ancestor whose
+    # package already clears the target feerate does not belong in the list, and putting one there
+    # would credit the child with a surplus no miner is waiting on. Same determination Core's
+    # `node::MiniMiner` makes, so both adapters see the same ancestor set.
+    mined = bench.MiniMiner(f).in_block
+    assert not mined, (
+        f"{name}: {sorted(mined)} already meet the target feerate and must not be listed as "
+        "needing a bump"
     )
 
 

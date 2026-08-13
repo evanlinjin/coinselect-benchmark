@@ -213,6 +213,12 @@ Problem BuildProblem(const Fixture& f, FastRandomContext& rng)
     // Individual ancestor bump fees, as wallet/spend.cpp's AvailableCoins would obtain them from
     // Chain::calculateIndividualBumpFees over every available coin at once.
     p.mini_miner = std::make_unique<MiniMinerLite>(f.ancestors, p.params.m_effective_feerate);
+    if (!p.mini_miner->Mined().empty()) {
+        std::string mined;
+        for (const auto& txid : p.mini_miner->Mined()) mined += (mined.empty() ? "" : ", ") + txid;
+        Die("fixture lists ancestors that already meet the target feerate and so need no bump: " +
+            mined + ". See fixtures/README.md: the ancestor list is the set that requires bumping.");
+    }
 
     for (size_t i = 0; i < f.candidates.size(); ++i) {
         const Candidate& c = f.candidates[i];

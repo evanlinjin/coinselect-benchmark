@@ -9,7 +9,7 @@
  "discard_feerate_sat_per_vb": 3,
  "dust_relay_feerate_sat_per_vb": 3,
  "target": {
-  "value": 12730000,
+  "value": 13089000,
   "n_outputs": 1,
   "non_input_weight": 212
  },
@@ -21,23 +21,23 @@
  "candidates": [
   {
    "id": "c000",
-   "value": 49399,
+   "value": 16448,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "rich03"
+  },
+  {
+   "id": "c001",
+   "value": 331921,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": null
   },
   {
-   "id": "c001",
-   "value": 410838,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": "rich00"
-  },
-  {
    "id": "c002",
-   "value": 38445,
+   "value": 10508,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
@@ -45,46 +45,30 @@
   },
   {
    "id": "c003",
-   "value": 59197,
+   "value": 232132,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
-   "residing_txid": "rich03"
+   "residing_txid": null
   },
   {
    "id": "c004",
-   "value": 158697,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": null
-  },
-  {
-   "id": "c005",
-   "value": 26516,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": "poor03"
-  },
-  {
-   "id": "c006",
    "value": 48663,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": null
-  },
-  {
-   "id": "c007",
-   "value": 348995,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": "poor02"
   },
   {
-   "id": "c008",
+   "id": "c005",
+   "value": 348995,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c006",
    "value": 907228,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -92,7 +76,7 @@
    "residing_txid": null
   },
   {
-   "id": "c009",
+   "id": "c007",
    "value": 52962,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -100,7 +84,7 @@
    "residing_txid": null
   },
   {
-   "id": "c010",
+   "id": "c008",
    "value": 31809,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -108,8 +92,24 @@
    "residing_txid": null
   },
   {
-   "id": "c011",
+   "id": "c009",
    "value": 4674449,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "rich03"
+  },
+  {
+   "id": "c010",
+   "value": 5214,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "poor00"
+  },
+  {
+   "id": "c011",
+   "value": 27881,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
@@ -117,22 +117,6 @@
   },
   {
    "id": "c012",
-   "value": 5214,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": "rich03"
-  },
-  {
-   "id": "c013",
-   "value": 27881,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": "poor00"
-  },
-  {
-   "id": "c014",
    "value": 1885022,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -140,7 +124,7 @@
    "residing_txid": null
   },
   {
-   "id": "c015",
+   "id": "c013",
    "value": 157120,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -148,7 +132,7 @@
    "residing_txid": null
   },
   {
-   "id": "c016",
+   "id": "c014",
    "value": 21972,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -156,7 +140,7 @@
    "residing_txid": null
   },
   {
-   "id": "c017",
+   "id": "c015",
    "value": 2246817,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -164,39 +148,39 @@
    "residing_txid": null
   },
   {
-   "id": "c018",
+   "id": "c016",
    "value": 28687,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": null
-  },
-  {
-   "id": "c019",
-   "value": 23108,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": "rich04"
   },
   {
-   "id": "c020",
-   "value": 375987,
+   "id": "c017",
+   "value": 23108,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": null
   },
   {
-   "id": "c021",
-   "value": 89164,
+   "id": "c018",
+   "value": 375987,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": "rich01"
   },
   {
-   "id": "c022",
+   "id": "c019",
+   "value": 89164,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c020",
    "value": 25419,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -204,7 +188,7 @@
    "residing_txid": null
   },
   {
-   "id": "c023",
+   "id": "c021",
    "value": 452275,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -212,7 +196,7 @@
    "residing_txid": null
   },
   {
-   "id": "c024",
+   "id": "c022",
    "value": 28592,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -220,55 +204,55 @@
    "residing_txid": null
   },
   {
-   "id": "c025",
+   "id": "c023",
    "value": 301435,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": null
-  },
-  {
-   "id": "c026",
-   "value": 49931,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": "rich02"
   },
   {
-   "id": "c027",
-   "value": 21883,
+   "id": "c024",
+   "value": 49931,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": "poor01"
   },
   {
-   "id": "c028",
-   "value": 18173,
+   "id": "c025",
+   "value": 21883,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": "poor00"
   },
   {
-   "id": "c029",
-   "value": 46936,
+   "id": "c026",
+   "value": 18173,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": null
   },
   {
-   "id": "c030",
-   "value": 16364,
+   "id": "c027",
+   "value": 46936,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": "poor04"
   },
   {
-   "id": "c031",
+   "id": "c028",
+   "value": 16364,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c029",
    "value": 7923,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -276,40 +260,56 @@
    "residing_txid": null
   },
   {
-   "id": "c032",
+   "id": "c030",
    "value": 52025,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": null
-  },
-  {
-   "id": "c033",
-   "value": 5769,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": "rich01"
   },
   {
-   "id": "c034",
-   "value": 256956,
+   "id": "c031",
+   "value": 5769,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": "rich00"
   },
   {
-   "id": "c035",
-   "value": 57092,
+   "id": "c032",
+   "value": 256956,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": "poor00"
   },
   {
-   "id": "c036",
+   "id": "c033",
+   "value": 57092,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c034",
    "value": 145531,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "rich02"
+  },
+  {
+   "id": "c035",
+   "value": 3615368,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "rich04"
+  },
+  {
+   "id": "c036",
+   "value": 4809618,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
@@ -317,7 +317,7 @@
   },
   {
    "id": "c037",
-   "value": 3615368,
+   "value": 125478,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
@@ -325,7 +325,7 @@
   },
   {
    "id": "c038",
-   "value": 4809618,
+   "value": 404522,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
@@ -333,7 +333,7 @@
   },
   {
    "id": "c039",
-   "value": 125478,
+   "value": 166038,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
@@ -341,15 +341,15 @@
   },
   {
    "id": "c040",
-   "value": 404522,
+   "value": 344959,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
-   "residing_txid": "rich02"
+   "residing_txid": "rich03"
   },
   {
    "id": "c041",
-   "value": 166038,
+   "value": 58845,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
@@ -357,7 +357,7 @@
   },
   {
    "id": "c042",
-   "value": 344959,
+   "value": 51384,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
@@ -365,30 +365,14 @@
   },
   {
    "id": "c043",
-   "value": 58845,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": "rich03"
-  },
-  {
-   "id": "c044",
-   "value": 51384,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": "rich04"
-  },
-  {
-   "id": "c045",
    "value": 364534,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
-   "residing_txid": null
+   "residing_txid": "rich01"
   },
   {
-   "id": "c046",
+   "id": "c044",
    "value": 4678368,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -396,90 +380,156 @@
    "residing_txid": "rich01"
   },
   {
-   "id": "c047",
+   "id": "c045",
    "value": 487962,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": "rich01"
-  },
-  {
-   "id": "c048",
-   "value": 17214,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": "poor01"
   },
   {
-   "id": "c049",
-   "value": 10393,
+   "id": "c046",
+   "value": 17214,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": "poor02"
+  },
+  {
+   "id": "c047",
+   "value": 10393,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c048",
+   "value": 914370,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c049",
+   "value": 36321,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
   }
  ],
  "ancestors": [
   {
+   "txid": "root00",
+   "weight": 8920,
+   "fee": 2230,
+   "parents": []
+  },
+  {
    "txid": "rich00",
    "weight": 1948,
    "fee": 19480,
-   "parents": []
+   "parents": [
+    "root00"
+   ]
   },
   {
    "txid": "poor00",
    "weight": 920,
    "fee": 230,
+   "parents": [
+    "root00"
+   ]
+  },
+  {
+   "txid": "root01",
+   "weight": 7504,
+   "fee": 1876,
    "parents": []
   },
   {
    "txid": "rich01",
-   "weight": 1552,
-   "fee": 15520,
-   "parents": []
+   "weight": 1432,
+   "fee": 14320,
+   "parents": [
+    "root01"
+   ]
   },
   {
    "txid": "poor01",
-   "weight": 1432,
-   "fee": 358,
+   "weight": 1944,
+   "fee": 486,
+   "parents": [
+    "root01"
+   ]
+  },
+  {
+   "txid": "root02",
+   "weight": 8436,
+   "fee": 2109,
    "parents": []
   },
   {
    "txid": "rich02",
-   "weight": 1944,
-   "fee": 19440,
-   "parents": []
+   "weight": 1004,
+   "fee": 10040,
+   "parents": [
+    "root02"
+   ]
   },
   {
    "txid": "poor02",
-   "weight": 1004,
-   "fee": 251,
+   "weight": 1716,
+   "fee": 429,
+   "parents": [
+    "root02"
+   ]
+  },
+  {
+   "txid": "root03",
+   "weight": 7096,
+   "fee": 1774,
    "parents": []
   },
   {
    "txid": "rich03",
-   "weight": 1716,
-   "fee": 17160,
-   "parents": []
+   "weight": 1644,
+   "fee": 16440,
+   "parents": [
+    "root03"
+   ]
   },
   {
    "txid": "poor03",
-   "weight": 1348,
-   "fee": 337,
+   "weight": 1320,
+   "fee": 330,
+   "parents": [
+    "root03"
+   ]
+  },
+  {
+   "txid": "root04",
+   "weight": 6208,
+   "fee": 1552,
    "parents": []
   },
   {
    "txid": "rich04",
-   "weight": 1644,
-   "fee": 16440,
-   "parents": []
+   "weight": 1844,
+   "fee": 18440,
+   "parents": [
+    "root04"
+   ]
   },
   {
    "txid": "poor04",
-   "weight": 1320,
-   "fee": 330,
-   "parents": []
+   "weight": 1672,
+   "fee": 418,
+   "parents": [
+    "root04"
+   ]
   }
  ]
 }

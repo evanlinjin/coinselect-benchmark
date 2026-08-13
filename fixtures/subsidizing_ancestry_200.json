@@ -9,7 +9,7 @@
  "discard_feerate_sat_per_vb": 3,
  "dust_relay_feerate_sat_per_vb": 3,
  "target": {
-  "value": 33107000,
+  "value": 33169000,
   "n_outputs": 1,
   "non_input_weight": 212
  },
@@ -21,15 +21,15 @@
  "candidates": [
   {
    "id": "c000",
-   "value": 378777,
+   "value": 14081,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
-   "residing_txid": null
+   "residing_txid": "poor13"
   },
   {
    "id": "c001",
-   "value": 53549,
+   "value": 12622,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
@@ -37,102 +37,38 @@
   },
   {
    "id": "c002",
-   "value": 130582,
+   "value": 59075,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
-   "residing_txid": "rich09"
+   "residing_txid": null
   },
   {
    "id": "c003",
-   "value": 58035,
+   "value": 40267,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
-   "residing_txid": "poor04"
+   "residing_txid": null
   },
   {
    "id": "c004",
-   "value": 14683,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": null
-  },
-  {
-   "id": "c005",
-   "value": 51978,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": "rich14"
-  },
-  {
-   "id": "c006",
-   "value": 90690,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": "poor19"
-  },
-  {
-   "id": "c007",
-   "value": 43463,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": "poor08"
-  },
-  {
-   "id": "c008",
-   "value": 20124,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": "poor13"
-  },
-  {
-   "id": "c009",
-   "value": 277151,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": "poor17"
-  },
-  {
-   "id": "c010",
-   "value": 11152,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": null
-  },
-  {
-   "id": "c011",
-   "value": 33244,
-   "input_weight": 272,
-   "input_type": "p2wpkh",
-   "is_segwit": true,
-   "residing_txid": null
-  },
-  {
-   "id": "c012",
-   "value": 274033,
+   "value": 385435,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": "poor01"
   },
   {
-   "id": "c013",
-   "value": 385417,
+   "id": "c005",
+   "value": 45677,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": "poor02"
   },
   {
-   "id": "c014",
+   "id": "c006",
    "value": 133080,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -140,7 +76,7 @@
    "residing_txid": "poor05"
   },
   {
-   "id": "c015",
+   "id": "c007",
    "value": 269391,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -148,7 +84,7 @@
    "residing_txid": null
   },
   {
-   "id": "c016",
+   "id": "c008",
    "value": 57951,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -156,7 +92,7 @@
    "residing_txid": "rich07"
   },
   {
-   "id": "c017",
+   "id": "c009",
    "value": 293954,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -164,7 +100,7 @@
    "residing_txid": null
   },
   {
-   "id": "c018",
+   "id": "c010",
    "value": 906957,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -172,7 +108,7 @@
    "residing_txid": null
   },
   {
-   "id": "c019",
+   "id": "c011",
    "value": 38501,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -180,7 +116,7 @@
    "residing_txid": "poor00"
   },
   {
-   "id": "c020",
+   "id": "c012",
    "value": 17163,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -188,7 +124,7 @@
    "residing_txid": "rich02"
   },
   {
-   "id": "c021",
+   "id": "c013",
    "value": 22872,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -196,7 +132,7 @@
    "residing_txid": null
   },
   {
-   "id": "c022",
+   "id": "c014",
    "value": 37820,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -204,7 +140,7 @@
    "residing_txid": null
   },
   {
-   "id": "c023",
+   "id": "c015",
    "value": 53690,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -212,7 +148,7 @@
    "residing_txid": "poor06"
   },
   {
-   "id": "c024",
+   "id": "c016",
    "value": 4434260,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -220,7 +156,7 @@
    "residing_txid": "rich17"
   },
   {
-   "id": "c025",
+   "id": "c017",
    "value": 4849135,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -228,7 +164,7 @@
    "residing_txid": null
   },
   {
-   "id": "c026",
+   "id": "c018",
    "value": 26426,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -236,7 +172,7 @@
    "residing_txid": "rich04"
   },
   {
-   "id": "c027",
+   "id": "c019",
    "value": 496086,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -244,7 +180,7 @@
    "residing_txid": null
   },
   {
-   "id": "c028",
+   "id": "c020",
    "value": 473207,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -252,7 +188,7 @@
    "residing_txid": "rich19"
   },
   {
-   "id": "c029",
+   "id": "c021",
    "value": 85264,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -260,7 +196,7 @@
    "residing_txid": null
   },
   {
-   "id": "c030",
+   "id": "c022",
    "value": 202752,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -268,7 +204,7 @@
    "residing_txid": "rich17"
   },
   {
-   "id": "c031",
+   "id": "c023",
    "value": 48039,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -276,7 +212,7 @@
    "residing_txid": null
   },
   {
-   "id": "c032",
+   "id": "c024",
    "value": 70424,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -284,7 +220,7 @@
    "residing_txid": "poor00"
   },
   {
-   "id": "c033",
+   "id": "c025",
    "value": 14769,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -292,7 +228,7 @@
    "residing_txid": "rich00"
   },
   {
-   "id": "c034",
+   "id": "c026",
    "value": 479702,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -300,7 +236,7 @@
    "residing_txid": null
   },
   {
-   "id": "c035",
+   "id": "c027",
    "value": 429385,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -308,7 +244,7 @@
    "residing_txid": null
   },
   {
-   "id": "c036",
+   "id": "c028",
    "value": 1262251,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -316,7 +252,7 @@
    "residing_txid": null
   },
   {
-   "id": "c037",
+   "id": "c029",
    "value": 40283,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -324,7 +260,7 @@
    "residing_txid": "poor05"
   },
   {
-   "id": "c038",
+   "id": "c030",
    "value": 51459,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -332,7 +268,7 @@
    "residing_txid": null
   },
   {
-   "id": "c039",
+   "id": "c031",
    "value": 42916,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -340,7 +276,7 @@
    "residing_txid": "poor09"
   },
   {
-   "id": "c040",
+   "id": "c032",
    "value": 169157,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -348,7 +284,7 @@
    "residing_txid": "poor01"
   },
   {
-   "id": "c041",
+   "id": "c033",
    "value": 32057,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -356,7 +292,7 @@
    "residing_txid": null
   },
   {
-   "id": "c042",
+   "id": "c034",
    "value": 22517,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -364,7 +300,7 @@
    "residing_txid": null
   },
   {
-   "id": "c043",
+   "id": "c035",
    "value": 440077,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -372,7 +308,7 @@
    "residing_txid": "rich07"
   },
   {
-   "id": "c044",
+   "id": "c036",
    "value": 25155,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -380,7 +316,7 @@
    "residing_txid": null
   },
   {
-   "id": "c045",
+   "id": "c037",
    "value": 31223,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -388,7 +324,7 @@
    "residing_txid": "rich15"
   },
   {
-   "id": "c046",
+   "id": "c038",
    "value": 59936,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -396,7 +332,7 @@
    "residing_txid": null
   },
   {
-   "id": "c047",
+   "id": "c039",
    "value": 479414,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -404,7 +340,7 @@
    "residing_txid": null
   },
   {
-   "id": "c048",
+   "id": "c040",
    "value": 418178,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -412,7 +348,7 @@
    "residing_txid": "rich07"
   },
   {
-   "id": "c049",
+   "id": "c041",
    "value": 323327,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -420,7 +356,7 @@
    "residing_txid": "rich16"
   },
   {
-   "id": "c050",
+   "id": "c042",
    "value": 398637,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -428,7 +364,7 @@
    "residing_txid": "rich15"
   },
   {
-   "id": "c051",
+   "id": "c043",
    "value": 24224,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -436,7 +372,7 @@
    "residing_txid": null
   },
   {
-   "id": "c052",
+   "id": "c044",
    "value": 32201,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -444,7 +380,7 @@
    "residing_txid": "poor17"
   },
   {
-   "id": "c053",
+   "id": "c045",
    "value": 201359,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -452,7 +388,7 @@
    "residing_txid": "rich03"
   },
   {
-   "id": "c054",
+   "id": "c046",
    "value": 470250,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -460,7 +396,7 @@
    "residing_txid": "rich15"
   },
   {
-   "id": "c055",
+   "id": "c047",
    "value": 10683,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -468,7 +404,7 @@
    "residing_txid": "poor16"
   },
   {
-   "id": "c056",
+   "id": "c048",
    "value": 88170,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -476,7 +412,7 @@
    "residing_txid": "poor11"
   },
   {
-   "id": "c057",
+   "id": "c049",
    "value": 28020,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -484,7 +420,7 @@
    "residing_txid": null
   },
   {
-   "id": "c058",
+   "id": "c050",
    "value": 605195,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -492,7 +428,7 @@
    "residing_txid": "poor11"
   },
   {
-   "id": "c059",
+   "id": "c051",
    "value": 14271,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -500,7 +436,7 @@
    "residing_txid": "poor09"
   },
   {
-   "id": "c060",
+   "id": "c052",
    "value": 3204818,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -508,7 +444,7 @@
    "residing_txid": null
   },
   {
-   "id": "c061",
+   "id": "c053",
    "value": 5031,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -516,7 +452,7 @@
    "residing_txid": "rich10"
   },
   {
-   "id": "c062",
+   "id": "c054",
    "value": 359978,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -524,7 +460,7 @@
    "residing_txid": "poor02"
   },
   {
-   "id": "c063",
+   "id": "c055",
    "value": 58019,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -532,7 +468,7 @@
    "residing_txid": "rich17"
   },
   {
-   "id": "c064",
+   "id": "c056",
    "value": 53995,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -540,7 +476,7 @@
    "residing_txid": "rich00"
   },
   {
-   "id": "c065",
+   "id": "c057",
    "value": 359011,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -548,7 +484,7 @@
    "residing_txid": "poor17"
   },
   {
-   "id": "c066",
+   "id": "c058",
    "value": 123946,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -556,7 +492,7 @@
    "residing_txid": "poor06"
   },
   {
-   "id": "c067",
+   "id": "c059",
    "value": 4317522,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -564,7 +500,7 @@
    "residing_txid": "rich15"
   },
   {
-   "id": "c068",
+   "id": "c060",
    "value": 18650,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -572,7 +508,7 @@
    "residing_txid": "rich04"
   },
   {
-   "id": "c069",
+   "id": "c061",
    "value": 43392,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -580,7 +516,7 @@
    "residing_txid": null
   },
   {
-   "id": "c070",
+   "id": "c062",
    "value": 230283,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -588,7 +524,7 @@
    "residing_txid": "poor10"
   },
   {
-   "id": "c071",
+   "id": "c063",
    "value": 23128,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -596,7 +532,7 @@
    "residing_txid": "rich11"
   },
   {
-   "id": "c072",
+   "id": "c064",
    "value": 132361,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -604,7 +540,7 @@
    "residing_txid": "rich05"
   },
   {
-   "id": "c073",
+   "id": "c065",
    "value": 34504,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -612,7 +548,7 @@
    "residing_txid": "poor00"
   },
   {
-   "id": "c074",
+   "id": "c066",
    "value": 37848,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -620,7 +556,7 @@
    "residing_txid": null
   },
   {
-   "id": "c075",
+   "id": "c067",
    "value": 10632,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -628,7 +564,7 @@
    "residing_txid": "poor05"
   },
   {
-   "id": "c076",
+   "id": "c068",
    "value": 48861,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -636,7 +572,7 @@
    "residing_txid": "poor16"
   },
   {
-   "id": "c077",
+   "id": "c069",
    "value": 408084,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -644,7 +580,7 @@
    "residing_txid": "poor14"
   },
   {
-   "id": "c078",
+   "id": "c070",
    "value": 54310,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -652,7 +588,7 @@
    "residing_txid": "poor17"
   },
   {
-   "id": "c079",
+   "id": "c071",
    "value": 431468,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -660,7 +596,7 @@
    "residing_txid": "rich02"
   },
   {
-   "id": "c080",
+   "id": "c072",
    "value": 43233,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -668,7 +604,7 @@
    "residing_txid": "poor01"
   },
   {
-   "id": "c081",
+   "id": "c073",
    "value": 117282,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -676,7 +612,7 @@
    "residing_txid": null
   },
   {
-   "id": "c082",
+   "id": "c074",
    "value": 52892,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -684,7 +620,7 @@
    "residing_txid": null
   },
   {
-   "id": "c083",
+   "id": "c075",
    "value": 77830,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -692,7 +628,7 @@
    "residing_txid": null
   },
   {
-   "id": "c084",
+   "id": "c076",
    "value": 42875,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -700,7 +636,7 @@
    "residing_txid": null
   },
   {
-   "id": "c085",
+   "id": "c077",
    "value": 26312,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -708,7 +644,7 @@
    "residing_txid": "rich08"
   },
   {
-   "id": "c086",
+   "id": "c078",
    "value": 48431,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -716,7 +652,7 @@
    "residing_txid": "poor15"
   },
   {
-   "id": "c087",
+   "id": "c079",
    "value": 45548,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -724,7 +660,7 @@
    "residing_txid": null
   },
   {
-   "id": "c088",
+   "id": "c080",
    "value": 36619,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -732,7 +668,7 @@
    "residing_txid": null
   },
   {
-   "id": "c089",
+   "id": "c081",
    "value": 332274,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -740,7 +676,7 @@
    "residing_txid": null
   },
   {
-   "id": "c090",
+   "id": "c082",
    "value": 45627,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -748,7 +684,7 @@
    "residing_txid": "rich19"
   },
   {
-   "id": "c091",
+   "id": "c083",
    "value": 21249,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -756,7 +692,7 @@
    "residing_txid": "rich02"
   },
   {
-   "id": "c092",
+   "id": "c084",
    "value": 422007,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -764,7 +700,7 @@
    "residing_txid": "rich05"
   },
   {
-   "id": "c093",
+   "id": "c085",
    "value": 18198,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -772,7 +708,7 @@
    "residing_txid": "poor03"
   },
   {
-   "id": "c094",
+   "id": "c086",
    "value": 33695,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -780,7 +716,7 @@
    "residing_txid": null
   },
   {
-   "id": "c095",
+   "id": "c087",
    "value": 43657,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -788,7 +724,7 @@
    "residing_txid": "poor04"
   },
   {
-   "id": "c096",
+   "id": "c088",
    "value": 56466,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -796,7 +732,7 @@
    "residing_txid": null
   },
   {
-   "id": "c097",
+   "id": "c089",
    "value": 254502,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -804,7 +740,7 @@
    "residing_txid": null
   },
   {
-   "id": "c098",
+   "id": "c090",
    "value": 40306,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -812,7 +748,7 @@
    "residing_txid": "poor14"
   },
   {
-   "id": "c099",
+   "id": "c091",
    "value": 51038,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -820,7 +756,7 @@
    "residing_txid": "rich19"
   },
   {
-   "id": "c100",
+   "id": "c092",
    "value": 247121,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -828,7 +764,7 @@
    "residing_txid": "poor07"
   },
   {
-   "id": "c101",
+   "id": "c093",
    "value": 30072,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -836,7 +772,7 @@
    "residing_txid": "rich18"
   },
   {
-   "id": "c102",
+   "id": "c094",
    "value": 36652,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -844,7 +780,7 @@
    "residing_txid": null
   },
   {
-   "id": "c103",
+   "id": "c095",
    "value": 15638,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -852,7 +788,7 @@
    "residing_txid": "rich18"
   },
   {
-   "id": "c104",
+   "id": "c096",
    "value": 405611,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -860,7 +796,7 @@
    "residing_txid": "poor19"
   },
   {
-   "id": "c105",
+   "id": "c097",
    "value": 62563,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -868,7 +804,7 @@
    "residing_txid": null
   },
   {
-   "id": "c106",
+   "id": "c098",
    "value": 351379,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -876,7 +812,7 @@
    "residing_txid": "rich12"
   },
   {
-   "id": "c107",
+   "id": "c099",
    "value": 57046,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -884,7 +820,7 @@
    "residing_txid": "poor05"
   },
   {
-   "id": "c108",
+   "id": "c100",
    "value": 53093,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -892,7 +828,7 @@
    "residing_txid": "poor15"
   },
   {
-   "id": "c109",
+   "id": "c101",
    "value": 281814,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -900,7 +836,7 @@
    "residing_txid": null
   },
   {
-   "id": "c110",
+   "id": "c102",
    "value": 227428,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -908,7 +844,7 @@
    "residing_txid": null
   },
   {
-   "id": "c111",
+   "id": "c103",
    "value": 139936,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -916,7 +852,7 @@
    "residing_txid": "poor08"
   },
   {
-   "id": "c112",
+   "id": "c104",
    "value": 492348,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -924,7 +860,7 @@
    "residing_txid": "poor05"
   },
   {
-   "id": "c113",
+   "id": "c105",
    "value": 12694,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -932,7 +868,7 @@
    "residing_txid": "poor16"
   },
   {
-   "id": "c114",
+   "id": "c106",
    "value": 7386,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -940,7 +876,7 @@
    "residing_txid": null
   },
   {
-   "id": "c115",
+   "id": "c107",
    "value": 21189,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -948,7 +884,7 @@
    "residing_txid": null
   },
   {
-   "id": "c116",
+   "id": "c108",
    "value": 395430,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -956,7 +892,7 @@
    "residing_txid": null
   },
   {
-   "id": "c117",
+   "id": "c109",
    "value": 133702,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -964,7 +900,7 @@
    "residing_txid": "rich17"
   },
   {
-   "id": "c118",
+   "id": "c110",
    "value": 356390,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -972,7 +908,7 @@
    "residing_txid": "rich01"
   },
   {
-   "id": "c119",
+   "id": "c111",
    "value": 53551,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -980,7 +916,7 @@
    "residing_txid": null
   },
   {
-   "id": "c120",
+   "id": "c112",
    "value": 29988,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -988,7 +924,7 @@
    "residing_txid": "poor15"
   },
   {
-   "id": "c121",
+   "id": "c113",
    "value": 81053,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -996,7 +932,7 @@
    "residing_txid": "rich17"
   },
   {
-   "id": "c122",
+   "id": "c114",
    "value": 94020,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1004,7 +940,7 @@
    "residing_txid": null
   },
   {
-   "id": "c123",
+   "id": "c115",
    "value": 276230,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1012,7 +948,7 @@
    "residing_txid": null
   },
   {
-   "id": "c124",
+   "id": "c116",
    "value": 1860310,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1020,7 +956,7 @@
    "residing_txid": "poor02"
   },
   {
-   "id": "c125",
+   "id": "c117",
    "value": 41397,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1028,7 +964,7 @@
    "residing_txid": "poor12"
   },
   {
-   "id": "c126",
+   "id": "c118",
    "value": 1760329,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1036,7 +972,7 @@
    "residing_txid": null
   },
   {
-   "id": "c127",
+   "id": "c119",
    "value": 55504,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1044,7 +980,7 @@
    "residing_txid": "rich07"
   },
   {
-   "id": "c128",
+   "id": "c120",
    "value": 1126821,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1052,7 +988,7 @@
    "residing_txid": "rich12"
   },
   {
-   "id": "c129",
+   "id": "c121",
    "value": 38797,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1060,7 +996,7 @@
    "residing_txid": "rich13"
   },
   {
-   "id": "c130",
+   "id": "c122",
    "value": 333429,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1068,7 +1004,7 @@
    "residing_txid": "poor01"
   },
   {
-   "id": "c131",
+   "id": "c123",
    "value": 7874,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1076,7 +1012,7 @@
    "residing_txid": null
   },
   {
-   "id": "c132",
+   "id": "c124",
    "value": 230492,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1084,7 +1020,7 @@
    "residing_txid": null
   },
   {
-   "id": "c133",
+   "id": "c125",
    "value": 954057,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1092,7 +1028,7 @@
    "residing_txid": "rich01"
   },
   {
-   "id": "c134",
+   "id": "c126",
    "value": 4723941,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1100,7 +1036,7 @@
    "residing_txid": "rich15"
   },
   {
-   "id": "c135",
+   "id": "c127",
    "value": 46821,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1108,7 +1044,7 @@
    "residing_txid": null
   },
   {
-   "id": "c136",
+   "id": "c128",
    "value": 177971,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1116,7 +1052,7 @@
    "residing_txid": "rich00"
   },
   {
-   "id": "c137",
+   "id": "c129",
    "value": 2391590,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1124,7 +1060,7 @@
    "residing_txid": null
   },
   {
-   "id": "c138",
+   "id": "c130",
    "value": 30584,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1132,7 +1068,7 @@
    "residing_txid": "poor15"
   },
   {
-   "id": "c139",
+   "id": "c131",
    "value": 476772,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1140,7 +1076,7 @@
    "residing_txid": "rich11"
   },
   {
-   "id": "c140",
+   "id": "c132",
    "value": 13458,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1148,7 +1084,7 @@
    "residing_txid": "poor03"
   },
   {
-   "id": "c141",
+   "id": "c133",
    "value": 59405,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1156,7 +1092,7 @@
    "residing_txid": "rich09"
   },
   {
-   "id": "c142",
+   "id": "c134",
    "value": 458099,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1164,7 +1100,7 @@
    "residing_txid": null
   },
   {
-   "id": "c143",
+   "id": "c135",
    "value": 408552,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1172,7 +1108,7 @@
    "residing_txid": "rich17"
   },
   {
-   "id": "c144",
+   "id": "c136",
    "value": 44762,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1180,7 +1116,7 @@
    "residing_txid": null
   },
   {
-   "id": "c145",
+   "id": "c137",
    "value": 68284,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1188,7 +1124,7 @@
    "residing_txid": null
   },
   {
-   "id": "c146",
+   "id": "c138",
    "value": 158495,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1196,7 +1132,7 @@
    "residing_txid": null
   },
   {
-   "id": "c147",
+   "id": "c139",
    "value": 180927,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1204,7 +1140,7 @@
    "residing_txid": "rich11"
   },
   {
-   "id": "c148",
+   "id": "c140",
    "value": 40483,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1212,7 +1148,7 @@
    "residing_txid": "poor03"
   },
   {
-   "id": "c149",
+   "id": "c141",
    "value": 417671,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1220,7 +1156,7 @@
    "residing_txid": "poor13"
   },
   {
-   "id": "c150",
+   "id": "c142",
    "value": 457209,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1228,7 +1164,7 @@
    "residing_txid": "rich05"
   },
   {
-   "id": "c151",
+   "id": "c143",
    "value": 47022,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1236,7 +1172,7 @@
    "residing_txid": null
   },
   {
-   "id": "c152",
+   "id": "c144",
    "value": 54389,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1244,7 +1180,7 @@
    "residing_txid": "rich01"
   },
   {
-   "id": "c153",
+   "id": "c145",
    "value": 197581,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1252,7 +1188,7 @@
    "residing_txid": "rich13"
   },
   {
-   "id": "c154",
+   "id": "c146",
    "value": 224390,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1260,7 +1196,7 @@
    "residing_txid": "poor10"
   },
   {
-   "id": "c155",
+   "id": "c147",
    "value": 4918698,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1268,7 +1204,7 @@
    "residing_txid": "rich04"
   },
   {
-   "id": "c156",
+   "id": "c148",
    "value": 30030,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1276,7 +1212,7 @@
    "residing_txid": "poor02"
   },
   {
-   "id": "c157",
+   "id": "c149",
    "value": 45971,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1284,7 +1220,7 @@
    "residing_txid": null
   },
   {
-   "id": "c158",
+   "id": "c150",
    "value": 59526,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1292,7 +1228,7 @@
    "residing_txid": null
   },
   {
-   "id": "c159",
+   "id": "c151",
    "value": 36759,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1300,7 +1236,7 @@
    "residing_txid": "poor08"
   },
   {
-   "id": "c160",
+   "id": "c152",
    "value": 35195,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1308,7 +1244,7 @@
    "residing_txid": "poor19"
   },
   {
-   "id": "c161",
+   "id": "c153",
    "value": 2602520,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1316,7 +1252,7 @@
    "residing_txid": "poor07"
   },
   {
-   "id": "c162",
+   "id": "c154",
    "value": 56810,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1324,7 +1260,7 @@
    "residing_txid": null
   },
   {
-   "id": "c163",
+   "id": "c155",
    "value": 3995944,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1332,7 +1268,7 @@
    "residing_txid": null
   },
   {
-   "id": "c164",
+   "id": "c156",
    "value": 59651,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1340,7 +1276,7 @@
    "residing_txid": "poor18"
   },
   {
-   "id": "c165",
+   "id": "c157",
    "value": 5498,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1348,7 +1284,7 @@
    "residing_txid": null
   },
   {
-   "id": "c166",
+   "id": "c158",
    "value": 75569,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1356,7 +1292,7 @@
    "residing_txid": "poor18"
   },
   {
-   "id": "c167",
+   "id": "c159",
    "value": 40334,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1364,7 +1300,7 @@
    "residing_txid": "poor13"
   },
   {
-   "id": "c168",
+   "id": "c160",
    "value": 25233,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1372,7 +1308,7 @@
    "residing_txid": "rich03"
   },
   {
-   "id": "c169",
+   "id": "c161",
    "value": 236173,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1380,7 +1316,7 @@
    "residing_txid": null
   },
   {
-   "id": "c170",
+   "id": "c162",
    "value": 36119,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1388,7 +1324,7 @@
    "residing_txid": "poor02"
   },
   {
-   "id": "c171",
+   "id": "c163",
    "value": 10716,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1396,7 +1332,7 @@
    "residing_txid": "poor05"
   },
   {
-   "id": "c172",
+   "id": "c164",
    "value": 45179,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1404,7 +1340,7 @@
    "residing_txid": "rich13"
   },
   {
-   "id": "c173",
+   "id": "c165",
    "value": 225522,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1412,7 +1348,7 @@
    "residing_txid": null
   },
   {
-   "id": "c174",
+   "id": "c166",
    "value": 106518,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1420,7 +1356,7 @@
    "residing_txid": null
   },
   {
-   "id": "c175",
+   "id": "c167",
    "value": 25265,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1428,7 +1364,7 @@
    "residing_txid": "poor04"
   },
   {
-   "id": "c176",
+   "id": "c168",
    "value": 341514,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1436,7 +1372,7 @@
    "residing_txid": "poor04"
   },
   {
-   "id": "c177",
+   "id": "c169",
    "value": 187638,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1444,7 +1380,7 @@
    "residing_txid": "poor09"
   },
   {
-   "id": "c178",
+   "id": "c170",
    "value": 227477,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1452,7 +1388,7 @@
    "residing_txid": null
   },
   {
-   "id": "c179",
+   "id": "c171",
    "value": 21298,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1460,7 +1396,7 @@
    "residing_txid": null
   },
   {
-   "id": "c180",
+   "id": "c172",
    "value": 39015,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1468,7 +1404,7 @@
    "residing_txid": "rich14"
   },
   {
-   "id": "c181",
+   "id": "c173",
    "value": 1931758,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1476,7 +1412,7 @@
    "residing_txid": "rich03"
   },
   {
-   "id": "c182",
+   "id": "c174",
    "value": 18317,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1484,7 +1420,7 @@
    "residing_txid": "rich18"
   },
   {
-   "id": "c183",
+   "id": "c175",
    "value": 44927,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1492,7 +1428,7 @@
    "residing_txid": "rich00"
   },
   {
-   "id": "c184",
+   "id": "c176",
    "value": 228086,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1500,7 +1436,7 @@
    "residing_txid": null
   },
   {
-   "id": "c185",
+   "id": "c177",
    "value": 345304,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1508,7 +1444,7 @@
    "residing_txid": "rich08"
   },
   {
-   "id": "c186",
+   "id": "c178",
    "value": 178970,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1516,7 +1452,7 @@
    "residing_txid": "rich01"
   },
   {
-   "id": "c187",
+   "id": "c179",
    "value": 45480,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1524,7 +1460,7 @@
    "residing_txid": null
   },
   {
-   "id": "c188",
+   "id": "c180",
    "value": 28918,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1532,7 +1468,7 @@
    "residing_txid": "rich00"
   },
   {
-   "id": "c189",
+   "id": "c181",
    "value": 52166,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1540,7 +1476,7 @@
    "residing_txid": "poor12"
   },
   {
-   "id": "c190",
+   "id": "c182",
    "value": 22533,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1548,7 +1484,7 @@
    "residing_txid": null
   },
   {
-   "id": "c191",
+   "id": "c183",
    "value": 2977130,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1556,7 +1492,7 @@
    "residing_txid": "poor04"
   },
   {
-   "id": "c192",
+   "id": "c184",
    "value": 292418,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1564,7 +1500,7 @@
    "residing_txid": null
   },
   {
-   "id": "c193",
+   "id": "c185",
    "value": 53373,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1572,7 +1508,7 @@
    "residing_txid": null
   },
   {
-   "id": "c194",
+   "id": "c186",
    "value": 37034,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1580,7 +1516,7 @@
    "residing_txid": "poor13"
   },
   {
-   "id": "c195",
+   "id": "c187",
    "value": 48451,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1588,7 +1524,7 @@
    "residing_txid": "rich02"
   },
   {
-   "id": "c196",
+   "id": "c188",
    "value": 13877,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1596,7 +1532,7 @@
    "residing_txid": null
   },
   {
-   "id": "c197",
+   "id": "c189",
    "value": 55706,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1604,7 +1540,7 @@
    "residing_txid": null
   },
   {
-   "id": "c198",
+   "id": "c190",
    "value": 417911,
    "input_weight": 272,
    "input_type": "p2wpkh",
@@ -1612,254 +1548,518 @@
    "residing_txid": null
   },
   {
-   "id": "c199",
+   "id": "c191",
    "value": 39946,
    "input_weight": 272,
    "input_type": "p2wpkh",
    "is_segwit": true,
    "residing_txid": "rich16"
+  },
+  {
+   "id": "c192",
+   "value": 309219,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "rich06"
+  },
+  {
+   "id": "c193",
+   "value": 105848,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "rich10"
+  },
+  {
+   "id": "c194",
+   "value": 23807,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "poor13"
+  },
+  {
+   "id": "c195",
+   "value": 14333,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c196",
+   "value": 344649,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "rich14"
+  },
+  {
+   "id": "c197",
+   "value": 273526,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c198",
+   "value": 56664,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "poor11"
+  },
+  {
+   "id": "c199",
+   "value": 275136,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "poor08"
   }
  ],
  "ancestors": [
   {
-   "txid": "rich00",
-   "weight": 1032,
-   "fee": 10320,
+   "txid": "root00",
+   "weight": 6460,
+   "fee": 1615,
    "parents": []
   },
   {
-   "txid": "poor00",
+   "txid": "rich00",
    "weight": 1228,
-   "fee": 307,
+   "fee": 12280,
+   "parents": [
+    "root00"
+   ]
+  },
+  {
+   "txid": "poor00",
+   "weight": 1792,
+   "fee": 448,
+   "parents": [
+    "root00"
+   ]
+  },
+  {
+   "txid": "root01",
+   "weight": 8304,
+   "fee": 2076,
    "parents": []
   },
   {
    "txid": "rich01",
-   "weight": 1792,
-   "fee": 17920,
-   "parents": []
+   "weight": 1560,
+   "fee": 15600,
+   "parents": [
+    "root01"
+   ]
   },
   {
    "txid": "poor01",
-   "weight": 1952,
-   "fee": 488,
+   "weight": 1136,
+   "fee": 284,
+   "parents": [
+    "root01"
+   ]
+  },
+  {
+   "txid": "root02",
+   "weight": 7092,
+   "fee": 1773,
    "parents": []
   },
   {
    "txid": "rich02",
-   "weight": 1560,
-   "fee": 15600,
-   "parents": []
+   "weight": 1984,
+   "fee": 19840,
+   "parents": [
+    "root02"
+   ]
   },
   {
    "txid": "poor02",
-   "weight": 1136,
-   "fee": 284,
+   "weight": 1328,
+   "fee": 332,
+   "parents": [
+    "root02"
+   ]
+  },
+  {
+   "txid": "root03",
+   "weight": 7540,
+   "fee": 1885,
    "parents": []
   },
   {
    "txid": "rich03",
-   "weight": 1348,
-   "fee": 13480,
-   "parents": []
+   "weight": 1192,
+   "fee": 11920,
+   "parents": [
+    "root03"
+   ]
   },
   {
    "txid": "poor03",
-   "weight": 1984,
-   "fee": 496,
+   "weight": 1800,
+   "fee": 450,
+   "parents": [
+    "root03"
+   ]
+  },
+  {
+   "txid": "root04",
+   "weight": 7468,
+   "fee": 1867,
    "parents": []
   },
   {
    "txid": "rich04",
-   "weight": 1328,
-   "fee": 13280,
-   "parents": []
+   "weight": 1560,
+   "fee": 15600,
+   "parents": [
+    "root04"
+   ]
   },
   {
    "txid": "poor04",
-   "weight": 1572,
-   "fee": 393,
+   "weight": 948,
+   "fee": 237,
+   "parents": [
+    "root04"
+   ]
+  },
+  {
+   "txid": "root05",
+   "weight": 9716,
+   "fee": 2429,
    "parents": []
   },
   {
    "txid": "rich05",
-   "weight": 1192,
-   "fee": 11920,
-   "parents": []
+   "weight": 1496,
+   "fee": 14960,
+   "parents": [
+    "root05"
+   ]
   },
   {
    "txid": "poor05",
-   "weight": 1800,
-   "fee": 450,
+   "weight": 1872,
+   "fee": 468,
+   "parents": [
+    "root05"
+   ]
+  },
+  {
+   "txid": "root06",
+   "weight": 6072,
+   "fee": 1518,
    "parents": []
   },
   {
    "txid": "rich06",
-   "weight": 1536,
-   "fee": 15360,
-   "parents": []
+   "weight": 1080,
+   "fee": 10800,
+   "parents": [
+    "root06"
+   ]
   },
   {
    "txid": "poor06",
-   "weight": 1560,
-   "fee": 390,
+   "weight": 1812,
+   "fee": 453,
+   "parents": [
+    "root06"
+   ]
+  },
+  {
+   "txid": "root07",
+   "weight": 8552,
+   "fee": 2138,
    "parents": []
   },
   {
    "txid": "rich07",
-   "weight": 948,
-   "fee": 9480,
-   "parents": []
+   "weight": 1464,
+   "fee": 14640,
+   "parents": [
+    "root07"
+   ]
   },
   {
    "txid": "poor07",
-   "weight": 1496,
-   "fee": 374,
+   "weight": 1052,
+   "fee": 263,
+   "parents": [
+    "root07"
+   ]
+  },
+  {
+   "txid": "root08",
+   "weight": 6736,
+   "fee": 1684,
    "parents": []
   },
   {
    "txid": "rich08",
-   "weight": 1872,
-   "fee": 18720,
-   "parents": []
+   "weight": 1196,
+   "fee": 11960,
+   "parents": [
+    "root08"
+   ]
   },
   {
    "txid": "poor08",
-   "weight": 836,
-   "fee": 209,
+   "weight": 1160,
+   "fee": 290,
+   "parents": [
+    "root08"
+   ]
+  },
+  {
+   "txid": "root09",
+   "weight": 9888,
+   "fee": 2472,
    "parents": []
   },
   {
    "txid": "rich09",
-   "weight": 1080,
-   "fee": 10800,
-   "parents": []
+   "weight": 1668,
+   "fee": 16680,
+   "parents": [
+    "root09"
+   ]
   },
   {
    "txid": "poor09",
-   "weight": 1812,
-   "fee": 453,
+   "weight": 1540,
+   "fee": 385,
+   "parents": [
+    "root09"
+   ]
+  },
+  {
+   "txid": "root10",
+   "weight": 7896,
+   "fee": 1974,
    "parents": []
   },
   {
    "txid": "rich10",
-   "weight": 1464,
-   "fee": 14640,
-   "parents": []
+   "weight": 1256,
+   "fee": 12560,
+   "parents": [
+    "root10"
+   ]
   },
   {
    "txid": "poor10",
-   "weight": 1052,
-   "fee": 263,
+   "weight": 1728,
+   "fee": 432,
+   "parents": [
+    "root10"
+   ]
+  },
+  {
+   "txid": "root11",
+   "weight": 8184,
+   "fee": 2046,
    "parents": []
   },
   {
    "txid": "rich11",
-   "weight": 1168,
-   "fee": 11680,
-   "parents": []
+   "weight": 1184,
+   "fee": 11840,
+   "parents": [
+    "root11"
+   ]
   },
   {
    "txid": "poor11",
-   "weight": 1196,
-   "fee": 299,
+   "weight": 1800,
+   "fee": 450,
+   "parents": [
+    "root11"
+   ]
+  },
+  {
+   "txid": "root12",
+   "weight": 8512,
+   "fee": 2128,
    "parents": []
   },
   {
    "txid": "rich12",
-   "weight": 1160,
-   "fee": 11600,
-   "parents": []
+   "weight": 1764,
+   "fee": 17640,
+   "parents": [
+    "root12"
+   ]
   },
   {
    "txid": "poor12",
-   "weight": 1668,
-   "fee": 417,
+   "weight": 1888,
+   "fee": 472,
+   "parents": [
+    "root12"
+   ]
+  },
+  {
+   "txid": "root13",
+   "weight": 7320,
+   "fee": 1830,
    "parents": []
   },
   {
    "txid": "rich13",
-   "weight": 1540,
-   "fee": 15400,
-   "parents": []
+   "weight": 1560,
+   "fee": 15600,
+   "parents": [
+    "root13"
+   ]
   },
   {
    "txid": "poor13",
-   "weight": 1748,
-   "fee": 437,
+   "weight": 1380,
+   "fee": 345,
+   "parents": [
+    "root13"
+   ]
+  },
+  {
+   "txid": "root14",
+   "weight": 8272,
+   "fee": 2068,
    "parents": []
   },
   {
    "txid": "rich14",
-   "weight": 1256,
-   "fee": 12560,
-   "parents": []
+   "weight": 820,
+   "fee": 8200,
+   "parents": [
+    "root14"
+   ]
   },
   {
    "txid": "poor14",
-   "weight": 1728,
-   "fee": 432,
+   "weight": 1576,
+   "fee": 394,
+   "parents": [
+    "root14"
+   ]
+  },
+  {
+   "txid": "root15",
+   "weight": 8492,
+   "fee": 2123,
    "parents": []
   },
   {
    "txid": "rich15",
-   "weight": 1892,
-   "fee": 18920,
-   "parents": []
+   "weight": 1432,
+   "fee": 14320,
+   "parents": [
+    "root15"
+   ]
   },
   {
    "txid": "poor15",
-   "weight": 1184,
-   "fee": 296,
+   "weight": 1076,
+   "fee": 269,
+   "parents": [
+    "root15"
+   ]
+  },
+  {
+   "txid": "root16",
+   "weight": 6780,
+   "fee": 1695,
    "parents": []
   },
   {
    "txid": "rich16",
-   "weight": 1800,
-   "fee": 18000,
-   "parents": []
+   "weight": 1532,
+   "fee": 15320,
+   "parents": [
+    "root16"
+   ]
   },
   {
    "txid": "poor16",
-   "weight": 1764,
-   "fee": 441,
+   "weight": 1976,
+   "fee": 494,
+   "parents": [
+    "root16"
+   ]
+  },
+  {
+   "txid": "root17",
+   "weight": 6608,
+   "fee": 1652,
    "parents": []
   },
   {
    "txid": "rich17",
-   "weight": 1888,
-   "fee": 18880,
-   "parents": []
+   "weight": 1280,
+   "fee": 12800,
+   "parents": [
+    "root17"
+   ]
   },
   {
    "txid": "poor17",
-   "weight": 1460,
-   "fee": 365,
+   "weight": 1240,
+   "fee": 310,
+   "parents": [
+    "root17"
+   ]
+  },
+  {
+   "txid": "root18",
+   "weight": 8936,
+   "fee": 2234,
    "parents": []
   },
   {
    "txid": "rich18",
-   "weight": 1560,
-   "fee": 15600,
-   "parents": []
+   "weight": 920,
+   "fee": 9200,
+   "parents": [
+    "root18"
+   ]
   },
   {
    "txid": "poor18",
-   "weight": 1380,
-   "fee": 345,
+   "weight": 1908,
+   "fee": 477,
+   "parents": [
+    "root18"
+   ]
+  },
+  {
+   "txid": "root19",
+   "weight": 9572,
+   "fee": 2393,
    "parents": []
   },
   {
    "txid": "rich19",
-   "weight": 1936,
-   "fee": 19360,
-   "parents": []
+   "weight": 1812,
+   "fee": 18120,
+   "parents": [
+    "root19"
+   ]
   },
   {
    "txid": "poor19",
-   "weight": 820,
-   "fee": 205,
-   "parents": []
+   "weight": 1172,
+   "fee": 293,
+   "parents": [
+    "root19"
+   ]
   }
  ]
 }

@@ -80,6 +80,13 @@ public:
     /// Whether `txid` made it into the mock template, i.e. owes nothing.
     bool InBlock(const std::string& txid) const { return m_in_block.count(txid) > 0; }
 
+    /// The ancestors the template already took, which therefore do not need bumping at all.
+    ///
+    /// A fixture must not list any: `AncestorToBump` means the ancestors that still require a
+    /// bump, and passing one a miner would take anyway would credit the child with a surplus
+    /// nobody is waiting on.
+    const std::set<std::string>& Mined() const { return m_in_block; }
+
     /// The bump fee Core would charge a single UTXO residing in `txid`.
     ///
     /// `max` of the individual and ancestor-set shortfalls: a transaction has to clear the

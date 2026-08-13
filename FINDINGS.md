@@ -1,159 +1,174 @@
 # Findings
 
-A snapshot of what the checked-in fixtures show. Regenerate with `python3 bench.py all --oracle`;
-`results/SUMMARY.md` is the machine-written report and `results/results.csv` the full matrix.
+What the checked-in fixtures show, from a full run of this harness. Regenerate with
+`python3 bench.py all --oracle --warmup 2 --repeat 9`; `results/SUMMARY.md` is the machine-written
+report and `results/results.csv` the full matrix behind everything below.
 
-- Bitcoin Core `9be056a8a72b624dae9623b2f7bded92c2a21c91` (v31.1)
+- Bitcoin Core `9be056a8a72b624dae9623b2f7bded92c2a21c91` (v31.1), coin-selection algorithms
+  unmodified apart from the node-count instrumentation in `patches/`
 - coin-select `b2f98ab852e0425494d53f7260c4aa82f6c0830d` (PR #64 head)
 - 29 fixtures (7 families x 4 sizes, plus the smoke fixture), both tracks, 100,000-node budget
 - 2 warm-up runs and 9 measured runs per case, median reported
-- Recorded on Linux 7.1.7 x86-64, 24 cores, GCC 15.2.0 / rustc 1.97.1
+- Linux 7.1.7 x86-64, 24 cores, GCC 15.2.0 `-O3` / rustc 1.97.1 `--release`
 
-Read these as observations about two engines that answer different questions. On the `kernel`
-track coin-select minimises fee *by definition*, so "coin-select's package is cheaper" restates
-its objective; the load-bearing comparisons there are search effort and the oracle checks.
+Read these as observations about two engines answering different questions. On the `kernel` track
+coin-select minimises fee *by definition*, so "coin-select's package is cheaper" restates its
+objective rather than reporting a result; the load-bearing comparisons are search effort and the
+oracle checks.
 
-## 1. The two engines charge for ancestors differently, and it changes the answer
+## 1. The two engines agree on what ancestry costs
 
-This is the substantive result, and it is not a search-efficiency question.
+Both fixture adapters are handed the same ancestor set — the transactions that still need bumping
+at the target feerate, which is what coin-select's `AncestorToBump` means and what Core's
+`node::MiniMiner` leaves unmined. Given that set, **coin-select's union bump and Core's
+post-discount combined bump are identical on all 116 runs in the matrix**, and every selection
+from both engines reaches the target feerate once its ancestor union is counted.
 
-coin-select charges `max(0, feerate x union_weight - union_fee)`: it nets the whole ancestor union
-in one go, so an ancestor paying above the target rate subsidises one paying below it. Core runs
-`node::MiniMiner`, which builds a mock block template and asks what the miner would *not* already
-have taken: an ancestor that clears the target feerate on its own gets mined, and its surplus is
-then unavailable to subsidise anything.
+That is a positive result for PR #64: netting weight and fee across the ancestor union reproduces
+Core's `combined bump = summed individual bumps - bump_fee_group_discount` exactly, without a
+post-selection correction step.
 
-In the `subsidizing_ancestry` family (and in the `smoke` fixture, built the same way) this splits
-the two engines apart completely. coin-select charges a bump of **0** where Core charges a real
-one, and in **6 of 58 runs** its selection does not leave enough child fee to cover what Core's
-mini-miner says the still-unmined ancestors need:
+It is worth being precise about what the ancestor list may contain, because getting this wrong
+inverts the result. An ancestor whose package already clears the target feerate is not an
+"ancestor to bump" — a miner takes it anyway — and feeding one to `SelectionProblem::new` credits
+the child with a surplus nobody is waiting on, which makes coin-select undercharge. Both
+`genfixtures.py --check` and the Core runner reject a fixture that lists one. An ancestor paying
+far above the target rate on its own can still belong in the set if its package does not, which is
+exactly what the `subsidizing_ancestry` family is built from.
 
-| fixture | track | child surplus over its own feerate | union bump (what coin-select charges) | combined bump (what Core's mini-miner charges) |
+## 2. Core cannot act on the discount during the search, and it costs real solutions
+
+Core charges each UTXO the full individual bump fee of the transaction it sits on, baked into its
+effective value *before* the search starts. Two coins on the same unconfirmed parent are each
+charged for that parent in full. The overlap comes back only once a result has been chosen, as
+`bump_fee_group_discount` — too late for the search to have used it.
+
+The `smoke` fixture shows the sharpest form. `SelectCoinsBnB` gives up after 62 nodes with **no
+solution**, while both coin-select and the exhaustive oracle return the same five-input selection
+`{c000, c002, c004, c006, c007}`:
+
+| | |
+| --- | --- |
+| Core's `selection_target` | 300540 |
+| effective value the search sees | 298000 — below the target, so the branch is pruned |
+| shared-ancestry discount for that set | 2700 (`c000` and `c002` both pay for parent `sh`) |
+| effective value after the discount | 300700 — inside the window, waste 24460 |
+
+Core is not choosing a worse selection here; it is structurally unable to see this one.
+
+Across the eight fixtures small enough to brute force, `SelectCoinsBnB` fails to reach the
+least-waste in-window selection on four, and every one of them has a non-empty ancestor union. It
+finds the optimum on every fixture without one.
+
+| fixture | waste Core returned | best in-window waste | inputs Core took | inputs in the optimum |
 | --- | --- | --- | --- | --- |
-| `smoke` | kernel | 520 | 0 | 3600 |
-| `subsidizing_ancestry_20` | kernel | 3 | 0 | 2826 |
-| `subsidizing_ancestry_20` | wallet | 0 | 0 | 5004 |
-| `subsidizing_ancestry_100` | kernel | 127 | 0 | 4140 |
-| `subsidizing_ancestry_200` | kernel | 8 | 0 | 3537 |
-| `subsidizing_ancestry_200` | wallet | 0 | 0 | 3537 |
+| `smoke` | no solution | 24460 | 0 | 5 |
+| `shared_ancestry_20` | 5544 | 2046 | 4 | 9 |
+| `subsidizing_ancestry_20` | 25270 | 24675 | 10 | 16 |
+| `nested_ancestry_20` | 16609 | 16024 | 12 | 11 |
 
-Both views are internally consistent. coin-select's transaction does reach the target feerate *as
-a package* — the harness verifies that for every selection, and it holds. But a miner selecting by
-ancestor-set score does not evaluate the package as a whole: it takes the overpaying ancestor on
-its own and then judges what is left. Under that rule these packages are underfunded, and the
-transaction will not confirm as quickly as the target feerate implies.
+`shared_ancestry_20` is the largest gap: Core leaves 63% of the achievable waste on the table,
+because during the search each of those nine coins looked like it had to pay for the shared
+ancestor by itself.
 
-The asymmetry runs one way across the whole matrix: on the 13 selections where the two figures
-differ, Core's combined bump is the **larger** one. That direction is what you would expect —
-whatever the mini-miner already mined pays at or above the target as a package, so folding it into
-the union can only drag the netted figure down — but it is not guaranteed in general: an
-ancestor-closed slice of the template need not clear the target on its own. Treat it as an
-observation about these fixtures, not a theorem.
+The `adversarial_shared` family is the same effect at scale. One fat underpaying ancestor hosts a
+block of small coins; charged the whole bump each, every one of them has negative effective value
+and Core drops them from the BnB pool before the search starts. coin-select's union accounting
+sees that taking several of them pays the bump once, and finds packages costing 4648 against
+Core's 7342 at n=100.
 
-Worth raising on PR #64. The branch's own docs anticipate the opposite direction — "deficits are
-computed against the full ancestor set and may **over**estimate what Bitcoin Core would charge" —
-and this is the case where the union netting underestimates instead.
+(The oracle enumerates every subset, including coins Core's positive-effective-value filter drops,
+so "Core missed it" covers both the search and that filter. Both are part of how Core answers.)
 
-## 2. Core discounts shared ancestry too late to act on it
-
-Core charges each UTXO the full individual bump fee of the transaction it sits on *during* the
-search, and refunds the overlap only once a result has been chosen (`bump_fee_group_discount`).
-The search therefore optimises a waste figure it later revises.
-
-The exhaustive oracle catches the consequence. Of the 8 fixtures small enough to brute force,
-`SelectCoinsBnB` fails to find the least-waste in-window selection on **3** — `nested_ancestry_20`,
-`shared_ancestry_20` and `subsidizing_ancestry_20` — and all three have a non-empty ancestor union.
-It finds the optimum on every fixture without one. On `shared_ancestry_20` the gap is large: waste
-5544 for the selection it returned against 2046 for the best in-window selection, and the better
-answer uses 9 inputs where Core took 4.
-
-The `adversarial_shared` family shows the extreme form. One fat underpaying ancestor hosts a block
-of small coins; charged the whole bump each, every one of them has negative effective value and
-Core drops them from the BnB pool before the search starts. coin-select's union accounting sees
-that taking several of them pays the bump once, and finds packages costing 4648 against Core's
-7342 at n=100.
-
-## 3. Search effort: opposite shapes
+## 3. coin-select pays for that in search cost, sometimes past its budget
 
 | | coin-select | Bitcoin Core |
 | --- | --- | --- |
-| kernel, median wall clock | 5454 us | 683 us |
-| kernel, budget exhausted | 2 of 29 fixtures | **21 of 29** |
-| kernel, median cost per node | ~1900 ns/round | ~7 ns/node |
-| wallet, median wall clock | 400 us | 1394 us |
-| wallet, budget exhausted | 1 of 29 fixtures | **18 of 29** |
+| kernel, median wall clock | 8039 us | 663 us |
+| kernel, budget exhausted | **6 of 29** fixtures | 21 of 29 |
+| kernel, returned no solution | **4 of 29** | 1 of 29 |
+| kernel, median cost per node | ~1890 ns/round | ~7 ns/node |
+| wallet, median wall clock | 993 us | 1412 us |
+| wallet, budget exhausted | 3 of 29 fixtures | 18 of 29 |
 
-Core's depth-first search is roughly 270x cheaper per node, and spends that speed running out its
+Core's depth-first search is roughly 280x cheaper per node and spends that speed running out its
 100,000-node budget on essentially every fixture with 50 or more candidates. coin-select's
-priority-queue search with the `LowestFee` bound prunes hard enough to exhaust the tree in a few
-thousand rounds on 27 of 29 fixtures, but each round costs about a microsecond — it clones a
-selector, evaluates a bound, and pushes onto a heap.
+priority-queue search prunes hard enough to exhaust the tree in a few thousand rounds on most
+fixtures, but each round costs about two microseconds — it clones a selector, evaluates a bound,
+and pushes onto a heap.
 
-Neither number is a verdict on its own. Core finishing "fast" usually means it stopped early with
-whatever it had; coin-select finishing "slow" usually means it proved it had the best answer.
+The failures matter more than the medians. On `subsidizing_ancestry_20` — twenty candidates, six
+unconfirmed ancestors — `Changeless<LowestFee>` burns all 100,000 rounds in 178 ms and returns
+**no solution**, while the oracle confirms an eleven-input changeless solution exists and Core
+answers in **52 nodes and 2 microseconds**. `nested_ancestry_20` fails the same way, and
+`shared_ancestry_200` and `subsidizing_ancestry_200` exhaust the budget after more than half a
+second.
 
-The memory profiles differ in kind as well as degree. Core's depth-first search carries one path,
-so its peak RSS is flat process baseline (~17 MB) on every fixture. coin-select's priority queue
-holds a `CoinSelector` per live branch, and peak RSS ranges from 2.9 MB up to 23 MB — the top of
-that range being `shared_ancestry_200`, the fixture where it exhausts its round budget.
-
-## 4. coin-select's branch and bound can blow its budget on 20 candidates
-
-`nested_ancestry_20` — twenty candidates, nine unconfirmed ancestors in a shared, three-deep
-graph — exhausts 100,000 rounds and returns **no solution** on the kernel track, while the
-exhaustive oracle confirms a changeless solution exists. Core solves the same fixture in 966
-nodes.
-
-The likely cause is visible in the branch's own source: `Changeless::change_unavoidable` gives up
-its prune outright when `problem.has_ancestors()`, and `LowestFee::bound` swaps to the relaxed
+The cause is visible in the branch's own source. `Changeless::change_unavoidable` gives up its
+prune outright when `problem.has_ancestors()`, and `LowestFee::bound` swaps to the relaxed
 `bound_with_ancestors`, which never returns `None`. Both are deliberate and both are sound — but
-together they remove nearly all pruning from `Changeless<LowestFee>` exactly when ancestry is
-present. `shared_ancestry_200` hits the same wall on both tracks (620 ms, budget exhausted).
+together they remove most of the pruning from `Changeless<LowestFee>` exactly when ancestry is
+present. That is the sharpest actionable result for the branch: on the ancestor-aware path the
+search is not merely slower per node, it can fail to answer a twenty-coin problem that Core
+answers in microseconds.
 
-This is the sharpest actionable result for the branch: the ancestor-aware path is not merely
-slower per node, it can fail to answer a twenty-coin problem.
+Memory differs in kind as well as degree. Core's depth-first search carries one path, so its peak
+RSS is flat process baseline (~17 MB) on every fixture. coin-select's priority queue holds a
+`CoinSelector` per live branch, and peak RSS runs from 2.7 MB up to 28 MB.
 
-## 5. Outcomes, scored on both objectives
+## 4. Outcomes, scored on both objectives
 
 Scoring each engine's selection on *both* metrics — the harness computes Core's waste formula for
-coin-select's selections and package fee for Core's — the picture is balanced rather than
-one-sided:
+coin-select's selections and package fee for Core's:
 
-| track | coin-select cheaper package | lower waste: coin-select | lower waste: Core | tie |
-| --- | --- | --- | --- | --- |
-| kernel | 24 of 26 | 11 | 13 | 2 |
-| wallet | 28 of 29 | 9 | 19 | 1 |
+| track | coin-select cheaper package | lower waste: coin-select | lower waste: Core |
+| --- | --- | --- | --- |
+| kernel | 22 of 24 | 10 of 24 | 12 of 24 |
+| wallet | 28 of 29 | 11 of 29 | 16 of 29 |
 
-Each engine wins its own objective most of the time, which is what should happen. The notable part
-is that coin-select's selections also beat Core on Core's own waste metric in 11 of 26 kernel
-fixtures and 9 of 29 wallet fixtures, without optimising for it — the ancestor-aware effective
-values it searches with are simply better informed.
+Each engine wins its own objective more often than not, which is what should happen. The part
+worth noting is that coin-select's selections also beat Core on Core's own waste metric in 10 of
+24 scoreable kernel fixtures and 11 of 29 wallet fixtures without optimising for it — the
+ancestor-aware effective values it searches with are simply better informed.
 
 Read the fee column with care. Core's portfolio minimises waste, and its knapsack and
 single-random-draw paths deliberately aim for a privacy-friendly change amount rather than the
-smallest fee, so it is not trying to win that column. The one fixture Core wins outright,
-`shared_ancestry_200`, is the one where coin-select hit its round budget and fell back to a much
-worse selection (189690 against 46550).
+smallest fee, so it is not trying to win that column. The median Core-to-coin-select package-fee
+ratio is 1.36x on the kernel track and 1.72x on the wallet track. The one fixture Core wins
+outright is `shared_ancestry_200`, where coin-select hit its round budget and fell back.
 
 The harness's reimplementation of Core's waste formula agrees with the waste Core itself reports
-on all 57 of its own selections, which is what makes the cross-scoring trustworthy.
+on every one of its own selections, which is what makes the cross-scoring trustworthy.
+
+## Reading list for PR #64
+
+1. **The bump arithmetic is right** (finding 1) — and the API contract that makes it right is that
+   `AncestorToBump` receives only ancestors that still require bumping. That is load-bearing and
+   currently only stated in prose; a caller that passes its whole unconfirmed ancestor graph will
+   silently undercharge.
+2. **The ancestor-aware search can run out of budget on twenty coins** (finding 3). Restoring some
+   pruning to `Changeless<LowestFee>` when ancestors are present is where the headroom is.
+3. **The in-search union is worth having** (finding 2): it finds selections Core's post-hoc
+   discount structurally cannot reach.
 
 ## What this does not answer
 
 The kernel track puts both engines on the same problem and the same budget, but not on literally
 the same objective — see the first entry under "Known limits" in the README for why that was left
-alone rather than papered over with a hand-written metric. So "coin-select needs fewer nodes" here
+alone rather than papered over with a hand-written metric. So "coin-select needs fewer nodes"
 means "fewer nodes to answer its own question", not "strictly better pruning on identical input".
-The oracle columns are what make that statement meaningful: both engines are checked against the
-optimum of their own objective.
+The oracle columns are what make that meaningful: both engines are checked against the optimum of
+the question they were actually asking.
 
 Nothing here measures address-grouped selection, Core's per-output-type pass, or behaviour on a
 mempool containing transactions outside the fixture's ancestor set.
 
 ## Verification
 
-Every selection from both engines was re-derived from the fixture: each package reaches the target
-feerate once its ancestor union is counted, each stays inside `max_weight`, and each runner's own
-bump-fee figures match the harness's independent reimplementation of Core's mini-miner. The two
-exceptions are both `wallet_mixed_50`, 10 satoshis short, which is the documented legacy-input
-empty-witness gap in Core's fee model and not a selection error.
+Every selection from both engines was re-derived from the fixture and cross-checked against that
+engine's own numbers: child weight against `CoinSelector::weight`, child fee against
+`CoinSelector::fee`, the union bump against `CoinSelector::ancestor_bump`, the individual and
+combined bump fees against an independent port of `node::MiniMiner`, waste against
+`SelectionResult::RecalculateWaste`, and input weight against `SelectionResult::GetWeight`. Every
+package reaches the target feerate once its ancestor union is counted, and every selection stays
+inside `max_weight`. `bench.py report` exits non-zero if any of that fails; this run exits 0.

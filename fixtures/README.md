@@ -57,6 +57,19 @@ files are stale.
 | `ancestors[].fee` | Fee it already pays. |
 | `ancestors[].parents` | Direct parents. A parent not listed in `ancestors` is confirmed and ignored. |
 
+**The ancestor list is the set that still requires bumping.** That is what coin-select's
+`AncestorToBump` means, and deciding it is the caller's job, not the selection algorithm's: a
+wallet works out which unconfirmed ancestors a miner would take anyway and passes only the rest.
+A fixture must not list an ancestor whose package already clears the target feerate. Listing one
+would credit the child with a surplus nobody is waiting on, and would make the two engines
+disagree about the ancestor set rather than about coin selection.
+
+Both `genfixtures.py --check` and the Core runner enforce this by building the mock block template
+(the same determination `node::MiniMiner` makes) and rejecting the fixture if it mines anything.
+Note that an ancestor can pay far above the target rate on its own and still belong here: what
+matters is its whole ancestor package, which is exactly what the `subsidizing_ancestry` family is
+built around.
+
 `genfixtures.py --check` also enforces: unique ids and txids, an acyclic ancestor graph, every
 `residing_txid` and `parents` entry resolving inside `ancestors`, and a pool that can cover the
 target.
@@ -155,17 +168,19 @@ Derived exactly as `wallet/spend.cpp` derives them: `m_change_fee`, `m_cost_of_c
 
 ### Ancestor bump fees
 
-The two engines do genuinely different things here, and the benchmark exists to measure that, so
-neither is adjusted to match the other:
+Given a correctly formed ancestor list (see above), the two engines arrive at the *same* final
+figure — the harness confirms they agree on every selection in the matrix. What differs is when
+each of them knows it:
 
-- **coin-select** charges `max(0, feerate * union_weight - union_fee)`: the whole ancestor union,
-  netted in one go, floored at zero. An ancestor paying above the target rate subsidises one
-  paying below it.
-- **Core** runs `node::MiniMiner`: it builds a mock block template over the cluster,
-  ancestor-feerate greedy, and stops at the target feerate. Whatever got into the template needs
-  no bump. Each UTXO is then charged, *during the search*, the individual bump fee of the
-  transaction it sits on — `max(individual shortfall, ancestor-set shortfall)` — and only after a
-  result is chosen is the overlap refunded as `SelectionResult::bump_fee_group_discount`.
+- **coin-select** charges `max(0, feerate * union_weight - union_fee)` over the whole ancestor
+  union, netted in one go and floored at zero, computed afresh for each selection *during* the
+  search. Within the union an ancestor paying above the target rate offsets one paying below it.
+- **Core** charges each UTXO, *during the search*, the individual bump fee of the transaction it
+  sits on: `max(individual shortfall, ancestor-set shortfall)`, baked into its effective value
+  before the search starts. Two coins sharing an ancestor are each charged for it in full. Only
+  after a result has been chosen is the overlap refunded, as
+  `SelectionResult::bump_fee_group_discount`. `node::MiniMiner` supplies both the individual
+  figures and the combined one.
 
 `core-runner/mini_miner_lite.h` ports that algorithm from the pinned Core source; `bench.py`
 reimplements it independently and the report asserts the two agree on every selection. Three
@@ -200,6 +215,6 @@ Seven families at sizes 20, 50, 100 and 200, plus a `smoke` fixture of 8 candida
 | `private_ancestry` | Every third coin sits on an unconfirmed parent nothing else can reach, so the bump folds into the candidate and no de-duplication is needed. |
 | `shared_ancestry` | A few unconfirmed parents host several coins each: the overlap Core discounts after the fact and coin-select nets during the search. |
 | `nested_ancestry` | Chains three to four deep that share a common root — transitive *and* shared. |
-| `subsidizing_ancestry` | Ancestors paying four times the target rate alongside ancestors paying a tenth of it. coin-select nets the surplus against the deficit; Core's mini-miner mines the overpaying ancestor and gives the child no credit for it. |
+| `subsidizing_ancestry` | A fat underpaying root spent by a child paying four times the target rate and by a sibling paying a tenth of it. Every package is still below target, so all three legitimately need bumping — but coin-select nets the rich child's surplus against its sibling's deficit while it searches, where Core charges each coin its own bump and refunds the overlap only afterwards. |
 | `wallet_mixed` | Mixed script types and values, a third of the coins unconfirmed, and a `max_weight` cap tight enough to bite. |
 | `adversarial_shared` | One fat, badly underpaying ancestor hosting a block of small coins. Charged the whole bump each, every one of them has negative effective value and Core drops them from the BnB pool; together they clear the target and pay the bump once. |

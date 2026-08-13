@@ -97,7 +97,9 @@ python3 genfixtures.py                      # regenerate fixtures/
 
 `--oracle` brute forces every fixture with at most 20 candidates against **each engine's own**
 objective, so a disagreement can be attributed rather than merely observed: it says whether a
-runner found the best answer to the question it was asking.
+runner found the best answer to the question it was asking. Core's oracle enumerates every subset,
+including coins Core's own positive-effective-value filter drops before the search — so "Core
+missed it" can mean either the search or that filter.
 
 ## Reproducibility
 
