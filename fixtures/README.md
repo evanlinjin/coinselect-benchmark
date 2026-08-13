@@ -137,6 +137,17 @@ Every place a runner has to translate is listed here.
 | each candidate | one `COutput` (`input_bytes = input_weight / 4`, `depth = 0` when unconfirmed else `1`) in its own `OutputGroup`. The outpoint is a fixed dummy txid with the candidate's index as the output number, which keeps `OutputSet` iteration in fixture order. |
 | each ancestor | an entry in the fixture's "mempool", from which individual and combined bump fees are derived (below) |
 
+Two things about Core's flow are deliberately not modelled, because both are about grouping
+rather than about selection:
+
+- **Address grouping** (`m_avoid_partial_spends`) is off: one fixture candidate is one
+  `OutputGroup`, which is what makes a fixture candidate mean the same thing to both engines.
+- **Output-type separation.** Core's `AttemptSelection` first runs the whole portfolio once per
+  output type and only searches the combined pool if no single type can fund the transaction. The
+  runner always searches the combined pool, i.e. Core's `allow_mixed_output_types` fallback. Only
+  `wallet_mixed` has more than one type, and a per-type pass would just be the same search over a
+  smaller pool.
+
 Derived exactly as `wallet/spend.cpp` derives them: `m_change_fee`, `m_cost_of_change`,
 `m_min_change_target` (via Core's own `GenerateChangeTarget` with a deterministic
 `FastRandomContext`), and `min_viable_change = max(discard_fee_to_spend_change + 1, dust)` where

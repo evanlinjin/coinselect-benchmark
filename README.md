@@ -25,9 +25,20 @@ would be meaningless. Instead:
   how many nodes they evaluated, and whether they finished the tree or hit the budget.
 - **`bench.py report` scores those selections**, from the fixture, with one implementation of one
   fee model. Both columns of every quality comparison come from the same code.
-- **Nothing is taken on trust.** The report re-derives each runner's own bump-fee figures and
-  fails loudly if they disagree, and it checks every selection against the fixture's ancestor
-  union: does this package actually reach the target feerate?
+- **Nothing is taken on trust.** Every quantity in the shared model is cross-checked against at
+  least one engine's own computation of it, and a mismatch is reported as a failure:
+
+  | shared model | checked against |
+  | --- | --- |
+  | child weight | `CoinSelector::weight` |
+  | child fee | `CoinSelector::fee` |
+  | ancestor union bump | `CoinSelector::ancestor_bump` |
+  | individual and combined bump fees | the Core runner's port of `node::MiniMiner` |
+  | waste | `SelectionResult::RecalculateWaste` |
+  | selected input weight | `SelectionResult::GetWeight` |
+
+  On top of that, every selection is checked against the fixture's ancestor union: does this
+  package actually reach the target feerate, and does it stay inside `max_weight`?
 
 ## The two tracks
 
@@ -113,7 +124,8 @@ runner found the best answer to the question it was asking.
   the empty witness a legacy input serialises, and the segwit marker on an all-legacy selection.
   See [`fixtures/README.md`](fixtures/README.md#known-residual-fee-model-gaps).
 - Address grouping (`m_avoid_partial_spends`) is off by construction: one fixture candidate is one
-  `OutputGroup`. Grouped selection is not measured.
+  `OutputGroup`. Grouped selection is not measured, and neither is Core's per-output-type pass —
+  the runner always searches the combined pool.
 
 [coin-select]: https://github.com/bitcoindevkit/coin-select
 [pr64]: https://github.com/bitcoindevkit/coin-select/pull/64

@@ -489,6 +489,10 @@ def cross_check(fixture, raw, metrics, problems):
             if native["input_weight"] != want:
                 problems.append(f"{tag}: input weight {native['input_weight']} != fixture {want}")
     else:
+        # The crate computes the child weight itself; the shared model should land on the same
+        # number for every selection, which is what makes the two engines' weights comparable.
+        if "child_weight" in native and native["child_weight"] != metrics["child_weight"]:
+            problems.append(f"{tag}: child weight {native['child_weight']} != harness {metrics['child_weight']}")
         if "ancestor_bump" in native and native["ancestor_bump"] != metrics["union_bump"]:
             problems.append(f"{tag}: ancestor_bump {native['ancestor_bump']} != harness {metrics['union_bump']}")
         if "child_fee" in native and native["child_fee"] != metrics["child_fee"]:
