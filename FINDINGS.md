@@ -155,6 +155,50 @@ on every one of its own selections, which is what makes the cross-scoring trustw
 3. **The in-search union is worth having** (finding 2): it finds selections Core's post-hoc
    discount structurally cannot reach.
 
+## 6. Combining with the delta-aware branch (PR #53)
+
+`bench.py compare-revs` A/Bs two coin-select revisions on these fixtures. Run against PR #64 head
+versus [`feature/ancestor-aware-with-view`][withview], which rebases [PR #53][pr53]'s delta-aware
+`SelectionView` onto it and extends the cache with ancestor aggregates:
+
+| track | group | geomean | median | range |
+| --- | --- | --- | --- | --- |
+| kernel | no ancestry | 1.35x | 1.71x | 0.51-2.23x |
+| kernel | **with ancestry** | **2.33x** | 2.31x | 1.43-3.79x |
+| wallet | no ancestry | 2.08x | 2.02x | 1.56-2.95x |
+| wallet | with ancestry | 1.84x | 1.76x | 0.71-3.92x |
+
+**Selections are identical on all 58 fixture/track pairs**, as is solved/unsolved. On the cases
+that actually hurt — n=200 and the budget-capped ones — it is consistently 2.3-3.3x:
+`shared_ancestry_200` 751 to 255 ms, `subsidizing_ancestry_200` 635 to 195 ms,
+`nested_ancestry_200` 172 to 53 ms. The ancestor share of per-node cost drops from 60-62% to
+13-58%; at n=100 the ancestor path goes from 2531 to 999 ns/round.
+
+Two things worth attention:
+
+- **`Changeless::change_unavoidable` is gone**, on the stated grounds that the prune "is not
+  generally sound". All four round-count differences are `no_ancestry` on the kernel track and all
+  are upward — 152 to 587 on `no_ancestry_20`, +1% to +14% elsewhere — which is exactly where that
+  prune used to be active, since #64 had already disabled it under ancestry. If the soundness
+  concern holds this is a bug fix rather than a regression, but it implies #64's version was
+  unsound for `!has_ancestors()`, and it is why `no_ancestry_20` ends up a net slowdown (0.51x)
+  despite cheaper nodes.
+- **Per-branch overhead grew.** The three cases that got slower have *identical* round counts, so
+  it is pure setup cost: `SelectionCache` carries two `Vec<u32>` refcount arrays sized by ancestor
+  count and is cloned per queued branch, so branch cloning went from O(n/64) words to
+  O(n_ancestors) plus two allocations. It pays off whenever evaluation dominates and loses on
+  searches of a few dozen nodes.
+
+None of the nine budget-capped fixtures stops capping, and `nested_ancestry_20`,
+`subsidizing_ancestry_20` and `subsidizing_ancestry_200` still return no solution on the kernel
+track. This is a constant factor, not a pruning fix: finding 3's ordering stands, fix the bound
+first and take this second.
+
+Full output in `results/compare/`.
+
+[pr53]: https://github.com/bitcoindevkit/coin-select/pull/53
+[withview]: https://github.com/evanlinjin/coin-select/tree/feature/ancestor-aware-with-view
+
 ## What this does not answer
 
 The kernel track puts both engines on the same problem and the same budget, but not on literally
