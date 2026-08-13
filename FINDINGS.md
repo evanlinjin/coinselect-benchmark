@@ -199,33 +199,46 @@ versus [`feature/ancestor-aware-with-view`][withview], which rebases [PR #53][pr
 
 | track | group | geomean | median | range |
 | --- | --- | --- | --- | --- |
-| kernel | no ancestry | 1.35x | 1.71x | 0.51-2.23x |
-| kernel | **with ancestry** | **2.33x** | 2.31x | 1.43-3.79x |
-| wallet | no ancestry | 2.08x | 2.02x | 1.56-2.95x |
-| wallet | with ancestry | 1.84x | 1.76x | 0.71-3.92x |
+| kernel | no ancestry | 1.36x | 1.73x | 0.49-2.34x |
+| kernel | **with ancestry** | **2.79x** | 2.73x | 1.78-4.25x |
+| changeful | no ancestry | 2.32x | 2.27x | 1.94-2.91x |
+| changeful | with ancestry | 2.14x | 2.30x | 0.70-4.69x |
+| wallet | no ancestry | 2.10x | 2.07x | 1.60-2.85x |
+| wallet | **with ancestry** | **2.32x** | 2.32x | 1.13-4.46x |
 
-**Selections are identical on all 58 fixture/track pairs**, as is solved/unsolved. On the cases
-that actually hurt — n=200 and the budget-capped ones — it is consistently 2.3-3.3x:
-`shared_ancestry_200` 751 to 255 ms, `subsidizing_ancestry_200` 635 to 195 ms,
-`nested_ancestry_200` 172 to 53 ms. The ancestor share of per-node cost drops from 60-62% to
-13-58%; at n=100 the ancestor path goes from 2531 to 999 ns/round.
+**Selections are identical on all 99 fixture/track pairs**, as is solved/unsolved. On the cases
+that hurt most it is consistently 2.3-4.2x, and the ancestor share of per-node cost drops sharply.
 
-Two things worth attention:
+The branch was measured twice. Restricted to the 58 pairs both runs covered, the second head
+(`bdcb1f0`, "compact ancestor-aware BnB cache") improves the ancestor path again and leaves the
+no-ancestor path exactly where it was — which is what a targeted change should look like:
 
-- **`Changeless::change_unavoidable` is gone**, on the stated grounds that the prune "is not
-  generally sound". All four round-count differences are `no_ancestry` on the kernel track and all
-  are upward — 152 to 587 on `no_ancestry_20`, +1% to +14% elsewhere — which is exactly where that
-  prune used to be active, since #64 had already disabled it under ancestry. If the soundness
-  concern holds this is a bug fix rather than a regression, but it implies #64's version was
-  unsound for `!has_ancestors()`, and it is why `no_ancestry_20` ends up a net slowdown (0.51x)
-  despite cheaper nodes.
-- **Per-branch overhead grew.** The three cases that got slower have *identical* round counts, so
-  it is pure setup cost: `SelectionCache` carries two `Vec<u32>` refcount arrays sized by ancestor
-  count and is cloned per queued branch, so branch cloning went from O(n/64) words to
-  O(n_ancestors) plus two allocations. It pays off whenever evaluation dominates and loses on
-  searches of a few dozen nodes.
+| track | group | at `af9d849` | at `bdcb1f0` |
+| --- | --- | --- | --- |
+| kernel | no ancestry | 1.35x | 1.36x |
+| kernel | with ancestry | 2.33x | **2.76x** |
+| wallet | no ancestry | 2.08x | 2.10x |
+| wallet | with ancestry | 1.84x | **2.33x** |
 
-None of the nine budget-capped fixtures stops capping, and `nested_ancestry_20`,
+That second commit also removed the per-branch allocation cost that made short searches a net
+loss at `af9d849`. Every case that had regressed is now a win, and no fixture in the
+wallet-with-ancestry group is slower any more (worst case 0.71x, now 1.13x):
+
+| fixture | track | rounds | `af9d849` | `bdcb1f0` |
+| --- | --- | --- | --- | --- |
+| `wallet_mixed_20` | wallet | 5 | 0.71x | **2.09x** |
+| `private_ancestry_20` | wallet | 17 | 0.76x | **1.13x** |
+| `smoke` | wallet | 35 | 0.98x | **1.86x** |
+
+One thing remains, and it is not from this work: **`Changeless::change_unavoidable` is gone**, on
+the stated grounds that the prune "is not generally sound". All four round-count differences are
+`no_ancestry` on the kernel track and all are upward — 152 to 587 on `no_ancestry_20`, +1% to +14%
+elsewhere — which is exactly where that prune used to be active, since #64 had already disabled it
+under ancestry. If the soundness concern holds this is a bug fix rather than a regression, but it
+implies #64's version was unsound for `!has_ancestors()`, and it is why `no_ancestry_20` is the
+only remaining net slowdown (0.49x) despite cheaper nodes.
+
+None of the budget-capped fixtures stops capping, and `nested_ancestry_20`,
 `subsidizing_ancestry_20` and `subsidizing_ancestry_200` still return no solution on the kernel
 track. This is a constant factor, not a pruning fix: finding 3's ordering stands, fix the bound
 first and take this second.
