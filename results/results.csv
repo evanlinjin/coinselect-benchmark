@@ -1,0 +1,5 @@
+fixture,family,size,track,runner,algorithm,ok,wall_ns_median,rounds,exhausted,peak_rss_kb,n_inputs,n_legacy_inputs,child_weight,child_fee,change_value,child_surplus,ancestors_in_union,union_bump,core_summed_individual_bump,core_combined_bump,covers_union_bump,covers_core_bump,package_fee,package_weight,package_feerate_sat_per_vb,package_meets_target,target_shortfall,within_max_weight,waste,score,matches_oracle
+smoke,smoke,8,kernel,bitcoin-core,none,False,4639,54,True,17840,,,,,,,,,,,,,,,,,,,,,no solution (oracle agrees)
+smoke,smoke,8,kernel,coin-select,bnb/changeless-lowest-fee,True,167816,62,True,2644,3,0,992,3000,0,520,2,0,3600,3600,True,False,11400,3392,13.4434,True,0,True,,3000.0,True
+smoke,smoke,8,wallet,bitcoin-core,srd,True,217109,,,17840,2,0,892,4930,75070,2700,2,0,2700,2700,True,True,13230,2892,18.2988,True,0,True,3304,,
+smoke,smoke,8,wallet,coin-select,bnb/lowest-fee+srd-fallback,True,40747,10,True,2656,1,0,660,1650,3350,0,1,0,0,0,True,True,9650,1460,26.4384,True,0,True,,2230.0,True

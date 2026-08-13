@@ -1,0 +1,109 @@
+{
+ "name": "smoke",
+ "family": "smoke",
+ "size": 8,
+ "seed": 1,
+ "search_budget": 100000,
+ "feerate_sat_per_vb": 10,
+ "long_term_feerate_sat_per_vb": 10,
+ "discard_feerate_sat_per_vb": 3,
+ "dust_relay_feerate_sat_per_vb": 3,
+ "target": {
+  "value": 300000,
+  "n_outputs": 1,
+  "non_input_weight": 212
+ },
+ "change": {
+  "output_weight": 172,
+  "spend_weight": 232
+ },
+ "max_weight": null,
+ "candidates": [
+  {
+   "id": "c000",
+   "value": 120000,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "sh"
+  },
+  {
+   "id": "c001",
+   "value": 90000,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "sh"
+  },
+  {
+   "id": "c002",
+   "value": 75000,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": "sh"
+  },
+  {
+   "id": "c003",
+   "value": 210000,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c004",
+   "value": 41000,
+   "input_weight": 592,
+   "input_type": "p2pkh",
+   "is_segwit": false,
+   "residing_txid": null
+  },
+  {
+   "id": "c005",
+   "value": 305000,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "rich"
+  },
+  {
+   "id": "c006",
+   "value": 60000,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": "poor"
+  },
+  {
+   "id": "c007",
+   "value": 33000,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  }
+ ],
+ "ancestors": [
+  {
+   "txid": "sh",
+   "weight": 1200,
+   "fee": 300,
+   "parents": []
+  },
+  {
+   "txid": "rich",
+   "weight": 800,
+   "fee": 8000,
+   "parents": []
+  },
+  {
+   "txid": "poor",
+   "weight": 1600,
+   "fee": 400,
+   "parents": [
+    "rich"
+   ]
+  }
+ ]
+}

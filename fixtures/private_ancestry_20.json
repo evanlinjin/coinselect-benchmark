@@ -1,0 +1,227 @@
+{
+ "name": "private_ancestry_20",
+ "family": "private_ancestry",
+ "size": 20,
+ "seed": 2782556571,
+ "search_budget": 100000,
+ "feerate_sat_per_vb": 10,
+ "long_term_feerate_sat_per_vb": 10,
+ "discard_feerate_sat_per_vb": 3,
+ "dust_relay_feerate_sat_per_vb": 3,
+ "target": {
+  "value": 6341000,
+  "n_outputs": 1,
+  "non_input_weight": 212
+ },
+ "change": {
+  "output_weight": 172,
+  "spend_weight": 232
+ },
+ "max_weight": null,
+ "candidates": [
+  {
+   "id": "c000",
+   "value": 2851794,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "p000"
+  },
+  {
+   "id": "c001",
+   "value": 32255,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c002",
+   "value": 196728,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c003",
+   "value": 167159,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "p003"
+  },
+  {
+   "id": "c004",
+   "value": 20371,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c005",
+   "value": 493496,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c006",
+   "value": 384929,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "p006"
+  },
+  {
+   "id": "c007",
+   "value": 4588594,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c008",
+   "value": 41703,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c009",
+   "value": 2829261,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "p009"
+  },
+  {
+   "id": "c010",
+   "value": 168295,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c011",
+   "value": 435217,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c012",
+   "value": 461486,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "p012"
+  },
+  {
+   "id": "c013",
+   "value": 373082,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c014",
+   "value": 135136,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c015",
+   "value": 34174,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "p015"
+  },
+  {
+   "id": "c016",
+   "value": 20443,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c017",
+   "value": 428266,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c018",
+   "value": 7919,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "p018"
+  },
+  {
+   "id": "c019",
+   "value": 422186,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  }
+ ],
+ "ancestors": [
+  {
+   "txid": "p000",
+   "weight": 524,
+   "fee": 262,
+   "parents": []
+  },
+  {
+   "txid": "p003",
+   "weight": 892,
+   "fee": 446,
+   "parents": []
+  },
+  {
+   "txid": "p006",
+   "weight": 1380,
+   "fee": 1035,
+   "parents": []
+  },
+  {
+   "txid": "p009",
+   "weight": 1488,
+   "fee": 744,
+   "parents": []
+  },
+  {
+   "txid": "p012",
+   "weight": 1388,
+   "fee": 1041,
+   "parents": []
+  },
+  {
+   "txid": "p015",
+   "weight": 868,
+   "fee": 434,
+   "parents": []
+  },
+  {
+   "txid": "p018",
+   "weight": 1264,
+   "fee": 316,
+   "parents": []
+  }
+ ]
+}

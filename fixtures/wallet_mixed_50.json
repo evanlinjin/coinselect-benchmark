@@ -1,0 +1,463 @@
+{
+ "name": "wallet_mixed_50",
+ "family": "wallet_mixed",
+ "size": 50,
+ "seed": 142390524,
+ "search_budget": 100000,
+ "feerate_sat_per_vb": 10,
+ "long_term_feerate_sat_per_vb": 10,
+ "discard_feerate_sat_per_vb": 3,
+ "dust_relay_feerate_sat_per_vb": 3,
+ "target": {
+  "value": 7150000,
+  "n_outputs": 1,
+  "non_input_weight": 212
+ },
+ "change": {
+  "output_weight": 172,
+  "spend_weight": 232
+ },
+ "max_weight": 5720,
+ "candidates": [
+  {
+   "id": "c000",
+   "value": 37826,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c001",
+   "value": 22254,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c002",
+   "value": 23585,
+   "input_weight": 364,
+   "input_type": "p2sh_p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c003",
+   "value": 45628,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": "m00"
+  },
+  {
+   "id": "c004",
+   "value": 21983,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": "m01"
+  },
+  {
+   "id": "c005",
+   "value": 40584,
+   "input_weight": 364,
+   "input_type": "p2sh_p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "m04"
+  },
+  {
+   "id": "c006",
+   "value": 93115,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c007",
+   "value": 34207,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "m04"
+  },
+  {
+   "id": "c008",
+   "value": 27250,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c009",
+   "value": 19435,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": "m01"
+  },
+  {
+   "id": "c010",
+   "value": 27557,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c011",
+   "value": 13883,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c012",
+   "value": 58666,
+   "input_weight": 364,
+   "input_type": "p2sh_p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c013",
+   "value": 40213,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c014",
+   "value": 42306,
+   "input_weight": 364,
+   "input_type": "p2sh_p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c015",
+   "value": 16560,
+   "input_weight": 592,
+   "input_type": "p2pkh",
+   "is_segwit": false,
+   "residing_txid": null
+  },
+  {
+   "id": "c016",
+   "value": 21358,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": "m04"
+  },
+  {
+   "id": "c017",
+   "value": 19542,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c018",
+   "value": 121092,
+   "input_weight": 364,
+   "input_type": "p2sh_p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c019",
+   "value": 189030,
+   "input_weight": 364,
+   "input_type": "p2sh_p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c020",
+   "value": 738665,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": "m00"
+  },
+  {
+   "id": "c021",
+   "value": 50578,
+   "input_weight": 364,
+   "input_type": "p2sh_p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c022",
+   "value": 55323,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c023",
+   "value": 30782,
+   "input_weight": 364,
+   "input_type": "p2sh_p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c024",
+   "value": 35022,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c025",
+   "value": 427725,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c026",
+   "value": 175370,
+   "input_weight": 592,
+   "input_type": "p2pkh",
+   "is_segwit": false,
+   "residing_txid": null
+  },
+  {
+   "id": "c027",
+   "value": 382633,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": "m03"
+  },
+  {
+   "id": "c028",
+   "value": 4904303,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c029",
+   "value": 42613,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c030",
+   "value": 37485,
+   "input_weight": 592,
+   "input_type": "p2pkh",
+   "is_segwit": false,
+   "residing_txid": null
+  },
+  {
+   "id": "c031",
+   "value": 24942,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c032",
+   "value": 327893,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c033",
+   "value": 157684,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "m01"
+  },
+  {
+   "id": "c034",
+   "value": 9237,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": "m03"
+  },
+  {
+   "id": "c035",
+   "value": 496398,
+   "input_weight": 592,
+   "input_type": "p2pkh",
+   "is_segwit": false,
+   "residing_txid": null
+  },
+  {
+   "id": "c036",
+   "value": 233905,
+   "input_weight": 592,
+   "input_type": "p2pkh",
+   "is_segwit": false,
+   "residing_txid": null
+  },
+  {
+   "id": "c037",
+   "value": 47584,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c038",
+   "value": 129257,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c039",
+   "value": 6868,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c040",
+   "value": 36599,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c041",
+   "value": 23775,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c042",
+   "value": 2146505,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c043",
+   "value": 12512,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": "mc00"
+  },
+  {
+   "id": "c044",
+   "value": 52378,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "m00"
+  },
+  {
+   "id": "c045",
+   "value": 3953673,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c046",
+   "value": 18062,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c047",
+   "value": 151212,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c048",
+   "value": 139090,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c049",
+   "value": 125097,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": "m04"
+  }
+ ],
+ "ancestors": [
+  {
+   "txid": "m00",
+   "weight": 1040,
+   "fee": 260,
+   "parents": []
+  },
+  {
+   "txid": "m01",
+   "weight": 1580,
+   "fee": 790,
+   "parents": []
+  },
+  {
+   "txid": "m02",
+   "weight": 1564,
+   "fee": 391,
+   "parents": []
+  },
+  {
+   "txid": "m03",
+   "weight": 2260,
+   "fee": 565,
+   "parents": []
+  },
+  {
+   "txid": "m04",
+   "weight": 728,
+   "fee": 910,
+   "parents": []
+  },
+  {
+   "txid": "mc00",
+   "weight": 928,
+   "fee": 232,
+   "parents": [
+    "m00"
+   ]
+  }
+ ]
+}

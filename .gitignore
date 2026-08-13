@@ -1,0 +1,5 @@
+# Pinned checkouts and build trees, all reproducible from pins.json via `bench.py setup`.
+/.build/
+/rust-runner/target/
+/results/raw/
+__pycache__/

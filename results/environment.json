@@ -1,0 +1,29 @@
+{
+ "host": "Linux-7.1.7-x86_64-with-glibc2.42",
+ "cpu": "x86_64",
+ "cpu_count": 24,
+ "cxx": "g++ (GCC) 15.2.0",
+ "cargo": "cargo 1.97.1 (c980f4866 2026-06-30)",
+ "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+ "cmake": "cmake version 4.1.6",
+ "core_rev": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+ "core_cxx_flags": "-O3, NDEBUG stripped (Core refuses to build with assertions compiled out)",
+ "core_patches": [
+  "core-bnb-instrumentation.patch"
+ ],
+ "coin_select_rev": "b2f98ab852e0425494d53f7260c4aa82f6c0830d",
+ "pins": {
+  "bitcoin_core": {
+   "repo": "https://github.com/bitcoin/bitcoin.git",
+   "rev": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+   "describes": "v31.1",
+   "why": "latest tagged release at the time the harness was written; wallet/coinselection.cpp is used unmodified"
+  },
+  "coin_select": {
+   "repo": "https://github.com/bitcoindevkit/coin-select.git",
+   "rev": "b2f98ab852e0425494d53f7260c4aa82f6c0830d",
+   "describes": "PR #64 head, branch feature/ancestor-aware-selection-no-clustor",
+   "why": "the ancestor-aware selection branch this benchmark exists to measure"
+  }
+ }
+}

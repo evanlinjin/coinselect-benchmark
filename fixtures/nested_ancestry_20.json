@@ -1,0 +1,255 @@
+{
+ "name": "nested_ancestry_20",
+ "family": "nested_ancestry",
+ "size": 20,
+ "seed": 2733726133,
+ "search_budget": 100000,
+ "feerate_sat_per_vb": 10,
+ "long_term_feerate_sat_per_vb": 10,
+ "discard_feerate_sat_per_vb": 3,
+ "dust_relay_feerate_sat_per_vb": 3,
+ "target": {
+  "value": 2517000,
+  "n_outputs": 1,
+  "non_input_weight": 212
+ },
+ "change": {
+  "output_weight": 172,
+  "spend_weight": 232
+ },
+ "max_weight": null,
+ "candidates": [
+  {
+   "id": "c000",
+   "value": 433063,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "n01_3"
+  },
+  {
+   "id": "c001",
+   "value": 31387,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c002",
+   "value": 292847,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "n01_3"
+  },
+  {
+   "id": "c003",
+   "value": 340111,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c004",
+   "value": 2727446,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c005",
+   "value": 469178,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c006",
+   "value": 119884,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "n00_3"
+  },
+  {
+   "id": "c007",
+   "value": 50531,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c008",
+   "value": 26802,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c009",
+   "value": 14367,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "n00_3"
+  },
+  {
+   "id": "c010",
+   "value": 46495,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "n01_3"
+  },
+  {
+   "id": "c011",
+   "value": 56548,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "n00_3"
+  },
+  {
+   "id": "c012",
+   "value": 51099,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c013",
+   "value": 5854,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "n00_3"
+  },
+  {
+   "id": "c014",
+   "value": 106001,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "n00_3"
+  },
+  {
+   "id": "c015",
+   "value": 17513,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c016",
+   "value": 212226,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "n01_3"
+  },
+  {
+   "id": "c017",
+   "value": 496734,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c018",
+   "value": 51850,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c019",
+   "value": 43795,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  }
+ ],
+ "ancestors": [
+  {
+   "txid": "root",
+   "weight": 1600,
+   "fee": 400,
+   "parents": []
+  },
+  {
+   "txid": "n00_0",
+   "weight": 752,
+   "fee": 188,
+   "parents": [
+    "root"
+   ]
+  },
+  {
+   "txid": "n00_1",
+   "weight": 736,
+   "fee": 184,
+   "parents": [
+    "n00_0"
+   ]
+  },
+  {
+   "txid": "n00_2",
+   "weight": 456,
+   "fee": 114,
+   "parents": [
+    "n00_1"
+   ]
+  },
+  {
+   "txid": "n00_3",
+   "weight": 828,
+   "fee": 207,
+   "parents": [
+    "n00_2"
+   ]
+  },
+  {
+   "txid": "n01_0",
+   "weight": 424,
+   "fee": 212,
+   "parents": [
+    "root"
+   ]
+  },
+  {
+   "txid": "n01_1",
+   "weight": 640,
+   "fee": 320,
+   "parents": [
+    "n01_0"
+   ]
+  },
+  {
+   "txid": "n01_2",
+   "weight": 1160,
+   "fee": 580,
+   "parents": [
+    "n01_1"
+   ]
+  },
+  {
+   "txid": "n01_3",
+   "weight": 860,
+   "fee": 430,
+   "parents": [
+    "n01_2"
+   ]
+  }
+ ]
+}

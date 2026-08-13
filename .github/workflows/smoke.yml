@@ -1,0 +1,61 @@
+name: smoke
+
+# The full matrix is a manual job: it wants a quiet machine to produce timings worth reading.
+# CI only proves the harness still builds, still agrees with itself, and still reports.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Bitcoin Core build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake libboost-dev
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache the pinned Bitcoin Core build
+        uses: actions/cache@v4
+        with:
+          path: .build/core
+          key: core-${{ hashFiles('pins.json', 'patches/*.patch') }}
+
+      - name: Fixtures are up to date
+        run: python3 genfixtures.py --check
+
+      - name: Build both pinned revisions
+        run: python3 bench.py setup
+
+      - name: Mini-miner ports agree with Core's worked example
+        run: python3 bench.py self-check
+
+      - name: Smoke fixture, both tracks, both runners
+        run: |
+          python3 bench.py run --fixtures smoke.json --repeat 1 --warmup 0 --oracle --clean
+          python3 bench.py report
+
+      # `report` writes the verification section but exits 0 so a full run always produces a
+      # report; in CI a verification problem should fail the job.
+      - name: No verification problems
+        run: |
+          python3 - <<'EOF'
+          import pathlib, sys
+          summary = pathlib.Path("results/SUMMARY.md").read_text()
+          section = summary.split("## Verification", 1)[1]
+          if "problem(s) found" in section:
+              print(section)
+              sys.exit("verification problems in the smoke run")
+          print("verification clean")
+          EOF
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: smoke-results
+          path: results/

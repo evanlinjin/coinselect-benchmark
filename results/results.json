@@ -1,0 +1,260 @@
+[
+ {
+  "raw": {
+   "runner": "bitcoin-core",
+   "fixture": "smoke",
+   "family": "smoke",
+   "size": 8,
+   "track": "kernel",
+   "objective": "minimise waste within [target, target + cost_of_change], changeless (SelectCoinsBnB)",
+   "algorithm": "none",
+   "ok": false,
+   "error": "no solution",
+   "selected": [],
+   "rounds": 54,
+   "exhausted": true,
+   "budget": 100000,
+   "timing": {
+    "repeats": 1,
+    "warmup": 0,
+    "wall_ns_min": 4639,
+    "wall_ns_median": 4639,
+    "wall_ns_max": 4639
+   },
+   "peak_rss_kb": 17840,
+   "native": null,
+   "oracle": {
+    "ran": true,
+    "best_waste": null,
+    "best_selected": [],
+    "subsets_evaluated": 256
+   }
+  },
+  "metrics": null,
+  "matches_oracle": "no solution (oracle agrees)"
+ },
+ {
+  "raw": {
+   "runner": "coin-select",
+   "fixture": "smoke",
+   "family": "smoke",
+   "size": 8,
+   "track": "kernel",
+   "objective": "minimise child fee, changeless (Changeless<LowestFee>)",
+   "algorithm": "bnb/changeless-lowest-fee",
+   "ok": true,
+   "error": null,
+   "selected": [
+    "c003",
+    "c006",
+    "c007"
+   ],
+   "rounds": 62,
+   "exhausted": true,
+   "budget": 100000,
+   "timing": {
+    "repeats": 1,
+    "warmup": 0,
+    "wall_ns_min": 167816,
+    "wall_ns_median": 167816,
+    "wall_ns_max": 167816
+   },
+   "peak_rss_kb": 2644,
+   "native": {
+    "score": 3000.0,
+    "drain_value": 0,
+    "child_weight": 992,
+    "child_fee": 3000,
+    "ancestor_bump": 0,
+    "ancestor_bump_lower_bound": 0,
+    "excess": 520,
+    "implied_feerate_sat_per_vb": 12.096774
+   },
+   "oracle": {
+    "ran": true,
+    "best_score": 3000.0,
+    "best_selected": [
+     "c003",
+     "c006",
+     "c007"
+    ],
+    "subsets_evaluated": 256
+   }
+  },
+  "metrics": {
+   "n_inputs": 3,
+   "n_legacy_inputs": 0,
+   "selected_value": 303000,
+   "child_weight": 992,
+   "child_fee": 3000,
+   "child_feerate_sat_per_vb": 12.0968,
+   "change_value": 0,
+   "ancestors_in_union": 2,
+   "ancestor_weight": 2400,
+   "ancestor_fee": 8400,
+   "union_bump": 0,
+   "core_summed_individual_bump": 3600,
+   "core_combined_bump": 3600,
+   "core_bump_discount": 0,
+   "package_fee": 11400,
+   "package_weight": 3392,
+   "package_feerate_sat_per_vb": 13.4434,
+   "child_surplus": 520,
+   "covers_union_bump": true,
+   "covers_core_bump": false,
+   "package_meets_target": true,
+   "child_meets_target": true,
+   "target_shortfall": 0,
+   "explainable_shortfall": 0,
+   "within_max_weight": true
+  },
+  "matches_oracle": true
+ },
+ {
+  "raw": {
+   "runner": "bitcoin-core",
+   "fixture": "smoke",
+   "family": "smoke",
+   "size": 8,
+   "track": "wallet",
+   "objective": "least waste across Core's algorithm portfolio (ChooseSelectionResult)",
+   "algorithm": "srd",
+   "ok": true,
+   "error": null,
+   "selected": [
+    "c002",
+    "c005"
+   ],
+   "rounds": null,
+   "exhausted": null,
+   "budget": 100000,
+   "timing": {
+    "repeats": 1,
+    "warmup": 0,
+    "wall_ns_min": 217109,
+    "wall_ns_median": 217109,
+    "wall_ns_max": 217109
+   },
+   "peak_rss_kb": 17840,
+   "native": {
+    "waste": 3304,
+    "selected_value": 380000,
+    "selected_effective_value": 376040,
+    "selection_target": 300540,
+    "input_weight": 504,
+    "change_value": 75070,
+    "summed_individual_bump_fees": 2700,
+    "combined_bump_fee": 2700,
+    "bump_fee_group_discount": 0,
+    "total_bump_fees": 2700
+   },
+   "oracle": {
+    "ran": false,
+    "best_waste": null,
+    "best_selected": [],
+    "subsets_evaluated": 0
+   }
+  },
+  "metrics": {
+   "n_inputs": 2,
+   "n_legacy_inputs": 0,
+   "selected_value": 380000,
+   "child_weight": 892,
+   "child_fee": 4930,
+   "child_feerate_sat_per_vb": 22.1076,
+   "change_value": 75070,
+   "ancestors_in_union": 2,
+   "ancestor_weight": 2000,
+   "ancestor_fee": 8300,
+   "union_bump": 0,
+   "core_summed_individual_bump": 2700,
+   "core_combined_bump": 2700,
+   "core_bump_discount": 0,
+   "package_fee": 13230,
+   "package_weight": 2892,
+   "package_feerate_sat_per_vb": 18.2988,
+   "child_surplus": 2700,
+   "covers_union_bump": true,
+   "covers_core_bump": true,
+   "package_meets_target": true,
+   "child_meets_target": true,
+   "target_shortfall": 0,
+   "explainable_shortfall": 0,
+   "within_max_weight": true
+  },
+  "matches_oracle": ""
+ },
+ {
+  "raw": {
+   "runner": "coin-select",
+   "fixture": "smoke",
+   "family": "smoke",
+   "size": 8,
+   "track": "wallet",
+   "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+   "algorithm": "bnb/lowest-fee+srd-fallback",
+   "ok": true,
+   "error": null,
+   "selected": [
+    "c005"
+   ],
+   "rounds": 10,
+   "exhausted": true,
+   "budget": 100000,
+   "timing": {
+    "repeats": 1,
+    "warmup": 0,
+    "wall_ns_min": 40747,
+    "wall_ns_median": 40747,
+    "wall_ns_max": 40747
+   },
+   "peak_rss_kb": 2656,
+   "native": {
+    "score": 2230.0,
+    "drain_value": 3350,
+    "child_weight": 660,
+    "child_fee": 1650,
+    "ancestor_bump": 0,
+    "ancestor_bump_lower_bound": 0,
+    "excess": 0,
+    "implied_feerate_sat_per_vb": 10.0
+   },
+   "oracle": {
+    "ran": true,
+    "best_score": 2230.0,
+    "best_selected": [
+     "c005"
+    ],
+    "subsets_evaluated": 256
+   }
+  },
+  "metrics": {
+   "n_inputs": 1,
+   "n_legacy_inputs": 0,
+   "selected_value": 305000,
+   "child_weight": 660,
+   "child_fee": 1650,
+   "child_feerate_sat_per_vb": 10.0,
+   "change_value": 3350,
+   "ancestors_in_union": 1,
+   "ancestor_weight": 800,
+   "ancestor_fee": 8000,
+   "union_bump": 0,
+   "core_summed_individual_bump": 0,
+   "core_combined_bump": 0,
+   "core_bump_discount": 0,
+   "package_fee": 9650,
+   "package_weight": 1460,
+   "package_feerate_sat_per_vb": 26.4384,
+   "child_surplus": 0,
+   "covers_union_bump": true,
+   "covers_core_bump": true,
+   "package_meets_target": true,
+   "child_meets_target": true,
+   "target_shortfall": 0,
+   "explainable_shortfall": 0,
+   "within_max_weight": true
+  },
+  "matches_oracle": true
+ }
+]

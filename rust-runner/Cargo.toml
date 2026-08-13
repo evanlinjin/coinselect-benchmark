@@ -1,0 +1,16 @@
+[package]
+name = "coinselect-bench-runner"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+# Pinned by scripts in ../bench.py; see ../pins.json. Kept in sync by `bench.py setup`.
+bdk_coin_select = { git = "https://github.com/bitcoindevkit/coin-select.git", rev = "b2f98ab852e0425494d53f7260c4aa82f6c0830d" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[profile.release]
+debug = true
+lto = false
+codegen-units = 1

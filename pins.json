@@ -1,0 +1,14 @@
+{
+ "bitcoin_core": {
+  "repo": "https://github.com/bitcoin/bitcoin.git",
+  "rev": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
+  "describes": "v31.1",
+  "why": "latest tagged release at the time the harness was written; wallet/coinselection.cpp is used unmodified"
+ },
+ "coin_select": {
+  "repo": "https://github.com/bitcoindevkit/coin-select.git",
+  "rev": "b2f98ab852e0425494d53f7260c4aa82f6c0830d",
+  "describes": "PR #64 head, branch feature/ancestor-aware-selection-no-clustor",
+  "why": "the ancestor-aware selection branch this benchmark exists to measure"
+ }
+}
