@@ -6,6 +6,7 @@ A snapshot of what the checked-in fixtures show. Regenerate with `python3 bench.
 - Bitcoin Core `9be056a8a72b624dae9623b2f7bded92c2a21c91` (v31.1)
 - coin-select `b2f98ab852e0425494d53f7260c4aa82f6c0830d` (PR #64 head)
 - 29 fixtures (7 families x 4 sizes, plus the smoke fixture), both tracks, 100,000-node budget
+- 2 warm-up runs and 9 measured runs per case, median reported
 - Recorded on Linux 7.1.7 x86-64, 24 cores, GCC 15.2.0 / rustc 1.97.1
 
 Read these as observations about two engines that answer different questions. On the `kernel`
@@ -76,13 +77,13 @@ that taking several of them pays the bump once, and finds packages costing 4648 
 
 | | coin-select | Bitcoin Core |
 | --- | --- | --- |
-| kernel, median wall clock | 6399 us | 691 us |
+| kernel, median wall clock | 5454 us | 683 us |
 | kernel, budget exhausted | 2 of 29 fixtures | **21 of 29** |
-| kernel, median cost per node | ~2180 ns/round | ~7 ns/node |
-| wallet, median wall clock | 425 us | 1375 us |
+| kernel, median cost per node | ~1900 ns/round | ~7 ns/node |
+| wallet, median wall clock | 400 us | 1394 us |
 | wallet, budget exhausted | 1 of 29 fixtures | **18 of 29** |
 
-Core's depth-first search is roughly 300x cheaper per node, and spends that speed running out its
+Core's depth-first search is roughly 270x cheaper per node, and spends that speed running out its
 100,000-node budget on essentially every fixture with 50 or more candidates. coin-select's
 priority-queue search with the `LowestFee` bound prunes hard enough to exhaust the tree in a few
 thousand rounds on 27 of 29 fixtures, but each round costs about a microsecond — it clones a

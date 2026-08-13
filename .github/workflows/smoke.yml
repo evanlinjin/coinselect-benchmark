@@ -35,24 +35,12 @@ jobs:
       - name: Mini-miner ports agree with Core's worked example
         run: python3 bench.py self-check
 
+      # `report` always writes the report and exits non-zero if verification found a problem,
+      # so this step covers both "the harness runs" and "the results verify".
       - name: Smoke fixture, both tracks, both runners
         run: |
           python3 bench.py run --fixtures smoke.json --repeat 1 --warmup 0 --oracle --clean
           python3 bench.py report
-
-      # `report` writes the verification section but exits 0 so a full run always produces a
-      # report; in CI a verification problem should fail the job.
-      - name: No verification problems
-        run: |
-          python3 - <<'EOF'
-          import pathlib, sys
-          summary = pathlib.Path("results/SUMMARY.md").read_text()
-          section = summary.split("## Verification", 1)[1]
-          if "problem(s) found" in section:
-              print(section)
-              sys.exit("verification problems in the smoke run")
-          print("verification clean")
-          EOF
 
       - uses: actions/upload-artifact@v4
         if: always()

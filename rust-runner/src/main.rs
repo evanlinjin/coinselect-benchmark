@@ -169,11 +169,12 @@ fn build_problem(f: &Fixture) -> SelectionProblem {
             value: c.value,
             weight: c.input_weight,
             is_segwit: c.is_segwit,
-            residing_txid: c
-                .residing_txid
-                .as_deref()
-                .map(|t| txid_index[t])
-                .unwrap_or(CONFIRMED),
+            residing_txid: match c.residing_txid.as_deref() {
+                None => CONFIRMED,
+                Some(txid) => *txid_index.get(txid).unwrap_or_else(|| {
+                    panic!("candidate {} resides on unknown txid {txid}", c.id)
+                }),
+            },
         })
         .collect();
 
@@ -366,43 +367,47 @@ fn main() {
         other => panic!("unknown track {other}"),
     };
 
-    // Timed region: the search only. Fixture parsing and problem construction sit outside it,
-    // matching what the Core runner times.
+    // Timed region: everything the track would do to produce a selection, and nothing else.
+    // Fixture parsing and problem construction sit outside it. The single-random-draw fallback is
+    // inside, because Core times its whole portfolio (single random draw included) and a
+    // wallet-track number that excluded the path the answer actually came from would not be
+    // comparable.
     let mut samples = Vec::with_capacity(args.repeat);
-    let mut last: Option<Search> = None;
+    let mut last: Option<(Search, Option<Drain>)> = None;
     for i in 0..(args.warmup + args.repeat) {
         let start = Instant::now();
-        let result = match args.track.as_str() {
+        let mut result = match args.track.as_str() {
             "kernel" => search(&base, Changeless(lowest_fee(&f)), budget),
             _ => search(&base, lowest_fee(&f), budget),
         };
+        // Fall back to single random draw exactly as a wallet would: wallet track only, and only
+        // when branch and bound came back empty.
+        let mut srd_drain = None;
+        if args.track == "wallet" && result.selection.is_none() {
+            let mut cs = base.clone();
+            if let Ok(drain) = cs.select_srd(
+                drain_weights(&f),
+                bdk_coin_select::CHANGE_LOWER,
+                seeded_rng(f.seed),
+            ) {
+                srd_drain = Some(drain);
+                result.selection = Some(cs);
+            }
+        }
         let elapsed = start.elapsed().as_nanos();
         if i >= args.warmup {
             samples.push(elapsed);
         }
-        last = Some(result);
+        last = Some((result, srd_drain));
     }
-    let mut result = last.expect("at least one repeat runs");
+    let (result, srd_drain) = last.expect("at least one repeat runs");
     // Read the high-water mark before the oracle runs: brute forcing allocates, and the number
     // is supposed to describe the search.
     let peak_rss = peak_rss_kb();
-
-    // Single random draw fallback, as a wallet would: only on the wallet track, and only when
-    // branch and bound came back empty. Not timed as part of the search comparison.
-    let mut algorithm = algorithm.to_string();
-    let mut srd_drain = None;
-    if args.track == "wallet" && result.selection.is_none() {
-        let mut cs = base.clone();
-        if let Ok(drain) = cs.select_srd(
-            drain_weights(&f),
-            bdk_coin_select::CHANGE_LOWER,
-            seeded_rng(f.seed),
-        ) {
-            algorithm = "srd".to_string();
-            srd_drain = Some(drain);
-            result.selection = Some(cs);
-        }
-    }
+    let algorithm = match srd_drain {
+        Some(_) => "srd".to_string(),
+        None => algorithm.to_string(),
+    };
 
     let oracle = match args.track.as_str() {
         "kernel" => run_oracle(&f, &problem, Changeless(lowest_fee(&f)), args.oracle),

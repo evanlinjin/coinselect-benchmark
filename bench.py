@@ -176,12 +176,19 @@ class MiniMiner:
 
 def core_waste(fixture, selected, summed_individual, combined):
     """Core's waste metric for an arbitrary selection, as `SelectionResult::RecalculateWaste`
-    computes it with the wallet flow's parameters.
+    computes it with the wallet flow's parameters. `None` when Core would reject the selection.
 
     Having this here lets the report score coin-select's selections on Core's objective and vice
     versa, which is the only way to compare two searches that minimise different things. The
     report also checks it against the waste the Core runner reported for its own selection, so a
     misreading of Core's accounting shows up as a harness failure.
+
+    A selection whose Core-accounted effective value is below `selection_target` gets `None`, not
+    a number. `RecalculateWaste` asserts that case away (`selected_effective_value >= m_target`)
+    because no Core algorithm can produce it — and evaluating the formula anyway would add a
+    *negative* excess, scoring the most underfunded selection as the least wasteful. That is
+    exactly the selection coin-select's union netting produces on the subsidizing fixtures, so
+    without this guard the cross-scoring would reward it.
     """
     by_id = fixture["_by_id"]
     rate = fixture["feerate_sat_per_vb"]
@@ -203,6 +210,9 @@ def core_waste(fixture, selected, summed_individual, combined):
     coin_long_term_fee = long_term * input_vb
     discount = max(0, summed_individual - combined)
     effective_value = sum(by_id[i]["value"] for i in selected) - coin_fee + discount
+
+    if effective_value < selection_target:
+        return None
 
     waste = coin_fee - coin_long_term_fee - discount
     change = effective_value - selection_target - change_fee
@@ -275,9 +285,10 @@ def evaluate(fixture, selected, change_value):
         "target_shortfall": max(0, rate * package_vsize - package_fee),
         # Core prices a legacy input at its scriptSig weight only, so it does not fund the empty
         # witness that input still serialises once the transaction has a witness section. That is
-        # `n_legacy` weight units, which is up to `ceil(n_legacy / 4)` vbytes once rounded. A
-        # shortfall no larger than this is that known gap, not a selection that missed the target.
-        "explainable_shortfall": rate * -(-n_legacy // 4),
+        # `n_legacy` weight units, up to `ceil(n_legacy / 4)` vbytes once rounded. Only Core's own
+        # selections get this tolerance (see `shortfall_tolerance`): coin-select charges the
+        # witness byte, so the same shortfall from coin-select would be a real underpayment.
+        "core_explainable_shortfall": rate * -(-n_legacy // 4),
         "within_max_weight": fixture["max_weight"] is None or weight <= fixture["max_weight"],
     }
 
@@ -310,12 +321,17 @@ def compile_flags(build_dir, target):
     from it, so the cache would misreport the build.
     """
     rules = pathlib.Path(build_dir) / "CMakeFiles" / f"{target}.dir" / "flags.make"
-    if not rules.exists():
-        return None
-    for line in rules.read_text().splitlines():
-        if line.startswith("CXX_FLAGS"):
-            return " ".join(line.partition("=")[2].split())
-    return None
+    if rules.exists():
+        for line in rules.read_text().splitlines():
+            if line.startswith("CXX_FLAGS"):
+                return " ".join(line.partition("=")[2].split())
+    ninja = pathlib.Path(build_dir) / "build.ninja"
+    if ninja.exists():
+        for line in ninja.read_text().splitlines():
+            stripped = line.strip()
+            if stripped.startswith("FLAGS = "):
+                return " ".join(stripped[len("FLAGS = "):].split())
+    return "unknown"
 
 
 def clone_pinned(name, dest, patches=()):
@@ -480,7 +496,7 @@ def cross_check(fixture, raw, metrics, problems):
                           ("combined_bump_fee", "core_combined_bump")):
             if key in native and native[key] != metrics[mine]:
                 problems.append(f"{tag}: {key} {native[key]} != harness {metrics[mine]}")
-        if "waste" in native and native["waste"] != metrics["core_waste"]:
+        if metrics["core_waste"] is not None and "waste" in native and native["waste"] != metrics["core_waste"]:
             problems.append(f"{tag}: waste {native['waste']} != harness {metrics['core_waste']}")
         if "input_weight" in native:
             # Core's SelectionResult tracks the summed candidate weights only: no input-count
@@ -520,7 +536,8 @@ def cmd_report(args):
         metrics = evaluate(fixture, raw["selected"], change_value_of(raw))
         if metrics:
             cross_check(fixture, raw, metrics, problems)
-            if metrics["target_shortfall"] > metrics["explainable_shortfall"]:
+            tolerance = metrics["core_explainable_shortfall"] if raw["runner"] == "bitcoin-core" else 0
+            if metrics["target_shortfall"] > tolerance:
                 problems.append(
                     f"{name}/{raw['track']}/{raw['runner']}: package feerate "
                     f"{metrics['package_feerate_sat_per_vb']} is {metrics['target_shortfall']} sats "
@@ -529,8 +546,8 @@ def cmd_report(args):
             elif metrics["target_shortfall"]:
                 notes.append(
                     f"{name}/{raw['track']}/{raw['runner']}: {metrics['target_shortfall']} sats "
-                    f"short of the target feerate, within the {metrics['explainable_shortfall']} sats "
-                    f"Core leaves unfunded for {metrics['n_legacy_inputs']} legacy input(s)"
+                    f"short of the target feerate, within the {tolerance} sats Core leaves "
+                    f"unfunded for {metrics['n_legacy_inputs']} legacy input(s)"
                 )
             if not metrics["within_max_weight"]:
                 problems.append(f"{name}/{raw['track']}/{raw['runner']}: selection exceeds max_weight")
@@ -564,11 +581,15 @@ def cmd_report(args):
         writer.writerows(rows)
     (RESULTS / "results.json").write_text(json.dumps(records, indent=1) + "\n")
     (RESULTS / "SUMMARY.md").write_text(build_summary(fixtures, records, problems, notes))
-    print(f"wrote results/results.csv, results/results.json and results/SUMMARY.md")
+    print("wrote results/results.csv, results/results.json and results/SUMMARY.md")
     if problems:
         print(f"\n{len(problems)} verification problem(s):", file=sys.stderr)
-        for p in problems[:20]:
-            print("  - " + p, file=sys.stderr)
+        for problem in problems[:20]:
+            print("  - " + problem, file=sys.stderr)
+        # The report is always written, so a full run still produces something to look at; the
+        # exit status is what CI (and `bench.py all`) key off.
+        if getattr(args, "strict", True):
+            return 1
     return 0
 
 
@@ -625,7 +646,9 @@ def build_summary(fixtures, records, problems, notes):
     w("## Objective cross-scores\n")
     w("Each engine's selection scored on **both** objectives by the harness. Core minimises the")
     w("`waste` column, coin-select minimises fee; each is expected to win its own column, so the")
-    w("interesting cases are the ones where an engine also wins the other's.\n")
+    w("interesting cases are the ones where an engine also wins the other's. A selection whose")
+    w("Core-accounted effective value falls below Core's target has no waste: Core's own")
+    w("`RecalculateWaste` asserts that case away, so it is reported rather than scored.\n")
     w(_cross_scores(fixtures, by_key))
     w("")
 
@@ -671,11 +694,15 @@ def _at_a_glance(fixtures, by_key):
         pairs = [(by_key.get((n, track, "coin-select")), by_key.get((n, track, "bitcoin-core")))
                  for n in sorted(fixtures)]
         pairs = [(a, b) for a, b in pairs if a and b]
+        if not pairs:
+            continue  # this track was not run
         scored = [(a["metrics"], b["metrics"]) for a, b in pairs if a["metrics"] and b["metrics"]]
         fee_wins = [sum(1 for a, b in scored if a["package_fee"] < b["package_fee"]),
                     sum(1 for a, b in scored if b["package_fee"] < a["package_fee"])]
-        waste_wins = [sum(1 for a, b in scored if a["core_waste"] < b["core_waste"]),
-                      sum(1 for a, b in scored if b["core_waste"] < a["core_waste"])]
+        # Only selections Core would accept can be compared on Core's metric.
+        wasted = [(a, b) for a, b in scored if a["core_waste"] is not None and b["core_waste"] is not None]
+        waste_wins = [sum(1 for a, b in wasted if a["core_waste"] < b["core_waste"]),
+                      sum(1 for a, b in wasted if b["core_waste"] < a["core_waste"])]
         for slot, engine in ((0, "coin-select"), (1, "bitcoin-core")):
             runs = [pair[slot]["raw"] for pair in pairs]
             times = sorted(r["timing"]["wall_ns_median"] for r in runs)
@@ -683,7 +710,7 @@ def _at_a_glance(fixtures, by_key):
                 f"| {track} | {engine} | {_fmt_us(times[len(times) // 2])} us "
                 f"| {sum(1 for r in runs if r['exhausted'] is False)} of {len(runs)} "
                 f"| {sum(1 for r in runs if not r['ok'])} "
-                f"| {fee_wins[slot]} of {len(scored)} | {waste_wins[slot]} of {len(scored)} |"
+                f"| {fee_wins[slot]} of {len(scored)} | {waste_wins[slot]} of {len(wasted)} |"
             )
     return "\n".join(lines)
 
@@ -745,13 +772,19 @@ def _cross_scores(fixtures, by_key):
             if not cs or not core or not cs["metrics"] or not core["metrics"]:
                 continue
             a, b = cs["metrics"], core["metrics"]
-            waste_winner = _winner(a["core_waste"], b["core_waste"])
-            fee_winner = _winner(a["package_fee"], b["package_fee"])
+            comparable = a["core_waste"] is not None and b["core_waste"] is not None
+            waste_winner = _winner(a["core_waste"], b["core_waste"]) if comparable else "n/a"
             lines.append(
-                f"| {name} | {track} | {a['core_waste']} | {b['core_waste']} | {waste_winner} "
-                f"| {a['package_fee']} | {b['package_fee']} | {fee_winner} |"
+                f"| {name} | {track} | {_fmt_waste(a['core_waste'])} | {_fmt_waste(b['core_waste'])} "
+                f"| {waste_winner} | {a['package_fee']} | {b['package_fee']} "
+                f"| {_winner(a['package_fee'], b['package_fee'])} |"
             )
     return "\n".join(lines)
+
+
+def _fmt_waste(waste):
+    """`None` means Core's accounting rejects the selection outright, not that it scored badly."""
+    return "below Core's target" if waste is None else str(waste)
 
 
 def _winner(coin_select, core):
@@ -862,9 +895,13 @@ def main():
         p.add_argument("--warmup", type=int, default=1, help="discarded runs per case")
         p.add_argument("--oracle", action="store_true", help="brute force fixtures of at most 20 candidates")
         p.add_argument("--clean", action="store_true", help="drop existing raw results first")
+        p.add_argument("--no-strict", dest="strict", action="store_false",
+                       help="exit 0 even when verification finds problems")
 
     add_run_flags(sub.add_parser("run", help="run the matrix into results/raw/"))
-    sub.add_parser("report", help="score results/raw/ into CSV, JSON and Markdown")
+    report = sub.add_parser("report", help="score results/raw/ into CSV, JSON and Markdown")
+    report.add_argument("--no-strict", dest="strict", action="store_false",
+                        help="exit 0 even when verification finds problems")
     sub.add_parser("self-check", help="check this file's mini-miner port against Core's own example")
     add_run_flags(sub.add_parser("all", help="setup, run and report"))
     sub.add_parser("smoke", help="setup, run the CI-sized fixture, report")

@@ -18,7 +18,7 @@
    "repo": "https://github.com/bitcoin/bitcoin.git",
    "rev": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
    "describes": "v31.1",
-   "why": "latest tagged release at the time the harness was written; wallet/coinselection.cpp is used unmodified"
+   "why": "latest tagged release at the time the harness was written; the coin-selection algorithms are used as-is, with only the instrumentation patch in patches/ applied"
   },
   "coin_select": {
    "repo": "https://github.com/bitcoindevkit/coin-select.git",

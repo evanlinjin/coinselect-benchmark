@@ -1,5 +1,5 @@
 diff --git a/src/wallet/coinselection.cpp b/src/wallet/coinselection.cpp
-index d7fde38..e769a93 100644
+index d7fde38..54e5a04 100644
 --- a/src/wallet/coinselection.cpp
 +++ b/src/wallet/coinselection.cpp
 @@ -18,6 +18,13 @@
@@ -16,7 +16,18 @@ index d7fde38..e769a93 100644
  // Common selection error across the algorithms
  static util::Result<SelectionResult> ErrorMaxWeightExceeded()
  {
-@@ -121,7 +128,8 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool
+@@ -93,6 +100,10 @@ static const size_t TOTAL_TRIES = 100000;
+ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool, const CAmount& selection_target, const CAmount& cost_of_change,
+                                              int max_selection_weight)
+ {
++    // Reset first so an early return below still reports this call rather than the last one.
++    g_bnb_selections_evaluated = 0;
++    g_bnb_algo_completed = true;
++
+     SelectionResult result(selection_target, SelectionAlgorithm::BNB);
+     CAmount curr_value = 0;
+     std::vector<size_t> curr_selection; // selected utxo indexes
+@@ -121,7 +132,8 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool
      bool max_tx_weight_exceeded = false;
  
      // Depth First search loop for choosing the UTXOs
@@ -26,7 +37,7 @@ index d7fde38..e769a93 100644
          // Conditions for starting a backtrack
          bool backtrack = false;
          if (curr_value + curr_available_value < selection_target || // Cannot possibly reach target with the amount remaining in the curr_available_value.
-@@ -185,6 +193,9 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool
+@@ -185,6 +197,9 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool
          }
      }
  

@@ -38,7 +38,9 @@ would be meaningless. Instead:
   | selected input weight | `SelectionResult::GetWeight` |
 
   On top of that, every selection is checked against the fixture's ancestor union: does this
-  package actually reach the target feerate, and does it stay inside `max_weight`?
+  package actually reach the target feerate, and does it stay inside `max_weight`? `report` writes
+  the report either way but exits non-zero when something failed, so CI does not need to parse it.
+  Pass `--no-strict` to look at a run that has known problems.
 
 ## The two tracks
 
@@ -88,7 +90,7 @@ python3 bench.py setup                      # clone + build both pinned revision
 python3 bench.py run --oracle               # run the matrix into results/raw/
 python3 bench.py run --fixtures 'shared_*'  # one family
 python3 bench.py run --tracks kernel        # one track
-python3 bench.py report                     # score results/raw/
+python3 bench.py report                     # score results/raw/ (exits non-zero on a problem)
 python3 bench.py smoke                      # the CI-sized fixture, end to end
 python3 genfixtures.py                      # regenerate fixtures/
 ```
