@@ -134,6 +134,18 @@ worse selection (189690 against 46550).
 The harness's reimplementation of Core's waste formula agrees with the waste Core itself reports
 on all 57 of its own selections, which is what makes the cross-scoring trustworthy.
 
+## What this does not answer
+
+The kernel track puts both engines on the same problem and the same budget, but not on literally
+the same objective — see the first entry under "Known limits" in the README for why that was left
+alone rather than papered over with a hand-written metric. So "coin-select needs fewer nodes" here
+means "fewer nodes to answer its own question", not "strictly better pruning on identical input".
+The oracle columns are what make that statement meaningful: both engines are checked against the
+optimum of their own objective.
+
+Nothing here measures address-grouped selection, Core's per-output-type pass, or behaviour on a
+mempool containing transactions outside the fixture's ancestor set.
+
 ## Verification
 
 Every selection from both engines was re-derived from the fixture: each package reaches the target

@@ -117,6 +117,14 @@ runner found the best answer to the question it was asking.
 
 ## Known limits
 
+- **The kernel track shares a constraint, not an objective.** Issue #67 asks for both searches to
+  run "the same changeless objective". They share the changeless constraint, the candidates, the
+  target, the feerate, the weight cap and the budget — but each still minimises its own score.
+  Making them literally identical would mean writing a Core-waste `BnbMetric`, bound included, for
+  coin-select. That bound would be this harness's code, so the track would end up measuring a
+  bound written here rather than the crate's, which is a worse answer than an honest gap. What
+  fills it instead: the report scores both selections on **both** objectives, and `--oracle` says
+  whether each engine reached the optimum of the question it was actually asking.
 - **The budgets are not the same unit.** Core's `TOTAL_TRIES` counts depth-first nodes;
   coin-select's `max_rounds` counts priority-queue pops. Both are 100,000. Comparing them is a
   statement about how much work each engine needs, not about how fast a node is.
