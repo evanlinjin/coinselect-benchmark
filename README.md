@@ -59,6 +59,22 @@ node counts, wall clock, whether the tree was exhausted — and reports solution
 through the shared metrics. coin-select minimises fee by construction, so "coin-select found a
 cheaper selection" on this track is a restatement of its objective, not a result.
 
+### `changeful` — the same, for searches that may create change
+
+| | |
+| --- | --- |
+| Bitcoin Core | `CoinGrinder`: depth-first, minimising **selected input weight** subject to funding the target plus a change target |
+| coin-select | bare `LowestFee`: priority-queue branch and bound, minimising long-term fee, change at the metric's own discretion |
+
+The counterpart to `kernel` for the change-producing case. Objectives differ again — weight versus
+long-term fee — so the same rules apply: node counts and wall clock compared directly, quality only
+through the shared metrics.
+
+Note Core's portfolio only reaches for `CoinGrinder` above 3x the long-term feerate, so the
+`high_feerate` fixture family exists to exercise it inside that gate. At `feerate ==
+long_term_feerate` Core's waste also degenerates — `coin.fee - coin.long_term_fee` is zero for
+every input, leaving only excess — which is the second reason that family is there.
+
 ### `wallet` — what a wallet would actually build
 
 | | |
@@ -89,7 +105,7 @@ change amount; coin-select minimises long-term fee — which the report says on 
 python3 bench.py setup                      # clone + build both pinned revisions
 python3 bench.py run --oracle               # run the matrix into results/raw/
 python3 bench.py run --fixtures 'shared_*'  # one family
-python3 bench.py run --tracks kernel        # one track
+python3 bench.py run --tracks kernel        # one track (kernel, changeful, wallet)
 python3 bench.py report                     # score results/raw/ (exits non-zero on a problem)
 python3 bench.py smoke                      # the CI-sized fixture, end to end
 python3 genfixtures.py                      # regenerate fixtures/

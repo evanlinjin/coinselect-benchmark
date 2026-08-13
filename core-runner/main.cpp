@@ -6,6 +6,9 @@
 // Tracks:
 //   kernel  SelectCoinsBnB only: Core's changeless branch and bound, same candidates, target,
 //           effective feerate, weight cap and 100,000-node budget as the coin-select side.
+//   changeful  CoinGrinder only: Core's change-producing branch and bound, the counterpart to
+//           coin-select's unconstrained LowestFee. Same candidates, target, feerate, weight cap
+//           and budget as the kernel track.
 //   wallet  Core's algorithm portfolio, replicating wallet/spend.cpp's ChooseSelectionResult:
 //           BnB, KnapsackSolver, CoinGrinder (only above 3x the long-term feerate), SRD; then
 //           the post-selection shared-ancestry bump discount; then pick the least waste.
@@ -479,7 +482,7 @@ int main(int argc, char** argv)
         else Die("unknown argument " + arg);
     }
     if (fixture_path.empty()) Die("--fixture is required");
-    if (track != "kernel" && track != "wallet") Die("unknown track " + track);
+    if (track != "kernel" && track != "changeful" && track != "wallet") Die("unknown track " + track);
 
     const Fixture f = LoadFixture(fixture_path);
     // Core's branch and bound budget (TOTAL_TRIES) is a compile-time constant. Fixtures state
@@ -512,6 +515,16 @@ int main(int argc, char** argv)
             if (auto bnb = SelectCoinsBnB(pool, problem.selection_target, problem.params.m_cost_of_change, problem.max_selection_weight)) {
                 attempt = *bnb;
             }
+        } else if (track == "changeful") {
+            // ChooseSelectionResult deducts the change output's weight before running any
+            // algorithm that can create change; CoinGrinder is one of those.
+            const int max_weight = problem.max_selection_weight
+                - problem.params.change_output_size * WITNESS_SCALE_FACTOR;
+            if (max_weight >= 0) {
+                if (auto cg = CoinGrinder(pool, problem.selection_target, problem.params.m_min_change_target, max_weight)) {
+                    attempt = *cg;
+                }
+            }
         } else {
             attempt = RunWalletTrack(f, problem);
         }
@@ -523,7 +536,7 @@ int main(int argc, char** argv)
         bnb_completed = g_bnb_algo_completed;
         result = attempt;
     }
-    if (track == "kernel" && result) FinishResult(f, problem, *result);
+    if ((track == "kernel" || track == "changeful") && result) FinishResult(f, problem, *result);
 
     std::sort(samples.begin(), samples.end());
 
@@ -533,9 +546,12 @@ int main(int argc, char** argv)
     out.pushKV("family", f.family);
     out.pushKV("size", static_cast<int64_t>(f.candidates.size()));
     out.pushKV("track", track);
-    out.pushKV("objective", track == "kernel"
-        ? "minimise waste within [target, target + cost_of_change], changeless (SelectCoinsBnB)"
-        : "least waste across Core's algorithm portfolio (ChooseSelectionResult)");
+    out.pushKV("objective",
+        track == "kernel"
+            ? "minimise waste within [target, target + cost_of_change], changeless (SelectCoinsBnB)"
+        : track == "changeful"
+            ? "minimise selected input weight funding target + change_target (CoinGrinder)"
+            : "least waste across Core's algorithm portfolio (ChooseSelectionResult)");
     out.pushKV("algorithm", result ? AlgoName(result->GetAlgo()) : "none");
     out.pushKV("ok", result.has_value());
     if (result) {

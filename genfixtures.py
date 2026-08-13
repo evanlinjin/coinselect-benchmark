@@ -39,6 +39,12 @@ CHANGE_OUTPUT_WEIGHT = TXOUT_P2TR_WEIGHT
 CHANGE_SPEND_WEIGHT = INPUT_TYPES["p2tr"][0]
 
 SIZES = [20, 50, 100, 200]
+
+# Families that override the default feerates. CoinGrinder only runs in Core's portfolio above
+# 3x the long-term feerate, and at feerate == long_term_feerate Core's waste degenerates
+# (`coin.fee - coin.long_term_fee` is 0 for every input, leaving only excess), so one family
+# deliberately sits in the high-feerate regime.
+FEERATE_OVERRIDES = {"high_feerate": {"feerate_sat_per_vb": 40, "long_term_feerate_sat_per_vb": 10}}
 SEARCH_BUDGET = 100_000
 
 FEERATE = 10  # sat/vB, integer so both fee models agree exactly
@@ -253,6 +259,7 @@ def fam_adversarial_shared(rng, n):
 
 FAMILIES = {
     "no_ancestry": fam_no_ancestry,
+    "high_feerate": fam_wallet_mixed,
     "private_ancestry": fam_private_ancestry,
     "shared_ancestry": fam_shared_ancestry,
     "nested_ancestry": fam_nested_ancestry,
@@ -271,6 +278,7 @@ def seed_for(family: str, size: int) -> int:
 
 
 def build(family: str, size: int) -> dict:
+    overrides = FEERATE_OVERRIDES.get(family, {})
     rng = random.Random(seed_for(family, size))
     cands, ancs = FAMILIES[family](rng, size)
     total = sum(c["value"] for c in cands)
@@ -290,8 +298,8 @@ def build(family: str, size: int) -> dict:
         "size": size,
         "seed": seed_for(family, size),
         "search_budget": SEARCH_BUDGET,
-        "feerate_sat_per_vb": FEERATE,
-        "long_term_feerate_sat_per_vb": LONG_TERM_FEERATE,
+        "feerate_sat_per_vb": overrides.get("feerate_sat_per_vb", FEERATE),
+        "long_term_feerate_sat_per_vb": overrides.get("long_term_feerate_sat_per_vb", LONG_TERM_FEERATE),
         "discard_feerate_sat_per_vb": DISCARD_FEERATE,
         "dust_relay_feerate_sat_per_vb": DUST_RELAY_FEERATE,
         "target": {

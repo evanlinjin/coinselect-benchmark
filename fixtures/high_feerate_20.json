@@ -1,0 +1,205 @@
+{
+ "name": "high_feerate_20",
+ "family": "high_feerate",
+ "size": 20,
+ "seed": 3701146451,
+ "search_budget": 100000,
+ "feerate_sat_per_vb": 40,
+ "long_term_feerate_sat_per_vb": 10,
+ "discard_feerate_sat_per_vb": 3,
+ "dust_relay_feerate_sat_per_vb": 3,
+ "target": {
+  "value": 4196000,
+  "n_outputs": 1,
+  "non_input_weight": 212
+ },
+ "change": {
+  "output_weight": 172,
+  "spend_weight": 232
+ },
+ "max_weight": null,
+ "candidates": [
+  {
+   "id": "c000",
+   "value": 175747,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c001",
+   "value": 247412,
+   "input_weight": 364,
+   "input_type": "p2sh_p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "m01"
+  },
+  {
+   "id": "c002",
+   "value": 467996,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "m01"
+  },
+  {
+   "id": "c003",
+   "value": 361146,
+   "input_weight": 592,
+   "input_type": "p2pkh",
+   "is_segwit": false,
+   "residing_txid": "m01"
+  },
+  {
+   "id": "c004",
+   "value": 427277,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c005",
+   "value": 1618568,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c006",
+   "value": 17642,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c007",
+   "value": 27783,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c008",
+   "value": 273117,
+   "input_weight": 364,
+   "input_type": "p2sh_p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c009",
+   "value": 361167,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c010",
+   "value": 33657,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c011",
+   "value": 36057,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": "m01"
+  },
+  {
+   "id": "c012",
+   "value": 6130,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c013",
+   "value": 461096,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c014",
+   "value": 48775,
+   "input_weight": 592,
+   "input_type": "p2pkh",
+   "is_segwit": false,
+   "residing_txid": null
+  },
+  {
+   "id": "c015",
+   "value": 33544,
+   "input_weight": 232,
+   "input_type": "p2tr",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c016",
+   "value": 41039,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "mc00"
+  },
+  {
+   "id": "c017",
+   "value": 461237,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  },
+  {
+   "id": "c018",
+   "value": 105504,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": "mc00"
+  },
+  {
+   "id": "c019",
+   "value": 4119854,
+   "input_weight": 272,
+   "input_type": "p2wpkh",
+   "is_segwit": true,
+   "residing_txid": null
+  }
+ ],
+ "ancestors": [
+  {
+   "txid": "m00",
+   "weight": 1040,
+   "fee": 520,
+   "parents": []
+  },
+  {
+   "txid": "m01",
+   "weight": 1260,
+   "fee": 630,
+   "parents": []
+  },
+  {
+   "txid": "mc00",
+   "weight": 664,
+   "fee": 166,
+   "parents": [
+    "m00"
+   ]
+  }
+ ]
+}

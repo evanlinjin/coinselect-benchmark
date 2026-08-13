@@ -24,78 +24,126 @@ solution quality is only ever compared through the shared metrics below.
 
 | track | engine | median time | budget exhausted | no solution | wins on fee | wins on waste |
 |---|---|---|---|---|---|---|
-| kernel | coin-select | 7622.7 us | 6 of 29 | 4 | 22 of 24 | 10 of 24 |
-| kernel | bitcoin-core | 483.5 us | 21 of 29 | 1 | 0 of 24 | 12 of 24 |
-| wallet | coin-select | 1026.9 us | 3 of 29 | 0 | 28 of 29 | 11 of 29 |
-| wallet | bitcoin-core | 1218.6 us | 18 of 29 | 0 | 1 of 29 | 16 of 29 |
+| kernel | coin-select | 7483.1 us | 6 of 33 | 4 | 25 of 28 | 13 of 28 |
+| kernel | bitcoin-core | 453.2 us | 23 of 33 | 1 | 0 of 28 | 12 of 28 |
+| changeful | coin-select | 937.2 us | 3 of 33 | 1 | 15 of 32 | 15 of 32 |
+| changeful | bitcoin-core | 4.4 us | 0 of 33 | 0 | 1 of 32 | 0 of 32 |
+| wallet | coin-select | 878.5 us | 3 of 33 | 0 | 31 of 33 | 14 of 33 |
+| wallet | bitcoin-core | 1236.5 us | 19 of 33 | 0 | 1 of 33 | 16 of 33 |
 
 ## Track: kernel
 
 | fixture | n | cs time (us) | core time (us) | cs rounds | core nodes | cs done | core done | cs pkg fee | core pkg fee | cs bump | core bump | cs covers core bump | same set |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| adversarial_shared_100 | 100 | 3415.6 | 607.6 | 1405 | 100000 | yes | budget | 4648 | 7342 | 0 | 0 | yes | **no** |
-| adversarial_shared_20 | 20 | 2941.1 | 2.9 | 2654 | 390 | yes | yes | 4674 | 5335 | 0 | 0 | yes | **no** |
-| adversarial_shared_200 | 200 | 17243.0 | 485.6 | 5571 | 100000 | yes | budget | 5939 | 8022 | 0 | 0 | yes | **no** |
-| adversarial_shared_50 | 50 | 4518.4 | 513.0 | 3355 | 100000 | yes | budget | 3799 | 6660 | 0 | 0 | yes | **no** |
-| nested_ancestry_100 | 100 | 12193.9 | 522.1 | 4219 | 100000 | yes | budget | 6224 | 25370 | 0 | 15212 | yes | **no** |
-| nested_ancestry_20 | 20 | 157881.7 | 8.1 | 100000 | 966 | budget | yes | none | 27770 | - | 16005 | - | - |
-| nested_ancestry_200 | 200 | 124707.9 | 620.3 | 23466 | 100000 | yes | budget | 24088 | 32980 | 10359 | 18638 | yes | **no** |
-| nested_ancestry_50 | 50 | 11676.4 | 729.5 | 3582 | 100000 | yes | budget | 16023 | 24840 | 9229 | 14175 | yes | **no** |
-| no_ancestry_100 | 100 | 3169.2 | 642.1 | 2827 | 100000 | yes | budget | 4374 | 6660 | 0 | 0 | yes | **no** |
-| no_ancestry_20 | 20 | 202.6 | 100.1 | 152 | 16450 | yes | yes | 3616 | 8025 | 0 | 0 | yes | **no** |
-| no_ancestry_200 | 200 | 39730.9 | 441.9 | 24024 | 100000 | yes | budget | 7997 | 10060 | 0 | 0 | yes | **no** |
-| no_ancestry_50 | 50 | 4416.8 | 425.6 | 3992 | 100000 | yes | budget | 4681 | 7341 | 0 | 0 | yes | **no** |
-| private_ancestry_100 | 100 | 1005.5 | 657.5 | 468 | 100000 | yes | budget | 4637 | 5982 | 0 | 0 | yes | **no** |
-| private_ancestry_20 | 20 | 882.4 | 40.3 | 765 | 6132 | yes | yes | 5438 | 5438 | 0 | 0 | yes | yes |
-| private_ancestry_200 | 200 | 71073.2 | 635.9 | 24577 | 100000 | yes | budget | 11420 | 23074 | 0 | 10080 | yes | **no** |
-| private_ancestry_50 | 50 | 3161.8 | 630.7 | 2721 | 100000 | yes | budget | 5486 | 8740 | 0 | 1456 | yes | **no** |
-| shared_ancestry_100 | 100 | 7622.7 | 414.4 | 2945 | 100000 | yes | budget | 15638 | 18985 | 6840 | 12177 | yes | **no** |
-| shared_ancestry_20 | 20 | 10568.4 | 68.7 | 9122 | 10482 | yes | yes | 9892 | 10094 | 5160 | 5160 | yes | **no** |
-| shared_ancestry_200 | 200 | 572827.9 | 660.9 | 100000 | 100000 | budget | budget | none | 46550 | - | 30480 | - | - |
-| shared_ancestry_50 | 50 | 391.7 | 452.0 | 237 | 100000 | yes | budget | 4098 | 4620 | 0 | 0 | yes | **no** |
-| smoke | 8 | 458.3 | 0.9 | 445 | 62 | yes | yes | 31700 | none | 24300 | - | yes | - |
-| subsidizing_ancestry_100 | 100 | 351630.6 | 436.4 | 100000 | 100000 | budget | budget | 51591 | 58460 | 13635 | 19503 | yes | **no** |
-| subsidizing_ancestry_20 | 20 | 162992.5 | 2.0 | 100000 | 52 | budget | yes | none | 61220 | - | 24666 | - | - |
-| subsidizing_ancestry_200 | 200 | 492197.2 | 431.9 | 100000 | 100000 | budget | budget | none | 100240 | - | 40347 | - | - |
-| subsidizing_ancestry_50 | 50 | 246630.8 | 655.6 | 100000 | 100000 | budget | budget | 25741 | 29690 | 138 | 6144 | yes | **no** |
-| wallet_mixed_100 | 100 | 7984.9 | 665.8 | 2915 | 100000 | yes | budget | 5491 | 7041 | 0 | 0 | yes | **no** |
-| wallet_mixed_20 | 20 | 897.6 | 10.8 | 527 | 2546 | yes | yes | 4809 | 4809 | 0 | 0 | yes | yes |
-| wallet_mixed_200 | 200 | 4807.6 | 483.5 | 1107 | 100000 | yes | budget | 7321 | 15950 | 0 | 6917 | yes | **no** |
-| wallet_mixed_50 | 50 | 2525.7 | 699.4 | 1455 | 100000 | yes | budget | 3715 | 5550 | 0 | 0 | yes | **no** |
+| adversarial_shared_100 | 100 | 2613.4 | 389.9 | 1405 | 100000 | yes | budget | 4648 | 7342 | 0 | 0 | yes | **no** |
+| adversarial_shared_20 | 20 | 3824.2 | 2.8 | 2654 | 390 | yes | yes | 4674 | 5335 | 0 | 0 | yes | **no** |
+| adversarial_shared_200 | 200 | 16629.6 | 416.2 | 5571 | 100000 | yes | budget | 5939 | 8022 | 0 | 0 | yes | **no** |
+| adversarial_shared_50 | 50 | 4307.4 | 452.0 | 3355 | 100000 | yes | budget | 3799 | 6660 | 0 | 0 | yes | **no** |
+| high_feerate_100 | 100 | 20671.8 | 585.1 | 9321 | 100000 | yes | budget | 23870 | 29297 | 0 | 0 | yes | **no** |
+| high_feerate_20 | 20 | 2352.1 | 1.4 | 2373 | 172 | yes | yes | 18054 | 27998 | 0 | 11970 | yes | **no** |
+| high_feerate_200 | 200 | 17784.0 | 564.2 | 3821 | 100000 | yes | budget | 66591 | 102504 | 22635 | 70650 | yes | **no** |
+| high_feerate_50 | 50 | 3374.5 | 26.0 | 1644 | 5580 | yes | yes | 21200 | 21200 | 0 | 0 | yes | yes |
+| nested_ancestry_100 | 100 | 11518.8 | 595.1 | 4219 | 100000 | yes | budget | 6224 | 25370 | 0 | 15212 | yes | **no** |
+| nested_ancestry_20 | 20 | 154182.2 | 6.7 | 100000 | 966 | budget | yes | none | 27770 | - | 16005 | - | - |
+| nested_ancestry_200 | 200 | 124518.0 | 637.0 | 23466 | 100000 | yes | budget | 24088 | 32980 | 10359 | 18638 | yes | **no** |
+| nested_ancestry_50 | 50 | 8739.4 | 610.1 | 3582 | 100000 | yes | budget | 16023 | 24840 | 9229 | 14175 | yes | **no** |
+| no_ancestry_100 | 100 | 4219.1 | 616.4 | 2827 | 100000 | yes | budget | 4374 | 6660 | 0 | 0 | yes | **no** |
+| no_ancestry_20 | 20 | 176.3 | 90.9 | 152 | 16450 | yes | yes | 3616 | 8025 | 0 | 0 | yes | **no** |
+| no_ancestry_200 | 200 | 40384.0 | 581.4 | 24024 | 100000 | yes | budget | 7997 | 10060 | 0 | 0 | yes | **no** |
+| no_ancestry_50 | 50 | 4434.4 | 579.1 | 3992 | 100000 | yes | budget | 4681 | 7341 | 0 | 0 | yes | **no** |
+| private_ancestry_100 | 100 | 663.3 | 591.2 | 468 | 100000 | yes | budget | 4637 | 5982 | 0 | 0 | yes | **no** |
+| private_ancestry_20 | 20 | 764.4 | 35.3 | 765 | 6132 | yes | yes | 5438 | 5438 | 0 | 0 | yes | yes |
+| private_ancestry_200 | 200 | 74731.4 | 632.0 | 24577 | 100000 | yes | budget | 11420 | 23074 | 0 | 10080 | yes | **no** |
+| private_ancestry_50 | 50 | 3400.4 | 441.7 | 2721 | 100000 | yes | budget | 5486 | 8740 | 0 | 1456 | yes | **no** |
+| shared_ancestry_100 | 100 | 7483.1 | 588.4 | 2945 | 100000 | yes | budget | 15638 | 18985 | 6840 | 12177 | yes | **no** |
+| shared_ancestry_20 | 20 | 11081.1 | 61.2 | 9122 | 10482 | yes | yes | 9892 | 10094 | 5160 | 5160 | yes | **no** |
+| shared_ancestry_200 | 200 | 580005.6 | 610.1 | 100000 | 100000 | budget | budget | none | 46550 | - | 30480 | - | - |
+| shared_ancestry_50 | 50 | 386.6 | 435.1 | 237 | 100000 | yes | budget | 4098 | 4620 | 0 | 0 | yes | **no** |
+| smoke | 8 | 325.9 | 0.5 | 445 | 62 | yes | yes | 31700 | none | 24300 | - | yes | - |
+| subsidizing_ancestry_100 | 100 | 361291.3 | 453.2 | 100000 | 100000 | budget | budget | 51591 | 58460 | 13635 | 19503 | yes | **no** |
+| subsidizing_ancestry_20 | 20 | 151991.6 | 1.9 | 100000 | 52 | budget | yes | none | 61220 | - | 24666 | - | - |
+| subsidizing_ancestry_200 | 200 | 473307.1 | 597.6 | 100000 | 100000 | budget | budget | none | 100240 | - | 40347 | - | - |
+| subsidizing_ancestry_50 | 50 | 240543.6 | 410.6 | 100000 | 100000 | budget | budget | 25741 | 29690 | 138 | 6144 | yes | **no** |
+| wallet_mixed_100 | 100 | 7800.6 | 578.5 | 2915 | 100000 | yes | budget | 5491 | 7041 | 0 | 0 | yes | **no** |
+| wallet_mixed_20 | 20 | 762.0 | 10.2 | 527 | 2546 | yes | yes | 4809 | 4809 | 0 | 0 | yes | yes |
+| wallet_mixed_200 | 200 | 4671.8 | 594.0 | 1107 | 100000 | yes | budget | 7321 | 15950 | 0 | 6917 | yes | **no** |
+| wallet_mixed_50 | 50 | 3723.7 | 727.4 | 1455 | 100000 | yes | budget | 3715 | 5550 | 0 | 0 | yes | **no** |
+
+## Track: changeful
+
+| fixture | n | cs time (us) | core time (us) | cs rounds | core nodes | cs done | core done | cs pkg fee | core pkg fee | cs bump | core bump | cs covers core bump | same set |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| adversarial_shared_100 | 100 | 937.2 | 4.1 | 490 | 10 | yes | yes | 3690 | 3690 | 0 | 0 | yes | yes |
+| adversarial_shared_20 | 20 | 85.5 | 0.6 | 49 | 6 | yes | yes | 2330 | 2330 | 0 | 0 | yes | yes |
+| adversarial_shared_200 | 200 | 7317.3 | 7.3 | 2499 | 54 | yes | yes | 5050 | 5050 | 0 | 0 | yes | yes |
+| adversarial_shared_50 | 50 | 22.4 | 1.8 | 21 | 5 | yes | yes | 2330 | 2330 | 0 | 0 | yes | yes |
+| high_feerate_100 | 100 | 3068.1 | 11.7 | 1558 | 522 | yes | yes | 21720 | 42520 | 0 | 19760 | yes | **no** |
+| high_feerate_20 | 20 | 14.8 | 1.1 | 14 | 16 | yes | yes | 8920 | 8920 | 0 | 0 | yes | yes |
+| high_feerate_200 | 200 | 17518.2 | 13.0 | 3821 | 329 | yes | yes | 66591 | 101680 | 22635 | 70650 | yes | **no** |
+| high_feerate_50 | 50 | 80.6 | 2.8 | 52 | 26 | yes | yes | 17200 | 43640 | 0 | 30996 | yes | **no** |
+| nested_ancestry_100 | 100 | 141.1 | 7.0 | 46 | 91 | yes | yes | 4370 | 21970 | 0 | 15212 | yes | **no** |
+| nested_ancestry_20 | 20 | 6.1 | 1.0 | 2 | 2 | yes | yes | 1650 | 1650 | 0 | 0 | yes | yes |
+| nested_ancestry_200 | 200 | 169952.7 | 17.2 | 23466 | 1065 | yes | yes | 24088 | 37940 | 10359 | 25446 | yes | **no** |
+| nested_ancestry_50 | 50 | 254.3 | 3.8 | 162 | 49 | yes | yes | 14400 | 14400 | 9229 | 9229 | yes | **no** |
+| no_ancestry_100 | 100 | 3635.1 | 6.6 | 2222 | 24 | yes | yes | 3690 | 3690 | 0 | 0 | yes | yes |
+| no_ancestry_20 | 20 | 15.6 | 1.0 | 14 | 5 | yes | yes | 2330 | 2330 | 0 | 0 | yes | **no** |
+| no_ancestry_200 | 200 | 15792.9 | 27.1 | 8127 | 1244 | yes | yes | 7090 | 7770 | 0 | 0 | yes | **no** |
+| no_ancestry_50 | 50 | 1672.7 | 3.3 | 1195 | 31 | yes | yes | 3690 | 3690 | 0 | 0 | yes | **no** |
+| private_ancestry_100 | 100 | 889.3 | 6.7 | 468 | 47 | yes | yes | 4637 | 4370 | 0 | 0 | yes | **no** |
+| private_ancestry_20 | 20 | 20.5 | 1.0 | 17 | 5 | yes | yes | 3640 | 6050 | 1048 | 2976 | yes | **no** |
+| private_ancestry_200 | 200 | 75524.4 | 31.2 | 24577 | 1582 | yes | yes | 11420 | 19350 | 0 | 8181 | yes | **no** |
+| private_ancestry_50 | 50 | 1229.4 | 4.8 | 841 | 14 | yes | yes | 5090 | 5090 | 1456 | 1456 | yes | yes |
+| shared_ancestry_100 | 100 | 7634.8 | 6.9 | 2945 | 44 | yes | yes | 15638 | 18640 | 6840 | 12843 | yes | **no** |
+| shared_ancestry_20 | 20 | 24.3 | 0.8 | 26 | 5 | yes | yes | 4540 | 4540 | 1989 | 1989 | yes | yes |
+| shared_ancestry_200 | 200 | 572020.3 | 21.0 | 100000 | 502 | budget | yes | none | 35960 | - | 23096 | - | - |
+| shared_ancestry_50 | 50 | 402.0 | 3.2 | 237 | 10 | yes | yes | 4098 | 11560 | 0 | 7128 | yes | **no** |
+| smoke | 8 | 27.0 | 0.7 | 35 | 10 | yes | yes | 5330 | 27330 | 2700 | 14700 | yes | **no** |
+| subsidizing_ancestry_100 | 100 | 337102.4 | 9.5 | 100000 | 364 | budget | yes | 51591 | 79760 | 13635 | 41121 | yes | **no** |
+| subsidizing_ancestry_20 | 20 | 104.3 | 0.9 | 104 | 2 | yes | yes | 28870 | 28870 | 10497 | 10497 | yes | yes |
+| subsidizing_ancestry_200 | 200 | 465306.7 | 14.8 | 100000 | 106 | budget | yes | 75880 | 75880 | 20871 | 20871 | yes | yes |
+| subsidizing_ancestry_50 | 50 | 129836.5 | 4.4 | 55738 | 14 | yes | yes | 24500 | 47200 | 138 | 9780 | yes | **no** |
+| wallet_mixed_100 | 100 | 5025.5 | 12.7 | 2006 | 303 | yes | yes | 4850 | 11420 | 0 | 5426 | yes | **no** |
+| wallet_mixed_20 | 20 | 6.1 | 1.1 | 5 | 9 | yes | yes | 2330 | 2330 | 0 | 0 | yes | yes |
+| wallet_mixed_200 | 200 | 4621.0 | 24.5 | 1107 | 715 | yes | yes | 7321 | 14110 | 0 | 6917 | yes | **no** |
+| wallet_mixed_50 | 50 | 169.1 | 3.0 | 55 | 8 | yes | yes | 2330 | 2330 | 0 | 0 | yes | yes |
 
 ## Track: wallet
 
 | fixture | n | cs time (us) | core time (us) | cs rounds | core nodes | cs done | core done | cs pkg fee | core pkg fee | cs bump | core bump | cs covers core bump | same set |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| adversarial_shared_100 | 100 | 1026.9 | 1009.9 | 490 | 100000 | yes | budget | 3690 | 7342 | 0 | 0 | yes | **no** |
-| adversarial_shared_20 | 20 | 52.6 | 278.4 | 49 | 390 | yes | yes | 2330 | 5335 | 0 | 0 | yes | **no** |
-| adversarial_shared_200 | 200 | 7895.3 | 2125.9 | 2499 | 100000 | yes | budget | 5050 | 8022 | 0 | 0 | yes | **no** |
-| adversarial_shared_50 | 50 | 41.6 | 1218.6 | 21 | 100000 | yes | budget | 2330 | 6660 | 0 | 0 | yes | **no** |
-| nested_ancestry_100 | 100 | 145.7 | 2749.7 | 46 | - | yes | n/a | 4370 | 24260 | 0 | 13046 | yes | **no** |
-| nested_ancestry_20 | 20 | 6.1 | 566.7 | 2 | - | yes | n/a | 1650 | 29130 | 0 | 16005 | yes | **no** |
-| nested_ancestry_200 | 200 | 126954.9 | 931.2 | 23466 | 100000 | yes | budget | 24088 | 32980 | 10359 | 18638 | yes | **no** |
-| nested_ancestry_50 | 50 | 438.0 | 1840.0 | 162 | 100000 | yes | budget | 14400 | 24840 | 9229 | 14175 | yes | **no** |
-| no_ancestry_100 | 100 | 3299.5 | 1387.9 | 2222 | - | yes | n/a | 3690 | 11420 | 0 | 0 | yes | **no** |
-| no_ancestry_20 | 20 | 24.8 | 588.5 | 14 | 16450 | yes | yes | 2330 | 8025 | 0 | 0 | yes | **no** |
-| no_ancestry_200 | 200 | 14535.9 | 2109.2 | 8127 | 100000 | yes | budget | 7090 | 10060 | 0 | 0 | yes | **no** |
-| no_ancestry_50 | 50 | 1980.9 | 1383.7 | 1195 | 100000 | yes | budget | 3690 | 7341 | 0 | 0 | yes | **no** |
-| private_ancestry_100 | 100 | 676.8 | 1926.1 | 468 | 100000 | yes | budget | 4637 | 5982 | 0 | 0 | yes | **no** |
-| private_ancestry_20 | 20 | 20.6 | 482.2 | 17 | 6132 | yes | yes | 3640 | 5438 | 1048 | 0 | yes | **no** |
-| private_ancestry_200 | 200 | 70275.0 | 1068.1 | 24577 | 100000 | yes | budget | 11420 | 23074 | 0 | 10080 | yes | **no** |
-| private_ancestry_50 | 50 | 1353.7 | 792.4 | 841 | 100000 | yes | budget | 5090 | 8740 | 1456 | 1456 | yes | **no** |
-| shared_ancestry_100 | 100 | 7600.5 | 1814.1 | 2945 | - | yes | n/a | 15638 | 18220 | 6840 | 10017 | yes | **no** |
-| shared_ancestry_20 | 20 | 26.3 | 563.8 | 26 | - | yes | n/a | 4540 | 6580 | 1989 | 1989 | yes | **no** |
-| shared_ancestry_200 | 200 | 572345.9 | 2535.6 | 100000 | 100000 | budget | budget | 189690 | 46550 | 95223 | 30480 | yes | **no** |
-| shared_ancestry_50 | 50 | 388.4 | 1741.5 | 237 | 100000 | yes | budget | 4098 | 4620 | 0 | 0 | yes | **no** |
-| smoke | 8 | 27.6 | 124.4 | 35 | - | yes | n/a | 5330 | 6590 | 2700 | 2700 | yes | **no** |
-| subsidizing_ancestry_100 | 100 | 360034.7 | 818.0 | 100000 | 100000 | budget | budget | 51591 | 58460 | 13635 | 19503 | yes | **no** |
-| subsidizing_ancestry_20 | 20 | 119.8 | 393.8 | 104 | - | yes | n/a | 28870 | 63260 | 10497 | 24666 | yes | **no** |
-| subsidizing_ancestry_200 | 200 | 482366.2 | 2299.0 | 100000 | 100000 | budget | budget | 75880 | 100240 | 20871 | 40347 | yes | **no** |
-| subsidizing_ancestry_50 | 50 | 132400.6 | 1700.0 | 55738 | 100000 | yes | budget | 24500 | 29690 | 138 | 6144 | yes | **no** |
-| wallet_mixed_100 | 100 | 5227.8 | 1824.2 | 2006 | 100000 | yes | budget | 4850 | 7041 | 0 | 0 | yes | **no** |
-| wallet_mixed_20 | 20 | 6.7 | 488.2 | 5 | 2546 | yes | yes | 2330 | 4809 | 0 | 0 | yes | **no** |
-| wallet_mixed_200 | 200 | 4872.5 | 1471.1 | 1107 | 100000 | yes | budget | 7321 | 15950 | 0 | 6917 | yes | **no** |
-| wallet_mixed_50 | 50 | 109.8 | 1202.0 | 55 | 100000 | yes | budget | 2330 | 5550 | 0 | 0 | yes | **no** |
+| adversarial_shared_100 | 100 | 873.9 | 995.0 | 490 | 100000 | yes | budget | 3690 | 7342 | 0 | 0 | yes | **no** |
+| adversarial_shared_20 | 20 | 51.8 | 389.0 | 49 | 390 | yes | yes | 2330 | 5335 | 0 | 0 | yes | **no** |
+| adversarial_shared_200 | 200 | 6960.5 | 2105.2 | 2499 | 100000 | yes | budget | 5050 | 8022 | 0 | 0 | yes | **no** |
+| adversarial_shared_50 | 50 | 32.2 | 1166.6 | 21 | 100000 | yes | budget | 2330 | 6660 | 0 | 0 | yes | **no** |
+| high_feerate_100 | 100 | 3236.7 | 1240.1 | 1558 | 100000 | yes | budget | 21720 | 29297 | 0 | 0 | yes | **no** |
+| high_feerate_20 | 20 | 14.6 | 339.3 | 14 | 16 | yes | yes | 8920 | 8920 | 0 | 0 | yes | yes |
+| high_feerate_200 | 200 | 17496.1 | 1143.5 | 3821 | 329 | yes | yes | 66591 | 101680 | 22635 | 70650 | yes | **no** |
+| high_feerate_50 | 50 | 81.1 | 120.3 | 52 | 5580 | yes | yes | 17200 | 21200 | 0 | 0 | yes | **no** |
+| nested_ancestry_100 | 100 | 105.3 | 2130.8 | 46 | - | yes | n/a | 4370 | 24260 | 0 | 13046 | yes | **no** |
+| nested_ancestry_20 | 20 | 3.6 | 595.8 | 2 | - | yes | n/a | 1650 | 29130 | 0 | 16005 | yes | **no** |
+| nested_ancestry_200 | 200 | 136669.8 | 1746.2 | 23466 | 100000 | yes | budget | 24088 | 32980 | 10359 | 18638 | yes | **no** |
+| nested_ancestry_50 | 50 | 338.6 | 1399.2 | 162 | 100000 | yes | budget | 14400 | 24840 | 9229 | 14175 | yes | **no** |
+| no_ancestry_100 | 100 | 2929.1 | 1517.3 | 2222 | - | yes | n/a | 3690 | 11420 | 0 | 0 | yes | **no** |
+| no_ancestry_20 | 20 | 14.9 | 538.4 | 14 | 16450 | yes | yes | 2330 | 8025 | 0 | 0 | yes | **no** |
+| no_ancestry_200 | 200 | 16471.2 | 2641.7 | 8127 | 100000 | yes | budget | 7090 | 10060 | 0 | 0 | yes | **no** |
+| no_ancestry_50 | 50 | 1302.5 | 1031.7 | 1195 | 100000 | yes | budget | 3690 | 7341 | 0 | 0 | yes | **no** |
+| private_ancestry_100 | 100 | 878.5 | 2592.9 | 468 | 100000 | yes | budget | 4637 | 5982 | 0 | 0 | yes | **no** |
+| private_ancestry_20 | 20 | 12.6 | 390.2 | 17 | 6132 | yes | yes | 3640 | 5438 | 1048 | 0 | yes | **no** |
+| private_ancestry_200 | 200 | 74009.1 | 1461.1 | 24577 | 100000 | yes | budget | 11420 | 23074 | 0 | 10080 | yes | **no** |
+| private_ancestry_50 | 50 | 1248.4 | 713.1 | 841 | 100000 | yes | budget | 5090 | 8740 | 1456 | 1456 | yes | **no** |
+| shared_ancestry_100 | 100 | 8233.3 | 2465.3 | 2945 | - | yes | n/a | 15638 | 18220 | 6840 | 10017 | yes | **no** |
+| shared_ancestry_20 | 20 | 24.7 | 560.3 | 26 | - | yes | n/a | 4540 | 6580 | 1989 | 1989 | yes | **no** |
+| shared_ancestry_200 | 200 | 556572.9 | 2646.7 | 100000 | 100000 | budget | budget | 189690 | 46550 | 95223 | 30480 | yes | **no** |
+| shared_ancestry_50 | 50 | 246.7 | 1236.5 | 237 | 100000 | yes | budget | 4098 | 4620 | 0 | 0 | yes | **no** |
+| smoke | 8 | 26.9 | 115.6 | 35 | - | yes | n/a | 5330 | 6590 | 2700 | 2700 | yes | **no** |
+| subsidizing_ancestry_100 | 100 | 349087.6 | 1139.5 | 100000 | 100000 | budget | budget | 51591 | 58460 | 13635 | 19503 | yes | **no** |
+| subsidizing_ancestry_20 | 20 | 105.9 | 557.0 | 104 | - | yes | n/a | 28870 | 63260 | 10497 | 24666 | yes | **no** |
+| subsidizing_ancestry_200 | 200 | 461084.2 | 2316.9 | 100000 | 100000 | budget | budget | 75880 | 100240 | 20871 | 40347 | yes | **no** |
+| subsidizing_ancestry_50 | 50 | 128718.3 | 1751.6 | 55738 | 100000 | yes | budget | 24500 | 29690 | 138 | 6144 | yes | **no** |
+| wallet_mixed_100 | 100 | 6348.8 | 1804.2 | 2006 | 100000 | yes | budget | 4850 | 7041 | 0 | 0 | yes | **no** |
+| wallet_mixed_20 | 20 | 4.1 | 329.4 | 5 | 2546 | yes | yes | 2330 | 4809 | 0 | 0 | yes | **no** |
+| wallet_mixed_200 | 200 | 4551.7 | 2064.8 | 1107 | 100000 | yes | budget | 7321 | 15950 | 0 | 6917 | yes | **no** |
+| wallet_mixed_50 | 50 | 101.6 | 1790.5 | 55 | 100000 | yes | budget | 2330 | 5550 | 0 | 0 | yes | **no** |
 
 ## Objective cross-scores
 
@@ -108,57 +156,97 @@ Core-accounted effective value falls below Core's target has no waste: Core's ow
 | fixture | track | cs waste | core waste | waste winner | cs pkg fee | core pkg fee | fee winner |
 |---|---|---|---|---|---|---|---|
 | adversarial_shared_100 | kernel | 28 | 2 | core | 4648 | 7342 | coin-select |
+| adversarial_shared_100 | changeful | 604 | 604 | tie | 3690 | 3690 | tie |
 | adversarial_shared_100 | wallet | 604 | 2 | core | 3690 | 7342 | coin-select |
 | adversarial_shared_20 | kernel | 604 | 35 | core | 4674 | 5335 | coin-select |
+| adversarial_shared_20 | changeful | 604 | 604 | tie | 2330 | 2330 | tie |
 | adversarial_shared_20 | wallet | 604 | 35 | core | 2330 | 5335 | coin-select |
 | adversarial_shared_200 | kernel | 639 | 2 | core | 5939 | 8022 | coin-select |
+| adversarial_shared_200 | changeful | 604 | 604 | tie | 5050 | 5050 | tie |
 | adversarial_shared_200 | wallet | 604 | 2 | core | 5050 | 8022 | coin-select |
 | adversarial_shared_50 | kernel | 539 | 0 | core | 3799 | 6660 | coin-select |
+| adversarial_shared_50 | changeful | 604 | 604 | tie | 2330 | 2330 | tie |
 | adversarial_shared_50 | wallet | 604 | 0 | core | 2330 | 6660 | coin-select |
+| high_feerate_100 | kernel | 16340 | 20407 | coin-select | 23870 | 29297 | coin-select |
+| high_feerate_100 | changeful | 15274 | 35034 | coin-select | 21720 | 42520 | coin-select |
+| high_feerate_100 | wallet | 15274 | 20407 | coin-select | 21720 | 29297 | coin-select |
+| high_feerate_20 | kernel | 12154 | 22108 | coin-select | 18054 | 27998 | coin-select |
+| high_feerate_20 | changeful | 5674 | 5674 | tie | 8920 | 8920 | tie |
+| high_feerate_20 | wallet | 5674 | 5674 | tie | 8920 | 8920 | tie |
+| high_feerate_200 | kernel | 53236 | 88124 | coin-select | 66591 | 102504 | coin-select |
+| high_feerate_200 | changeful | 53236 | 88054 | coin-select | 66591 | 101680 | coin-select |
+| high_feerate_200 | wallet | 53236 | 88054 | coin-select | 66591 | 101680 | coin-select |
+| high_feerate_50 | kernel | 14360 | 14360 | tie | 21200 | 21200 | tie |
+| high_feerate_50 | changeful | 11854 | 38710 | coin-select | 17200 | 43640 | coin-select |
+| high_feerate_50 | wallet | 11854 | 14360 | coin-select | 17200 | 21200 | coin-select |
 | nested_ancestry_100 | kernel | 244 | 15816 | coin-select | 6224 | 25370 | coin-select |
+| nested_ancestry_100 | changeful | 604 | 15816 | coin-select | 4370 | 21970 | coin-select |
 | nested_ancestry_100 | wallet | 604 | 13650 | coin-select | 4370 | 24260 | coin-select |
+| nested_ancestry_20 | changeful | 604 | 604 | tie | 1650 | 1650 | tie |
 | nested_ancestry_20 | wallet | 604 | 16609 | coin-select | 1650 | 29130 | coin-select |
 | nested_ancestry_200 | kernel | 10377 | 19242 | coin-select | 24088 | 32980 | coin-select |
+| nested_ancestry_200 | changeful | 10377 | 26050 | coin-select | 24088 | 37940 | coin-select |
 | nested_ancestry_200 | wallet | 10377 | 19242 | coin-select | 24088 | 32980 | coin-select |
 | nested_ancestry_50 | kernel | 9242 | 14779 | coin-select | 16023 | 24840 | coin-select |
+| nested_ancestry_50 | changeful | 9833 | 9833 | tie | 14400 | 14400 | tie |
 | nested_ancestry_50 | wallet | 9833 | 14779 | coin-select | 14400 | 24840 | coin-select |
 | no_ancestry_100 | kernel | 434 | 0 | core | 4374 | 6660 | coin-select |
+| no_ancestry_100 | changeful | 604 | 604 | tie | 3690 | 3690 | tie |
 | no_ancestry_100 | wallet | 604 | 0 | core | 3690 | 11420 | coin-select |
 | no_ancestry_20 | kernel | 356 | 5 | core | 3616 | 8025 | coin-select |
+| no_ancestry_20 | changeful | 604 | 604 | tie | 2330 | 2330 | tie |
 | no_ancestry_20 | wallet | 604 | 5 | core | 2330 | 8025 | coin-select |
 | no_ancestry_200 | kernel | 657 | 0 | core | 7997 | 10060 | coin-select |
+| no_ancestry_200 | changeful | 604 | 604 | tie | 7090 | 7770 | coin-select |
 | no_ancestry_200 | wallet | 604 | 0 | core | 7090 | 10060 | coin-select |
 | no_ancestry_50 | kernel | 61 | 1 | core | 4681 | 7341 | coin-select |
+| no_ancestry_50 | changeful | 604 | 604 | tie | 3690 | 3690 | tie |
 | no_ancestry_50 | wallet | 604 | 1 | core | 3690 | 7341 | coin-select |
 | private_ancestry_100 | kernel | 17 | 2 | core | 4637 | 5982 | coin-select |
+| private_ancestry_100 | changeful | 17 | 604 | coin-select | 4637 | 4370 | core |
 | private_ancestry_100 | wallet | 17 | 2 | core | 4637 | 5982 | coin-select |
 | private_ancestry_20 | kernel | 138 | 138 | tie | 5438 | 5438 | tie |
+| private_ancestry_20 | changeful | 1652 | 3580 | coin-select | 3640 | 6050 | coin-select |
 | private_ancestry_20 | wallet | 1652 | 138 | core | 3640 | 5438 | coin-select |
 | private_ancestry_200 | kernel | 0 | 10084 | coin-select | 11420 | 23074 | coin-select |
+| private_ancestry_200 | changeful | 0 | 8785 | coin-select | 11420 | 19350 | coin-select |
 | private_ancestry_200 | wallet | 0 | 10084 | coin-select | 11420 | 23074 | coin-select |
 | private_ancestry_50 | kernel | 186 | 1456 | coin-select | 5486 | 8740 | coin-select |
+| private_ancestry_50 | changeful | 2060 | 2060 | tie | 5090 | 5090 | tie |
 | private_ancestry_50 | wallet | 2060 | 1456 | core | 5090 | 8740 | coin-select |
 | shared_ancestry_100 | kernel | 6858 | 12332 | coin-select | 15638 | 18985 | coin-select |
+| shared_ancestry_100 | changeful | 6858 | 13447 | coin-select | 15638 | 18640 | coin-select |
 | shared_ancestry_100 | wallet | 6858 | 10621 | coin-select | 15638 | 18220 | coin-select |
 | shared_ancestry_20 | kernel | 5342 | 5544 | coin-select | 9892 | 10094 | coin-select |
+| shared_ancestry_20 | changeful | 2593 | 2593 | tie | 4540 | 4540 | tie |
 | shared_ancestry_20 | wallet | 2593 | 2593 | tie | 4540 | 6580 | coin-select |
 | shared_ancestry_200 | wallet | 95827 | 31084 | core | 189690 | 46550 | core |
 | shared_ancestry_50 | kernel | 158 | 0 | core | 4098 | 4620 | coin-select |
+| shared_ancestry_50 | changeful | 158 | 7732 | coin-select | 4098 | 11560 | coin-select |
 | shared_ancestry_50 | wallet | 158 | 0 | core | 4098 | 4620 | coin-select |
+| smoke | changeful | 3304 | 15304 | coin-select | 5330 | 27330 | coin-select |
 | smoke | wallet | 3304 | 3304 | tie | 5330 | 6590 | coin-select |
 | subsidizing_ancestry_100 | kernel | 13706 | 20107 | coin-select | 51591 | 58460 | coin-select |
+| subsidizing_ancestry_100 | changeful | 13706 | 41725 | coin-select | 51591 | 79760 | coin-select |
 | subsidizing_ancestry_100 | wallet | 13706 | 20107 | coin-select | 51591 | 58460 | coin-select |
+| subsidizing_ancestry_20 | changeful | 11101 | 11101 | tie | 28870 | 28870 | tie |
 | subsidizing_ancestry_20 | wallet | 11101 | 25270 | coin-select | 28870 | 63260 | coin-select |
+| subsidizing_ancestry_200 | changeful | 21475 | 21475 | tie | 75880 | 75880 | tie |
 | subsidizing_ancestry_200 | wallet | 21475 | 40951 | coin-select | 75880 | 100240 | coin-select |
 | subsidizing_ancestry_50 | kernel | 449 | 6154 | coin-select | 25741 | 29690 | coin-select |
+| subsidizing_ancestry_50 | changeful | 742 | 10384 | coin-select | 24500 | 47200 | coin-select |
 | subsidizing_ancestry_50 | wallet | 742 | 6154 | coin-select | 24500 | 29690 | coin-select |
 | wallet_mixed_100 | kernel | 391 | 1 | core | 5491 | 7041 | coin-select |
+| wallet_mixed_100 | changeful | 604 | 6030 | coin-select | 4850 | 11420 | coin-select |
 | wallet_mixed_100 | wallet | 604 | 1 | core | 4850 | 7041 | coin-select |
 | wallet_mixed_20 | kernel | 519 | 519 | tie | 4809 | 4809 | tie |
+| wallet_mixed_20 | changeful | 604 | 604 | tie | 2330 | 2330 | tie |
 | wallet_mixed_20 | wallet | 604 | 519 | core | 2330 | 4809 | coin-select |
 | wallet_mixed_200 | kernel | 81 | 6917 | coin-select | 7321 | 15950 | coin-select |
+| wallet_mixed_200 | changeful | 81 | 7521 | coin-select | 7321 | 14110 | coin-select |
 | wallet_mixed_200 | wallet | 81 | 6917 | coin-select | 7321 | 15950 | coin-select |
 | wallet_mixed_50 | kernel | 555 | 0 | core | 3715 | 5550 | coin-select |
+| wallet_mixed_50 | changeful | 604 | 604 | tie | 2330 | 2330 | tie |
 | wallet_mixed_50 | wallet | 604 | 0 | core | 2330 | 5550 | coin-select |
 
 ## Selection differences
@@ -177,46 +265,71 @@ Cases where both runners produced a selection but chose different packages. The
 | adversarial_shared_200 | wallet | 6 | 11 | 5050 | 8022 | 0 | 0 | 10.0 | 10.0025 |
 | adversarial_shared_50 | kernel | 4 | 9 | 3799 | 6660 | 0 | 0 | 11.6534 | 10.0 |
 | adversarial_shared_50 | wallet | 2 | 9 | 2330 | 6660 | 0 | 0 | 10.0 | 10.0 |
+| high_feerate_100 | kernel | 8 | 10 | 23870 | 29297 | 0 | 0 | 40.3892 | 40.2985 |
+| high_feerate_100 | changeful | 7 | 7 | 21720 | 42520 | 0 | 19760 | 40.0 | 40.0 |
+| high_feerate_100 | wallet | 7 | 10 | 21720 | 29297 | 0 | 0 | 40.0 | 40.2985 |
+| high_feerate_20 | kernel | 4 | 5 | 18054 | 27998 | 0 | 11970 | 45.4761 | 41.2342 |
+| high_feerate_200 | kernel | 15 | 9 | 66591 | 102504 | 22635 | 70650 | 40.0186 | 40.0876 |
+| high_feerate_200 | changeful | 15 | 8 | 66591 | 101680 | 22635 | 70650 | 40.0186 | 40.0 |
+| high_feerate_200 | wallet | 15 | 8 | 66591 | 101680 | 22635 | 70650 | 40.0186 | 40.0 |
+| high_feerate_50 | changeful | 4 | 3 | 17200 | 43640 | 0 | 30996 | 40.0 | 40.0 |
+| high_feerate_50 | wallet | 4 | 6 | 17200 | 21200 | 0 | 0 | 40.0 | 40.5354 |
 | nested_ancestry_100 | kernel | 8 | 10 | 6224 | 25370 | 0 | 15212 | 10.408 | 10.0 |
+| nested_ancestry_100 | changeful | 5 | 5 | 4370 | 21970 | 0 | 15212 | 10.0 | 10.0 |
 | nested_ancestry_100 | wallet | 5 | 12 | 4370 | 24260 | 0 | 13046 | 10.0 | 10.0 |
 | nested_ancestry_20 | wallet | 1 | 14 | 1650 | 29130 | 0 | 16005 | 10.0 | 10.0 |
 | nested_ancestry_200 | kernel | 17 | 15 | 24088 | 32980 | 10359 | 18638 | 10.0075 | 10.0 |
+| nested_ancestry_200 | changeful | 17 | 10 | 24088 | 37940 | 10359 | 25446 | 10.0075 | 10.0 |
 | nested_ancestry_200 | wallet | 17 | 15 | 24088 | 32980 | 10359 | 18638 | 10.0075 | 10.0 |
 | nested_ancestry_50 | kernel | 7 | 10 | 16023 | 24840 | 9229 | 14175 | 10.0081 | 10.0 |
+| nested_ancestry_50 | changeful | 4 | 4 | 14400 | 14400 | 9229 | 9229 | 10.0 | 10.0 |
 | nested_ancestry_50 | wallet | 4 | 10 | 14400 | 24840 | 9229 | 14175 | 10.0 | 10.0 |
 | no_ancestry_100 | kernel | 5 | 9 | 4374 | 6660 | 0 | 0 | 11.1015 | 10.0 |
 | no_ancestry_100 | wallet | 4 | 16 | 3690 | 11420 | 0 | 0 | 10.0 | 10.0 |
 | no_ancestry_20 | kernel | 4 | 11 | 3616 | 8025 | 0 | 0 | 11.092 | 10.0062 |
+| no_ancestry_20 | changeful | 2 | 2 | 2330 | 2330 | 0 | 0 | 10.0 | 10.0 |
 | no_ancestry_20 | wallet | 2 | 11 | 2330 | 8025 | 0 | 0 | 10.0 | 10.0062 |
 | no_ancestry_200 | kernel | 10 | 14 | 7997 | 10060 | 0 | 0 | 10.8951 | 10.0 |
+| no_ancestry_200 | changeful | 9 | 10 | 7090 | 7770 | 0 | 0 | 10.0 | 10.0 |
 | no_ancestry_200 | wallet | 9 | 14 | 7090 | 10060 | 0 | 0 | 10.0 | 10.0 |
 | no_ancestry_50 | kernel | 6 | 10 | 4681 | 7341 | 0 | 0 | 10.132 | 10.0014 |
+| no_ancestry_50 | changeful | 4 | 4 | 3690 | 3690 | 0 | 0 | 10.0 | 10.0 |
 | no_ancestry_50 | wallet | 4 | 10 | 3690 | 7341 | 0 | 0 | 10.0 | 10.0014 |
 | private_ancestry_100 | kernel | 6 | 8 | 4637 | 5982 | 0 | 0 | 10.0368 | 10.0033 |
+| private_ancestry_100 | changeful | 6 | 5 | 4637 | 4370 | 0 | 0 | 10.0368 | 10.0 |
 | private_ancestry_100 | wallet | 6 | 8 | 4637 | 5982 | 0 | 0 | 10.0368 | 10.0033 |
+| private_ancestry_20 | changeful | 2 | 2 | 3640 | 6050 | 1048 | 2976 | 10.0 | 10.0 |
 | private_ancestry_20 | wallet | 2 | 7 | 3640 | 5438 | 1048 | 0 | 10.0 | 10.2604 |
 | private_ancestry_200 | kernel | 16 | 14 | 11420 | 23074 | 0 | 10080 | 10.0 | 10.0017 |
+| private_ancestry_200 | changeful | 16 | 11 | 11420 | 19350 | 0 | 8181 | 10.0 | 10.0 |
 | private_ancestry_200 | wallet | 16 | 14 | 11420 | 23074 | 0 | 10080 | 10.0 | 10.0017 |
 | private_ancestry_50 | kernel | 7 | 9 | 5486 | 8740 | 0 | 1456 | 10.3509 | 10.0 |
 | private_ancestry_50 | wallet | 3 | 9 | 5090 | 8740 | 1456 | 1456 | 10.0 | 10.0 |
 | shared_ancestry_100 | kernel | 11 | 7 | 15638 | 18985 | 6840 | 12177 | 10.0115 | 10.0823 |
+| shared_ancestry_100 | changeful | 11 | 5 | 15638 | 18640 | 6840 | 12843 | 10.0115 | 10.0 |
 | shared_ancestry_100 | wallet | 11 | 9 | 15638 | 18220 | 6840 | 10017 | 10.0115 | 10.0 |
 | shared_ancestry_20 | kernel | 4 | 4 | 9892 | 10094 | 5160 | 5160 | 10.1874 | 10.3955 |
 | shared_ancestry_20 | wallet | 2 | 5 | 4540 | 6580 | 1989 | 1989 | 10.0 | 10.0 |
 | shared_ancestry_200 | wallet | 109 | 12 | 189690 | 46550 | 95223 | 30480 | 10.0 | 10.0 |
 | shared_ancestry_50 | kernel | 5 | 6 | 4098 | 4620 | 0 | 0 | 10.401 | 10.0 |
+| shared_ancestry_50 | changeful | 5 | 3 | 4098 | 11560 | 0 | 7128 | 10.401 | 10.0 |
 | shared_ancestry_50 | wallet | 5 | 6 | 4098 | 4620 | 0 | 0 | 10.401 | 10.0 |
+| smoke | changeful | 2 | 2 | 5330 | 27330 | 2700 | 14700 | 10.0 | 10.0 |
 | smoke | wallet | 2 | 4 | 5330 | 6590 | 2700 | 2700 | 10.0 | 10.0 |
 | subsidizing_ancestry_100 | kernel | 7 | 11 | 51591 | 58460 | 13635 | 19503 | 10.0138 | 10.0 |
+| subsidizing_ancestry_100 | changeful | 7 | 7 | 51591 | 79760 | 13635 | 41121 | 10.0138 | 10.0 |
 | subsidizing_ancestry_100 | wallet | 7 | 11 | 51591 | 58460 | 13635 | 19503 | 10.0138 | 10.0 |
 | subsidizing_ancestry_20 | wallet | 1 | 13 | 28870 | 63260 | 10497 | 24666 | 10.0 | 10.0 |
 | subsidizing_ancestry_200 | wallet | 8 | 12 | 75880 | 100240 | 20871 | 40347 | 10.0 | 10.0 |
 | subsidizing_ancestry_50 | kernel | 7 | 10 | 25741 | 29690 | 138 | 6144 | 10.1223 | 10.0034 |
+| subsidizing_ancestry_50 | changeful | 5 | 3 | 24500 | 47200 | 138 | 9780 | 10.0 | 10.0 |
 | subsidizing_ancestry_50 | wallet | 5 | 10 | 24500 | 29690 | 138 | 6144 | 10.0 | 10.0034 |
 | wallet_mixed_100 | kernel | 7 | 10 | 5491 | 7041 | 0 | 0 | 10.7667 | 10.0014 |
+| wallet_mixed_100 | changeful | 6 | 6 | 4850 | 11420 | 0 | 5426 | 10.0 | 10.0 |
 | wallet_mixed_100 | wallet | 6 | 10 | 4850 | 7041 | 0 | 0 | 10.0 | 10.0014 |
 | wallet_mixed_20 | wallet | 2 | 4 | 2330 | 4809 | 0 | 0 | 10.0 | 11.1837 |
 | wallet_mixed_200 | kernel | 10 | 11 | 7321 | 15950 | 0 | 6917 | 10.1119 | 10.0 |
+| wallet_mixed_200 | changeful | 10 | 8 | 7321 | 14110 | 0 | 6917 | 10.1119 | 10.0 |
 | wallet_mixed_200 | wallet | 10 | 11 | 7321 | 15950 | 0 | 6917 | 10.1119 | 10.0 |
 | wallet_mixed_50 | kernel | 4 | 6 | 3715 | 5550 | 0 | 0 | 11.7563 | 9.982 |
 | wallet_mixed_50 | wallet | 2 | 6 | 2330 | 5550 | 0 | 0 | 10.0 | 9.982 |
@@ -228,27 +341,39 @@ objective, so a disagreement can be attributed rather than just observed.
 
 | fixture | track | runner | found optimum |
 |---|---|---|---|
+| adversarial_shared_20 | changeful | coin-select | yes |
 | adversarial_shared_20 | kernel | bitcoin-core | yes |
 | adversarial_shared_20 | kernel | coin-select | yes |
 | adversarial_shared_20 | wallet | coin-select | yes |
+| high_feerate_20 | changeful | coin-select | yes |
+| high_feerate_20 | kernel | bitcoin-core | yes |
+| high_feerate_20 | kernel | coin-select | yes |
+| high_feerate_20 | wallet | coin-select | yes |
+| nested_ancestry_20 | changeful | coin-select | yes |
 | nested_ancestry_20 | kernel | bitcoin-core | **no** |
 | nested_ancestry_20 | kernel | coin-select | **missed a solution** |
 | nested_ancestry_20 | wallet | coin-select | yes |
+| no_ancestry_20 | changeful | coin-select | yes |
 | no_ancestry_20 | kernel | bitcoin-core | yes |
 | no_ancestry_20 | kernel | coin-select | yes |
 | no_ancestry_20 | wallet | coin-select | yes |
+| private_ancestry_20 | changeful | coin-select | yes |
 | private_ancestry_20 | kernel | bitcoin-core | yes |
 | private_ancestry_20 | kernel | coin-select | yes |
 | private_ancestry_20 | wallet | coin-select | yes |
+| shared_ancestry_20 | changeful | coin-select | yes |
 | shared_ancestry_20 | kernel | bitcoin-core | **no** |
 | shared_ancestry_20 | kernel | coin-select | yes |
 | shared_ancestry_20 | wallet | coin-select | yes |
+| smoke | changeful | coin-select | yes |
 | smoke | kernel | bitcoin-core | **missed a solution** |
 | smoke | kernel | coin-select | yes |
 | smoke | wallet | coin-select | yes |
+| subsidizing_ancestry_20 | changeful | coin-select | yes |
 | subsidizing_ancestry_20 | kernel | bitcoin-core | **no** |
 | subsidizing_ancestry_20 | kernel | coin-select | **missed a solution** |
 | subsidizing_ancestry_20 | wallet | coin-select | yes |
+| wallet_mixed_20 | changeful | coin-select | yes |
 | wallet_mixed_20 | kernel | bitcoin-core | yes |
 | wallet_mixed_20 | kernel | coin-select | yes |
 | wallet_mixed_20 | wallet | coin-select | yes |

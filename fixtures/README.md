@@ -36,6 +36,7 @@ files are stale.
 
 | field | meaning |
 | --- | --- |
+| `feerate_sat_per_vb` vs `long_term_feerate_sat_per_vb` | Equal in every family except `high_feerate`. See that row below for why one family deliberately separates them. |
 | `search_budget` | Node budget for both searches. Must be `100000`: that is Core's compile-time `TOTAL_TRIES`, and the Core runner refuses anything else rather than compare unequal budgets. |
 | `feerate_sat_per_vb` | Target (effective) feerate. Integer, see [Weights](#weights-are-multiples-of-4). |
 | `long_term_feerate_sat_per_vb` | Feerate at which spending the change output later is priced. |
@@ -217,4 +218,5 @@ Seven families at sizes 20, 50, 100 and 200, plus a `smoke` fixture of 8 candida
 | `nested_ancestry` | Chains three to four deep that share a common root — transitive *and* shared. |
 | `subsidizing_ancestry` | A fat underpaying root spent by a child paying four times the target rate and by a sibling paying a tenth of it. Every package is still below target, so all three legitimately need bumping — but coin-select nets the rich child's surplus against its sibling's deficit while it searches, where Core charges each coin its own bump and refunds the overlap only afterwards. |
 | `wallet_mixed` | Mixed script types and values, a third of the coins unconfirmed, and a `max_weight` cap tight enough to bite. |
+| `high_feerate` | The `wallet_mixed` shape at 40 sat/vB against a 10 sat/vB long-term feerate. Puts Core's `CoinGrinder` inside the `> 3x long-term` gate its portfolio applies, and keeps Core's waste metric non-degenerate: at `feerate == long_term_feerate` every input's `fee - long_term_fee` is zero, so waste collapses to excess alone. |
 | `adversarial_shared` | One fat, badly underpaying ancestor hosting a block of small coins. Charged the whole bump each, every one of them has negative effective value and Core drops them from the BnB pool; together they clear the target and pay the bump once. |
