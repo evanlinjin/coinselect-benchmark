@@ -609,6 +609,10 @@ def build_summary(fixtures, records, problems, notes):
     w("changeless selection. Runtime and node counts are therefore compared directly, while")
     w("solution quality is only ever compared through the shared metrics below.\n")
 
+    w("## At a glance\n")
+    w(_at_a_glance(fixtures, by_key))
+    w("")
+
     for track in TRACKS:
         w(f"## Track: {track}\n")
         w(_track_table(fixtures, by_key, track))
@@ -651,6 +655,33 @@ def build_summary(fixtures, records, problems, notes):
             w(f"- {note}")
     w("")
     return "\n".join(out) + "\n"
+
+
+def _at_a_glance(fixtures, by_key):
+    """One row per track: how hard each engine worked and how the two objectives came out."""
+    lines = [
+        "| track | engine | median time | budget exhausted | no solution | wins on fee | wins on waste |",
+        "|" + "---|" * 7,
+    ]
+    for track in TRACKS:
+        pairs = [(by_key.get((n, track, "coin-select")), by_key.get((n, track, "bitcoin-core")))
+                 for n in sorted(fixtures)]
+        pairs = [(a, b) for a, b in pairs if a and b]
+        scored = [(a["metrics"], b["metrics"]) for a, b in pairs if a["metrics"] and b["metrics"]]
+        fee_wins = [sum(1 for a, b in scored if a["package_fee"] < b["package_fee"]),
+                    sum(1 for a, b in scored if b["package_fee"] < a["package_fee"])]
+        waste_wins = [sum(1 for a, b in scored if a["core_waste"] < b["core_waste"]),
+                      sum(1 for a, b in scored if b["core_waste"] < a["core_waste"])]
+        for slot, engine in ((0, "coin-select"), (1, "bitcoin-core")):
+            runs = [pair[slot]["raw"] for pair in pairs]
+            times = sorted(r["timing"]["wall_ns_median"] for r in runs)
+            lines.append(
+                f"| {track} | {engine} | {_fmt_us(times[len(times) // 2])} us "
+                f"| {sum(1 for r in runs if r['exhausted'] is False)} of {len(runs)} "
+                f"| {sum(1 for r in runs if not r['ok'])} "
+                f"| {fee_wins[slot]} of {len(scored)} | {waste_wins[slot]} of {len(scored)} |"
+            )
+    return "\n".join(lines)
 
 
 def _fmt_us(ns):

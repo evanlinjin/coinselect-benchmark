@@ -20,6 +20,15 @@ coin-select's `Changeless<LowestFee>` minimises the child transaction's fee over
 changeless selection. Runtime and node counts are therefore compared directly, while
 solution quality is only ever compared through the shared metrics below.
 
+## At a glance
+
+| track | engine | median time | budget exhausted | no solution | wins on fee | wins on waste |
+|---|---|---|---|---|---|---|
+| kernel | coin-select | 6398.9 us | 2 of 29 | 2 | 24 of 26 | 11 of 26 |
+| kernel | bitcoin-core | 690.6 us | 21 of 29 | 1 | 0 of 26 | 13 of 26 |
+| wallet | coin-select | 425.2 us | 1 of 29 | 0 | 28 of 29 | 9 of 29 |
+| wallet | bitcoin-core | 1375.4 us | 18 of 29 | 0 | 1 of 29 | 19 of 29 |
+
 ## Track: kernel
 
 | fixture | n | cs time (us) | core time (us) | cs rounds | core nodes | cs done | core done | cs pkg fee | core pkg fee | cs bump | core bump | cs covers core bump | same set |
