@@ -42,9 +42,12 @@ ancestor-set score does not evaluate the package as a whole: it takes the overpa
 its own and then judges what is left. Under that rule these packages are underfunded, and the
 transaction will not confirm as quickly as the target feerate implies.
 
-The asymmetry is one-directional across the whole matrix: on the 13 selections where the two
-figures differ, Core's combined bump is always the **larger** one. coin-select never charges more
-for ancestry than Core does, and sometimes charges materially less.
+The asymmetry runs one way across the whole matrix: on the 13 selections where the two figures
+differ, Core's combined bump is the **larger** one. That direction is what you would expect —
+whatever the mini-miner already mined pays at or above the target as a package, so folding it into
+the union can only drag the netted figure down — but it is not guaranteed in general: an
+ancestor-closed slice of the template need not clear the target on its own. Treat it as an
+observation about these fixtures, not a theorem.
 
 Worth raising on PR #64. The branch's own docs anticipate the opposite direction — "deficits are
 computed against the full ancestor set and may **over**estimate what Bitcoin Core would charge" —
