@@ -59,3 +59,26 @@ jobs:
         with:
           name: smoke-results
           path: results/
+
+  # The full matrix, on request only. Shared CI runners are noisy, so treat the timings from this
+  # job as indicative and rerun on a quiet machine before quoting them.
+  full:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Bitcoin Core build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake libboost-dev
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Full matrix
+        run: python3 bench.py all --oracle --clean
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: full-results
+          path: results/

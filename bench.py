@@ -174,6 +174,45 @@ class MiniMiner:
         return self._fee(sum(self.tx[a]["vsize"] for a in unmined)) - sum(self.tx[a]["fee"] for a in unmined)
 
 
+def core_waste(fixture, selected, summed_individual, combined):
+    """Core's waste metric for an arbitrary selection, as `SelectionResult::RecalculateWaste`
+    computes it with the wallet flow's parameters.
+
+    Having this here lets the report score coin-select's selections on Core's objective and vice
+    versa, which is the only way to compare two searches that minimise different things. The
+    report also checks it against the waste the Core runner reported for its own selection, so a
+    misreading of Core's accounting shows up as a harness failure.
+    """
+    by_id = fixture["_by_id"]
+    rate = fixture["feerate_sat_per_vb"]
+    long_term = fixture["long_term_feerate_sat_per_vb"]
+    discard = fixture["discard_feerate_sat_per_vb"]
+    dust_rate = fixture["dust_relay_feerate_sat_per_vb"]
+
+    change_out_vb = fixture["change"]["output_weight"] // 4
+    change_spend_vb = fixture["change"]["spend_weight"] // 4
+    change_fee = rate * change_out_vb
+    cost_of_change = discard * change_spend_vb + change_fee
+    min_viable_change = max(discard * change_spend_vb + 1, dust_rate * (change_out_vb + change_spend_vb))
+
+    # Core's tx_noinputs_size, i.e. the same conversion core-runner makes.
+    selection_target = fixture["target"]["value"] + rate * ((fixture["target"]["non_input_weight"] + 4) // 4)
+
+    input_vb = sum(by_id[i]["input_weight"] // 4 for i in selected)
+    coin_fee = rate * input_vb + summed_individual
+    coin_long_term_fee = long_term * input_vb
+    discount = max(0, summed_individual - combined)
+    effective_value = sum(by_id[i]["value"] for i in selected) - coin_fee + discount
+
+    waste = coin_fee - coin_long_term_fee - discount
+    change = effective_value - selection_target - change_fee
+    if change < min_viable_change:
+        waste += effective_value - selection_target  # excess burned to fees
+    else:
+        waste += cost_of_change
+    return waste
+
+
 def evaluate(fixture, selected, change_value):
     """Package-quality metrics for one selection, computed only from the fixture."""
     if not selected:
@@ -218,6 +257,9 @@ def evaluate(fixture, selected, change_value):
         "core_summed_individual_bump": summed_individual,
         "core_combined_bump": combined,
         "core_bump_discount": max(0, summed_individual - combined),
+        # Both objectives, for both engines' selections, so the two searches can be compared on
+        # each other's terms rather than only on their own.
+        "core_waste": core_waste(fixture, selected, summed_individual, combined),
         "package_fee": package_fee,
         "package_weight": package_weight,
         "package_feerate_sat_per_vb": round(package_fee / package_vsize, 4),
@@ -258,6 +300,22 @@ def run(cmd, **kwargs):
 
 def capture(cmd, cwd=None):
     return subprocess.run(cmd, cwd=cwd, check=True, capture_output=True, text=True).stdout.strip()
+
+
+def compile_flags(build_dir, target):
+    """The flags the compiler was actually invoked with.
+
+    Read from the generated build rules rather than from CMakeCache.txt: the cache still holds
+    the unmodified `CMAKE_CXX_FLAGS_RELEASE`, while `core-runner/CMakeLists.txt` strips `-DNDEBUG`
+    from it, so the cache would misreport the build.
+    """
+    rules = pathlib.Path(build_dir) / "CMakeFiles" / f"{target}.dir" / "flags.make"
+    if not rules.exists():
+        return None
+    for line in rules.read_text().splitlines():
+        if line.startswith("CXX_FLAGS"):
+            return " ".join(line.partition("=")[2].split())
+    return None
 
 
 def clone_pinned(name, dest, patches=()):
@@ -323,7 +381,10 @@ def cmd_setup(args):
         "rustc": capture(["rustc", "--version"]),
         "cmake": capture(["cmake", "--version"]).splitlines()[0],
         "core_rev": capture(["git", "-C", str(core), "rev-parse", "HEAD"]),
-        "core_cxx_flags": "-O3, NDEBUG stripped (Core refuses to build with assertions compiled out)",
+        # The flags the runner (and Core's own coinselection.cpp inside it) is actually built
+        # with. NDEBUG is absent on purpose: Core refuses to compile with assertions off.
+        "core_runner_cxx_flags": compile_flags(runner_build, "core-runner"),
+        "rust_runner_profile": "release, codegen-units=1, lto=off, debug=true",
         "core_patches": [p.name for p in sorted((ROOT / "patches").glob("*.patch"))],
         "coin_select_rev": PINS["coin_select"]["rev"],
         "pins": PINS,
@@ -382,7 +443,7 @@ CSV_COLUMNS = [
     "ancestors_in_union", "union_bump", "core_summed_individual_bump", "core_combined_bump",
     "covers_union_bump", "covers_core_bump",
     "package_fee", "package_weight", "package_feerate_sat_per_vb", "package_meets_target",
-    "target_shortfall", "within_max_weight", "waste", "score", "matches_oracle",
+    "target_shortfall", "within_max_weight", "core_waste", "waste", "score", "matches_oracle",
 ]
 
 
@@ -419,6 +480,8 @@ def cross_check(fixture, raw, metrics, problems):
                           ("combined_bump_fee", "core_combined_bump")):
             if key in native and native[key] != metrics[mine]:
                 problems.append(f"{tag}: {key} {native[key]} != harness {metrics[mine]}")
+        if "waste" in native and native["waste"] != metrics["core_waste"]:
+            problems.append(f"{tag}: waste {native['waste']} != harness {metrics['core_waste']}")
         if "input_weight" in native:
             # Core's SelectionResult tracks the summed candidate weights only: no input-count
             # varint and no segwit marker, both of which the shared model puts elsewhere.
@@ -528,7 +591,10 @@ def build_summary(fixtures, records, problems, notes):
     w(f"- coin-select: `{PINS['coin_select']['rev']}` ({PINS['coin_select']['describes']})")
     if env:
         w(f"- host: {env.get('host')} ({env.get('cpu_count')} cpus)")
-        w(f"- compilers: {env.get('cxx')}; {env.get('rustc')}")
+        w(f"- compilers: {env.get('cxx')} ({env.get('core_runner_cxx_flags')}); {env.get('rustc')}"
+          f" ({env.get('rust_runner_profile')})")
+        w(f"- Core patches applied: {', '.join(env.get('core_patches') or ['none'])}"
+          " (instrumentation only, see patches/README.md)")
     sample = next(iter(fixtures.values()), None)
     if sample:
         w(f"- search budget: {sample['search_budget']} (Core's compile-time `TOTAL_TRIES`;"
@@ -547,6 +613,13 @@ def build_summary(fixtures, records, problems, notes):
         w(f"## Track: {track}\n")
         w(_track_table(fixtures, by_key, track))
         w("")
+
+    w("## Objective cross-scores\n")
+    w("Each engine's selection scored on **both** objectives by the harness. Core minimises the")
+    w("`waste` column, coin-select minimises fee; each is expected to win its own column, so the")
+    w("interesting cases are the ones where an engine also wins the other's.\n")
+    w(_cross_scores(fixtures, by_key))
+    w("")
 
     w("## Selection differences\n")
     diffs = _selection_differences(fixtures, by_key)
@@ -623,6 +696,34 @@ def _track_table(fixtures, by_key, track):
             f"| {same} |"
         )
     return "\n".join(lines)
+
+
+def _cross_scores(fixtures, by_key):
+    lines = [
+        "| fixture | track | cs waste | core waste | waste winner | cs pkg fee | core pkg fee | fee winner |",
+        "|" + "---|" * 8,
+    ]
+    for name in sorted(fixtures):
+        for track in TRACKS:
+            cs = by_key.get((name, track, "coin-select"))
+            core = by_key.get((name, track, "bitcoin-core"))
+            if not cs or not core or not cs["metrics"] or not core["metrics"]:
+                continue
+            a, b = cs["metrics"], core["metrics"]
+            waste_winner = _winner(a["core_waste"], b["core_waste"])
+            fee_winner = _winner(a["package_fee"], b["package_fee"])
+            lines.append(
+                f"| {name} | {track} | {a['core_waste']} | {b['core_waste']} | {waste_winner} "
+                f"| {a['package_fee']} | {b['package_fee']} | {fee_winner} |"
+            )
+    return "\n".join(lines)
+
+
+def _winner(coin_select, core):
+    """Which engine scored lower on a metric where lower is better."""
+    if coin_select == core:
+        return "tie"
+    return "coin-select" if coin_select < core else "core"
 
 
 def _selection_differences(fixtures, by_key):

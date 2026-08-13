@@ -7,7 +7,8 @@
  "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
  "cmake": "cmake version 4.1.6",
  "core_rev": "9be056a8a72b624dae9623b2f7bded92c2a21c91",
- "core_cxx_flags": "-O3, NDEBUG stripped (Core refuses to build with assertions compiled out)",
+ "core_runner_cxx_flags": "-O3 -std=c++20",
+ "rust_runner_profile": "release, codegen-units=1, lto=off, debug=true",
  "core_patches": [
   "core-bnb-instrumentation.patch"
  ],

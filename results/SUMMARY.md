@@ -9,7 +9,8 @@ runner, so the two columns are scored by the same formula.
 - Bitcoin Core: `9be056a8a72b624dae9623b2f7bded92c2a21c91` (v31.1)
 - coin-select: `b2f98ab852e0425494d53f7260c4aa82f6c0830d` (PR #64 head, branch feature/ancestor-aware-selection-no-clustor)
 - host: Linux-7.1.7-x86_64-with-glibc2.42 (24 cpus)
-- compilers: g++ (GCC) 15.2.0; rustc 1.97.1 (8bab26f4f 2026-07-14)
+- compilers: g++ (GCC) 15.2.0 (-O3 -std=c++20); rustc 1.97.1 (8bab26f4f 2026-07-14) (release, codegen-units=1, lto=off, debug=true)
+- Core patches applied: core-bnb-instrumentation.patch (instrumentation only, see patches/README.md)
 - search budget: 100000 (Core's compile-time `TOTAL_TRIES`; coin-select is given the same number of branch-and-bound rounds)
 - timing: 1 warm-up run(s), 5 measured run(s), median reported
 
@@ -86,6 +87,70 @@ solution quality is only ever compared through the shared metrics below.
 | wallet_mixed_20 | 20 | 7.1 | 375.1 | 5 | 2546 | yes | yes | 2330 | 4809 | 0 | 0 | yes | **no** |
 | wallet_mixed_200 | 200 | 7308.4 | 1550.1 | 1107 | 100000 | yes | budget | 7321 | 15950 | 0 | 6917 | yes | **no** |
 | wallet_mixed_50 | 50 | 113.9 | 1928.1 | 55 | 100000 | yes | budget | 2330 | 5550 | 0 | 0 | yes | **no** |
+
+## Objective cross-scores
+
+Each engine's selection scored on **both** objectives by the harness. Core minimises the
+`waste` column, coin-select minimises fee; each is expected to win its own column, so the
+interesting cases are the ones where an engine also wins the other's.
+
+| fixture | track | cs waste | core waste | waste winner | cs pkg fee | core pkg fee | fee winner |
+|---|---|---|---|---|---|---|---|
+| adversarial_shared_100 | kernel | 28 | 2 | core | 4648 | 7342 | coin-select |
+| adversarial_shared_100 | wallet | 604 | 2 | core | 3690 | 7342 | coin-select |
+| adversarial_shared_20 | kernel | 604 | 35 | core | 4674 | 5335 | coin-select |
+| adversarial_shared_20 | wallet | 604 | 35 | core | 2330 | 5335 | coin-select |
+| adversarial_shared_200 | kernel | 639 | 2 | core | 5939 | 8022 | coin-select |
+| adversarial_shared_200 | wallet | 604 | 2 | core | 5050 | 8022 | coin-select |
+| adversarial_shared_50 | kernel | 539 | 0 | core | 3799 | 6660 | coin-select |
+| adversarial_shared_50 | wallet | 604 | 0 | core | 2330 | 6660 | coin-select |
+| nested_ancestry_100 | kernel | 244 | 15816 | coin-select | 6224 | 25370 | coin-select |
+| nested_ancestry_100 | wallet | 604 | 13650 | coin-select | 4370 | 24260 | coin-select |
+| nested_ancestry_20 | wallet | 604 | 16609 | coin-select | 1650 | 29130 | coin-select |
+| nested_ancestry_200 | kernel | 10377 | 19242 | coin-select | 24088 | 32980 | coin-select |
+| nested_ancestry_200 | wallet | 10377 | 19242 | coin-select | 24088 | 32980 | coin-select |
+| nested_ancestry_50 | kernel | 9242 | 14779 | coin-select | 16023 | 24840 | coin-select |
+| nested_ancestry_50 | wallet | 9833 | 14779 | coin-select | 14400 | 24840 | coin-select |
+| no_ancestry_100 | kernel | 434 | 0 | core | 4374 | 6660 | coin-select |
+| no_ancestry_100 | wallet | 604 | 0 | core | 3690 | 11420 | coin-select |
+| no_ancestry_20 | kernel | 356 | 5 | core | 3616 | 8025 | coin-select |
+| no_ancestry_20 | wallet | 604 | 5 | core | 2330 | 8025 | coin-select |
+| no_ancestry_200 | kernel | 657 | 0 | core | 7997 | 10060 | coin-select |
+| no_ancestry_200 | wallet | 604 | 0 | core | 7090 | 10060 | coin-select |
+| no_ancestry_50 | kernel | 61 | 1 | core | 4681 | 7341 | coin-select |
+| no_ancestry_50 | wallet | 604 | 1 | core | 3690 | 7341 | coin-select |
+| private_ancestry_100 | kernel | 17 | 2 | core | 4637 | 5982 | coin-select |
+| private_ancestry_100 | wallet | 17 | 2 | core | 4637 | 5982 | coin-select |
+| private_ancestry_20 | kernel | 138 | 138 | tie | 5438 | 5438 | tie |
+| private_ancestry_20 | wallet | 1652 | 138 | core | 3640 | 5438 | coin-select |
+| private_ancestry_200 | kernel | 0 | 10084 | coin-select | 11420 | 23074 | coin-select |
+| private_ancestry_200 | wallet | 0 | 10084 | coin-select | 11420 | 23074 | coin-select |
+| private_ancestry_50 | kernel | 186 | 1456 | coin-select | 5486 | 8740 | coin-select |
+| private_ancestry_50 | wallet | 2060 | 1456 | core | 5090 | 8740 | coin-select |
+| shared_ancestry_100 | kernel | 6858 | 12332 | coin-select | 15638 | 18985 | coin-select |
+| shared_ancestry_100 | wallet | 6858 | 10621 | coin-select | 15638 | 18220 | coin-select |
+| shared_ancestry_20 | kernel | 5342 | 5544 | coin-select | 9892 | 10094 | coin-select |
+| shared_ancestry_20 | wallet | 2593 | 2593 | tie | 4540 | 6580 | coin-select |
+| shared_ancestry_200 | wallet | 95827 | 31084 | core | 189690 | 46550 | core |
+| shared_ancestry_50 | kernel | 158 | 0 | core | 4098 | 4620 | coin-select |
+| shared_ancestry_50 | wallet | 158 | 0 | core | 4098 | 4620 | coin-select |
+| smoke | wallet | 604 | 4204 | coin-select | 9650 | 15710 | coin-select |
+| subsidizing_ancestry_100 | kernel | 127 | 1975 | coin-select | 33887 | 44334 | coin-select |
+| subsidizing_ancestry_100 | wallet | 604 | 1975 | coin-select | 19370 | 44334 | coin-select |
+| subsidizing_ancestry_20 | kernel | 3 | 2256 | coin-select | 18617 | 33758 | coin-select |
+| subsidizing_ancestry_20 | wallet | 5608 | 2256 | core | 17926 | 33758 | coin-select |
+| subsidizing_ancestry_200 | kernel | 8 | 3366 | coin-select | 58821 | 89160 | coin-select |
+| subsidizing_ancestry_200 | wallet | 4141 | 3366 | core | 57883 | 89160 | coin-select |
+| subsidizing_ancestry_50 | kernel | 69 | 5 | core | 56089 | 75225 | coin-select |
+| subsidizing_ancestry_50 | wallet | 604 | 5 | core | 34970 | 75225 | coin-select |
+| wallet_mixed_100 | kernel | 391 | 1 | core | 5491 | 7041 | coin-select |
+| wallet_mixed_100 | wallet | 604 | 1 | core | 4850 | 7041 | coin-select |
+| wallet_mixed_20 | kernel | 519 | 519 | tie | 4809 | 4809 | tie |
+| wallet_mixed_20 | wallet | 604 | 519 | core | 2330 | 4809 | coin-select |
+| wallet_mixed_200 | kernel | 81 | 6917 | coin-select | 7321 | 15950 | coin-select |
+| wallet_mixed_200 | wallet | 81 | 6917 | coin-select | 7321 | 15950 | coin-select |
+| wallet_mixed_50 | kernel | 555 | 0 | core | 3715 | 5550 | coin-select |
+| wallet_mixed_50 | wallet | 604 | 0 | core | 2330 | 5550 | coin-select |
 
 ## Selection differences
 

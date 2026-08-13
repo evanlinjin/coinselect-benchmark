@@ -42,6 +42,10 @@ ancestor-set score does not evaluate the package as a whole: it takes the overpa
 its own and then judges what is left. Under that rule these packages are underfunded, and the
 transaction will not confirm as quickly as the target feerate implies.
 
+The asymmetry is one-directional across the whole matrix: on the 13 selections where the two
+figures differ, Core's combined bump is always the **larger** one. coin-select never charges more
+for ancestry than Core does, and sometimes charges materially less.
+
 Worth raising on PR #64. The branch's own docs anticipate the opposite direction — "deficits are
 computed against the full ancestor set and may **over**estimate what Bitcoin Core would charge" —
 and this is the case where the union netting underestimates instead.
@@ -100,15 +104,30 @@ present. `shared_ancestry_200` hits the same wall on both tracks (620 ms, budget
 This is the sharpest actionable result for the branch: the ancestor-aware path is not merely
 slower per node, it can fail to answer a twenty-coin problem.
 
-## 5. Wallet-track outcomes
+## 5. Outcomes, scored on both objectives
 
-On the track that reflects what a wallet would actually build, coin-select produced the cheaper
-package on **28 of 29** fixtures, with a median Core-to-coin-select package-fee ratio of **1.9x**.
+Scoring each engine's selection on *both* metrics — the harness computes Core's waste formula for
+coin-select's selections and package fee for Core's — the picture is balanced rather than
+one-sided:
 
-Read with care. Core's portfolio minimises waste, not fee, and its knapsack and single-random-draw
-paths deliberately aim for a privacy-friendly change amount rather than the smallest fee — Core is
-not trying to win this column. The one fixture Core wins, `shared_ancestry_200`, is the one where
-coin-select hit its round budget and fell back to a much worse selection (189690 against 46550).
+| track | coin-select cheaper package | lower waste: coin-select | lower waste: Core | tie |
+| --- | --- | --- | --- | --- |
+| kernel | 24 of 26 | 11 | 13 | 2 |
+| wallet | 28 of 29 | 9 | 19 | 1 |
+
+Each engine wins its own objective most of the time, which is what should happen. The notable part
+is that coin-select's selections also beat Core on Core's own waste metric in 11 of 26 kernel
+fixtures and 9 of 29 wallet fixtures, without optimising for it — the ancestor-aware effective
+values it searches with are simply better informed.
+
+Read the fee column with care. Core's portfolio minimises waste, and its knapsack and
+single-random-draw paths deliberately aim for a privacy-friendly change amount rather than the
+smallest fee, so it is not trying to win that column. The one fixture Core wins outright,
+`shared_ancestry_200`, is the one where coin-select hit its round budget and fell back to a much
+worse selection (189690 against 46550).
+
+The harness's reimplementation of Core's waste formula agrees with the waste Core itself reports
+on all 57 of its own selections, which is what makes the cross-scoring trustworthy.
 
 ## Verification
 
