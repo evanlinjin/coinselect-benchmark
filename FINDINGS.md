@@ -84,12 +84,16 @@ so "Core missed it" covers both the search and that filter. Both are part of how
 
 | | coin-select | Bitcoin Core |
 | --- | --- | --- |
-| kernel, median wall clock | 8039 us | 663 us |
+| kernel, median wall clock | ~7000-8000 us | ~530-660 us |
 | kernel, budget exhausted | **6 of 29** fixtures | 21 of 29 |
 | kernel, returned no solution | **4 of 29** | 1 of 29 |
-| kernel, median cost per node | ~1890 ns/round | ~7 ns/node |
-| wallet, median wall clock | 993 us | 1412 us |
+| kernel, median cost per node | ~1900 ns/round | ~7 ns/node |
+| wallet, median wall clock | ~870-990 us | ~1150-1410 us |
 | wallet, budget exhausted | 3 of 29 fixtures | 18 of 29 |
+
+Wall-clock medians move about 15% between runs on this machine; the counts, the selections and
+every derived figure are byte-identical run to run. Treat the times as orders of magnitude and the
+counts as exact.
 
 Core's depth-first search is roughly 280x cheaper per node and spends that speed running out its
 100,000-node budget on essentially every fixture with 50 or more candidates. coin-select's
@@ -98,11 +102,11 @@ fixtures, but each round costs about two microseconds — it clones a selector, 
 and pushes onto a heap.
 
 The failures matter more than the medians. On `subsidizing_ancestry_20` — twenty candidates, six
-unconfirmed ancestors — `Changeless<LowestFee>` burns all 100,000 rounds in 178 ms and returns
+unconfirmed ancestors — `Changeless<LowestFee>` burns all 100,000 rounds — about 180 ms — and returns
 **no solution**, while the oracle confirms an eleven-input changeless solution exists and Core
-answers in **52 nodes and 2 microseconds**. `nested_ancestry_20` fails the same way, and
+answers in **52 nodes and a couple of microseconds**. `nested_ancestry_20` fails the same way, and
 `shared_ancestry_200` and `subsidizing_ancestry_200` exhaust the budget after more than half a
-second.
+second each.
 
 The cause is visible in the branch's own source. `Changeless::change_unavoidable` gives up its
 prune outright when `problem.has_ancestors()`, and `LowestFee::bound` swaps to the relaxed
