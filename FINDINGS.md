@@ -7,7 +7,7 @@ report and `results/results.csv` the full matrix behind everything below.
 - Bitcoin Core `9be056a8a72b624dae9623b2f7bded92c2a21c91` (v31.1), coin-selection algorithms
   unmodified apart from the node-count instrumentation in `patches/`
 - coin-select `b2f98ab852e0425494d53f7260c4aa82f6c0830d` (PR #64 head)
-- 29 fixtures (7 families x 4 sizes, plus the smoke fixture), both tracks, 100,000-node budget
+- 33 fixtures (8 families x 4 sizes, plus the smoke fixture), three tracks, 100,000-node budget
 - 2 warm-up runs and 9 measured runs per case, median reported
 - Linux 7.1.7 x86-64, 24 cores, GCC 15.2.0 `-O3` / rustc 1.97.1 `--release`
 
@@ -155,7 +155,43 @@ on every one of its own selections, which is what makes the cross-scoring trustw
 3. **The in-search union is worth having** (finding 2): it finds selections Core's post-hoc
    discount structurally cannot reach.
 
-## 6. Combining with the delta-aware branch (PR #53)
+## 6. The change-producing pair: `LowestFee` vs `CoinGrinder`
+
+`Changeless<LowestFee>` exists in the kernel track only to match Core's changeless
+`SelectCoinsBnB`. Core's counterpart to *bare* `LowestFee` is `CoinGrinder`, and the `changeful`
+track pairs them. The result inverts the kernel track completely.
+
+| | coin-select (`LowestFee`) | Bitcoin Core (`CoinGrinder`) |
+| --- | --- | --- |
+| median wall clock | 937 us | **4.4 us** |
+| median nodes | ~500 | **~24** |
+| budget exhausted | 3 of 33 | **0 of 33** |
+| returned no solution | 1 of 33 | **0 of 33** |
+| lower waste | **15** of 32 | 0 of 32 |
+| cheaper package | **15** of 32 | 1 of 32 |
+
+`CoinGrinder` is ~200x faster, never exhausts its budget, and never fails — its objective is
+minimum *selected input weight*, which is monotone as inputs are added and so bounds beautifully.
+Node counts run 2 to 1582 against coin-select's 2 to 100000.
+
+It also loses on quality every time the two disagree: 15-0 on Core's own waste metric, 15-1 on
+package fee, the rest ties. Minimum weight is not minimum fee — `CoinGrinder` must fund
+`target + change_target` and is indifferent to how far it overshoots, so it lands on much larger
+packages. On `high_feerate_50` that is waste 38710 against 11854 and package fee 43640 against
+17200, and this is inside the `> 3x long-term feerate` gate where Core actually reaches for it.
+
+Read it as an objective difference, not a verdict: `CoinGrinder` is one member of a portfolio, and
+`ChooseSelectionResult` picks the least-waste result across all four. Run alone it is being asked
+a question it was not designed to answer alone — which is exactly the kernel-track caveat, pointed
+the other way.
+
+Two things worth carrying away. First, the two engines have opposite failure shapes: on the
+changeless pair coin-select explores far fewer nodes but each is expensive, while on the
+change-producing pair Core explores far fewer nodes *and* they are cheap. Second, bare `LowestFee`
+is markedly healthier than `Changeless<LowestFee>` — 3 budget exhaustions against 6, one failure
+against four — which is the same conclusion finding 4 reached from the other direction.
+
+## 7. Combining with the delta-aware branch (PR #53)
 
 `bench.py compare-revs` A/Bs two coin-select revisions on these fixtures. Run against PR #64 head
 versus [`feature/ancestor-aware-with-view`][withview], which rebases [PR #53][pr53]'s delta-aware
