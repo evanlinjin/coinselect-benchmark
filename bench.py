@@ -866,10 +866,12 @@ def build_runner_at(repo, rev):
     (dest / "Cargo.toml").write_text(manifest)
 
     binary = dest / "target" / "release" / "coinselect-bench-runner"
-    for features in ([], ["selection-view"]):
+    # The default features match the pinned revision's API; `--no-default-features` reaches the
+    # pre-PR-#53 shape. Trying both covers either side of that change without inspecting the tree.
+    for features in ("default", "no-default-features"):
         cmd = ["cargo", "build", "--release", "--manifest-path", str(dest / "Cargo.toml")]
-        if features:
-            cmd += ["--features", ",".join(features)]
+        if features == "no-default-features":
+            cmd += ["--no-default-features"]
         print("$ " + " ".join(cmd), flush=True)
         built = subprocess.run(cmd, capture_output=True, text=True)
         if built.returncode == 0:

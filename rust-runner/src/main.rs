@@ -1,4 +1,5 @@
-//! Fixture-driven runner for `bdk_coin_select` (the ancestor-aware branch, PR #64).
+//! Fixture-driven runner for `bdk_coin_select`, pinned by `../../pins.json` to the
+//! ancestor-aware branch built on the delta-aware branch-and-bound evaluator.
 //!
 //! Reads one fixture (see `../fixtures/README.md`), runs one track, and writes a JSON
 //! result to stdout. The Bitcoin Core runner in `../core-runner` speaks the same

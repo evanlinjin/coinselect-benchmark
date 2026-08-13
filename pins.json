@@ -6,9 +6,9 @@
   "why": "latest tagged release at the time the harness was written; the coin-selection algorithms are used as-is, with only the instrumentation patch in patches/ applied"
  },
  "coin_select": {
-  "repo": "https://github.com/bitcoindevkit/coin-select.git",
-  "rev": "b2f98ab852e0425494d53f7260c4aa82f6c0830d",
-  "describes": "PR #64 head, branch feature/ancestor-aware-selection-no-clustor",
-  "why": "the ancestor-aware selection branch this benchmark exists to measure"
+  "repo": "https://github.com/evanlinjin/coin-select.git",
+  "rev": "bdcb1f064cd20ab4d864e6f040f0d45a6fd5e8fc",
+  "describes": "feature/ancestor-aware-with-view: PR #64 (ancestor-aware selection) with PR #53 (delta-aware SelectionView) rebased on top",
+  "why": "the ancestor-aware selection work this benchmark exists to measure, on the delta-aware branch-and-bound evaluator it is meant to ship with"
  }
 }

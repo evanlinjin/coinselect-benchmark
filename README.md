@@ -1,7 +1,9 @@
 # coinselect-benchmark
 
 An apples-to-apples benchmark of ancestor-aware coin selection: [`bdk_coin_select`][coin-select]
-(the ancestor-aware branch, [PR #64][pr64]) against [Bitcoin Core][core]'s wallet coin selection.
+on the [`feature/ancestor-aware-with-view`][branch] branch — ancestor-aware selection
+([PR #64][pr64]) on the delta-aware branch-and-bound evaluator ([PR #53][pr53]) — against
+[Bitcoin Core][core]'s wallet coin selection.
 
 Answers [bitcoindevkit/coin-select#67][issue67].
 
@@ -134,7 +136,9 @@ missed it" can mean either the search or that filter.
 - Both revisions are pinned by commit in `pins.json`; `bench.py setup` checks out exactly those
   and re-applies patches from scratch every time, so it is idempotent.
 - `rust-runner/Cargo.toml` pins the same coin-select revision; setup refuses to build if the two
-  pins have drifted apart.
+  pins have drifted apart. The runner's `selection-view` feature is on by default because the
+  pinned revision takes `&SelectionView` in `BnbMetric`; build with `--no-default-features` for a
+  revision from before that change.
 - Fixtures are deterministic from a per-fixture seed and are checked in.
 - Core is built at `-O3` with assertions on (it refuses to compile with `NDEBUG`); the Rust runner
   at `--release` with `codegen-units = 1`. Compiler versions, host and the applied patch list are
@@ -171,6 +175,8 @@ missed it" can mean either the search or that filter.
   the runner always searches the combined pool.
 
 [coin-select]: https://github.com/bitcoindevkit/coin-select
+[branch]: https://github.com/evanlinjin/coin-select/tree/feature/ancestor-aware-with-view
 [pr64]: https://github.com/bitcoindevkit/coin-select/pull/64
+[pr53]: https://github.com/bitcoindevkit/coin-select/pull/53
 [issue67]: https://github.com/bitcoindevkit/coin-select/issues/67
 [core]: https://github.com/bitcoin/bitcoin
