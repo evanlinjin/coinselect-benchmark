@@ -88,6 +88,11 @@ selector, evaluates a bound, and pushes onto a heap.
 Neither number is a verdict on its own. Core finishing "fast" usually means it stopped early with
 whatever it had; coin-select finishing "slow" usually means it proved it had the best answer.
 
+The memory profiles differ in kind as well as degree. Core's depth-first search carries one path,
+so its peak RSS is flat process baseline (~17 MB) on every fixture. coin-select's priority queue
+holds a `CoinSelector` per live branch, and peak RSS ranges from 2.9 MB up to 23 MB — the top of
+that range being `shared_ancestry_200`, the fixture where it exhausts its round budget.
+
 ## 4. coin-select's branch and bound can blow its budget on 20 candidates
 
 `nested_ancestry_20` — twenty candidates, nine unconfirmed ancestors in a shared, three-deep

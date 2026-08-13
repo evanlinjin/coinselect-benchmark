@@ -110,7 +110,10 @@ runner found the best answer to the question it was asking.
 - Timing is one warm-up run and five measured runs per case by default (`--warmup`, `--repeat`);
   the median is reported, and only the search itself is inside the timed region — fixture parsing
   and problem construction are not.
-- Peak RSS is process-wide, so it is a ceiling rather than a measurement of the search.
+- Peak RSS is process-wide and read before the oracle runs. It tracks the search for the
+  coin-select runner (2.9 MB to 23 MB across the matrix, since the priority queue holds a branch
+  per live node); the Core runner sits at a flat ~17 MB of process baseline on every fixture, so
+  its figure says nothing about the search and the two are not comparable.
 
 ## Known limits
 

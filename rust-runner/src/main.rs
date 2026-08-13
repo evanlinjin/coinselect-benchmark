@@ -383,6 +383,9 @@ fn main() {
         last = Some(result);
     }
     let mut result = last.expect("at least one repeat runs");
+    // Read the high-water mark before the oracle runs: brute forcing allocates, and the number
+    // is supposed to describe the search.
+    let peak_rss = peak_rss_kb();
 
     // Single random draw fallback, as a wallet would: only on the wallet track, and only when
     // branch and bound came back empty. Not timed as part of the search comparison.
@@ -452,7 +455,7 @@ fn main() {
             wall_ns_max: *samples.iter().max().unwrap(),
             wall_ns_median: median(samples),
         },
-        peak_rss_kb: peak_rss_kb(),
+        peak_rss_kb: peak_rss,
         native: native_out,
         oracle,
     };
