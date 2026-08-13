@@ -10,6 +10,12 @@ bdk_coin_select = { git = "https://github.com/bitcoindevkit/coin-select.git", re
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 
+[features]
+# PR #53 moved the BnbMetric read methods behind `CoinSelector::compute_view()`. Enable this to
+# build against a revision that has it; `bench.py compare-revs` picks the right one by trying
+# both. Nothing else in the runner differs between the two API shapes.
+selection-view = []
+
 [profile.release]
 debug = true
 lto = false

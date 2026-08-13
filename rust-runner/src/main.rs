@@ -22,6 +22,24 @@ use serde::Serialize;
 mod fixture;
 use fixture::{varint_size, Fixture, CONFIRMED};
 
+/// Hands a `&CoinSelector` to a [`BnbMetric`] in whichever form the pinned revision wants.
+///
+/// Before PR #53 the metric methods take `&CoinSelector` directly; after it they take a
+/// `&SelectionView` obtained from `compute_view()`. Only the call form differs, so one macro
+/// keeps a single runner source building against either side of that change.
+#[cfg(not(feature = "selection-view"))]
+macro_rules! view {
+    ($cs:expr) => {
+        $cs
+    };
+}
+#[cfg(feature = "selection-view")]
+macro_rules! view {
+    ($cs:expr) => {
+        &$cs.compute_view()
+    };
+}
+
 /// Largest candidate count we are willing to brute force (2^20 subsets).
 const ORACLE_MAX_CANDIDATES: usize = 20;
 
@@ -321,7 +339,7 @@ fn run_oracle<M: BnbMetric + Copy>(
                 cs.select(i);
             }
         }
-        if let Some(score) = metric.score(&cs) {
+        if let Some(score) = metric.score(view!(&cs)) {
             if best.map_or(true, |(b, _)| score < b) {
                 best = Some((score, mask));
             }
@@ -419,7 +437,7 @@ fn main() {
             let drain = match srd_drain {
                 Some(drain) => drain,
                 None if args.track == "kernel" => Drain::NONE,
-                None => lowest_fee(&f).drain(cs),
+                None => lowest_fee(&f).drain(view!(cs)),
             };
             (
                 true,

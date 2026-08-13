@@ -18,9 +18,13 @@ import argparse
 import csv
 import glob
 import json
+import math
 import os
 import pathlib
 import platform
+import re
+import shutil
+import statistics
 import subprocess
 import sys
 
@@ -838,6 +842,160 @@ def _oracle_section(by_key):
     return "\n".join(lines)
 
 
+# --- compare-revs -----------------------------------------------------------
+
+
+def parse_rev_spec(spec):
+    """`rev` or `repo#rev`. A bare rev means the repo pinned in pins.json."""
+    repo, _, rev = spec.rpartition("#")
+    return (repo or PINS["coin_select"]["repo"]), rev
+
+
+def build_runner_at(repo, rev):
+    """Build the runner against one coin-select revision. Returns (binary, features).
+
+    The runner source is copied rather than edited in place, so the checked-in manifest keeps
+    pointing at the pinned revision. Feature detection is by trial: PR #53 changed the
+    `BnbMetric` signature, and trying both is more robust than inspecting the tree.
+    """
+    dest = BUILD / f"runner-{rev[:12]}"
+    dest.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(ROOT / "rust-runner" / "src", dest / "src", dirs_exist_ok=True)
+    manifest = (ROOT / "rust-runner" / "Cargo.toml").read_text()
+    manifest = re.sub(r'git = "[^"]+", rev = "[^"]+"', f'git = "{repo}", rev = "{rev}"', manifest)
+    (dest / "Cargo.toml").write_text(manifest)
+
+    binary = dest / "target" / "release" / "coinselect-bench-runner"
+    for features in ([], ["selection-view"]):
+        cmd = ["cargo", "build", "--release", "--manifest-path", str(dest / "Cargo.toml")]
+        if features:
+            cmd += ["--features", ",".join(features)]
+        print("$ " + " ".join(cmd), flush=True)
+        built = subprocess.run(cmd, capture_output=True, text=True)
+        if built.returncode == 0:
+            return binary, features
+    sys.exit(f"cannot build the runner against {rev}:\n{built.stderr[-3000:]}")
+
+
+def pin_prefix():
+    """Pin both binaries to one core so they are perturbed identically, where possible."""
+    if shutil.which("taskset") and os.cpu_count():
+        return ["taskset", "-c", str(os.cpu_count() - 2)]
+    return []
+
+
+def cmd_compare_revs(args):
+    a_repo, a_rev = parse_rev_spec(args.a)
+    b_repo, b_rev = parse_rev_spec(args.b)
+    built = {
+        "a": build_runner_at(a_repo, a_rev),
+        "b": build_runner_at(b_repo, b_rev),
+    }
+    fixtures = sorted(glob.glob(str(FIXTURES / args.fixtures)))
+    if not fixtures:
+        sys.exit(f"no fixtures match {args.fixtures}")
+
+    pin = pin_prefix()
+    got = {"a": {}, "b": {}}
+    for fixture_path in fixtures:
+        name = pathlib.Path(fixture_path).stem
+        for track in args.tracks:
+            # Interleaved: the two runs for one case sit next to each other in time, so drifting
+            # background load moves both rather than one.
+            for label in ("a", "b"):
+                binary, _ = built[label]
+                out = subprocess.run(
+                    pin + [str(binary), "--fixture", fixture_path, "--track", track,
+                           "--repeat", str(args.repeat), "--warmup", str(args.warmup)],
+                    capture_output=True, text=True)
+                if out.returncode != 0:
+                    sys.exit(f"{label} failed on {name}/{track}:\n{out.stderr}")
+                got[label][(name, track)] = json.loads(out.stdout)
+            print(f"  {name:28s} {track:7s} "
+                  f"{_speedup(got['a'][(name, track)], got['b'][(name, track)]):5.2f}x", flush=True)
+
+    out_dir = RESULTS / "compare"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    stem = f"{a_rev[:12]}-vs-{b_rev[:12]}"
+    (out_dir / f"{stem}.json").write_text(json.dumps(
+        {"a": {"repo": a_repo, "rev": a_rev, "features": built["a"][1]},
+         "b": {"repo": b_repo, "rev": b_rev, "features": built["b"][1]},
+         "pinned_to_core": pin[-1] if pin else None,
+         "runs": [{"fixture": k[0], "track": k[1], "a": got["a"][k], "b": got["b"][k]}
+                  for k in sorted(got["a"])]}, indent=1) + "\n")
+    report = _compare_report(a_rev, b_rev, built, pin, got)
+    (out_dir / f"{stem}.md").write_text(report)
+    print("\n" + report)
+    print(f"written to {out_dir / (stem + '.md')}")
+    return 0
+
+
+def _speedup(a, b):
+    """How much faster `b` is than `a`, on the minimum sample.
+
+    The minimum is the least contaminated statistic available: background load can only ever add
+    time, so the fastest observed run is the closest to an uncontended measurement.
+    """
+    return a["timing"]["wall_ns_min"] / max(1, b["timing"]["wall_ns_min"])
+
+
+def _geomean(values):
+    return math.exp(statistics.fmean(math.log(v) for v in values))
+
+
+def _compare_report(a_rev, b_rev, built, pin, got):
+    keys = sorted(got["a"])
+    out = []
+    w = out.append
+    w(f"# `{a_rev[:12]}` vs `{b_rev[:12]}`\n")
+    w(f"- A: `{a_rev}` (features: {built['a'][1] or 'none'})")
+    w(f"- B: `{b_rev}` (features: {built['b'][1] or 'none'})")
+    w(f"- {len(keys)} fixture/track pairs, interleaved A/B per case"
+      + (f", both pinned to core {pin[-1]}" if pin else "") + "")
+    first = got["a"][keys[0]]["timing"]
+    w(f"- {first['warmup']} warm-up and {first['repeats']} measured runs each; speedup is the "
+      "ratio of minimum samples\n")
+
+    w("## Behaviour\n")
+    same_sel = [k for k in keys if got["a"][k]["selected"] == got["b"][k]["selected"]]
+    same_rounds = [k for k in keys if got["a"][k]["rounds"] == got["b"][k]["rounds"]]
+    same_ok = [k for k in keys if got["a"][k]["ok"] == got["b"][k]["ok"]]
+    w(f"- identical selections: **{len(same_sel)}/{len(keys)}**")
+    w(f"- identical round counts: **{len(same_rounds)}/{len(keys)}**")
+    w(f"- identical solved/unsolved: **{len(same_ok)}/{len(keys)}**\n")
+    changed = [k for k in keys if k not in same_rounds or k not in same_sel or k not in same_ok]
+    if changed:
+        w("| fixture | track | rounds A | rounds B | inputs A | inputs B | solved A | solved B |")
+        w("|" + "---|" * 8)
+        for k in changed:
+            a, b = got["a"][k], got["b"][k]
+            w(f"| {k[0]} | {k[1]} | {a['rounds']} | {b['rounds']} | {len(a['selected'])} "
+              f"| {len(b['selected'])} | {a['ok']} | {b['ok']} |")
+        w("")
+
+    w("## Speedup\n")
+    w("| track | group | geomean | median | range |")
+    w("|" + "---|" * 5)
+    for track in TRACKS:
+        for group, pred in (("no ancestry", lambda k: k[0].startswith("no_ancestry")),
+                            ("with ancestry", lambda k: not k[0].startswith("no_ancestry"))):
+            v = [_speedup(got["a"][k], got["b"][k]) for k in keys if k[1] == track and pred(k)]
+            if not v:
+                continue
+            w(f"| {track} | {group} | {_geomean(v):.2f}x | {statistics.median(v):.2f}x "
+              f"| {min(v):.2f}-{max(v):.2f}x |")
+    w("")
+    w("## Per fixture\n")
+    w("| fixture | track | n | rounds | A (ms) | B (ms) | speedup |")
+    w("|" + "---|" * 7)
+    for k in keys:
+        a, b = got["a"][k], got["b"][k]
+        rounds = str(a["rounds"]) if a["rounds"] == b["rounds"] else f"{a['rounds']}->{b['rounds']}"
+        w(f"| {k[0]} | {k[1]} | {a['size']} | {rounds} | {a['timing']['wall_ns_min'] / 1e6:.2f} "
+          f"| {b['timing']['wall_ns_min'] / 1e6:.2f} | {_speedup(a, b):.2f}x |")
+    return "\n".join(out) + "\n"
+
+
 # --- self-check -------------------------------------------------------------
 
 
@@ -903,6 +1061,14 @@ def main():
     report.add_argument("--no-strict", dest="strict", action="store_false",
                         help="exit 0 even when verification finds problems")
     sub.add_parser("self-check", help="check this file's mini-miner port against Core's own example")
+
+    cmp = sub.add_parser("compare-revs", help="A/B two coin-select revisions on the same fixtures")
+    cmp.add_argument("--a", required=True, metavar="[REPO#]REV", help="baseline revision")
+    cmp.add_argument("--b", required=True, metavar="[REPO#]REV", help="revision to compare against it")
+    cmp.add_argument("--fixtures", default="*.json", help="glob within fixtures/ (default: all)")
+    cmp.add_argument("--tracks", nargs="+", default=TRACKS, choices=TRACKS)
+    cmp.add_argument("--repeat", type=int, default=9, help="measured runs per case")
+    cmp.add_argument("--warmup", type=int, default=2, help="discarded runs per case")
     add_run_flags(sub.add_parser("all", help="setup, run and report"))
     sub.add_parser("smoke", help="setup, run the CI-sized fixture, report")
 
@@ -915,6 +1081,8 @@ def main():
         return cmd_report(args)
     if args.command == "self-check":
         return cmd_self_check(args)
+    if args.command == "compare-revs":
+        return cmd_compare_revs(args)
     if args.command == "all":
         cmd_setup(args)
         cmd_self_check(args)

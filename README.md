@@ -80,7 +80,7 @@ change amount; coin-select minimises long-term fee — which the report says on 
 | `rust-runner/` | The coin-select runner. |
 | `core-runner/` | The Bitcoin Core runner, including a port of `node::MiniMiner`'s bump-fee calculation. |
 | `patches/` | One instrumentation-only patch to Core, explained in [`patches/README.md`](patches/README.md). Coin selection itself is never patched. |
-| `results/` | Generated. `SUMMARY.md` is the readable report; `results.csv` is the full matrix. |
+| `results/` | Generated. `SUMMARY.md` is the readable report, `results.csv` the full matrix, and `compare/` holds revision A/B runs. |
 | `FINDINGS.md` | A snapshot of what the current results show, with the revisions they came from. |
 
 ## Commands
@@ -93,7 +93,19 @@ python3 bench.py run --tracks kernel        # one track
 python3 bench.py report                     # score results/raw/ (exits non-zero on a problem)
 python3 bench.py smoke                      # the CI-sized fixture, end to end
 python3 genfixtures.py                      # regenerate fixtures/
+
+# A/B two coin-select revisions on the same fixtures
+python3 bench.py compare-revs --a <rev> --b 'https://github.com/you/coin-select.git#<rev>'
 ```
+
+`compare-revs` builds the runner against each revision, runs them **interleaved per fixture** and
+pinned to one core so drifting background load moves both together, and compares minimum samples
+rather than medians — background load can only ever add time, so the fastest observed run is the
+closest thing to an uncontended measurement. It reports behaviour first (identical selections,
+round counts, solved/unsolved) and speed second, because a speedup that changed the answers is not
+a speedup. Revisions either side of coin-select PR #53 have different `BnbMetric` signatures; the
+runner carries a `selection-view` feature for that and `compare-revs` picks the right one by
+trying both. Output lands in `results/compare/`.
 
 `--oracle` brute forces every fixture with at most 20 candidates against **each engine's own**
 objective, so a disagreement can be attributed rather than merely observed: it says whether a
