@@ -118,27 +118,36 @@ cache per live branch — running aggregates plus per-ancestor refcount arrays �
 from 2.6 MB up to **88 MB**. That is the price of making per-node evaluation O(1): state that used
 to be recomputed on demand is now carried, per branch, for every branch in the queue.
 
-## 4. What still exhausts the budget — and it is size, not just shape
+## 4. What still exhausts the budget — size, under either metric
 
 At wallet scale (20-200 candidates) four kernel-track fixtures hit the 100,000-round cap and two
 return nothing, both 200-candidate dense-ancestry cases.
 
-**Above 500 candidates it stops being an edge case.** The matrix now runs three shapes at 500,
-1000 and 2000 candidates, and on the kernel track coin-select returns **no solution on all nine**,
-while Core answers every one in about a millisecond:
+**Above 500 candidates it stops being an edge case.** The matrix runs three shapes at 500, 1000
+and 2000 candidates. Branch and bound returns **no solution on all nine, under either metric** —
+`LowestFeeChangeless` on the kernel track and bare `LowestFee` on the changeful track fail at
+essentially identical times, always at exactly 100,000 rounds — while Core answers every one in
+about a millisecond:
 
-| fixture | coin-select | Bitcoin Core |
-| --- | --- | --- |
-| `no_ancestry_500` | no solution, 97 ms | solved, 1.2 ms |
-| `shared_ancestry_500` | no solution, 403 ms | solved, 1.2 ms |
-| `no_ancestry_2000` | no solution, 105 ms | solved, 1.4 ms |
-| `shared_ancestry_2000` | no solution, **1222 ms** | solved, 1.4 ms |
-| `wallet_mixed_2000` | no solution, **1266 ms** | solved, 0.7 ms |
+| fixture | `LowestFeeChangeless` (kernel) | `LowestFee` (changeful) | `LowestFee` + SRD (wallet) | Bitcoin Core |
+| --- | --- | --- | --- | --- |
+| `no_ancestry_500` | no solution, 97 ms | no solution, 95 ms | solved by SRD | solved, 1.2 ms |
+| `shared_ancestry_500` | no solution, 402 ms | no solution, 405 ms | solved by SRD | solved, 1.2 ms |
+| `no_ancestry_2000` | no solution, 105 ms | no solution, 104 ms | solved by SRD | solved, 1.4 ms |
+| `shared_ancestry_2000` | no solution, **1222 ms** | no solution, **1225 ms** | solved by SRD | solved, 1.4 ms |
+| `wallet_mixed_2000` | no solution, **1266 ms** | no solution, **1261 ms** | **no solution** | solved, 0.7 ms |
 
-Note this happens on `no_ancestry` too, so it is not an ancestry problem: best-first search with
-100,000 rounds simply cannot reach a funded changeless selection once the candidate set is large,
-because each round adds one coin and a funded selection needs hundreds. Core's depth-first search
-descends straight to a funded prefix and always has an answer to fall back on.
+Three things to take from the shape of that table. It is **not a changeless problem** — bare
+`LowestFee` is affected identically, so nothing here is attributable to the changeless metric or
+its bound. It is **not an ancestry problem** — `no_ancestry` fails just as reliably. And what
+rescues the wallet track is **the single-random-draw fallback rather than the metric**: six of the
+nine come back with `algorithm: srd`. The three that still fail are all `wallet_mixed`, the only
+family carrying a `max_weight` cap.
+
+The mechanism is simply that each branch-and-bound round adds one coin, so a selection needing
+hundreds of inputs is unreachable inside a 100,000-round budget once the candidate set is large
+enough that the search cannot commit to a funding prefix. Core's depth-first search descends
+straight to one and always has an answer to fall back on.
 
 That reframes the earlier conclusion. It is still a bound problem, but the binding constraint above
 a few hundred candidates is that a round budget and a node budget are not comparable units at all —
