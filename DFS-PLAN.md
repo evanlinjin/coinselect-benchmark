@@ -57,8 +57,12 @@ or backtracks (pop to the most recent inclusion and flip it to exclusion).
 `SelectionCache` already exposes incremental `add`/`sub`, so descent and backtrack are O(1) rather
 than the clone-per-push the queue requires. This removes the two costs the current design pays:
 
-- **Memory**: O(depth) rather than O(frontier). Peak RSS in this matrix reaches 88 MB, essentially
-  all of it queued branches; a stack is bounded by the candidate count.
+- **Memory**: O(depth) rather than O(frontier), and this is the most urgent of the three. Peak RSS
+  reaches 293 MB at the default round cap, but the cap is what is holding it there — given a
+  130-second budget the frontier reaches **20 GB on a 500-candidate problem**, because a
+  best-first search over a depth-increasing bound never finishes a level and so never discards
+  one. A wallet that hits this fails hard rather than slowly. A stack is bounded by the candidate
+  count: kilobytes.
 - **Per node**: the current search spends 530–1400 ns per round, dominated by cloning a
   `CoinSelector` plus its cache on every push. An in-place step should reach tens of nanoseconds.
 

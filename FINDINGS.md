@@ -195,6 +195,29 @@ One more fixture converts between one second and twenty-one. The rest do not, an
 about a thousand times the default budget. This is not a case of the budget being set slightly too
 low; the search is not converging on these inputs at all.
 
+Extending the budget to **130 seconds** confirms it, and turns up something more serious than slow:
+
+| fixture (kernel) | result | rounds | peak RSS |
+| --- | --- | --- | --- |
+| `shared_ancestry_500` | no solution | 18.6M | **17.0 GB** |
+| `no_ancestry_2000` | no solution | 120.9M | **9.0 GB** |
+| `shared_ancestry_2000` | no solution | 7.5M | **20.4 GB** |
+
+120 million expansions on `no_ancestry_2000` — 1,200x the default budget — still with no funded
+selection. Across 100,000 rounds, 1,000,000 rounds, 21 seconds and 130 seconds, exactly one
+fixture ever converted.
+
+**The memory ceiling is the harder limit.** Twenty gigabytes on a 500-candidate problem is not a
+slow search, it is one that would exhaust any real machine before it gave up. It follows directly
+from the traversal: the queue holds a selector and its selection cache per live branch, and a
+best-first search over a bound that rises with depth keeps every shallow node alive, because it
+never finishes a level. The earlier figures understated this — 88 MB, then 293 MB at the default
+cap, looked like a tunable cost. Given room to run it is unbounded in the candidate count.
+
+The default round cap is therefore doing double duty as a memory guard. It is worth keeping that
+in mind before replacing it with a wall-clock budget: a time budget alone does not bound the
+frontier.
+
 `bench.py compare-revs` is the tool for attributing any further improvement — `results/compare/`
 holds the runs that tracked this one.
 
