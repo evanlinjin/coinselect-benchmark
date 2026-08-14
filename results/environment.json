@@ -12,7 +12,7 @@
  "core_patches": [
   "core-bench-hooks.patch"
  ],
- "coin_select_rev": "fb5a0219d3ad1d34e48cae6678dbec66595c8a7e",
+ "coin_select_rev": "91f5cfeb1163f87a27059adbbe1de6af8afbb08b",
  "pins": {
   "bitcoin_core": {
    "repo": "https://github.com/bitcoin/bitcoin.git",
@@ -22,9 +22,9 @@
   },
   "coin_select": {
    "repo": "https://github.com/bitcoindevkit/coin-select.git",
-   "rev": "fb5a0219d3ad1d34e48cae6678dbec66595c8a7e",
-   "describes": "PR #69: ancestor-aware selection with Bitcoin Core's incumbent-free branch-and-bound prunes ported",
-   "why": "the ancestor-aware selection work this benchmark exists to measure, on the search that carries prunes able to cut before a first solution is found"
+   "rev": "91f5cfeb1163f87a27059adbbe1de6af8afbb08b",
+   "describes": "PR #70: ancestor-aware selection, Core's incumbent-free prunes, and a greedy incumbent seeded before the search",
+   "why": "the ancestor-aware selection work this benchmark exists to measure, on the search that both prunes without an incumbent and starts with one"
   }
  }
 }
