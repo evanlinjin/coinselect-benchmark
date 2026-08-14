@@ -7,9 +7,8 @@ report and `results/results.csv` the full matrix behind everything below.
 - Bitcoin Core `9be056a8a72b624dae9623b2f7bded92c2a21c91` (v31.1), coin-selection algorithms
   unmodified apart from the benchmark hooks in `patches/` (a node counter and an optional
   wall-clock deadline, neither active in this run's default node-budget mode)
-- coin-select `e45bb58efef5752356d3299cfd545ca8059df4fb`
-  ([`feature/lowest-fee-changeless`][branch]) — ancestor-aware selection on the delta-aware
-  branch-and-bound evaluator, with a dedicated `LowestFeeChangeless` metric
+- coin-select `fb5a0219d3ad1d34e48cae6678dbec66595c8a7e` ([PR #69][branch]) — ancestor-aware
+  selection with Bitcoin Core's incumbent-free branch-and-bound prunes ported
 - 42 fixtures: 8 families x 20/50/100/200, three shapes also at 500/1000/2000, plus the smoke
   fixture; three tracks, 100,000-node budget
 - 2 warm-up runs and 9 measured runs per case, median reported
@@ -85,11 +84,11 @@ so "Core missed it" covers both the search and that filter. Both are part of how
 
 | | coin-select | Bitcoin Core |
 | --- | --- | --- |
-| kernel, median wall clock | 2876 us | 586 us |
+| kernel, median wall clock | 2979 us | 571 us |
 | kernel, budget exhausted | 13 of 42 | **32 of 42** |
 | kernel, returned no solution | **11 of 42** | 1 of 42 |
 | kernel, median cost per node | ~530-1280 ns/round | **~6 ns/node** |
-| wallet, median wall clock | 2680 us | 2068 us |
+| wallet, median wall clock | 2126 us | 1499 us |
 | wallet, budget exhausted | 12 of 42 | 25 of 42 |
 | wallet, returned no solution | 3 of 42 | 0 of 42 |
 
@@ -115,7 +114,7 @@ whatever it had; coin-select finishing "slow" usually means it proved it had the
 **Memory is the clearest cost.** Core's depth-first search carries one path, so its peak RSS is
 flat process baseline (~19 MB) on every fixture. coin-select's priority queue holds a selection
 cache per live branch — running aggregates plus per-ancestor refcount arrays — and peak RSS runs
-from 2.6 MB up to **88 MB**. That is the price of making per-node evaluation O(1): state that used
+from 2.6 MB up to **293 MB**. That is the price of making per-node evaluation O(1): state that used
 to be recomputed on demand is now carried, per branch, for every branch in the queue.
 
 ## 4. What still exhausts the budget — size, under either metric
@@ -178,6 +177,24 @@ thirteen- and eleven-input selections the brute-force oracle identifies as optim
 changeless-specific bound, rather than delegating to the unconstrained inner one, is what closed
 that gap.
 
+### Time does not buy its way out
+
+Giving the search a wall-clock budget instead of a round budget, with the round cap lifted, shows
+how far from the boundary these cases are:
+
+| fixture (kernel) | 1 second | 21 seconds |
+| --- | --- | --- |
+| `no_ancestry_500` | solved, 175,357 rounds | solved, same |
+| `wallet_mixed_500` | no solution | **solved**, 727,006 rounds |
+| `shared_ancestry_500` | no solution | no solution, 3.2M rounds |
+| `no_ancestry_2000` | no solution | no solution, **20.6M rounds** |
+| `shared_ancestry_2000` | no solution | no solution, 1.2M rounds |
+
+One more fixture converts between one second and twenty-one. The rest do not, and
+`no_ancestry_2000` gets through twenty million expansions without reaching a funded selection —
+about a thousand times the default budget. This is not a case of the budget being set slightly too
+low; the search is not converging on these inputs at all.
+
 `bench.py compare-revs` is the tool for attributing any further improvement — `results/compare/`
 holds the runs that tracked this one.
 
@@ -200,7 +217,7 @@ simply better informed.
 Read the fee column with care. Core's portfolio minimises waste, and its knapsack and
 single-random-draw paths deliberately aim for a privacy-friendly change amount rather than the
 smallest fee, so it is not trying to win that column. The median Core-to-coin-select package-fee
-ratio is 1.32x on the kernel track, 1.00x on `changeful` (they tie on half the fixtures) and 1.53x
+ratio is 1.32x on the kernel track, 1.00x on `changeful` (they tie on half the fixtures) and 1.45x
 on `wallet`.
 
 The harness's reimplementation of Core's waste formula agrees with the waste Core itself reports
@@ -266,4 +283,4 @@ inside `max_weight`. `bench.py report` exits non-zero if any of that fails; this
 `bench.py compare-revs` A/Bs two coin-select revisions on these same fixtures if you want to
 attribute a change to a particular commit; past runs are kept in `results/compare/`.
 
-[branch]: https://github.com/evanlinjin/coin-select/tree/feature/lowest-fee-changeless
+[branch]: https://github.com/bitcoindevkit/coin-select/pull/69

@@ -12,7 +12,7 @@
  "core_patches": [
   "core-bench-hooks.patch"
  ],
- "coin_select_rev": "e45bb58efef5752356d3299cfd545ca8059df4fb",
+ "coin_select_rev": "fb5a0219d3ad1d34e48cae6678dbec66595c8a7e",
  "pins": {
   "bitcoin_core": {
    "repo": "https://github.com/bitcoin/bitcoin.git",
@@ -21,10 +21,10 @@
    "why": "latest tagged release at the time the harness was written; the coin-selection algorithms are used as-is, with only the instrumentation patch in patches/ applied"
   },
   "coin_select": {
-   "repo": "https://github.com/evanlinjin/coin-select.git",
-   "rev": "e45bb58efef5752356d3299cfd545ca8059df4fb",
-   "describes": "feature/lowest-fee-changeless: ancestor-aware selection on the delta-aware evaluator, with a dedicated LowestFeeChangeless metric",
-   "why": "the ancestor-aware selection work this benchmark exists to measure, on the branch carrying both the delta-aware branch-and-bound evaluator and the changeless-specific bound"
+   "repo": "https://github.com/bitcoindevkit/coin-select.git",
+   "rev": "fb5a0219d3ad1d34e48cae6678dbec66595c8a7e",
+   "describes": "PR #69: ancestor-aware selection with Bitcoin Core's incumbent-free branch-and-bound prunes ported",
+   "why": "the ancestor-aware selection work this benchmark exists to measure, on the search that carries prunes able to cut before a first solution is found"
   }
  }
 }

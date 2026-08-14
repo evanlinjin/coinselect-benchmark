@@ -1,0 +1,111 @@
+{
+ "a": {
+  "repo": "file:///home/evanlinjin/Git/coin-select",
+  "rev": "2398ab2bd3a3539c11b7d4d11281bf013854ee29",
+  "features": "selection-view + lowest-fee-changeless"
+ },
+ "b": {
+  "repo": "file:///home/evanlinjin/Git/coin-select",
+  "rev": "15ff3d4",
+  "features": "selection-view + lowest-fee-changeless"
+ },
+ "pinned_to_core": "22",
+ "runs": [
+  {
+   "fixture": "smoke",
+   "track": "kernel",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "smoke",
+    "family": "smoke",
+    "size": 8,
+    "track": "kernel",
+    "objective": "minimise child fee, changeless (Changeless<LowestFee>)",
+    "algorithm": "bnb/changeless-lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c000",
+     "c002",
+     "c004",
+     "c006",
+     "c007"
+    ],
+    "rounds": 254,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 73277,
+     "wall_ns_median": 73277,
+     "wall_ns_max": 73277
+    },
+    "peak_rss_kb": 2668,
+    "native": {
+     "score": 29000.0,
+     "drain_value": 0,
+     "child_weight": 1817,
+     "child_fee": 29000,
+     "ancestor_bump": 24300,
+     "ancestor_bump_lower_bound": 24300,
+     "excess": 150,
+     "implied_feerate_sat_per_vb": 63.841496
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "smoke",
+    "family": "smoke",
+    "size": 8,
+    "track": "kernel",
+    "objective": "minimise child fee, changeless (Changeless<LowestFee>)",
+    "algorithm": "bnb/changeless-lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c000",
+     "c002",
+     "c004",
+     "c006",
+     "c007"
+    ],
+    "rounds": 475,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 143648,
+     "wall_ns_median": 143648,
+     "wall_ns_max": 143648
+    },
+    "peak_rss_kb": 2656,
+    "native": {
+     "score": 29000.0,
+     "drain_value": 0,
+     "child_weight": 1817,
+     "child_fee": 29000,
+     "ancestor_bump": 24300,
+     "ancestor_bump_lower_bound": 24300,
+     "excess": 150,
+     "implied_feerate_sat_per_vb": 63.841496
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  }
+ ]
+}
