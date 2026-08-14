@@ -144,10 +144,27 @@ rescues the wallet track is **the single-random-draw fallback rather than the me
 nine come back with `algorithm: srd`. The three that still fail are all `wallet_mixed`, the only
 family carrying a `max_weight` cap.
 
-The mechanism is simply that each branch-and-bound round adds one coin, so a selection needing
-hundreds of inputs is unreachable inside a 100,000-round budget once the candidate set is large
-enough that the search cannot commit to a funding prefix. Core's depth-first search descends
-straight to one and always has an answer to fall back on.
+Raising the budget tenfold, to 1,000,000 rounds, resolves two of the nine and leaves seven
+failing — and the two that resolve show the cause is **not** what a round budget suggests:
+
+| fixture | 1M rounds | inputs in the solution |
+| --- | --- | --- |
+| `no_ancestry_500` | solved, 175,357 rounds, tree exhausted, 198 ms | 23 |
+| `wallet_mixed_500` | solved, 727,007 rounds, tree exhausted, 3.9 s | 28 |
+| `shared_ancestry_500` | still no solution, 5.6 s | - |
+| `shared_ancestry_2000` | still no solution, **15.4 s** | - |
+| `wallet_mixed_2000` | still no solution, **15.8 s** | - |
+
+The winning selections are 23 and 28 inputs, not hundreds. So this is not the search failing to
+accumulate enough coins one round at a time; a 23-input answer sits 23 levels down a tree the
+search took 175,000 rounds to reach. The bound is too weak to direct the descent, so best-first
+spends its budget spreading across a huge frontier of near-equally-bounded shallow branches. Core's
+depth-first search commits to a funding prefix immediately and always has an answer in hand.
+
+That the two successes *exhausted* their trees is the encouraging part: given enough budget the
+search terminates with a proven optimum rather than grinding indefinitely. The problem is how much
+budget — 727,000 rounds and 3.9 seconds for 500 candidates, and beyond 1,000,000 rounds and 15
+seconds at 2000.
 
 That reframes the earlier conclusion. It is still a bound problem, but the binding constraint above
 a few hundred candidates is that a round budget and a node budget are not comparable units at all —
