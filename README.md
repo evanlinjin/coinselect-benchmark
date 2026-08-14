@@ -1,9 +1,9 @@
 # coinselect-benchmark
 
 An apples-to-apples benchmark of ancestor-aware coin selection: [`bdk_coin_select`][coin-select]
-on the [`feature/ancestor-aware-with-view`][branch] branch — ancestor-aware selection
-([PR #64][pr64]) on the delta-aware branch-and-bound evaluator ([PR #53][pr53]) — against
-[Bitcoin Core][core]'s wallet coin selection.
+on the [`feature/lowest-fee-changeless`][branch] branch — ancestor-aware selection
+([PR #64][pr64]) on the delta-aware branch-and-bound evaluator ([PR #53][pr53]), with a dedicated
+changeless metric — against [Bitcoin Core][core]'s wallet coin selection.
 
 Answers [bitcoindevkit/coin-select#67][issue67].
 
@@ -54,7 +54,7 @@ feerate, weight cap and 100,000-node budget:
 | | |
 | --- | --- |
 | Bitcoin Core | `SelectCoinsBnB`: depth-first, least waste among selections whose effective value lands in `[target, target + cost_of_change]` |
-| coin-select | `Changeless<LowestFee>`: priority-queue branch and bound, minimising the child transaction's fee over all changeless selections |
+| coin-select | `LowestFeeChangeless`: priority-queue branch and bound, minimising the child transaction's fee over all changeless selections |
 
 The objectives are related but **not identical**, so this track compares traversal and pruning —
 node counts, wall clock, whether the tree was exhausted — and reports solution quality only
@@ -137,8 +137,9 @@ missed it" can mean either the search or that filter.
   and re-applies patches from scratch every time, so it is idempotent.
 - `rust-runner/Cargo.toml` pins the same coin-select revision; setup refuses to build if the two
   pins have drifted apart. The runner's `selection-view` feature is on by default because the
-  pinned revision takes `&SelectionView` in `BnbMetric`; build with `--no-default-features` for a
-  revision from before that change.
+  pinned revision takes `&SelectionView` in `BnbMetric` and expresses the changeless case as a
+  dedicated `LowestFeeChangeless` metric. Older revisions differ on both counts; `compare-revs`
+  reaches them by trying each feature combination in turn.
 - Fixtures are deterministic from a per-fixture seed and are checked in.
 - Core is built at `-O3` with assertions on (it refuses to compile with `NDEBUG`); the Rust runner
   at `--release` with `codegen-units = 1`. Compiler versions, host and the applied patch list are
@@ -175,7 +176,7 @@ missed it" can mean either the search or that filter.
   the runner always searches the combined pool.
 
 [coin-select]: https://github.com/bitcoindevkit/coin-select
-[branch]: https://github.com/evanlinjin/coin-select/tree/feature/ancestor-aware-with-view
+[branch]: https://github.com/evanlinjin/coin-select/tree/feature/lowest-fee-changeless
 [pr64]: https://github.com/bitcoindevkit/coin-select/pull/64
 [pr53]: https://github.com/bitcoindevkit/coin-select/pull/53
 [issue67]: https://github.com/bitcoindevkit/coin-select/issues/67

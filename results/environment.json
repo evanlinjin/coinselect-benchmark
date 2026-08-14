@@ -12,7 +12,7 @@
  "core_patches": [
   "core-bnb-instrumentation.patch"
  ],
- "coin_select_rev": "bdcb1f064cd20ab4d864e6f040f0d45a6fd5e8fc",
+ "coin_select_rev": "e45bb58efef5752356d3299cfd545ca8059df4fb",
  "pins": {
   "bitcoin_core": {
    "repo": "https://github.com/bitcoin/bitcoin.git",
@@ -22,9 +22,9 @@
   },
   "coin_select": {
    "repo": "https://github.com/evanlinjin/coin-select.git",
-   "rev": "bdcb1f064cd20ab4d864e6f040f0d45a6fd5e8fc",
-   "describes": "feature/ancestor-aware-with-view: PR #64 (ancestor-aware selection) with PR #53 (delta-aware SelectionView) rebased on top",
-   "why": "the ancestor-aware selection work this benchmark exists to measure, on the delta-aware branch-and-bound evaluator it is meant to ship with"
+   "rev": "e45bb58efef5752356d3299cfd545ca8059df4fb",
+   "describes": "feature/lowest-fee-changeless: ancestor-aware selection on the delta-aware evaluator, with a dedicated LowestFeeChangeless metric",
+   "why": "the ancestor-aware selection work this benchmark exists to measure, on the branch carrying both the delta-aware branch-and-bound evaluator and the changeless-specific bound"
   }
  }
 }

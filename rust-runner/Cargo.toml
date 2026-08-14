@@ -6,7 +6,7 @@ publish = false
 
 [dependencies]
 # Pinned by scripts in ../bench.py; see ../pins.json. Kept in sync by `bench.py setup`.
-bdk_coin_select = { git = "https://github.com/evanlinjin/coin-select.git", rev = "bdcb1f064cd20ab4d864e6f040f0d45a6fd5e8fc" }
+bdk_coin_select = { git = "https://github.com/evanlinjin/coin-select.git", rev = "e45bb58efef5752356d3299cfd545ca8059df4fb" }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 
@@ -14,7 +14,7 @@ serde_json = "1"
 # The pinned revision takes `&SelectionView` in `BnbMetric`, so this is on by default. Revisions
 # from before coin-select PR #53 take `&CoinSelector` instead; build those with
 # `--no-default-features`. `bench.py compare-revs` picks the right shape by trying both.
-default = ["selection-view"]
+default = ["selection-view", "lowest-fee-changeless"]
 selection-view = []
 # Later revisions replace the `Changeless<M>` wrapper with a dedicated `LowestFeeChangeless`
 # metric carrying a changeless-specific bound. Same objective, different type.

@@ -44,8 +44,8 @@ CORE_LIB_TARGETS = ["bitcoin_util", "bitcoin_crypto", "bitcoin_consensus", "bitc
 
 # Build configurations tried, in order, when targeting an arbitrary coin-select revision.
 FEATURE_ATTEMPTS = [
-    ("selection-view", []),
-    ("selection-view + lowest-fee-changeless", ["--features", "lowest-fee-changeless"]),
+    ("selection-view + lowest-fee-changeless", []),
+    ("selection-view", ["--no-default-features", "--features", "selection-view"]),
     ("pre-SelectionView", ["--no-default-features"]),
 ]
 

@@ -6,9 +6,9 @@ report and `results/results.csv` the full matrix behind everything below.
 
 - Bitcoin Core `9be056a8a72b624dae9623b2f7bded92c2a21c91` (v31.1), coin-selection algorithms
   unmodified apart from the node-count instrumentation in `patches/`
-- coin-select `bdcb1f064cd20ab4d864e6f040f0d45a6fd5e8fc`
-  ([`feature/ancestor-aware-with-view`][branch]) — ancestor-aware selection on the delta-aware
-  branch-and-bound evaluator
+- coin-select `e45bb58efef5752356d3299cfd545ca8059df4fb`
+  ([`feature/lowest-fee-changeless`][branch]) — ancestor-aware selection on the delta-aware
+  branch-and-bound evaluator, with a dedicated `LowestFeeChangeless` metric
 - 33 fixtures (8 families x 4 sizes, plus the smoke fixture), three tracks, 100,000-node budget
 - 2 warm-up runs and 9 measured runs per case, median reported
 - Linux 7.1.7 x86-64, 24 cores, GCC 15.2.0 `-O3` / rustc 1.97.1 `--release`
@@ -46,8 +46,8 @@ charged for that parent in full. The overlap comes back only once a result has b
 `bump_fee_group_discount` — too late for the search to have used it.
 
 The `smoke` fixture shows the sharpest form. `SelectCoinsBnB` gives up after 62 nodes with **no
-solution**, while coin-select returns a five-input selection that the exhaustive oracle confirms is
-the least-waste one available — waste 24460, matching the oracle exactly:
+solution**, while coin-select returns a five-input selection that the exhaustive oracle confirms
+is the least-waste one available — waste 24460, matching the oracle exactly:
 
 | | |
 | --- | --- |
@@ -60,7 +60,8 @@ Core is not choosing a worse selection here; it is structurally unable to see th
 
 Across the eight fixtures small enough to brute force, `SelectCoinsBnB` fails to reach the
 least-waste in-window selection on four, and every one of them has a non-empty ancestor union. It
-finds the optimum on every fixture without one.
+finds the optimum on every fixture without one. **coin-select reaches the optimum of its own
+objective on every one of the eight.**
 
 | fixture | waste Core returned | best in-window waste | inputs Core took | inputs in the optimum |
 | --- | --- | --- | --- | --- |
@@ -86,25 +87,25 @@ so "Core missed it" covers both the search and that filter. Both are part of how
 
 | | coin-select | Bitcoin Core |
 | --- | --- | --- |
-| kernel, median wall clock | 2310 us | 599 us |
-| kernel, budget exhausted | 6 of 33 | **23 of 33** |
-| kernel, returned no solution | **4 of 33** | 1 of 33 |
-| kernel, median cost per node | ~530-1400 ns/round | **~6 ns/node** |
-| wallet, median wall clock | **547 us** | 1197 us |
+| kernel, median wall clock | 1719 us | 569 us |
+| kernel, budget exhausted | 4 of 33 | **23 of 33** |
+| kernel, returned no solution | 2 of 33 | 1 of 33 |
+| kernel, median cost per node | ~530-1280 ns/round | **~6 ns/node** |
+| wallet, median wall clock | **356 us** | 1236 us |
 | wallet, budget exhausted | 3 of 33 | 19 of 33 |
 
 Core's depth-first search is roughly 100-200x cheaper per node and spends that speed running out
 its 100,000-node budget on essentially every fixture with 50 or more candidates. coin-select's
-priority-queue search prunes hard enough to exhaust the tree in a few thousand rounds on most
-fixtures, at roughly half a microsecond to a microsecond and a half per round.
+priority-queue search prunes hard enough to exhaust the tree in a few thousand rounds on nearly
+every fixture, at roughly half a microsecond to a microsecond and a quarter per round.
 
-Per-node cost still splits cleanly by whether ancestry is present (kernel track, ns/round):
+Per-node cost splits cleanly by whether ancestry is present (kernel track, ns/round):
 
 | n | no ancestry | with ancestry |
 | --- | --- | --- |
-| 50 | 535 | 645 |
-| 100 | 534 | 1006 |
-| 200 | 714 | 1390 |
+| 50 | 530 | 597 |
+| 100 | 531 | 871 |
+| 200 | 651 | 1281 |
 
 Neither number is a verdict on its own. Core finishing "fast" usually means it stopped early with
 whatever it had; coin-select finishing "slow" usually means it proved it had the best answer.
@@ -112,25 +113,26 @@ whatever it had; coin-select finishing "slow" usually means it proved it had the
 **Memory is the clearest cost.** Core's depth-first search carries one path, so its peak RSS is
 flat process baseline (~19 MB) on every fixture. coin-select's priority queue holds a selection
 cache per live branch — running aggregates plus per-ancestor refcount arrays — and peak RSS runs
-from 2.6 MB up to **87 MB**. That is the price of making per-node evaluation O(1): state that used
+from 2.6 MB up to **88 MB**. That is the price of making per-node evaluation O(1): state that used
 to be recomputed on demand is now carried, per branch, for every branch in the queue.
 
-## 4. coin-select's branch and bound can blow its budget on 20 candidates
+## 4. What still exhausts the budget
 
-`subsidizing_ancestry_20` — twenty candidates, six unconfirmed ancestors — burns all 100,000
-rounds in 45 ms and returns **no solution**, while the oracle confirms an eleven-input changeless
-solution exists and Core answers in **52 nodes and under 10 microseconds**. `nested_ancestry_20`
-fails the same way (55 ms, oracle finds a thirteen-input solution, Core answers in 966 nodes).
+Four kernel-track fixtures hit the 100,000-round cap and two of those return nothing:
+`shared_ancestry_200` and `subsidizing_ancestry_200`. Both are 200-candidate problems with dense
+shared ancestry, and both take about 150 ms to give up.
 
-Six kernel-track fixtures exhaust the budget and four return nothing. The cause is visible in the
-branch's own source: `LowestFee::bound` swaps to the relaxed `bound_with_ancestors`, which never
-returns `None`, and `Changeless` has no prune of its own to compensate. Together they remove most
-of the pruning from `Changeless<LowestFee>` exactly when ancestry is present.
+This is a much narrower failure than the ancestor-aware path used to have. Earlier revisions —
+before `LowestFeeChangeless` replaced the generic `Changeless<M>` wrapper — also failed on
+`nested_ancestry_20` and `subsidizing_ancestry_20`, twenty-candidate problems that Core answered
+in 966 and 52 nodes. Those now solve in 200 and 886 rounds respectively, and land on exactly the
+thirteen- and eleven-input selections the brute-force oracle identifies as optimal. A
+changeless-specific bound, rather than delegating to the unconstrained inner one, is what closed
+that gap.
 
-That is the sharpest actionable result: on the ancestor-aware path the search is not merely slower
-per node, it can fail to answer a twenty-coin problem that Core answers in microseconds. It is a
-bound problem, not a throughput problem — a faster node visit makes the failure arrive sooner, not
-go away.
+What remains is still a bound problem rather than a throughput one: a faster node visit makes the
+remaining failures arrive sooner, not go away. `bench.py compare-revs` is the tool for attributing
+any further improvement — `results/compare/` holds the runs that tracked this one.
 
 ## 5. Outcomes, scored on both objectives
 
@@ -139,7 +141,7 @@ coin-select's selections and package fee for Core's:
 
 | track | coin-select cheaper package | lower waste: coin-select | lower waste: Core |
 | --- | --- | --- | --- |
-| kernel | 25 of 28 | 13 of 28 | 12 of 28 |
+| kernel | 26 of 30 | 15 of 30 | 12 of 30 |
 | changeful | 15 of 32 | 15 of 32 | 0 of 32 |
 | wallet | 31 of 33 | 14 of 33 | 16 of 33 |
 
@@ -151,7 +153,7 @@ simply better informed.
 Read the fee column with care. Core's portfolio minimises waste, and its knapsack and
 single-random-draw paths deliberately aim for a privacy-friendly change amount rather than the
 smallest fee, so it is not trying to win that column. The median Core-to-coin-select package-fee
-ratio is 1.36x on the kernel track, 1.00x on `changeful` (they tie on half the fixtures) and 1.53x
+ratio is 1.32x on the kernel track, 1.00x on `changeful` (they tie on half the fixtures) and 1.53x
 on `wallet`.
 
 The harness's reimplementation of Core's waste formula agrees with the waste Core itself reports
@@ -159,20 +161,19 @@ on every one of its own selections, which is what makes the cross-scoring trustw
 
 ## 6. The change-producing pair: `LowestFee` vs `CoinGrinder`
 
-`Changeless<LowestFee>` exists in the kernel track only to match Core's changeless
-`SelectCoinsBnB`. Core's counterpart to *bare* `LowestFee` is `CoinGrinder`, and the `changeful`
-track pairs them. The result inverts the kernel track.
+The kernel track pairs the two changeless searches. Core's counterpart to *bare* `LowestFee` is
+`CoinGrinder`, and the `changeful` track pairs them. The result inverts the kernel track.
 
 | | coin-select (`LowestFee`) | Bitcoin Core (`CoinGrinder`) |
 | --- | --- | --- |
-| median wall clock | 441 us | **4.0 us** |
+| median wall clock | 517 us | **3.3 us** |
 | median nodes | ~500 | **~24** |
 | budget exhausted | 3 of 33 | **0 of 33** |
 | returned no solution | 1 of 33 | **0 of 33** |
 | lower waste | **15** of 32 | 0 of 32 |
 | cheaper package | **15** of 32 | 1 of 32 |
 
-`CoinGrinder` is ~100x faster, never exhausts its budget, and never fails — its objective is
+`CoinGrinder` is ~150x faster, never exhausts its budget, and never fails — its objective is
 minimum *selected input weight*, which is monotone as inputs are added and so bounds beautifully.
 Node counts run 2 to 1582 against coin-select's 2 to 100000.
 
@@ -187,14 +188,12 @@ Read it as an objective difference, not a verdict: `CoinGrinder` is one member o
 a question it was not designed to answer alone — which is exactly the kernel-track caveat, pointed
 the other way.
 
-Two things worth carrying away. First, the two engines have opposite failure shapes: on the
+The two engines have opposite failure shapes, and that is the durable observation here: on the
 changeless pair coin-select explores far fewer nodes but each is expensive, while on the
-change-producing pair Core explores far fewer nodes *and* they are cheap. Second, bare `LowestFee`
-is markedly healthier than `Changeless<LowestFee>` — 3 budget exhaustions against 6, one failure
-against four. `Changeless<M>` constrains the same objective to a strict subset of selections while
-delegating to the *unconstrained* inner bound, so it narrows the solution set without tightening
-anything. Unless you specifically need a changeless transaction, bare `LowestFee` is both
-better-scoring and better-behaved.
+change-producing pair Core explores far fewer nodes *and* they are cheap. The changeless and
+change-producing metrics on the coin-select side now behave comparably to each other — 4 budget
+exhaustions against 3, two failures against one — which was not true when the changeless case was
+expressed as a constraint wrapped around `LowestFee`.
 
 ## What this does not answer
 
@@ -221,4 +220,4 @@ inside `max_weight`. `bench.py report` exits non-zero if any of that fails; this
 `bench.py compare-revs` A/Bs two coin-select revisions on these same fixtures if you want to
 attribute a change to a particular commit; past runs are kept in `results/compare/`.
 
-[branch]: https://github.com/evanlinjin/coin-select/tree/feature/ancestor-aware-with-view
+[branch]: https://github.com/evanlinjin/coin-select/tree/feature/lowest-fee-changeless

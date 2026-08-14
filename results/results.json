@@ -22,11 +22,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 4339,
-    "wall_ns_median": 4368,
-    "wall_ns_max": 4909
+    "wall_ns_min": 2666,
+    "wall_ns_median": 2725,
+    "wall_ns_max": 3057
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18788,
    "native": {
     "waste": 604,
     "selected_value": 17070248,
@@ -99,11 +99,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 353716,
-    "wall_ns_median": 365710,
-    "wall_ns_max": 422759
+    "wall_ns_min": 508153,
+    "wall_ns_median": 517283,
+    "wall_ns_max": 534780
    },
-   "peak_rss_kb": 2844,
+   "peak_rss_kb": 2896,
    "native": {
     "score": 4270.0,
     "drain_value": 157558,
@@ -180,11 +180,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 420194,
-    "wall_ns_median": 433549,
-    "wall_ns_max": 624254
+    "wall_ns_min": 384976,
+    "wall_ns_median": 388122,
+    "wall_ns_max": 391439
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18788,
    "native": {
     "waste": 2,
     "selected_value": 16916342,
@@ -259,11 +259,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1593369,
-    "wall_ns_median": 1609730,
-    "wall_ns_max": 1645238
+    "wall_ns_min": 1511263,
+    "wall_ns_median": 1525975,
+    "wall_ns_max": 1536135
    },
-   "peak_rss_kb": 3208,
+   "peak_rss_kb": 3244,
    "native": {
     "score": 4648.0,
     "drain_value": 0,
@@ -340,11 +340,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1035922,
-    "wall_ns_median": 1055119,
-    "wall_ns_max": 1075438
+    "wall_ns_min": 966944,
+    "wall_ns_median": 973287,
+    "wall_ns_max": 1003611
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18788,
    "native": {
     "waste": 2,
     "selected_value": 16916342,
@@ -417,11 +417,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 524664,
-    "wall_ns_median": 547187,
-    "wall_ns_max": 557286
+    "wall_ns_min": 344551,
+    "wall_ns_median": 355825,
+    "wall_ns_max": 1199460
    },
-   "peak_rss_kb": 2892,
+   "peak_rss_kb": 2860,
    "native": {
     "score": 4270.0,
     "drain_value": 157558,
@@ -490,11 +490,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 581,
-    "wall_ns_median": 651,
-    "wall_ns_max": 751
+    "wall_ns_min": 391,
+    "wall_ns_median": 451,
+    "wall_ns_max": 521
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18788,
    "native": {
     "waste": 604,
     "selected_value": 8141962,
@@ -565,11 +565,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 60676,
-    "wall_ns_median": 62760,
-    "wall_ns_max": 73921
+    "wall_ns_min": 35003,
+    "wall_ns_median": 37148,
+    "wall_ns_max": 46186
    },
-   "peak_rss_kb": 2692,
+   "peak_rss_kb": 2700,
    "native": {
     "score": 2910.0,
     "drain_value": 3240632,
@@ -646,11 +646,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1864,
-    "wall_ns_median": 1944,
-    "wall_ns_max": 2204
+    "wall_ns_min": 2736,
+    "wall_ns_median": 2826,
+    "wall_ns_max": 3347
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18788,
    "native": {
     "waste": 35,
     "selected_value": 4904335,
@@ -726,17 +726,17 @@
     "c015",
     "c016"
    ],
-   "rounds": 2654,
+   "rounds": 301,
    "exhausted": true,
    "budget": 100000,
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1397964,
-    "wall_ns_median": 2021267,
-    "wall_ns_max": 2591288
+    "wall_ns_min": 153081,
+    "wall_ns_median": 158712,
+    "wall_ns_max": 183163
    },
-   "peak_rss_kb": 3480,
+   "peak_rss_kb": 2824,
    "native": {
     "score": 4674.0,
     "drain_value": 0,
@@ -816,11 +816,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 397481,
-    "wall_ns_median": 408782,
-    "wall_ns_max": 424633
+    "wall_ns_min": 384932,
+    "wall_ns_median": 394562,
+    "wall_ns_max": 412100
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18788,
    "native": {
     "waste": 35,
     "selected_value": 4904335,
@@ -891,11 +891,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 35408,
-    "wall_ns_median": 38503,
-    "wall_ns_max": 46930
+    "wall_ns_min": 34322,
+    "wall_ns_median": 37508,
+    "wall_ns_max": 72612
    },
-   "peak_rss_kb": 2712,
+   "peak_rss_kb": 2696,
    "native": {
     "score": 2910.0,
     "drain_value": 3240632,
@@ -971,11 +971,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 11703,
-    "wall_ns_median": 12023,
-    "wall_ns_max": 60576
+    "wall_ns_min": 10081,
+    "wall_ns_median": 10201,
+    "wall_ns_max": 10862
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 604,
     "selected_value": 22746108,
@@ -1050,11 +1050,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2543346,
-    "wall_ns_median": 2715035,
-    "wall_ns_max": 4544364
+    "wall_ns_min": 3336468,
+    "wall_ns_median": 3353623,
+    "wall_ns_max": 3543820
    },
-   "peak_rss_kb": 3912,
+   "peak_rss_kb": 4244,
    "native": {
     "score": 5630.0,
     "drain_value": 1124058,
@@ -1132,11 +1132,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 433960,
-    "wall_ns_median": 437077,
-    "wall_ns_max": 440422
+    "wall_ns_min": 585330,
+    "wall_ns_median": 587916,
+    "wall_ns_max": 598258
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 2,
     "selected_value": 21625022,
@@ -1212,11 +1212,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 5740864,
-    "wall_ns_median": 6199190,
-    "wall_ns_max": 8346720
+    "wall_ns_min": 5027885,
+    "wall_ns_median": 5152605,
+    "wall_ns_max": 8997493
    },
-   "peak_rss_kb": 5028,
+   "peak_rss_kb": 5032,
    "native": {
     "score": 5939.0,
     "drain_value": 0,
@@ -1294,11 +1294,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2356308,
-    "wall_ns_median": 2446261,
-    "wall_ns_max": 4106947
+    "wall_ns_min": 2001453,
+    "wall_ns_median": 2057590,
+    "wall_ns_max": 2070497
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 2,
     "selected_value": 21625022,
@@ -1373,11 +1373,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2490845,
-    "wall_ns_median": 2515402,
-    "wall_ns_max": 2620894
+    "wall_ns_min": 2231774,
+    "wall_ns_median": 2257086,
+    "wall_ns_max": 3311084
    },
-   "peak_rss_kb": 4036,
+   "peak_rss_kb": 3972,
    "native": {
     "score": 5630.0,
     "drain_value": 1124058,
@@ -1446,11 +1446,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2415,
-    "wall_ns_median": 2515,
-    "wall_ns_max": 2665
+    "wall_ns_min": 1793,
+    "wall_ns_median": 1824,
+    "wall_ns_max": 1975
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 604,
     "selected_value": 5876240,
@@ -1521,11 +1521,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 26731,
-    "wall_ns_median": 32703,
-    "wall_ns_max": 37472
+    "wall_ns_min": 19431,
+    "wall_ns_median": 19832,
+    "wall_ns_max": 21274
    },
-   "peak_rss_kb": 2676,
+   "peak_rss_kb": 2696,
    "native": {
     "score": 2910.0,
     "drain_value": 171910,
@@ -1601,11 +1601,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 440874,
-    "wall_ns_median": 662488,
-    "wall_ns_max": 683528
+    "wall_ns_min": 566120,
+    "wall_ns_median": 574317,
+    "wall_ns_max": 579429
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 0,
     "selected_value": 5708660,
@@ -1678,9 +1678,9 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1935653,
-    "wall_ns_median": 1957645,
-    "wall_ns_max": 1984487
+    "wall_ns_min": 1759639,
+    "wall_ns_median": 1775242,
+    "wall_ns_max": 1854517
    },
    "peak_rss_kb": 3900,
    "native": {
@@ -1758,11 +1758,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1286421,
-    "wall_ns_median": 1300569,
-    "wall_ns_max": 1830122
+    "wall_ns_min": 1151874,
+    "wall_ns_median": 1540330,
+    "wall_ns_max": 1947688
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 0,
     "selected_value": 5708660,
@@ -1833,11 +1833,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 22032,
-    "wall_ns_median": 22744,
-    "wall_ns_max": 24907
+    "wall_ns_min": 19060,
+    "wall_ns_median": 19451,
+    "wall_ns_max": 32227
    },
-   "peak_rss_kb": 2684,
+   "peak_rss_kb": 2688,
    "native": {
     "score": 2910.0,
     "drain_value": 171910,
@@ -1911,11 +1911,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 13576,
-    "wall_ns_median": 13707,
-    "wall_ns_max": 14598
+    "wall_ns_min": 11854,
+    "wall_ns_median": 11975,
+    "wall_ns_max": 12666
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 35034,
     "selected_value": 26226616,
@@ -1991,11 +1991,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1376193,
-    "wall_ns_median": 1397033,
-    "wall_ns_max": 1479871
+    "wall_ns_min": 1810091,
+    "wall_ns_median": 1814269,
+    "wall_ns_max": 1831255
    },
-   "peak_rss_kb": 3384,
+   "peak_rss_kb": 3404,
    "native": {
     "score": 22300.0,
     "drain_value": 778863,
@@ -2072,11 +2072,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 672175,
-    "wall_ns_median": 675943,
-    "wall_ns_max": 751077
+    "wall_ns_min": 579564,
+    "wall_ns_median": 590617,
+    "wall_ns_max": 1231860
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 20407,
     "selected_value": 26110297,
@@ -2153,11 +2153,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 6736488,
-    "wall_ns_median": 6990845,
-    "wall_ns_max": 7438892
+    "wall_ns_min": 6017052,
+    "wall_ns_median": 6206426,
+    "wall_ns_max": 9314474
    },
-   "peak_rss_kb": 6896,
+   "peak_rss_kb": 6892,
    "native": {
     "score": 23870.0,
     "drain_value": 0,
@@ -2234,11 +2234,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 919759,
-    "wall_ns_median": 925992,
-    "wall_ns_max": 993621
+    "wall_ns_min": 1231128,
+    "wall_ns_median": 1235939,
+    "wall_ns_max": 1253044
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 20407,
     "selected_value": 26110297,
@@ -2314,11 +2314,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1344963,
-    "wall_ns_median": 1366013,
-    "wall_ns_max": 2344776
+    "wall_ns_min": 1226919,
+    "wall_ns_median": 1239145,
+    "wall_ns_max": 1258295
    },
-   "peak_rss_kb": 3380,
+   "peak_rss_kb": 3388,
    "native": {
     "score": 22300.0,
     "drain_value": 778863,
@@ -2387,11 +2387,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1202,
-    "wall_ns_median": 1283,
-    "wall_ns_max": 1603
+    "wall_ns_min": 1083,
+    "wall_ns_median": 1102,
+    "wall_ns_max": 1342
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 5674,
     "selected_value": 4481021,
@@ -2462,9 +2462,9 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 17584,
-    "wall_ns_median": 22784,
-    "wall_ns_max": 26711
+    "wall_ns_min": 16825,
+    "wall_ns_median": 17186,
+    "wall_ns_max": 18208
    },
    "peak_rss_kb": 2664,
    "native": {
@@ -2541,11 +2541,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2315,
-    "wall_ns_median": 2364,
-    "wall_ns_max": 2926
+    "wall_ns_min": 1393,
+    "wall_ns_median": 1423,
+    "wall_ns_max": 1823
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 22108,
     "selected_value": 4223368,
@@ -2618,17 +2618,17 @@
     "c014",
     "c019"
    ],
-   "rounds": 2373,
+   "rounds": 43,
    "exhausted": true,
    "budget": 100000,
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1086619,
-    "wall_ns_median": 1148767,
-    "wall_ns_max": 1427751
+    "wall_ns_min": 31234,
+    "wall_ns_median": 31977,
+    "wall_ns_max": 35293
    },
-   "peak_rss_kb": 3164,
+   "peak_rss_kb": 2664,
    "native": {
     "score": 18054.0,
     "drain_value": 0,
@@ -2702,11 +2702,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 515246,
-    "wall_ns_median": 533691,
-    "wall_ns_max": 678228
+    "wall_ns_min": 316595,
+    "wall_ns_median": 324612,
+    "wall_ns_max": 331487
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 5674,
     "selected_value": 4481021,
@@ -2777,11 +2777,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 11312,
-    "wall_ns_median": 11442,
-    "wall_ns_max": 12954
+    "wall_ns_min": 16955,
+    "wall_ns_median": 17596,
+    "wall_ns_max": 18829
    },
-   "peak_rss_kb": 2660,
+   "peak_rss_kb": 2676,
    "native": {
     "score": 9500.0,
     "drain_value": 276101,
@@ -2859,11 +2859,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 19107,
-    "wall_ns_median": 19167,
-    "wall_ns_max": 20399
+    "wall_ns_min": 16614,
+    "wall_ns_median": 16725,
+    "wall_ns_max": 17807
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 88054,
     "selected_value": 23635712,
@@ -2947,11 +2947,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 4222758,
-    "wall_ns_median": 4555314,
-    "wall_ns_max": 5758306
+    "wall_ns_min": 3958857,
+    "wall_ns_median": 3989972,
+    "wall_ns_max": 7239680
    },
-   "peak_rss_kb": 4980,
+   "peak_rss_kb": 4992,
    "native": {
     "score": 65586.0,
     "drain_value": 0,
@@ -3027,11 +3027,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 422969,
-    "wall_ns_median": 737831,
-    "wall_ns_max": 997157
+    "wall_ns_min": 562444,
+    "wall_ns_median": 568787,
+    "wall_ns_max": 593328
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 88124,
     "selected_value": 23457034,
@@ -3115,9 +3115,9 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 4219332,
-    "wall_ns_median": 4401159,
-    "wall_ns_max": 5770178
+    "wall_ns_min": 4025926,
+    "wall_ns_median": 4054355,
+    "wall_ns_max": 4146165
    },
    "peak_rss_kb": 4980,
    "native": {
@@ -3194,11 +3194,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1714299,
-    "wall_ns_median": 1722255,
-    "wall_ns_max": 1736301
+    "wall_ns_min": 1050435,
+    "wall_ns_median": 1061247,
+    "wall_ns_max": 1172789
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 88054,
     "selected_value": 23635712,
@@ -3282,11 +3282,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 4225273,
-    "wall_ns_median": 4304304,
-    "wall_ns_max": 5071532
+    "wall_ns_min": 3877048,
+    "wall_ns_median": 3939838,
+    "wall_ns_max": 5022991
    },
-   "peak_rss_kb": 4960,
+   "peak_rss_kb": 4980,
    "native": {
     "score": 65586.0,
     "drain_value": 0,
@@ -3356,11 +3356,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 3146,
-    "wall_ns_median": 3196,
-    "wall_ns_max": 3447
+    "wall_ns_min": 2776,
+    "wall_ns_median": 2796,
+    "wall_ns_max": 3067
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 38710,
     "selected_value": 11127698,
@@ -3433,11 +3433,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 52791,
-    "wall_ns_median": 60435,
-    "wall_ns_max": 72739
+    "wall_ns_min": 45003,
+    "wall_ns_median": 75306,
+    "wall_ns_max": 79835
    },
-   "peak_rss_kb": 2684,
+   "peak_rss_kb": 2692,
    "native": {
     "score": 17780.0,
     "drain_value": 457984,
@@ -3510,11 +3510,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 43042,
-    "wall_ns_median": 43353,
-    "wall_ns_max": 48804
+    "wall_ns_min": 37748,
+    "wall_ns_median": 37878,
+    "wall_ns_max": 38910
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 14360,
     "selected_value": 11002200,
@@ -3589,11 +3589,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 933376,
-    "wall_ns_median": 964195,
-    "wall_ns_max": 1472176
+    "wall_ns_min": 875222,
+    "wall_ns_median": 894923,
+    "wall_ns_max": 1014540
    },
-   "peak_rss_kb": 3292,
+   "peak_rss_kb": 3252,
    "native": {
     "score": 21200.0,
     "drain_value": 0,
@@ -3666,11 +3666,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 121553,
-    "wall_ns_median": 139117,
-    "wall_ns_max": 180536
+    "wall_ns_min": 105008,
+    "wall_ns_median": 123245,
+    "wall_ns_max": 170092
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 14360,
     "selected_value": 11002200,
@@ -3743,11 +3743,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 52400,
-    "wall_ns_median": 52711,
-    "wall_ns_max": 81136
+    "wall_ns_min": 45254,
+    "wall_ns_median": 45995,
+    "wall_ns_max": 60886
    },
-   "peak_rss_kb": 2684,
+   "peak_rss_kb": 2680,
    "native": {
     "score": 17780.0,
     "drain_value": 457984,
@@ -3819,11 +3819,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 5060,
-    "wall_ns_median": 5140,
-    "wall_ns_max": 5711
+    "wall_ns_min": 6814,
+    "wall_ns_median": 6924,
+    "wall_ns_max": 7676
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 15816,
     "selected_value": 21389758,
@@ -3897,11 +3897,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 67829,
-    "wall_ns_median": 68892,
-    "wall_ns_max": 75444
+    "wall_ns_min": 59312,
+    "wall_ns_median": 59743,
+    "wall_ns_max": 70035
    },
-   "peak_rss_kb": 2728,
+   "peak_rss_kb": 2744,
    "native": {
     "score": 4950.0,
     "drain_value": 282092,
@@ -3978,11 +3978,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 564170,
-    "wall_ns_median": 664472,
-    "wall_ns_max": 1052173
+    "wall_ns_min": 588799,
+    "wall_ns_median": 592957,
+    "wall_ns_max": 615614
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 15816,
     "selected_value": 21209167,
@@ -4059,11 +4059,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2811548,
-    "wall_ns_median": 2866593,
-    "wall_ns_max": 4602805
+    "wall_ns_min": 2616047,
+    "wall_ns_median": 2685410,
+    "wall_ns_max": 2717387
    },
-   "peak_rss_kb": 5060,
+   "peak_rss_kb": 5064,
    "native": {
     "score": 6224.0,
     "drain_value": 0,
@@ -4142,11 +4142,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1992281,
-    "wall_ns_median": 3020278,
-    "wall_ns_max": 3489986
+    "wall_ns_min": 1857165,
+    "wall_ns_median": 1878499,
+    "wall_ns_max": 2949648
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 13650,
     "selected_value": 21313277,
@@ -4220,11 +4220,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 67039,
-    "wall_ns_median": 68521,
-    "wall_ns_max": 80894
+    "wall_ns_min": 59683,
+    "wall_ns_median": 60535,
+    "wall_ns_max": 65115
    },
-   "peak_rss_kb": 2736,
+   "peak_rss_kb": 2732,
    "native": {
     "score": 4950.0,
     "drain_value": 282092,
@@ -4292,11 +4292,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 972,
-    "wall_ns_median": 1032,
-    "wall_ns_max": 1152
+    "wall_ns_min": 912,
+    "wall_ns_median": 962,
+    "wall_ns_max": 1092
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 604,
     "selected_value": 2727446,
@@ -4366,11 +4366,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1993,
-    "wall_ns_median": 2354,
-    "wall_ns_max": 3848
+    "wall_ns_min": 1914,
+    "wall_ns_median": 1994,
+    "wall_ns_max": 2485
    },
-   "peak_rss_kb": 2644,
+   "peak_rss_kb": 2660,
    "native": {
     "score": 2230.0,
     "drain_value": 208796,
@@ -4451,11 +4451,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 7274,
-    "wall_ns_median": 7524,
-    "wall_ns_max": 12343
+    "wall_ns_min": 10592,
+    "wall_ns_median": 11003,
+    "wall_ns_max": 12095
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 16609,
     "selected_value": 2564948,
@@ -4526,21 +4526,44 @@
    "track": "kernel",
    "objective": "minimise child fee, changeless (Changeless<LowestFee>)",
    "algorithm": "bnb/changeless-lowest-fee",
-   "ok": false,
-   "error": "no solution within 100000 rounds",
-   "selected": [],
-   "rounds": 100000,
-   "exhausted": false,
+   "ok": true,
+   "error": null,
+   "selected": [
+    "c000",
+    "c001",
+    "c002",
+    "c003",
+    "c005",
+    "c007",
+    "c010",
+    "c012",
+    "c015",
+    "c016",
+    "c017",
+    "c018",
+    "c019"
+   ],
+   "rounds": 200,
+   "exhausted": true,
    "budget": 100000,
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 51521103,
-    "wall_ns_median": 54676721,
-    "wall_ns_max": 57563216
+    "wall_ns_min": 154267,
+    "wall_ns_median": 156592,
+    "wall_ns_max": 188989
    },
-   "peak_rss_kb": 24776,
-   "native": null,
+   "peak_rss_kb": 2796,
+   "native": {
+    "score": 19829.0,
+    "drain_value": 0,
+    "child_weight": 3752,
+    "child_fee": 19829,
+    "ancestor_bump": 9768,
+    "ancestor_bump_lower_bound": 9768,
+    "excess": 681,
+    "implied_feerate_sat_per_vb": 21.139658
+   },
    "oracle": {
     "ran": true,
     "best_score": 19829.0,
@@ -4562,8 +4585,35 @@
     "subsets_evaluated": 1048576
    }
   },
-  "metrics": null,
-  "matches_oracle": "missed a solution"
+  "metrics": {
+   "n_inputs": 13,
+   "n_legacy_inputs": 0,
+   "selected_value": 2536829,
+   "child_weight": 3752,
+   "child_fee": 19829,
+   "child_feerate_sat_per_vb": 21.1397,
+   "change_value": 0,
+   "ancestors_in_union": 5,
+   "ancestor_weight": 4684,
+   "ancestor_fee": 1942,
+   "union_bump": 9768,
+   "core_summed_individual_bump": 39072,
+   "core_combined_bump": 9768,
+   "core_bump_discount": 29304,
+   "core_waste": 10449,
+   "package_fee": 21771,
+   "package_weight": 8436,
+   "package_feerate_sat_per_vb": 10.3229,
+   "child_surplus": 10449,
+   "covers_union_bump": true,
+   "covers_core_bump": true,
+   "package_meets_target": true,
+   "child_meets_target": true,
+   "target_shortfall": 0,
+   "core_explainable_shortfall": 0,
+   "within_max_weight": true
+  },
+  "matches_oracle": true
  },
  {
   "raw": {
@@ -4598,11 +4648,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 609476,
-    "wall_ns_median": 621188,
-    "wall_ns_max": 636106
+    "wall_ns_min": 582875,
+    "wall_ns_median": 585430,
+    "wall_ns_max": 608047
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 16609,
     "selected_value": 2693386,
@@ -4672,11 +4722,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2996,
-    "wall_ns_median": 3437,
-    "wall_ns_max": 4398
+    "wall_ns_min": 3086,
+    "wall_ns_median": 3578,
+    "wall_ns_max": 18188
    },
-   "peak_rss_kb": 2644,
+   "peak_rss_kb": 2652,
    "native": {
     "score": 2230.0,
     "drain_value": 208796,
@@ -4755,11 +4805,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 26070,
-    "wall_ns_median": 26451,
-    "wall_ns_max": 27462
+    "wall_ns_min": 25001,
+    "wall_ns_median": 25061,
+    "wall_ns_max": 26013
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 26050,
     "selected_value": 37181927,
@@ -4845,11 +4895,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 30420101,
-    "wall_ns_median": 32753225,
-    "wall_ns_max": 46060821
+    "wall_ns_min": 28988903,
+    "wall_ns_median": 30957265,
+    "wall_ns_max": 33408650
    },
-   "peak_rss_kb": 29568,
+   "peak_rss_kb": 29476,
    "native": {
     "score": 22477.0,
     "drain_value": 0,
@@ -4931,11 +4981,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 605338,
-    "wall_ns_median": 609916,
-    "wall_ns_max": 612481
+    "wall_ns_min": 665304,
+    "wall_ns_median": 676867,
+    "wall_ns_max": 1439401
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 19242,
     "selected_value": 37072937,
@@ -5021,11 +5071,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 32105127,
-    "wall_ns_median": 34030950,
-    "wall_ns_max": 37825366
+    "wall_ns_min": 29914657,
+    "wall_ns_median": 31865175,
+    "wall_ns_max": 33599080
    },
-   "peak_rss_kb": 29520,
+   "peak_rss_kb": 29352,
    "native": {
     "score": 22477.0,
     "drain_value": 0,
@@ -5107,11 +5157,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 790021,
-    "wall_ns_median": 798296,
-    "wall_ns_max": 1569592
+    "wall_ns_min": 789203,
+    "wall_ns_median": 1163047,
+    "wall_ns_max": 2003535
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 19242,
     "selected_value": 37072937,
@@ -5197,11 +5247,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 31212316,
-    "wall_ns_median": 33578561,
-    "wall_ns_max": 34612348
+    "wall_ns_min": 29841666,
+    "wall_ns_median": 30525804,
+    "wall_ns_max": 34393589
    },
-   "peak_rss_kb": 29148,
+   "peak_rss_kb": 29536,
    "native": {
     "score": 22477.0,
     "drain_value": 0,
@@ -5272,11 +5322,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 4017,
-    "wall_ns_median": 4048,
-    "wall_ns_max": 4508
+    "wall_ns_min": 3657,
+    "wall_ns_median": 3728,
+    "wall_ns_max": 4099
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 9833,
     "selected_value": 15199201,
@@ -5349,11 +5399,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 163633,
-    "wall_ns_median": 165767,
-    "wall_ns_max": 187959
+    "wall_ns_min": 149375,
+    "wall_ns_median": 151650,
+    "wall_ns_max": 178194
    },
-   "peak_rss_kb": 2812,
+   "peak_rss_kb": 2808,
    "native": {
     "score": 13499.0,
     "drain_value": 1564302,
@@ -5430,11 +5480,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 627701,
-    "wall_ns_median": 632530,
-    "wall_ns_max": 659501
+    "wall_ns_min": 605959,
+    "wall_ns_median": 616820,
+    "wall_ns_max": 619767
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 14779,
     "selected_value": 15039458,
@@ -5510,11 +5560,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2165210,
-    "wall_ns_median": 2309937,
-    "wall_ns_max": 3094828
+    "wall_ns_min": 2129602,
+    "wall_ns_median": 2139462,
+    "wall_ns_max": 2157469
    },
-   "peak_rss_kb": 4204,
+   "peak_rss_kb": 4168,
    "native": {
     "score": 14542.0,
     "drain_value": 0,
@@ -5591,11 +5641,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1862011,
-    "wall_ns_median": 1871870,
-    "wall_ns_max": 1885325
+    "wall_ns_min": 1697690,
+    "wall_ns_median": 1701958,
+    "wall_ns_max": 1713842
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 14779,
     "selected_value": 15039458,
@@ -5668,9 +5718,9 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 105833,
-    "wall_ns_median": 106745,
-    "wall_ns_max": 124528
+    "wall_ns_min": 149476,
+    "wall_ns_median": 152912,
+    "wall_ns_max": 186461
    },
    "peak_rss_kb": 2828,
    "native": {
@@ -5743,11 +5793,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 4528,
-    "wall_ns_median": 4619,
-    "wall_ns_max": 7024
+    "wall_ns_min": 6253,
+    "wall_ns_median": 6353,
+    "wall_ns_max": 6954
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 604,
     "selected_value": 13671465,
@@ -5820,11 +5870,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1198221,
-    "wall_ns_median": 1255190,
-    "wall_ns_max": 1483627
+    "wall_ns_min": 1643719,
+    "wall_ns_median": 1648899,
+    "wall_ns_max": 1668449
    },
-   "peak_rss_kb": 3400,
+   "peak_rss_kb": 3396,
    "native": {
     "score": 4270.0,
     "drain_value": 489775,
@@ -5900,11 +5950,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 616839,
-    "wall_ns_median": 630396,
-    "wall_ns_max": 1096517
+    "wall_ns_min": 382793,
+    "wall_ns_median": 385708,
+    "wall_ns_max": 613684
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 0,
     "selected_value": 13184660,
@@ -5978,11 +6028,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1686615,
-    "wall_ns_median": 1713437,
-    "wall_ns_max": 2103402
+    "wall_ns_min": 1682769,
+    "wall_ns_median": 1706056,
+    "wall_ns_max": 1716037
    },
-   "peak_rss_kb": 3680,
+   "peak_rss_kb": 3712,
    "native": {
     "score": 4374.0,
     "drain_value": 0,
@@ -6065,11 +6115,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1064947,
-    "wall_ns_median": 1197300,
-    "wall_ns_max": 1625038
+    "wall_ns_min": 1470966,
+    "wall_ns_median": 1477279,
+    "wall_ns_max": 1488652
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 0,
     "selected_value": 13189420,
@@ -6142,11 +6192,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1206958,
-    "wall_ns_median": 1861530,
-    "wall_ns_max": 2027356
+    "wall_ns_min": 1130811,
+    "wall_ns_median": 1161033,
+    "wall_ns_max": 1918681
    },
-   "peak_rss_kb": 3380,
+   "peak_rss_kb": 3416,
    "native": {
     "score": 4270.0,
     "drain_value": 489775,
@@ -6215,11 +6265,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 962,
-    "wall_ns_median": 1012,
-    "wall_ns_max": 1202
+    "wall_ns_min": 932,
+    "wall_ns_median": 962,
+    "wall_ns_max": 1082
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 604,
     "selected_value": 3724016,
@@ -6290,11 +6340,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 8887,
-    "wall_ns_median": 10690,
-    "wall_ns_max": 16582
+    "wall_ns_min": 14580,
+    "wall_ns_median": 15161,
+    "wall_ns_max": 16654
    },
-   "peak_rss_kb": 2652,
+   "peak_rss_kb": 2680,
    "native": {
     "score": 2910.0,
     "drain_value": 904494,
@@ -6375,11 +6425,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 94340,
-    "wall_ns_median": 95262,
-    "wall_ns_max": 98649
+    "wall_ns_min": 87488,
+    "wall_ns_median": 87990,
+    "wall_ns_max": 90044
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 5,
     "selected_value": 3268025,
@@ -6458,17 +6508,17 @@
     "c016",
     "c019"
    ],
-   "rounds": 587,
+   "rounds": 152,
    "exhausted": true,
    "budget": 100000,
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 361241,
-    "wall_ns_median": 364497,
-    "wall_ns_max": 377442
+    "wall_ns_min": 66176,
+    "wall_ns_median": 66746,
+    "wall_ns_max": 222916
    },
-   "peak_rss_kb": 2852,
+   "peak_rss_kb": 2724,
    "native": {
     "score": 3616.0,
     "drain_value": 0,
@@ -6551,11 +6601,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 559741,
-    "wall_ns_median": 570471,
-    "wall_ns_max": 591411
+    "wall_ns_min": 530942,
+    "wall_ns_median": 539098,
+    "wall_ns_max": 552977
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 5,
     "selected_value": 3268025,
@@ -6626,11 +6676,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 9108,
-    "wall_ns_median": 9668,
-    "wall_ns_max": 10510
+    "wall_ns_min": 8667,
+    "wall_ns_median": 9008,
+    "wall_ns_max": 9911
    },
-   "peak_rss_kb": 2636,
+   "peak_rss_kb": 2660,
    "native": {
     "score": 2910.0,
     "drain_value": 904494,
@@ -6710,11 +6760,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 28555,
-    "wall_ns_median": 29176,
-    "wall_ns_max": 30568
+    "wall_ns_min": 26634,
+    "wall_ns_median": 27145,
+    "wall_ns_max": 27957
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 604,
     "selected_value": 34169924,
@@ -6792,11 +6842,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 4669970,
-    "wall_ns_median": 5220362,
-    "wall_ns_max": 7757273
+    "wall_ns_min": 4453384,
+    "wall_ns_median": 5429131,
+    "wall_ns_max": 7206572
    },
-   "peak_rss_kb": 7364,
+   "peak_rss_kb": 7444,
    "native": {
     "score": 7670.0,
     "drain_value": 30296,
@@ -6877,11 +6927,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 569109,
-    "wall_ns_median": 572445,
-    "wall_ns_max": 594035
+    "wall_ns_min": 566233,
+    "wall_ns_median": 570883,
+    "wall_ns_max": 573578
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 0,
     "selected_value": 34073060,
@@ -6960,11 +7010,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 16106338,
-    "wall_ns_median": 17298738,
-    "wall_ns_max": 20169838
+    "wall_ns_min": 14696964,
+    "wall_ns_median": 15760972,
+    "wall_ns_max": 17005438
    },
-   "peak_rss_kb": 19048,
+   "peak_rss_kb": 19060,
    "native": {
     "score": 7997.0,
     "drain_value": 0,
@@ -7045,11 +7095,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2067864,
-    "wall_ns_median": 3186573,
-    "wall_ns_max": 3293999
+    "wall_ns_min": 2927484,
+    "wall_ns_median": 2942896,
+    "wall_ns_max": 3629074
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 0,
     "selected_value": 34073060,
@@ -7127,11 +7177,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 4663807,
-    "wall_ns_median": 4953071,
-    "wall_ns_max": 6074536
+    "wall_ns_min": 4451159,
+    "wall_ns_median": 4517634,
+    "wall_ns_max": 5648749
    },
-   "peak_rss_kb": 7276,
+   "peak_rss_kb": 7476,
    "native": {
     "score": 7670.0,
     "drain_value": 30296,
@@ -7202,11 +7252,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2214,
-    "wall_ns_median": 2264,
-    "wall_ns_max": 2545
+    "wall_ns_min": 3256,
+    "wall_ns_median": 3296,
+    "wall_ns_max": 3657
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 604,
     "selected_value": 8372116,
@@ -7279,11 +7329,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 582243,
-    "wall_ns_median": 617661,
-    "wall_ns_max": 936510
+    "wall_ns_min": 569821,
+    "wall_ns_median": 827877,
+    "wall_ns_max": 1357657
    },
-   "peak_rss_kb": 3040,
+   "peak_rss_kb": 3060,
    "native": {
     "score": 4270.0,
     "drain_value": 920669,
@@ -7360,11 +7410,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 613603,
-    "wall_ns_median": 621909,
-    "wall_ns_max": 626819
+    "wall_ns_min": 389013,
+    "wall_ns_median": 393892,
+    "wall_ns_max": 1063938
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 1,
     "selected_value": 7690341,
@@ -7439,11 +7489,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2221027,
-    "wall_ns_median": 2258529,
-    "wall_ns_max": 3514080
+    "wall_ns_min": 2201956,
+    "wall_ns_median": 2237879,
+    "wall_ns_max": 3235041
    },
-   "peak_rss_kb": 4024,
+   "peak_rss_kb": 4008,
    "native": {
     "score": 4681.0,
     "drain_value": 0,
@@ -7520,11 +7570,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 913597,
-    "wall_ns_median": 916582,
-    "wall_ns_max": 967901
+    "wall_ns_min": 848228,
+    "wall_ns_median": 856635,
+    "wall_ns_max": 1612826
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 1,
     "selected_value": 7690341,
@@ -7597,11 +7647,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 585449,
-    "wall_ns_median": 892566,
-    "wall_ns_max": 906543
+    "wall_ns_min": 548197,
+    "wall_ns_median": 570763,
+    "wall_ns_max": 836304
    },
-   "peak_rss_kb": 3032,
+   "peak_rss_kb": 3056,
    "native": {
     "score": 4270.0,
     "drain_value": 920669,
@@ -7673,11 +7723,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 7024,
-    "wall_ns_median": 7164,
-    "wall_ns_max": 11662
+    "wall_ns_min": 6504,
+    "wall_ns_median": 6583,
+    "wall_ns_max": 7425
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 604,
     "selected_value": 9175856,
@@ -7752,11 +7802,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 285816,
-    "wall_ns_median": 440592,
-    "wall_ns_max": 732260
+    "wall_ns_min": 267845,
+    "wall_ns_median": 277466,
+    "wall_ns_max": 412791
    },
-   "peak_rss_kb": 2840,
+   "peak_rss_kb": 2860,
    "native": {
     "score": 4637.0,
     "drain_value": 0,
@@ -7831,11 +7881,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 622170,
-    "wall_ns_median": 626227,
-    "wall_ns_max": 677335
+    "wall_ns_min": 582387,
+    "wall_ns_median": 587607,
+    "wall_ns_max": 599080
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 2,
     "selected_value": 9071982,
@@ -7910,11 +7960,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 435002,
-    "wall_ns_median": 438929,
-    "wall_ns_max": 451573
+    "wall_ns_min": 402029,
+    "wall_ns_median": 407430,
+    "wall_ns_max": 413993
    },
-   "peak_rss_kb": 2840,
+   "peak_rss_kb": 2860,
    "native": {
     "score": 4637.0,
     "drain_value": 0,
@@ -7989,11 +8039,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1825901,
-    "wall_ns_median": 1874544,
-    "wall_ns_max": 3363010
+    "wall_ns_min": 1755226,
+    "wall_ns_median": 2615308,
+    "wall_ns_max": 2919859
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 2,
     "selected_value": 9071982,
@@ -8068,11 +8118,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 421846,
-    "wall_ns_median": 427697,
-    "wall_ns_max": 440994
+    "wall_ns_min": 268457,
+    "wall_ns_median": 271223,
+    "wall_ns_max": 579030
    },
-   "peak_rss_kb": 2800,
+   "peak_rss_kb": 2840,
    "native": {
     "score": 4637.0,
     "drain_value": 0,
@@ -8141,11 +8191,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1032,
-    "wall_ns_median": 1092,
-    "wall_ns_max": 1252
+    "wall_ns_min": 1002,
+    "wall_ns_median": 1022,
+    "wall_ns_max": 1172
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 3580,
     "selected_value": 7417855,
@@ -8216,11 +8266,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 17554,
-    "wall_ns_median": 18615,
-    "wall_ns_max": 26942
+    "wall_ns_min": 11023,
+    "wall_ns_median": 11293,
+    "wall_ns_max": 12626
    },
-   "peak_rss_kb": 2684,
+   "peak_rss_kb": 2644,
    "native": {
     "score": 3958.0,
     "drain_value": 1096010,
@@ -8297,11 +8347,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 38253,
-    "wall_ns_median": 38694,
-    "wall_ns_max": 41269
+    "wall_ns_min": 35362,
+    "wall_ns_median": 35612,
+    "wall_ns_max": 41595
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 138,
     "selected_value": 6346438,
@@ -8379,17 +8429,17 @@
     "c017",
     "c019"
    ],
-   "rounds": 765,
+   "rounds": 207,
    "exhausted": true,
    "budget": 100000,
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 469919,
-    "wall_ns_median": 474026,
-    "wall_ns_max": 515856
+    "wall_ns_min": 129273,
+    "wall_ns_median": 131346,
+    "wall_ns_max": 140355
    },
-   "peak_rss_kb": 2848,
+   "peak_rss_kb": 2700,
    "native": {
     "score": 5438.0,
     "drain_value": 0,
@@ -8471,11 +8521,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 489647,
-    "wall_ns_median": 501950,
-    "wall_ns_max": 518191
+    "wall_ns_min": 349831,
+    "wall_ns_median": 477551,
+    "wall_ns_max": 500356
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 138,
     "selected_value": 6346438,
@@ -8546,9 +8596,9 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 11121,
-    "wall_ns_median": 11542,
-    "wall_ns_max": 20159
+    "wall_ns_min": 18688,
+    "wall_ns_median": 18928,
+    "wall_ns_max": 21835
    },
    "peak_rss_kb": 2668,
    "native": {
@@ -8631,11 +8681,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 30989,
-    "wall_ns_median": 31350,
-    "wall_ns_max": 32182
+    "wall_ns_min": 30762,
+    "wall_ns_median": 31203,
+    "wall_ns_max": 35381
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 8785,
     "selected_value": 39107114,
@@ -8720,11 +8770,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 26701140,
-    "wall_ns_median": 28203613,
-    "wall_ns_max": 33440395
+    "wall_ns_min": 24900298,
+    "wall_ns_median": 25442787,
+    "wall_ns_max": 27563393
    },
-   "peak_rss_kb": 18204,
+   "peak_rss_kb": 18320,
    "native": {
     "score": 11420.0,
     "drain_value": 0,
@@ -8805,11 +8855,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 577634,
-    "wall_ns_median": 666905,
-    "wall_ns_max": 937353
+    "wall_ns_min": 398610,
+    "wall_ns_median": 400142,
+    "wall_ns_max": 417679
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 10084,
     "selected_value": 39010144,
@@ -8894,11 +8944,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 26933724,
-    "wall_ns_median": 29254391,
-    "wall_ns_max": 31667165
+    "wall_ns_min": 25170225,
+    "wall_ns_median": 25410450,
+    "wall_ns_max": 28790636
    },
-   "peak_rss_kb": 18604,
+   "peak_rss_kb": 18516,
    "native": {
     "score": 11420.0,
     "drain_value": 0,
@@ -8979,11 +9029,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1043175,
-    "wall_ns_median": 1595711,
-    "wall_ns_max": 1653481
+    "wall_ns_min": 1440909,
+    "wall_ns_median": 1444706,
+    "wall_ns_max": 1478264
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 10084,
     "selected_value": 39010144,
@@ -9068,11 +9118,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 27828525,
-    "wall_ns_median": 30005347,
-    "wall_ns_max": 36484415
+    "wall_ns_min": 25034961,
+    "wall_ns_median": 25292212,
+    "wall_ns_max": 28145331
    },
-   "peak_rss_kb": 18008,
+   "peak_rss_kb": 18340,
    "native": {
     "score": 11420.0,
     "drain_value": 0,
@@ -9142,11 +9192,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 3126,
-    "wall_ns_median": 3136,
-    "wall_ns_max": 3447
+    "wall_ns_min": 2976,
+    "wall_ns_median": 3016,
+    "wall_ns_max": 3286
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 2060,
     "selected_value": 8341070,
@@ -9218,11 +9268,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 446754,
-    "wall_ns_median": 672125,
-    "wall_ns_max": 691943
+    "wall_ns_min": 648504,
+    "wall_ns_median": 651520,
+    "wall_ns_max": 671510
    },
-   "peak_rss_kb": 2948,
+   "peak_rss_kb": 3028,
    "native": {
     "score": 5046.0,
     "drain_value": 1109604,
@@ -9298,11 +9348,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 601339,
-    "wall_ns_median": 606249,
-    "wall_ns_max": 609556
+    "wall_ns_min": 563892,
+    "wall_ns_median": 565405,
+    "wall_ns_max": 580827
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 1456,
     "selected_value": 7235116,
@@ -9378,11 +9428,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1578318,
-    "wall_ns_median": 1588046,
-    "wall_ns_max": 2656659
+    "wall_ns_min": 1564038,
+    "wall_ns_median": 1718702,
+    "wall_ns_max": 2547280
    },
-   "peak_rss_kb": 3524,
+   "peak_rss_kb": 3560,
    "native": {
     "score": 5486.0,
     "drain_value": 0,
@@ -9458,11 +9508,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 493172,
-    "wall_ns_median": 516808,
-    "wall_ns_max": 764762
+    "wall_ns_min": 708866,
+    "wall_ns_median": 727473,
+    "wall_ns_max": 751513
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 1456,
     "selected_value": 7235116,
@@ -9534,11 +9584,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 666644,
-    "wall_ns_median": 675061,
-    "wall_ns_max": 699196
+    "wall_ns_min": 428619,
+    "wall_ns_median": 437396,
+    "wall_ns_max": 973021
    },
-   "peak_rss_kb": 2988,
+   "peak_rss_kb": 2948,
    "native": {
     "score": 5046.0,
     "drain_value": 1109604,
@@ -9610,11 +9660,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 6703,
-    "wall_ns_median": 6823,
-    "wall_ns_max": 7554
+    "wall_ns_min": 13167,
+    "wall_ns_median": 13517,
+    "wall_ns_max": 14470
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 13447,
     "selected_value": 15091925,
@@ -9694,11 +9744,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2415438,
-    "wall_ns_median": 2444593,
-    "wall_ns_max": 2965480
+    "wall_ns_min": 2306572,
+    "wall_ns_median": 2356793,
+    "wall_ns_max": 4084884
    },
-   "peak_rss_kb": 3980,
+   "peak_rss_kb": 3956,
    "native": {
     "score": 14878.0,
     "drain_value": 0,
@@ -9772,11 +9822,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 390056,
-    "wall_ns_median": 444009,
-    "wall_ns_max": 634644
+    "wall_ns_min": 576076,
+    "wall_ns_median": 582681,
+    "wall_ns_max": 901116
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 12332,
     "selected_value": 14982632,
@@ -9856,11 +9906,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2379058,
-    "wall_ns_median": 3019402,
-    "wall_ns_max": 3610402
+    "wall_ns_min": 3556354,
+    "wall_ns_median": 3583629,
+    "wall_ns_max": 3604301
    },
-   "peak_rss_kb": 3988,
+   "peak_rss_kb": 3976,
    "native": {
     "score": 14878.0,
     "drain_value": 0,
@@ -9936,11 +9986,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1784040,
-    "wall_ns_median": 2586154,
-    "wall_ns_max": 2600932
+    "wall_ns_min": 2593935,
+    "wall_ns_median": 2603714,
+    "wall_ns_max": 2617993
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 10621,
     "selected_value": 15079333,
@@ -10020,11 +10070,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 3502206,
-    "wall_ns_median": 3518758,
-    "wall_ns_max": 3547332
+    "wall_ns_min": 2339770,
+    "wall_ns_median": 2371173,
+    "wall_ns_max": 2381504
    },
-   "peak_rss_kb": 3972,
+   "peak_rss_kb": 3988,
    "native": {
     "score": 14878.0,
     "drain_value": 0,
@@ -10093,11 +10143,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1073,
-    "wall_ns_median": 1142,
-    "wall_ns_max": 1343
+    "wall_ns_min": 1122,
+    "wall_ns_median": 1152,
+    "wall_ns_max": 1422
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 2593,
     "selected_value": 1513720,
@@ -10168,11 +10218,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 30418,
-    "wall_ns_median": 33003,
-    "wall_ns_max": 67048
+    "wall_ns_min": 18467,
+    "wall_ns_median": 19660,
+    "wall_ns_max": 20802
    },
-   "peak_rss_kb": 2684,
+   "peak_rss_kb": 2668,
    "native": {
     "score": 4899.0,
     "drain_value": 139401,
@@ -10246,11 +10296,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 41088,
-    "wall_ns_median": 41440,
-    "wall_ns_max": 43162
+    "wall_ns_min": 61184,
+    "wall_ns_median": 61945,
+    "wall_ns_max": 71184
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 5544,
     "selected_value": 1378804,
@@ -10327,17 +10377,17 @@
     "c012",
     "c015"
    ],
-   "rounds": 9122,
+   "rounds": 369,
    "exhausted": true,
    "budget": 100000,
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 3682180,
-    "wall_ns_median": 3735161,
-    "wall_ns_max": 3903393
+    "wall_ns_min": 199693,
+    "wall_ns_median": 282410,
+    "wall_ns_max": 316198
    },
-   "peak_rss_kb": 3656,
+   "peak_rss_kb": 2788,
    "native": {
     "score": 8602.0,
     "drain_value": 0,
@@ -10414,11 +10464,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 553638,
-    "wall_ns_median": 561854,
-    "wall_ns_max": 578396
+    "wall_ns_min": 529116,
+    "wall_ns_median": 536441,
+    "wall_ns_max": 550970
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 2593,
     "selected_value": 1655771,
@@ -10489,11 +10539,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 20309,
-    "wall_ns_median": 29066,
-    "wall_ns_max": 55466
+    "wall_ns_min": 29740,
+    "wall_ns_median": 32706,
+    "wall_ns_max": 107767
    },
-   "peak_rss_kb": 2684,
+   "peak_rss_kb": 2668,
    "native": {
     "score": 4899.0,
     "drain_value": 139401,
@@ -10573,11 +10623,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 21060,
-    "wall_ns_median": 21240,
-    "wall_ns_max": 22272
+    "wall_ns_min": 20110,
+    "wall_ns_median": 20251,
+    "wall_ns_max": 21293
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 23700,
     "selected_value": 31086128,
@@ -10645,11 +10695,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 161762882,
-    "wall_ns_median": 169077894,
-    "wall_ns_max": 177104496
+    "wall_ns_min": 147035217,
+    "wall_ns_median": 150881105,
+    "wall_ns_max": 155783906
    },
-   "peak_rss_kb": 65688,
+   "peak_rss_kb": 65544,
    "native": null,
    "oracle": {
     "ran": false,
@@ -10692,11 +10742,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 641797,
-    "wall_ns_median": 646075,
-    "wall_ns_max": 966358
+    "wall_ns_min": 597544,
+    "wall_ns_median": 604828,
+    "wall_ns_max": 606401
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 31084,
     "selected_value": 30979432,
@@ -10764,11 +10814,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 157572890,
-    "wall_ns_median": 169884672,
-    "wall_ns_max": 183032527
+    "wall_ns_min": 149917724,
+    "wall_ns_median": 150840067,
+    "wall_ns_max": 154827789
    },
-   "peak_rss_kb": 65324,
+   "peak_rss_kb": 65668,
    "native": null,
    "oracle": {
     "ran": false,
@@ -10811,11 +10861,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2419374,
-    "wall_ns_median": 2441275,
-    "wall_ns_max": 3516701
+    "wall_ns_min": 2343014,
+    "wall_ns_median": 3051680,
+    "wall_ns_max": 3536790
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 31084,
     "selected_value": 30979432,
@@ -10993,11 +11043,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 156379759,
-    "wall_ns_median": 169462551,
-    "wall_ns_max": 183632692
+    "wall_ns_min": 149118878,
+    "wall_ns_median": 151449415,
+    "wall_ns_max": 158084033
    },
-   "peak_rss_kb": 65320,
+   "peak_rss_kb": 65372,
    "native": {
     "score": null,
     "drain_value": 63567,
@@ -11067,11 +11117,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 3056,
-    "wall_ns_median": 3116,
-    "wall_ns_max": 3547
+    "wall_ns_min": 2806,
+    "wall_ns_median": 2866,
+    "wall_ns_max": 3256
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 7732,
     "selected_value": 6495034,
@@ -11145,11 +11195,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 145949,
-    "wall_ns_median": 148444,
-    "wall_ns_max": 165606
+    "wall_ns_min": 127103,
+    "wall_ns_median": 128716,
+    "wall_ns_max": 134197
    },
-   "peak_rss_kb": 2748,
+   "peak_rss_kb": 2740,
    "native": {
     "score": 4098.0,
     "drain_value": 0,
@@ -11222,11 +11272,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 646235,
-    "wall_ns_median": 652817,
-    "wall_ns_max": 659841
+    "wall_ns_min": 583280,
+    "wall_ns_median": 588161,
+    "wall_ns_max": 591808
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 0,
     "selected_value": 6352620,
@@ -11300,11 +11350,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 215011,
-    "wall_ns_median": 219649,
-    "wall_ns_max": 238436
+    "wall_ns_min": 196982,
+    "wall_ns_median": 200529,
+    "wall_ns_max": 207483
    },
-   "peak_rss_kb": 2744,
+   "peak_rss_kb": 2768,
    "native": {
     "score": 4098.0,
     "drain_value": 0,
@@ -11377,11 +11427,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1873460,
-    "wall_ns_median": 1888058,
-    "wall_ns_max": 2009660
+    "wall_ns_min": 1706245,
+    "wall_ns_median": 1711946,
+    "wall_ns_max": 1728288
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 0,
     "selected_value": 6352620,
@@ -11455,11 +11505,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 137793,
-    "wall_ns_median": 158994,
-    "wall_ns_max": 470509
+    "wall_ns_min": 130269,
+    "wall_ns_median": 191872,
+    "wall_ns_max": 231811
    },
-   "peak_rss_kb": 2768,
+   "peak_rss_kb": 2748,
    "native": {
     "score": 4098.0,
     "drain_value": 0,
@@ -11528,11 +11578,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 351,
-    "wall_ns_median": 361,
-    "wall_ns_max": 471
+    "wall_ns_min": 320,
+    "wall_ns_median": 330,
+    "wall_ns_max": 421
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 15304,
     "selected_value": 425000,
@@ -11603,11 +11653,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 21712,
-    "wall_ns_median": 23996,
-    "wall_ns_max": 30899
+    "wall_ns_min": 33536,
+    "wall_ns_median": 34719,
+    "wall_ns_max": 37504
    },
-   "peak_rss_kb": 2668,
+   "peak_rss_kb": 2648,
    "native": {
     "score": 5610.0,
     "drain_value": 24970,
@@ -11676,11 +11726,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 490,
-    "wall_ns_median": 541,
-    "wall_ns_max": 611
+    "wall_ns_min": 481,
+    "wall_ns_median": 501,
+    "wall_ns_max": 551
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": null,
    "oracle": {
     "ran": true,
@@ -11716,17 +11766,17 @@
     "c006",
     "c007"
    ],
-   "rounds": 445,
+   "rounds": 121,
    "exhausted": true,
    "budget": 100000,
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 131221,
-    "wall_ns_median": 132053,
-    "wall_ns_max": 144316
+    "wall_ns_min": 54799,
+    "wall_ns_median": 55882,
+    "wall_ns_max": 59599
    },
-   "peak_rss_kb": 2704,
+   "peak_rss_kb": 2672,
    "native": {
     "score": 29000.0,
     "drain_value": 0,
@@ -11803,11 +11853,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 90142,
-    "wall_ns_median": 112034,
-    "wall_ns_max": 140909
+    "wall_ns_min": 79157,
+    "wall_ns_median": 87955,
+    "wall_ns_max": 117855
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 3304,
     "selected_value": 408000,
@@ -11878,11 +11928,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 22803,
-    "wall_ns_median": 23735,
-    "wall_ns_max": 25408
+    "wall_ns_min": 32234,
+    "wall_ns_median": 35681,
+    "wall_ns_max": 37104
    },
-   "peak_rss_kb": 2672,
+   "peak_rss_kb": 2684,
    "native": {
     "score": 5610.0,
     "drain_value": 24970,
@@ -11959,11 +12009,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 9799,
-    "wall_ns_median": 9859,
-    "wall_ns_max": 10691
+    "wall_ns_min": 9379,
+    "wall_ns_median": 9419,
+    "wall_ns_max": 10260
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 41725,
     "selected_value": 8860917,
@@ -12039,11 +12089,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 125350275,
-    "wall_ns_median": 133133447,
-    "wall_ns_max": 142864946
+    "wall_ns_min": 118677005,
+    "wall_ns_median": 121818617,
+    "wall_ns_max": 124903618
    },
-   "peak_rss_kb": 64968,
+   "peak_rss_kb": 65216,
    "native": {
     "score": 19006.0,
     "drain_value": 0,
@@ -12121,11 +12171,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 435473,
-    "wall_ns_median": 460079,
-    "wall_ns_max": 660082
+    "wall_ns_min": 592609,
+    "wall_ns_median": 595786,
+    "wall_ns_max": 622689
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 20107,
     "selected_value": 8744236,
@@ -12201,11 +12251,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 127832413,
-    "wall_ns_median": 131645138,
-    "wall_ns_max": 140164368
+    "wall_ns_min": 116616465,
+    "wall_ns_median": 121915674,
+    "wall_ns_max": 127458036
    },
-   "peak_rss_kb": 65124,
+   "peak_rss_kb": 64848,
    "native": {
     "score": 19006.0,
     "drain_value": 0,
@@ -12283,11 +12333,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 778919,
-    "wall_ns_median": 804908,
-    "wall_ns_max": 1475028
+    "wall_ns_min": 750784,
+    "wall_ns_median": 768569,
+    "wall_ns_max": 848557
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 20107,
     "selected_value": 8744236,
@@ -12363,11 +12413,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 124627127,
-    "wall_ns_median": 133376071,
-    "wall_ns_max": 162114746
+    "wall_ns_min": 117448384,
+    "wall_ns_median": 119169665,
+    "wall_ns_max": 126273557
    },
-   "peak_rss_kb": 65192,
+   "peak_rss_kb": 64784,
    "native": {
     "score": 19006.0,
     "drain_value": 0,
@@ -12435,11 +12485,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 951,
-    "wall_ns_median": 962,
+    "wall_ns_min": 892,
+    "wall_ns_median": 931,
     "wall_ns_max": 1142
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 11101,
     "selected_value": 4387881,
@@ -12509,11 +12559,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 61548,
-    "wall_ns_median": 62088,
-    "wall_ns_max": 73110
+    "wall_ns_min": 60078,
+    "wall_ns_median": 60469,
+    "wall_ns_max": 104897
    },
-   "peak_rss_kb": 2688,
+   "peak_rss_kb": 2672,
    "native": {
     "score": 12727.0,
     "drain_value": 422734,
@@ -12592,11 +12642,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2745,
-    "wall_ns_median": 2825,
-    "wall_ns_max": 3446
+    "wall_ns_min": 1713,
+    "wall_ns_median": 1813,
+    "wall_ns_max": 2154
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 25270,
     "selected_value": 4063358,
@@ -12672,21 +12722,42 @@
    "track": "kernel",
    "objective": "minimise child fee, changeless (Changeless<LowestFee>)",
    "algorithm": "bnb/changeless-lowest-fee",
-   "ok": false,
-   "error": "no solution within 100000 rounds",
-   "selected": [],
-   "rounds": 100000,
-   "exhausted": false,
+   "ok": true,
+   "error": null,
+   "selected": [
+    "c000",
+    "c003",
+    "c004",
+    "c005",
+    "c006",
+    "c007",
+    "c010",
+    "c012",
+    "c014",
+    "c016",
+    "c019"
+   ],
+   "rounds": 886,
+   "exhausted": true,
    "budget": 100000,
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 42026985,
-    "wall_ns_median": 45351617,
-    "wall_ns_max": 52858217
+    "wall_ns_min": 744595,
+    "wall_ns_median": 758654,
+    "wall_ns_max": 802489
    },
-   "peak_rss_kb": 11360,
-   "native": null,
+   "peak_rss_kb": 2992,
+   "native": {
+    "score": 33172.0,
+    "drain_value": 0,
+    "child_weight": 3208,
+    "child_fee": 33172,
+    "ancestor_bump": 24666,
+    "ancestor_bump_lower_bound": 24666,
+    "excess": 486,
+    "implied_feerate_sat_per_vb": 41.361595
+   },
    "oracle": {
     "ran": true,
     "best_score": 33172.0,
@@ -12706,8 +12777,35 @@
     "subsets_evaluated": 1048576
    }
   },
-  "metrics": null,
-  "matches_oracle": "missed a solution"
+  "metrics": {
+   "n_inputs": 11,
+   "n_legacy_inputs": 0,
+   "selected_value": 3986172,
+   "child_weight": 3208,
+   "child_fee": 33172,
+   "child_feerate_sat_per_vb": 41.3616,
+   "change_value": 0,
+   "ancestors_in_union": 6,
+   "ancestor_weight": 21380,
+   "ancestor_fee": 28784,
+   "union_bump": 24666,
+   "core_summed_individual_bump": 113328,
+   "core_combined_bump": 24666,
+   "core_bump_discount": 88662,
+   "core_waste": 25152,
+   "package_fee": 61956,
+   "package_weight": 24588,
+   "package_feerate_sat_per_vb": 10.0791,
+   "child_surplus": 25152,
+   "covers_union_bump": true,
+   "covers_core_bump": true,
+   "package_meets_target": true,
+   "child_meets_target": true,
+   "target_shortfall": 0,
+   "core_explainable_shortfall": 0,
+   "within_max_weight": true
+  },
+  "matches_oracle": true
  },
  {
   "raw": {
@@ -12741,11 +12839,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 374415,
-    "wall_ns_median": 383112,
-    "wall_ns_max": 531505
+    "wall_ns_min": 377121,
+    "wall_ns_median": 390187,
+    "wall_ns_max": 569859
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 25270,
     "selected_value": 4202854,
@@ -12815,11 +12913,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 64393,
-    "wall_ns_median": 101413,
-    "wall_ns_max": 112204
+    "wall_ns_min": 59887,
+    "wall_ns_median": 60489,
+    "wall_ns_max": 105538
    },
-   "peak_rss_kb": 2672,
+   "peak_rss_kb": 2676,
    "native": {
     "score": 12727.0,
     "drain_value": 422734,
@@ -12896,11 +12994,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 16191,
-    "wall_ns_median": 16411,
-    "wall_ns_max": 21040
+    "wall_ns_min": 14709,
+    "wall_ns_median": 14889,
+    "wall_ns_max": 16172
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 21475,
     "selected_value": 33421448,
@@ -12977,11 +13075,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 129310829,
-    "wall_ns_median": 136211189,
-    "wall_ns_max": 149996778
+    "wall_ns_min": 125090004,
+    "wall_ns_median": 126234911,
+    "wall_ns_max": 127640136
    },
-   "peak_rss_kb": 87320,
+   "peak_rss_kb": 87224,
    "native": {
     "score": 27861.0,
     "drain_value": 225167,
@@ -13060,11 +13158,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 435141,
-    "wall_ns_median": 627359,
-    "wall_ns_max": 637948
+    "wall_ns_min": 402461,
+    "wall_ns_median": 404304,
+    "wall_ns_max": 406729
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 40951,
     "selected_value": 33226418,
@@ -13132,11 +13230,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 128189777,
-    "wall_ns_median": 141965069,
-    "wall_ns_max": 161487829
+    "wall_ns_min": 117619346,
+    "wall_ns_median": 128148458,
+    "wall_ns_max": 136234647
    },
-   "peak_rss_kb": 87472,
+   "peak_rss_kb": 87596,
    "native": null,
    "oracle": {
     "ran": false,
@@ -13179,11 +13277,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2240058,
-    "wall_ns_median": 2318829,
-    "wall_ns_max": 3478293
+    "wall_ns_min": 3288083,
+    "wall_ns_median": 3311109,
+    "wall_ns_max": 3826786
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 40951,
     "selected_value": 33226418,
@@ -13260,11 +13358,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 133643108,
-    "wall_ns_median": 138105973,
-    "wall_ns_max": 140144946
+    "wall_ns_min": 123141038,
+    "wall_ns_median": 124769314,
+    "wall_ns_max": 126555507
    },
-   "peak_rss_kb": 86936,
+   "peak_rss_kb": 87216,
    "native": {
     "score": 27861.0,
     "drain_value": 225167,
@@ -13334,11 +13432,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 3046,
-    "wall_ns_median": 3106,
-    "wall_ns_max": 3366
+    "wall_ns_min": 2805,
+    "wall_ns_median": 2855,
+    "wall_ns_max": 3156
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 10384,
     "selected_value": 14162435,
@@ -13412,11 +13510,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 28511836,
-    "wall_ns_median": 31866201,
-    "wall_ns_max": 32671568
+    "wall_ns_min": 24964035,
+    "wall_ns_median": 25650860,
+    "wall_ns_max": 26679690
    },
-   "peak_rss_kb": 7432,
+   "peak_rss_kb": 7424,
    "native": {
     "score": 5088.0,
     "drain_value": 370545,
@@ -13493,11 +13591,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 640543,
-    "wall_ns_median": 646184,
-    "wall_ns_max": 656553
+    "wall_ns_min": 581852,
+    "wall_ns_median": 585671,
+    "wall_ns_max": 594438
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 6154,
     "selected_value": 13102494,
@@ -13573,11 +13671,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 90024517,
-    "wall_ns_median": 92028335,
-    "wall_ns_max": 100239214
+    "wall_ns_min": 79436911,
+    "wall_ns_median": 81430924,
+    "wall_ns_max": 91768211
    },
-   "peak_rss_kb": 37540,
+   "peak_rss_kb": 37924,
    "native": {
     "score": 5749.0,
     "drain_value": 0,
@@ -13654,11 +13752,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1917472,
-    "wall_ns_median": 1938873,
-    "wall_ns_max": 1955655
+    "wall_ns_min": 1179613,
+    "wall_ns_median": 1711607,
+    "wall_ns_max": 1973767
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 6154,
     "selected_value": 13102494,
@@ -13732,11 +13830,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 28016937,
-    "wall_ns_median": 29246959,
-    "wall_ns_max": 29911645
+    "wall_ns_min": 25238729,
+    "wall_ns_median": 25747107,
+    "wall_ns_max": 26811396
    },
-   "peak_rss_kb": 7416,
+   "peak_rss_kb": 7456,
    "native": {
     "score": 5088.0,
     "drain_value": 370545,
@@ -13809,11 +13907,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 6332,
-    "wall_ns_median": 6392,
-    "wall_ns_max": 7084
+    "wall_ns_min": 9158,
+    "wall_ns_median": 9248,
+    "wall_ns_max": 10260
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 6030,
     "selected_value": 18189173,
@@ -13888,11 +13986,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1400043,
-    "wall_ns_median": 2023404,
-    "wall_ns_max": 2073248
+    "wall_ns_min": 1336518,
+    "wall_ns_median": 1357989,
+    "wall_ns_max": 2422429
    },
-   "peak_rss_kb": 3576,
+   "peak_rss_kb": 3544,
    "native": {
     "score": 5430.0,
     "drain_value": 18567,
@@ -13969,11 +14067,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 597662,
-    "wall_ns_median": 598883,
-    "wall_ns_max": 602120
+    "wall_ns_min": 581721,
+    "wall_ns_median": 585508,
+    "wall_ns_max": 596069
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 1,
     "selected_value": 18088041,
@@ -14049,11 +14147,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1950695,
-    "wall_ns_median": 2932590,
-    "wall_ns_max": 3008935
+    "wall_ns_min": 1937977,
+    "wall_ns_median": 1987644,
+    "wall_ns_max": 3477610
    },
-   "peak_rss_kb": 4008,
+   "peak_rss_kb": 3972,
    "native": {
     "score": 5491.0,
     "drain_value": 0,
@@ -14130,11 +14228,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1753278,
-    "wall_ns_median": 2628880,
-    "wall_ns_max": 2664338
+    "wall_ns_min": 1713771,
+    "wall_ns_median": 1749159,
+    "wall_ns_max": 2548544
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 1,
     "selected_value": 18088041,
@@ -14209,11 +14307,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1346100,
-    "wall_ns_median": 1389053,
-    "wall_ns_max": 1414380
+    "wall_ns_min": 1324174,
+    "wall_ns_median": 1346637,
+    "wall_ns_max": 2011710
    },
-   "peak_rss_kb": 3592,
+   "peak_rss_kb": 3540,
    "native": {
     "score": 5430.0,
     "drain_value": 18567,
@@ -14282,11 +14380,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1102,
-    "wall_ns_median": 1162,
-    "wall_ns_max": 1393
+    "wall_ns_min": 1012,
+    "wall_ns_median": 1072,
+    "wall_ns_max": 1252
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 604,
     "selected_value": 4549550,
@@ -14357,11 +14455,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 7163,
-    "wall_ns_median": 7805,
-    "wall_ns_max": 9097
+    "wall_ns_min": 4258,
+    "wall_ns_median": 4518,
+    "wall_ns_max": 5090
    },
-   "peak_rss_kb": 2676,
+   "peak_rss_kb": 2652,
    "native": {
     "score": 2910.0,
     "drain_value": 336220,
@@ -14435,11 +14533,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 15219,
-    "wall_ns_median": 15329,
-    "wall_ns_max": 17243
+    "wall_ns_min": 14187,
+    "wall_ns_median": 14308,
+    "wall_ns_max": 16221
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 519,
     "selected_value": 4215809,
@@ -14511,17 +14609,17 @@
     "c015",
     "c019"
    ],
-   "rounds": 527,
+   "rounds": 31,
    "exhausted": true,
    "budget": 100000,
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 381649,
-    "wall_ns_median": 385897,
-    "wall_ns_max": 396216
+    "wall_ns_min": 23466,
+    "wall_ns_median": 24347,
+    "wall_ns_max": 26341
    },
-   "peak_rss_kb": 2796,
+   "peak_rss_kb": 2688,
    "native": {
     "score": 4809.0,
     "drain_value": 0,
@@ -14597,11 +14695,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 449028,
-    "wall_ns_median": 458155,
-    "wall_ns_max": 483403
+    "wall_ns_min": 434373,
+    "wall_ns_median": 443331,
+    "wall_ns_max": 465333
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 519,
     "selected_value": 4215809,
@@ -14672,11 +14770,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 7114,
-    "wall_ns_median": 7254,
-    "wall_ns_max": 8807
+    "wall_ns_min": 7154,
+    "wall_ns_median": 7294,
+    "wall_ns_max": 8266
    },
-   "peak_rss_kb": 2640,
+   "peak_rss_kb": 2624,
    "native": {
     "score": 2910.0,
     "drain_value": 336220,
@@ -14754,11 +14852,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 21932,
-    "wall_ns_median": 22062,
-    "wall_ns_max": 22824
+    "wall_ns_min": 21481,
+    "wall_ns_median": 21773,
+    "wall_ns_max": 93732
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 7521,
     "selected_value": 29818206,
@@ -14837,11 +14935,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1195473,
-    "wall_ns_median": 1577873,
-    "wall_ns_max": 1589065
+    "wall_ns_min": 1526743,
+    "wall_ns_median": 1537113,
+    "wall_ns_max": 1555288
    },
-   "peak_rss_kb": 3368,
+   "peak_rss_kb": 3340,
    "native": {
     "score": 7321.0,
     "drain_value": 0,
@@ -14919,11 +15017,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 398160,
-    "wall_ns_median": 421464,
-    "wall_ns_max": 670841
+    "wall_ns_min": 427940,
+    "wall_ns_median": 575106,
+    "wall_ns_max": 588051
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 6917,
     "selected_value": 29711967,
@@ -15002,11 +15100,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1094129,
-    "wall_ns_median": 1538868,
-    "wall_ns_max": 2248403
+    "wall_ns_min": 1548987,
+    "wall_ns_median": 1558675,
+    "wall_ns_max": 1577611
    },
-   "peak_rss_kb": 3360,
+   "peak_rss_kb": 3352,
    "native": {
     "score": 7321.0,
     "drain_value": 0,
@@ -15084,11 +15182,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1268222,
-    "wall_ns_median": 1303599,
-    "wall_ns_max": 1926198
+    "wall_ns_min": 1257220,
+    "wall_ns_median": 1283210,
+    "wall_ns_max": 1365500
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 6917,
     "selected_value": 29711967,
@@ -15167,11 +15265,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1051508,
-    "wall_ns_median": 1060084,
-    "wall_ns_max": 1163782
+    "wall_ns_min": 1035350,
+    "wall_ns_median": 1053605,
+    "wall_ns_max": 2094094
    },
-   "peak_rss_kb": 3360,
+   "peak_rss_kb": 3352,
    "native": {
     "score": 7321.0,
     "drain_value": 0,
@@ -15240,11 +15338,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 2995,
-    "wall_ns_median": 3026,
-    "wall_ns_max": 3326
+    "wall_ns_min": 2795,
+    "wall_ns_median": 2845,
+    "wall_ns_max": 3026
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 604,
     "selected_value": 8857976,
@@ -15315,11 +15413,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 50867,
-    "wall_ns_median": 51388,
-    "wall_ns_max": 66377
+    "wall_ns_min": 44877,
+    "wall_ns_median": 46951,
+    "wall_ns_max": 49566
    },
-   "peak_rss_kb": 2708,
+   "peak_rss_kb": 2692,
    "native": {
     "score": 2910.0,
     "drain_value": 1705646,
@@ -15392,11 +15490,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 631947,
-    "wall_ns_median": 636025,
-    "wall_ns_max": 642136
+    "wall_ns_min": 435856,
+    "wall_ns_median": 600636,
+    "wall_ns_max": 1077281
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 0,
     "selected_value": 7155550,
@@ -15469,11 +15567,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 800849,
-    "wall_ns_median": 1034625,
-    "wall_ns_max": 1815546
+    "wall_ns_min": 787158,
+    "wall_ns_median": 867314,
+    "wall_ns_max": 1714417
    },
-   "peak_rss_kb": 3180,
+   "peak_rss_kb": 3224,
    "native": {
     "score": 3715.0,
     "drain_value": 0,
@@ -15546,11 +15644,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 1149725,
-    "wall_ns_median": 1305162,
-    "wall_ns_max": 1941036
+    "wall_ns_min": 1648800,
+    "wall_ns_median": 1655142,
+    "wall_ns_max": 1662757
    },
-   "peak_rss_kb": 18864,
+   "peak_rss_kb": 18980,
    "native": {
     "waste": 0,
     "selected_value": 7155550,
@@ -15621,11 +15719,11 @@
    "timing": {
     "repeats": 9,
     "warmup": 2,
-    "wall_ns_min": 50366,
-    "wall_ns_median": 55767,
-    "wall_ns_max": 87397
+    "wall_ns_min": 45217,
+    "wall_ns_median": 47642,
+    "wall_ns_max": 82650
    },
-   "peak_rss_kb": 2672,
+   "peak_rss_kb": 2684,
    "native": {
     "score": 2910.0,
     "drain_value": 1705646,
