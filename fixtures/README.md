@@ -202,6 +202,10 @@ than hidden, and neither depends on which coins get selected:
   `COutput::input_bytes` does not. A Core selection with legacy inputs can therefore land up to
   `feerate * ceil(n_legacy / 4)` satoshis under the target feerate. The report classifies a
   shortfall within that bound as this known gap and flags anything larger as a failure.
+- **The input-count varint above 252 inputs.** Core prices it as a flat 1 vbyte — its own
+  `SelectionResult::GetChange` comment says so — while the shared model charges
+  `4 * varint_size(n_inputs)`. Past 252 selected inputs that is 2 vbytes short. Only the
+  thousand-candidate fixtures select enough inputs to reach it.
 - **The segwit marker on an all-legacy selection.** Core's `tx_noinputs_size` always includes it;
   coin-select adds it only when a segwit input is selected. Worth 2 WU, and only reachable by a
   selection containing no segwit input at all.

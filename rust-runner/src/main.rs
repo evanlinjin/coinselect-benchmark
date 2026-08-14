@@ -14,7 +14,7 @@
 //! - `wallet`: `LowestFee` branch and bound (change is the metric's own decision),
 //!   falling back to single random draw, mirroring how a wallet would drive this crate.
 
-use std::time::Instant;
+use std::time::{Duration, Instant};
 
 use bdk_coin_select::{
     float::Ordf32, metrics::LowestFee, AncestorToBump, BnbMetric, CoinSelector, Drain, DrainWeights,
@@ -102,6 +102,8 @@ struct Output {
     /// True when the search finished the tree; false when it stopped at `search_budget`.
     exhausted: bool,
     budget: usize,
+    /// Wall-clock budget the search was given, when it was given one instead of a round budget.
+    deadline_us: Option<u64>,
     timing: Timing,
     peak_rss_kb: Option<u64>,
     native: Option<Native>,
@@ -113,6 +115,8 @@ struct Args {
     track: String,
     repeat: usize,
     warmup: usize,
+    /// Wall-clock budget for the search. `None` stops on the fixture's round budget instead.
+    deadline_us: Option<u64>,
     oracle: bool,
 }
 
@@ -121,6 +125,7 @@ fn parse_args() -> Args {
     let mut track = "kernel".to_string();
     let mut repeat = 5usize;
     let mut warmup = 1usize;
+    let mut deadline_us = None;
     let mut oracle = false;
     let mut it = std::env::args().skip(1);
     while let Some(arg) = it.next() {
@@ -129,6 +134,9 @@ fn parse_args() -> Args {
             "--track" => track = it.next().expect("--track needs a value"),
             "--repeat" => repeat = it.next().expect("--repeat needs a value").parse().unwrap(),
             "--warmup" => warmup = it.next().expect("--warmup needs a value").parse().unwrap(),
+            "--deadline-us" => {
+                deadline_us = Some(it.next().expect("--deadline-us needs a value").parse().unwrap())
+            }
             "--oracle" => oracle = true,
             other => panic!("unknown argument {other}"),
         }
@@ -138,6 +146,7 @@ fn parse_args() -> Args {
         track,
         repeat: repeat.max(1),
         warmup,
+        deadline_us: deadline_us.filter(|us| *us > 0),
         oracle,
     }
 }
@@ -263,12 +272,22 @@ fn search<'a, M: BnbMetric + Copy>(
     cs: &CoinSelector<'a>,
     metric: M,
     budget: usize,
+    deadline: Option<Instant>,
 ) -> Search<'a> {
     let mut iter = cs.bnb_solutions(metric);
     let mut rounds = 0;
     let mut best = None;
     let mut exhausted = true;
+    let mut deadline_hit = false;
     for _ in 0..budget {
+        // Polled every 256 rounds, matching the Core patch: an `Instant::now()` costs a
+        // meaningful fraction of a round, so checking every round would distort the measurement.
+        if let Some(deadline) = deadline {
+            if rounds & 0xff == 0 && Instant::now() >= deadline {
+                deadline_hit = true;
+                break;
+            }
+        }
         match iter.next() {
             Some(solution) => {
                 rounds += 1;
@@ -279,7 +298,7 @@ fn search<'a, M: BnbMetric + Copy>(
             None => break,
         }
     }
-    if rounds == budget && iter.next().is_some() {
+    if deadline_hit || (rounds == budget && iter.next().is_some()) {
         exhausted = false;
     }
     let (selection, score) = match best {
@@ -419,9 +438,10 @@ fn main() {
     let mut last: Option<(Search, Option<Drain>)> = None;
     for i in 0..(args.warmup + args.repeat) {
         let start = Instant::now();
+        let deadline = args.deadline_us.map(|us| start + Duration::from_micros(us));
         let mut result = match args.track.as_str() {
-            "kernel" => search(&base, changeless_metric(&f), budget),
-            _ => search(&base, lowest_fee(&f), budget),
+            "kernel" => search(&base, changeless_metric(&f), budget, deadline),
+            _ => search(&base, lowest_fee(&f), budget, deadline),
         };
         // Fall back to single random draw exactly as a wallet would: wallet track only, and only
         // when branch and bound came back empty.
@@ -496,6 +516,7 @@ fn main() {
         rounds: result.rounds,
         exhausted: result.exhausted,
         budget,
+        deadline_us: args.deadline_us,
         timing: Timing {
             repeats: args.repeat,
             warmup: args.warmup,

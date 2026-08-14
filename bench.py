@@ -299,7 +299,11 @@ def evaluate(fixture, selected, change_value):
         # `n_legacy` weight units, up to `ceil(n_legacy / 4)` vbytes once rounded. Only Core's own
         # selections get this tolerance (see `shortfall_tolerance`): coin-select charges the
         # witness byte, so the same shortfall from coin-select would be a real underpayment.
-        "core_explainable_shortfall": rate * -(-n_legacy // 4),
+        # Core also assumes the input-count varint is always 1 vbyte (see the comment on
+        # `SelectionResult::GetChange`), which is 2 vbytes short once a selection exceeds 252
+        # inputs — only reachable on the thousand-candidate fixtures.
+        "core_explainable_shortfall": rate * -(-n_legacy // 4)
+        + rate * (varint_size(len(selected)) - 1),
         "within_max_weight": fixture["max_weight"] is None or weight <= fixture["max_weight"],
     }
 
@@ -450,6 +454,8 @@ def cmd_run(args):
                     str(binary), "--fixture", fixture_path, "--track", track,
                     "--repeat", str(args.repeat), "--warmup", str(args.warmup),
                 ]
+                if getattr(args, "deadline_us", 0):
+                    cmd += ["--deadline-us", str(args.deadline_us)]
                 if args.oracle:
                     cmd.append("--oracle")
                 print(f"  {name:28s} {track:7s} {runner}", flush=True)
@@ -915,7 +921,8 @@ def cmd_compare_revs(args):
                 binary, _ = built[label]
                 out = subprocess.run(
                     pin + [str(binary), "--fixture", fixture_path, "--track", track,
-                           "--repeat", str(args.repeat), "--warmup", str(args.warmup)],
+                           "--repeat", str(args.repeat), "--warmup", str(args.warmup)]
+                    + (["--deadline-us", str(args.deadline_us)] if args.deadline_us else []),
                     capture_output=True, text=True)
                 if out.returncode != 0:
                     sys.exit(f"{label} failed on {name}/{track}:\n{out.stderr}")
@@ -1060,6 +1067,9 @@ def main():
         p.add_argument("--tracks", nargs="+", default=TRACKS, choices=TRACKS)
         p.add_argument("--repeat", type=int, default=5, help="measured runs per case")
         p.add_argument("--warmup", type=int, default=1, help="discarded runs per case")
+        p.add_argument("--deadline-us", type=int, default=0, metavar="US",
+                       help="give each search this wall-clock budget instead of the fixture's "
+                            "round budget, so both engines stop on the same criterion")
         p.add_argument("--oracle", action="store_true", help="brute force fixtures of at most 20 candidates")
         p.add_argument("--clean", action="store_true", help="drop existing raw results first")
         p.add_argument("--no-strict", dest="strict", action="store_false",
@@ -1078,6 +1088,8 @@ def main():
     cmp.add_argument("--tracks", nargs="+", default=TRACKS, choices=TRACKS)
     cmp.add_argument("--repeat", type=int, default=9, help="measured runs per case")
     cmp.add_argument("--warmup", type=int, default=2, help="discarded runs per case")
+    cmp.add_argument("--deadline-us", type=int, default=0, metavar="US",
+                     help="wall-clock budget per search instead of the fixture's round budget")
     add_run_flags(sub.add_parser("all", help="setup, run and report"))
     sub.add_parser("smoke", help="setup, run the CI-sized fixture, report")
 

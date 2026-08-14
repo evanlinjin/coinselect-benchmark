@@ -10,7 +10,7 @@
  "core_runner_cxx_flags": "-O3 -std=c++20",
  "rust_runner_profile": "release, codegen-units=1, lto=off, debug=true",
  "core_patches": [
-  "core-bnb-instrumentation.patch"
+  "core-bench-hooks.patch"
  ],
  "coin_select_rev": "e45bb58efef5752356d3299cfd545ca8059df4fb",
  "pins": {

@@ -40,6 +40,13 @@ CHANGE_SPEND_WEIGHT = INPUT_TYPES["p2tr"][0]
 
 SIZES = [20, 50, 100, 200]
 
+# Sizes into the thousands, for a representative subset rather than every family: the control
+# shape, the ancestry shape that stresses the search hardest, and the realistic wallet mix. The
+# full cross-product at these sizes would dominate the matrix's runtime without adding a
+# qualitatively different case.
+LARGE_SIZES = [500, 1000, 2000]
+LARGE_FAMILIES = ["no_ancestry", "shared_ancestry", "wallet_mixed"]
+
 # Families that override the default feerates. CoinGrinder only runs in Core's portfolio above
 # 3x the long-term feerate, and at feerate == long_term_feerate Core's waste degenerates
 # (`coin.fee - coin.long_term_fee` is 0 for every input, leaving only excess), so one family
@@ -413,6 +420,7 @@ def main():
     OUT_DIR.mkdir(exist_ok=True)
     fixtures = [build_smoke()]
     fixtures += [build(fam, n) for fam in FAMILIES for n in SIZES]
+    fixtures += [build(fam, n) for fam in LARGE_FAMILIES for n in LARGE_SIZES]
 
     stale = []
     for f in fixtures:

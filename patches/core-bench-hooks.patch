@@ -1,8 +1,14 @@
 diff --git a/src/wallet/coinselection.cpp b/src/wallet/coinselection.cpp
-index d7fde38..54e5a04 100644
+index d7fde38..56bb623 100644
 --- a/src/wallet/coinselection.cpp
 +++ b/src/wallet/coinselection.cpp
-@@ -18,6 +18,13 @@
+@@ -13,11 +13,32 @@
+ #include <util/check.h>
+ #include <util/moneystr.h>
+ 
++#include <chrono>
+ #include <numeric>
+ #include <optional>
  #include <queue>
  
  namespace wallet {
@@ -13,10 +19,23 @@ index d7fde38..54e5a04 100644
 +size_t g_bnb_selections_evaluated{0};
 +bool g_bnb_algo_completed{true};
 +
++// Benchmark deadline (coinselect-benchmark, see patches/README.md). Both searches here stop on a
++// node count, which is not the same unit as the round count another engine's budget uses. When set,
++// this gives the harness a way to hand both engines the same *wall-clock* budget instead. Default
++// is a zero time_point, meaning no deadline and exactly the unpatched behaviour.
++std::chrono::steady_clock::time_point g_bench_deadline{};
++static bool BenchDeadlineHit(size_t tries)
++{
++    // Polled every 256 nodes: a steady_clock read costs a few times what visiting a node does, so
++    // checking on every node would distort the very thing being measured.
++    if (g_bench_deadline.time_since_epoch().count() == 0 || (tries & 0xff) != 0) return false;
++    return std::chrono::steady_clock::now() >= g_bench_deadline;
++}
++
  // Common selection error across the algorithms
  static util::Result<SelectionResult> ErrorMaxWeightExceeded()
  {
-@@ -93,6 +100,10 @@ static const size_t TOTAL_TRIES = 100000;
+@@ -93,6 +114,10 @@ static const size_t TOTAL_TRIES = 100000;
  util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool, const CAmount& selection_target, const CAmount& cost_of_change,
                                               int max_selection_weight)
  {
@@ -27,23 +46,37 @@ index d7fde38..54e5a04 100644
      SelectionResult result(selection_target, SelectionAlgorithm::BNB);
      CAmount curr_value = 0;
      std::vector<size_t> curr_selection; // selected utxo indexes
-@@ -121,7 +132,8 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool
+@@ -121,7 +146,13 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool
      bool max_tx_weight_exceeded = false;
  
      // Depth First search loop for choosing the UTXOs
 -    for (size_t curr_try = 0, utxo_pool_index = 0; curr_try < TOTAL_TRIES; ++curr_try, ++utxo_pool_index) {
 +    size_t curr_try = 0;
++    bool deadline_hit = false;
 +    for (size_t utxo_pool_index = 0; curr_try < TOTAL_TRIES; ++curr_try, ++utxo_pool_index) {
++        if (BenchDeadlineHit(curr_try)) {
++            deadline_hit = true;
++            break;
++        }
          // Conditions for starting a backtrack
          bool backtrack = false;
          if (curr_value + curr_available_value < selection_target || // Cannot possibly reach target with the amount remaining in the curr_available_value.
-@@ -185,6 +197,9 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool
+@@ -185,6 +216,9 @@ util::Result<SelectionResult> SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool
          }
      }
  
 +    g_bnb_selections_evaluated = curr_try;
-+    g_bnb_algo_completed = curr_try < TOTAL_TRIES;
++    g_bnb_algo_completed = !deadline_hit && curr_try < TOTAL_TRIES;
 +
      // Check for solution
      if (best_selection.empty()) {
          return max_tx_weight_exceeded ? ErrorMaxWeightExceeded() : util::Error();
+@@ -463,7 +497,7 @@ util::Result<SelectionResult> CoinGrinder(std::vector<OutputGroup>& utxo_pool, c
+             }
+         }
+ 
+-        if (curr_try >= TOTAL_TRIES) {
++        if (curr_try >= TOTAL_TRIES || BenchDeadlineHit(curr_try)) {
+             // Solution is not guaranteed to be optimal if `curr_try` hit TOTAL_TRIES
+             result.SetAlgoCompleted(false);
+             break;

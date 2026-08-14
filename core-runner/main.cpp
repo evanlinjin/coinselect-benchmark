@@ -48,9 +48,10 @@
 const TranslateFn G_TRANSLATION_FUN{nullptr};
 
 namespace wallet {
-// Published by patches/core-bnb-instrumentation.patch; see patches/README.md.
+// Published by patches/core-bench-hooks.patch; see patches/README.md.
 extern size_t g_bnb_selections_evaluated;
 extern bool g_bnb_algo_completed;
+extern std::chrono::steady_clock::time_point g_bench_deadline;
 } // namespace wallet
 
 using namespace wallet;
@@ -465,6 +466,7 @@ int main(int argc, char** argv)
     std::string track = "kernel";
     int repeat = 5;
     int warmup = 1;
+    int deadline_us = 0; // 0 = no deadline, stop on Core's node budget instead
     bool oracle = false;
 
     for (int i = 1; i < argc; ++i) {
@@ -477,6 +479,7 @@ int main(int argc, char** argv)
         else if (arg == "--track") track = next();
         else if (arg == "--repeat") repeat = std::max(1, std::stoi(next()));
         else if (arg == "--warmup") warmup = std::stoi(next());
+        else if (arg == "--deadline-us") deadline_us = std::stoi(next());
         else if (arg == "--oracle") oracle = true;
         else if (arg == "--self-check") { SelfCheck(); return 0; }
         else Die("unknown argument " + arg);
@@ -488,7 +491,7 @@ int main(int argc, char** argv)
     // Core's branch and bound budget (TOTAL_TRIES) is a compile-time constant. Fixtures state
     // the same number so both runners search under the same budget; refuse anything else rather
     // than silently comparing different budgets.
-    if (f.search_budget != 100000) {
+    if (deadline_us == 0 && f.search_budget != 100000) {
         Die("search_budget must be 100000 to match Core's compile-time TOTAL_TRIES (fixture says " +
             std::to_string(f.search_budget) + ")");
     }
@@ -510,6 +513,11 @@ int main(int argc, char** argv)
         rng.Reseed(uint256::ZERO);
         auto pool = problem.positive_groups;
         const auto start = std::chrono::steady_clock::now();
+        // Give the search a wall-clock budget instead of a node budget when asked, so both
+        // engines can be compared on the same termination criterion.
+        g_bench_deadline = deadline_us > 0
+            ? start + std::chrono::microseconds(deadline_us)
+            : std::chrono::steady_clock::time_point{};
         std::optional<SelectionResult> attempt;
         if (track == "kernel") {
             if (auto bnb = SelectCoinsBnB(pool, problem.selection_target, problem.params.m_cost_of_change, problem.max_selection_weight)) {
@@ -578,6 +586,7 @@ int main(int argc, char** argv)
         out.pushKV("exhausted", UniValue{});
     }
     out.pushKV("budget", static_cast<int64_t>(f.search_budget));
+    if (deadline_us > 0) out.pushKV("deadline_us", deadline_us); else out.pushKV("deadline_us", UniValue{});
 
     UniValue timing(UniValue::VOBJ);
     timing.pushKV("repeats", repeat);

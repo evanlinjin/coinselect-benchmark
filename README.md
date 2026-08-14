@@ -97,7 +97,7 @@ change amount; coin-select minimises long-term fee — which the report says on 
 | `fixtures/` | The datasets, plus [`fixtures/README.md`](fixtures/README.md) — the schema and **every semantic conversion either adapter makes**. |
 | `rust-runner/` | The coin-select runner. |
 | `core-runner/` | The Bitcoin Core runner, including a port of `node::MiniMiner`'s bump-fee calculation. |
-| `patches/` | One instrumentation-only patch to Core, explained in [`patches/README.md`](patches/README.md). Coin selection itself is never patched. |
+| `patches/` | One patch to Core adding benchmark hooks — a node counter and an optional wall-clock deadline — explained in [`patches/README.md`](patches/README.md). No bound, ordering or scoring rule is ever patched. |
 | `results/` | Generated. `SUMMARY.md` is the readable report, `results.csv` the full matrix, and `compare/` holds revision A/B runs. |
 | `FINDINGS.md` | A snapshot of what the current results show, with the revisions they came from. |
 
@@ -109,6 +109,7 @@ python3 bench.py run --oracle               # run the matrix into results/raw/
 python3 bench.py run --fixtures 'shared_*'  # one family
 python3 bench.py run --tracks kernel        # one track (kernel, changeful, wallet)
 python3 bench.py report                     # score results/raw/ (exits non-zero on a problem)
+python3 bench.py run --deadline-us 5000     # equal-time instead of equal-rounds (see below)
 python3 bench.py smoke                      # the CI-sized fixture, end to end
 python3 genfixtures.py                      # regenerate fixtures/
 
@@ -162,9 +163,11 @@ missed it" can mean either the search or that filter.
   bound written here rather than the crate's, which is a worse answer than an honest gap. What
   fills it instead: the report scores both selections on **both** objectives, and `--oracle` says
   whether each engine reached the optimum of the question it was actually asking.
-- **The budgets are not the same unit.** Core's `TOTAL_TRIES` counts depth-first nodes;
-  coin-select's `max_rounds` counts priority-queue pops. Both are 100,000. Comparing them is a
-  statement about how much work each engine needs, not about how fast a node is.
+- **The default budgets are not the same unit.** Core's `TOTAL_TRIES` counts depth-first nodes;
+  coin-select's `max_rounds` counts priority-queue pops. Both are 100,000, so the default matrix
+  says how much work each engine needs rather than which wins under a fixed latency budget. Pass
+  `--deadline-us` to give both the same wall-clock budget instead — that is the framing closest to
+  what a wallet actually constrains, and it sidesteps the unit mismatch entirely.
 - **The fixture ancestor graph is the whole mempool.** A real `MiniMiner` also pulls in unrelated
   transactions that share a cluster, which can change what gets "mined" and therefore what a bump
   costs.
