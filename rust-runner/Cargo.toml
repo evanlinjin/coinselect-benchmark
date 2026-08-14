@@ -16,6 +16,9 @@ serde_json = "1"
 # `--no-default-features`. `bench.py compare-revs` picks the right shape by trying both.
 default = ["selection-view"]
 selection-view = []
+# Later revisions replace the `Changeless<M>` wrapper with a dedicated `LowestFeeChangeless`
+# metric carrying a changeless-specific bound. Same objective, different type.
+lowest-fee-changeless = []
 
 [profile.release]
 debug = true

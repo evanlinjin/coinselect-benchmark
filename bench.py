@@ -42,6 +42,13 @@ RUNNERS = ["coin-select", "bitcoin-core"]
 # well under a minute and avoids the node's storage dependencies.
 CORE_LIB_TARGETS = ["bitcoin_util", "bitcoin_crypto", "bitcoin_consensus", "bitcoin_clientversion", "univalue"]
 
+# Build configurations tried, in order, when targeting an arbitrary coin-select revision.
+FEATURE_ATTEMPTS = [
+    ("selection-view", []),
+    ("selection-view + lowest-fee-changeless", ["--features", "lowest-fee-changeless"]),
+    ("pre-SelectionView", ["--no-default-features"]),
+]
+
 WITNESS_SCALE_FACTOR = 4
 TX_FIXED_FIELD_WEIGHT = 32
 
@@ -866,12 +873,12 @@ def build_runner_at(repo, rev):
     (dest / "Cargo.toml").write_text(manifest)
 
     binary = dest / "target" / "release" / "coinselect-bench-runner"
-    # The default features match the pinned revision's API; `--no-default-features` reaches the
-    # pre-PR-#53 shape. Trying both covers either side of that change without inspecting the tree.
-    for features in ("default", "no-default-features"):
-        cmd = ["cargo", "build", "--release", "--manifest-path", str(dest / "Cargo.toml")]
-        if features == "no-default-features":
-            cmd += ["--no-default-features"]
+    # coin-select's API has moved twice in ways the runner has to follow: PR #53 changed what
+    # `BnbMetric` receives, and a later revision replaced `Changeless<M>` with a dedicated
+    # `LowestFeeChangeless`. The feature combinations are mutually exclusive — a revision compiles
+    # under exactly one — so trying them in turn identifies the shape without inspecting the tree.
+    for features, extra in FEATURE_ATTEMPTS:
+        cmd = ["cargo", "build", "--release", "--manifest-path", str(dest / "Cargo.toml")] + extra
         print("$ " + " ".join(cmd), flush=True)
         built = subprocess.run(cmd, capture_output=True, text=True)
         if built.returncode == 0:

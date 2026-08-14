@@ -17,10 +17,13 @@
 use std::time::Instant;
 
 use bdk_coin_select::{
-    float::Ordf32, metrics::Changeless, metrics::LowestFee, AncestorToBump, BnbMetric, CoinSelector,
-    Drain, DrainWeights, FeeRate, Input, SelectionProblem, Target, TargetFee, TargetOutputs,
-    TX_FIXED_FIELD_WEIGHT,
+    float::Ordf32, metrics::LowestFee, AncestorToBump, BnbMetric, CoinSelector, Drain, DrainWeights,
+    FeeRate, Input, SelectionProblem, Target, TargetFee, TargetOutputs, TX_FIXED_FIELD_WEIGHT,
 };
+#[cfg(not(feature = "lowest-fee-changeless"))]
+use bdk_coin_select::metrics::Changeless;
+#[cfg(feature = "lowest-fee-changeless")]
+use bdk_coin_select::metrics::LowestFeeChangeless;
 use serde::Serialize;
 
 mod fixture;
@@ -222,6 +225,20 @@ fn drain_weights(f: &Fixture) -> DrainWeights {
     }
 }
 
+/// The kernel track's metric: minimise fee over changeless selections.
+///
+/// Earlier revisions express this by wrapping `LowestFee` in the generic `Changeless<M>`
+/// constraint; later ones replace that with a dedicated `LowestFeeChangeless` carrying a
+/// changeless-specific bound. Same objective either way, so the track compares like with like.
+#[cfg(not(feature = "lowest-fee-changeless"))]
+fn changeless_metric(f: &Fixture) -> Changeless<LowestFee> {
+    Changeless(lowest_fee(f))
+}
+#[cfg(feature = "lowest-fee-changeless")]
+fn changeless_metric(f: &Fixture) -> LowestFeeChangeless {
+    LowestFeeChangeless::from(lowest_fee(f))
+}
+
 fn lowest_fee(f: &Fixture) -> LowestFee {
     LowestFee {
         long_term_feerate: feerate(f.long_term_feerate_sat_per_vb),
@@ -403,7 +420,7 @@ fn main() {
     for i in 0..(args.warmup + args.repeat) {
         let start = Instant::now();
         let mut result = match args.track.as_str() {
-            "kernel" => search(&base, Changeless(lowest_fee(&f)), budget),
+            "kernel" => search(&base, changeless_metric(&f), budget),
             _ => search(&base, lowest_fee(&f), budget),
         };
         // Fall back to single random draw exactly as a wallet would: wallet track only, and only
@@ -436,7 +453,7 @@ fn main() {
     };
 
     let oracle = match args.track.as_str() {
-        "kernel" => run_oracle(&f, &problem, Changeless(lowest_fee(&f)), args.oracle),
+        "kernel" => run_oracle(&f, &problem, changeless_metric(&f), args.oracle),
         _ => run_oracle(&f, &problem, lowest_fee(&f), args.oracle),
     };
 
