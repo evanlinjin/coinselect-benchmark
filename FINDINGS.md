@@ -30,13 +30,9 @@ That is a positive result: netting weight and fee across the ancestor union repr
 `combined bump = summed individual bumps - bump_fee_group_discount` exactly, without a
 post-selection correction step.
 
-It is worth being precise about what the ancestor list may contain, because getting this wrong
-inverts the result. An ancestor whose package already clears the target feerate is not an
-"ancestor to bump" — a miner takes it anyway — and feeding one to `SelectionProblem::new` credits
-the child with a surplus nobody is waiting on, which makes coin-select undercharge. Both
-`genfixtures.py --check` and the Core runner reject a fixture that lists one. An ancestor paying
-far above the target rate on its own can still belong in the set if its package does not, which is
-exactly what the `subsidizing_ancestry` family is built from.
+Both `genfixtures.py --check` and the Core runner enforce that the ancestor set really is the
+one still requiring a bump, so this is a measurement rather than an assumption; see
+[the fixture schema](fixtures/README.md#schema) for what that means and why it matters.
 
 ## 2. Core cannot act on the discount during the search, and it costs real solutions
 
