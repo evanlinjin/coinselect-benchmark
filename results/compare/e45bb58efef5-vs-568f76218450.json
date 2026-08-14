@@ -1,0 +1,4358 @@
+{
+ "a": {
+  "repo": "https://github.com/evanlinjin/coin-select.git",
+  "rev": "e45bb58efef5752356d3299cfd545ca8059df4fb",
+  "features": "selection-view + lowest-fee-changeless"
+ },
+ "b": {
+  "repo": "file:///tmp/claude-1000/-home-evanlinjin-Git-coinselect-benchmark/a6d093f4-3559-4233-a07d-986e2f138406/scratchpad/cs",
+  "rev": "568f76218450eb18b47da1cc3ec97fe9ea0d94a5",
+  "features": "selection-view + lowest-fee-changeless"
+ },
+ "pinned_to_core": "22",
+ "runs": [
+  {
+   "fixture": "adversarial_shared_100",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "adversarial_shared_100",
+    "family": "adversarial_shared",
+    "size": 100,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c009",
+     "c066",
+     "c075",
+     "c079"
+    ],
+    "rounds": 490,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 681531,
+     "wall_ns_median": 681531,
+     "wall_ns_max": 681531
+    },
+    "peak_rss_kb": 2784,
+    "native": {
+     "score": 4270.0,
+     "drain_value": 157558,
+     "child_weight": 1476,
+     "child_fee": 3690,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "adversarial_shared_100",
+    "family": "adversarial_shared",
+    "size": 100,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c009",
+     "c066",
+     "c075",
+     "c079"
+    ],
+    "rounds": 486,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 485121,
+     "wall_ns_median": 485121,
+     "wall_ns_max": 485121
+    },
+    "peak_rss_kb": 2700,
+    "native": {
+     "score": 4270.0,
+     "drain_value": 157558,
+     "child_weight": 1476,
+     "child_fee": 3690,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "adversarial_shared_20",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "adversarial_shared_20",
+    "family": "adversarial_shared",
+    "size": 20,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c002",
+     "c005"
+    ],
+    "rounds": 49,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 54393,
+     "wall_ns_median": 54393,
+     "wall_ns_max": 54393
+    },
+    "peak_rss_kb": 2692,
+    "native": {
+     "score": 2910.0,
+     "drain_value": 3240632,
+     "child_weight": 932,
+     "child_fee": 2330,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "adversarial_shared_20",
+    "family": "adversarial_shared",
+    "size": 20,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c002",
+     "c005"
+    ],
+    "rounds": 49,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 39875,
+     "wall_ns_median": 39875,
+     "wall_ns_max": 39875
+    },
+    "peak_rss_kb": 2656,
+    "native": {
+     "score": 2910.0,
+     "drain_value": 3240632,
+     "child_weight": 932,
+     "child_fee": 2330,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "adversarial_shared_200",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "adversarial_shared_200",
+    "family": "adversarial_shared",
+    "size": 200,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c045",
+     "c053",
+     "c071",
+     "c104",
+     "c146",
+     "c161"
+    ],
+    "rounds": 2499,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 3621085,
+     "wall_ns_median": 3621085,
+     "wall_ns_max": 3621085
+    },
+    "peak_rss_kb": 3512,
+    "native": {
+     "score": 5630.0,
+     "drain_value": 1124058,
+     "child_weight": 2020,
+     "child_fee": 5050,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "adversarial_shared_200",
+    "family": "adversarial_shared",
+    "size": 200,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c045",
+     "c053",
+     "c071",
+     "c104",
+     "c146",
+     "c161"
+    ],
+    "rounds": 2482,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 2830099,
+     "wall_ns_median": 2830099,
+     "wall_ns_max": 2830099
+    },
+    "peak_rss_kb": 2780,
+    "native": {
+     "score": 5630.0,
+     "drain_value": 1124058,
+     "child_weight": 2020,
+     "child_fee": 5050,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "adversarial_shared_50",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "adversarial_shared_50",
+    "family": "adversarial_shared",
+    "size": 50,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c002",
+     "c027"
+    ],
+    "rounds": 21,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 34044,
+     "wall_ns_median": 34044,
+     "wall_ns_max": 34044
+    },
+    "peak_rss_kb": 2680,
+    "native": {
+     "score": 2910.0,
+     "drain_value": 171910,
+     "child_weight": 932,
+     "child_fee": 2330,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "adversarial_shared_50",
+    "family": "adversarial_shared",
+    "size": 50,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c015",
+     "c027"
+    ],
+    "rounds": 19,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 26250,
+     "wall_ns_median": 26250,
+     "wall_ns_max": 26250
+    },
+    "peak_rss_kb": 2656,
+    "native": {
+     "score": 2910.0,
+     "drain_value": 1349326,
+     "child_weight": 932,
+     "child_fee": 2330,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "high_feerate_100",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "high_feerate_100",
+    "family": "high_feerate",
+    "size": 100,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c017",
+     "c020",
+     "c026",
+     "c027",
+     "c028",
+     "c033",
+     "c060"
+    ],
+    "rounds": 1558,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 2020066,
+     "wall_ns_median": 2020066,
+     "wall_ns_max": 2020066
+    },
+    "peak_rss_kb": 3236,
+    "native": {
+     "score": 22300.0,
+     "drain_value": 778863,
+     "child_weight": 2172,
+     "child_fee": 21720,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 40.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "high_feerate_100",
+    "family": "high_feerate",
+    "size": 100,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c017",
+     "c020",
+     "c026",
+     "c027",
+     "c028",
+     "c033",
+     "c060"
+    ],
+    "rounds": 1559,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 1730542,
+     "wall_ns_median": 1730542,
+     "wall_ns_max": 1730542
+    },
+    "peak_rss_kb": 2804,
+    "native": {
+     "score": 22300.0,
+     "drain_value": 778863,
+     "child_weight": 2172,
+     "child_fee": 21720,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 40.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "high_feerate_20",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "high_feerate_20",
+    "family": "high_feerate",
+    "size": 20,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c009",
+     "c019"
+    ],
+    "rounds": 14,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 19867,
+     "wall_ns_median": 19867,
+     "wall_ns_max": 19867
+    },
+    "peak_rss_kb": 2648,
+    "native": {
+     "score": 9500.0,
+     "drain_value": 276101,
+     "child_weight": 892,
+     "child_fee": 8920,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 40.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "high_feerate_20",
+    "family": "high_feerate",
+    "size": 20,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c009",
+     "c019"
+    ],
+    "rounds": 15,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 18014,
+     "wall_ns_median": 18014,
+     "wall_ns_max": 18014
+    },
+    "peak_rss_kb": 2660,
+    "native": {
+     "score": 9500.0,
+     "drain_value": 276101,
+     "child_weight": 892,
+     "child_fee": 8920,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 40.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "high_feerate_200",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "high_feerate_200",
+    "family": "high_feerate",
+    "size": 200,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c013",
+     "c046",
+     "c060",
+     "c112",
+     "c114",
+     "c120",
+     "c131",
+     "c135",
+     "c145",
+     "c173",
+     "c180",
+     "c183",
+     "c188",
+     "c196",
+     "c198"
+    ],
+    "rounds": 3821,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 6551921,
+     "wall_ns_median": 6551921,
+     "wall_ns_max": 6551921
+    },
+    "peak_rss_kb": 4776,
+    "native": {
+     "score": 65586.0,
+     "drain_value": 0,
+     "child_weight": 4292,
+     "child_fee": 65586,
+     "ancestor_bump": 22635,
+     "ancestor_bump_lower_bound": 22635,
+     "excess": 31,
+     "implied_feerate_sat_per_vb": 61.12395
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "high_feerate_200",
+    "family": "high_feerate",
+    "size": 200,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c013",
+     "c046",
+     "c060",
+     "c112",
+     "c114",
+     "c120",
+     "c131",
+     "c135",
+     "c145",
+     "c173",
+     "c180",
+     "c183",
+     "c188",
+     "c196",
+     "c198"
+    ],
+    "rounds": 3822,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 6618056,
+     "wall_ns_median": 6618056,
+     "wall_ns_max": 6618056
+    },
+    "peak_rss_kb": 4652,
+    "native": {
+     "score": 65586.0,
+     "drain_value": 0,
+     "child_weight": 4292,
+     "child_fee": 65586,
+     "ancestor_bump": 22635,
+     "ancestor_bump_lower_bound": 22635,
+     "excess": 31,
+     "implied_feerate_sat_per_vb": 61.12395
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "high_feerate_50",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "high_feerate_50",
+    "family": "high_feerate",
+    "size": 50,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c001",
+     "c003",
+     "c005",
+     "c044"
+    ],
+    "rounds": 52,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 66896,
+     "wall_ns_median": 66896,
+     "wall_ns_max": 66896
+    },
+    "peak_rss_kb": 2708,
+    "native": {
+     "score": 17780.0,
+     "drain_value": 457984,
+     "child_weight": 1717,
+     "child_fee": 17200,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 40.06989
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "high_feerate_50",
+    "family": "high_feerate",
+    "size": 50,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c001",
+     "c003",
+     "c005",
+     "c044"
+    ],
+    "rounds": 53,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 67156,
+     "wall_ns_median": 67156,
+     "wall_ns_max": 67156
+    },
+    "peak_rss_kb": 2704,
+    "native": {
+     "score": 17780.0,
+     "drain_value": 457984,
+     "child_weight": 1717,
+     "child_fee": 17200,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 40.06989
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "nested_ancestry_100",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "nested_ancestry_100",
+    "family": "nested_ancestry",
+    "size": 100,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c007",
+     "c028",
+     "c035",
+     "c042",
+     "c043"
+    ],
+    "rounds": 46,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 85961,
+     "wall_ns_median": 85961,
+     "wall_ns_max": 85961
+    },
+    "peak_rss_kb": 2740,
+    "native": {
+     "score": 4950.0,
+     "drain_value": 282092,
+     "child_weight": 1748,
+     "child_fee": 4370,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "nested_ancestry_100",
+    "family": "nested_ancestry",
+    "size": 100,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c007",
+     "c028",
+     "c035",
+     "c042",
+     "c043"
+    ],
+    "rounds": 47,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 90911,
+     "wall_ns_median": 90911,
+     "wall_ns_max": 90911
+    },
+    "peak_rss_kb": 2712,
+    "native": {
+     "score": 4950.0,
+     "drain_value": 282092,
+     "child_weight": 1748,
+     "child_fee": 4370,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "nested_ancestry_20",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "nested_ancestry_20",
+    "family": "nested_ancestry",
+    "size": 20,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c004"
+    ],
+    "rounds": 2,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 8466,
+     "wall_ns_median": 8466,
+     "wall_ns_max": 8466
+    },
+    "peak_rss_kb": 2664,
+    "native": {
+     "score": 2230.0,
+     "drain_value": 208796,
+     "child_weight": 660,
+     "child_fee": 1650,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "nested_ancestry_20",
+    "family": "nested_ancestry",
+    "size": 20,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c004"
+    ],
+    "rounds": 2,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 8587,
+     "wall_ns_median": 8587,
+     "wall_ns_max": 8587
+    },
+    "peak_rss_kb": 2644,
+    "native": {
+     "score": 2230.0,
+     "drain_value": 208796,
+     "child_weight": 660,
+     "child_fee": 1650,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "nested_ancestry_200",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "nested_ancestry_200",
+    "family": "nested_ancestry",
+    "size": 200,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c002",
+     "c049",
+     "c051",
+     "c065",
+     "c066",
+     "c083",
+     "c085",
+     "c100",
+     "c103",
+     "c110",
+     "c118",
+     "c131",
+     "c143",
+     "c168",
+     "c184",
+     "c193",
+     "c198"
+    ],
+    "rounds": 23466,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 50845805,
+     "wall_ns_median": 50845805,
+     "wall_ns_max": 50845805
+    },
+    "peak_rss_kb": 21672,
+    "native": {
+     "score": 22477.0,
+     "drain_value": 0,
+     "child_weight": 4840,
+     "child_fee": 22477,
+     "ancestor_bump": 10359,
+     "ancestor_bump_lower_bound": 10359,
+     "excess": 18,
+     "implied_feerate_sat_per_vb": 18.576033
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "nested_ancestry_200",
+    "family": "nested_ancestry",
+    "size": 200,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c002",
+     "c049",
+     "c051",
+     "c065",
+     "c066",
+     "c083",
+     "c085",
+     "c100",
+     "c103",
+     "c110",
+     "c118",
+     "c131",
+     "c143",
+     "c168",
+     "c184",
+     "c193",
+     "c198"
+    ],
+    "rounds": 23467,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 48564548,
+     "wall_ns_median": 48564548,
+     "wall_ns_max": 48564548
+    },
+    "peak_rss_kb": 21308,
+    "native": {
+     "score": 22477.0,
+     "drain_value": 0,
+     "child_weight": 4840,
+     "child_fee": 22477,
+     "ancestor_bump": 10359,
+     "ancestor_bump_lower_bound": 10359,
+     "excess": 18,
+     "implied_feerate_sat_per_vb": 18.576033
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "nested_ancestry_50",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "nested_ancestry_50",
+    "family": "nested_ancestry",
+    "size": 50,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c016",
+     "c024",
+     "c033",
+     "c047"
+    ],
+    "rounds": 162,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 208121,
+     "wall_ns_median": 208121,
+     "wall_ns_max": 208121
+    },
+    "peak_rss_kb": 2716,
+    "native": {
+     "score": 13499.0,
+     "drain_value": 1564302,
+     "child_weight": 1476,
+     "child_fee": 12919,
+     "ancestor_bump": 9229,
+     "ancestor_bump_lower_bound": 9229,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 35.01084
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "nested_ancestry_50",
+    "family": "nested_ancestry",
+    "size": 50,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c011",
+     "c016",
+     "c024",
+     "c033"
+    ],
+    "rounds": 163,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 185980,
+     "wall_ns_median": 185980,
+     "wall_ns_max": 185980
+    },
+    "peak_rss_kb": 2748,
+    "native": {
+     "score": 13499.0,
+     "drain_value": 172282,
+     "child_weight": 1476,
+     "child_fee": 12919,
+     "ancestor_bump": 9229,
+     "ancestor_bump_lower_bound": 9229,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 35.01084
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "no_ancestry_100",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "no_ancestry_100",
+    "family": "no_ancestry",
+    "size": 100,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c016",
+     "c026",
+     "c043",
+     "c054"
+    ],
+    "rounds": 2222,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 1870905,
+     "wall_ns_median": 1870905,
+     "wall_ns_max": 1870905
+    },
+    "peak_rss_kb": 3116,
+    "native": {
+     "score": 4270.0,
+     "drain_value": 489775,
+     "child_weight": 1476,
+     "child_fee": 3690,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "no_ancestry_100",
+    "family": "no_ancestry",
+    "size": 100,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c026",
+     "c029",
+     "c043",
+     "c054"
+    ],
+    "rounds": 2212,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 1334277,
+     "wall_ns_median": 1334277,
+     "wall_ns_max": 1334277
+    },
+    "peak_rss_kb": 2748,
+    "native": {
+     "score": 4270.0,
+     "drain_value": 2203804,
+     "child_weight": 1476,
+     "child_fee": 3690,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "no_ancestry_1000",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "no_ancestry_1000",
+    "family": "no_ancestry",
+    "size": 1000,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": false,
+    "error": "no solution within 100000 rounds",
+    "selected": [],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 129773449,
+     "wall_ns_median": 129773449,
+     "wall_ns_max": 129773449
+    },
+    "peak_rss_kb": 56560,
+    "native": null,
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "no_ancestry_1000",
+    "family": "no_ancestry",
+    "size": 1000,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c004",
+     "c024",
+     "c078",
+     "c164",
+     "c165",
+     "c178",
+     "c209",
+     "c243",
+     "c254",
+     "c276",
+     "c304",
+     "c326",
+     "c350",
+     "c389",
+     "c424",
+     "c427",
+     "c456",
+     "c489",
+     "c515",
+     "c534",
+     "c538",
+     "c582",
+     "c596",
+     "c618",
+     "c621",
+     "c646",
+     "c650",
+     "c664",
+     "c689",
+     "c725",
+     "c726",
+     "c730",
+     "c755",
+     "c767",
+     "c799",
+     "c832",
+     "c835",
+     "c841",
+     "c845",
+     "c852",
+     "c859",
+     "c961",
+     "c980"
+    ],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 78927695,
+     "wall_ns_median": 78927695,
+     "wall_ns_max": 78927695
+    },
+    "peak_rss_kb": 9592,
+    "native": {
+     "score": 30790.0,
+     "drain_value": 21284,
+     "child_weight": 12084,
+     "child_fee": 30210,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "no_ancestry_20",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "no_ancestry_20",
+    "family": "no_ancestry",
+    "size": 20,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c000",
+     "c014"
+    ],
+    "rounds": 14,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 37210,
+     "wall_ns_median": 37210,
+     "wall_ns_max": 37210
+    },
+    "peak_rss_kb": 2632,
+    "native": {
+     "score": 2910.0,
+     "drain_value": 904494,
+     "child_weight": 932,
+     "child_fee": 2330,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "no_ancestry_20",
+    "family": "no_ancestry",
+    "size": 20,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c000",
+     "c014"
+    ],
+    "rounds": 13,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 27913,
+     "wall_ns_median": 27913,
+     "wall_ns_max": 27913
+    },
+    "peak_rss_kb": 2676,
+    "native": {
+     "score": 2910.0,
+     "drain_value": 904494,
+     "child_weight": 932,
+     "child_fee": 2330,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "no_ancestry_200",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "no_ancestry_200",
+    "family": "no_ancestry",
+    "size": 200,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c038",
+     "c042",
+     "c052",
+     "c081",
+     "c111",
+     "c174",
+     "c183",
+     "c185",
+     "c189"
+    ],
+    "rounds": 8127,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 7511786,
+     "wall_ns_median": 7511786,
+     "wall_ns_max": 7511786
+    },
+    "peak_rss_kb": 5532,
+    "native": {
+     "score": 7670.0,
+     "drain_value": 30296,
+     "child_weight": 2836,
+     "child_fee": 7090,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "no_ancestry_200",
+    "family": "no_ancestry",
+    "size": 200,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c038",
+     "c042",
+     "c052",
+     "c081",
+     "c111",
+     "c174",
+     "c183",
+     "c185",
+     "c189"
+    ],
+    "rounds": 8127,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 5353891,
+     "wall_ns_median": 5353891,
+     "wall_ns_max": 5353891
+    },
+    "peak_rss_kb": 2812,
+    "native": {
+     "score": 7670.0,
+     "drain_value": 30296,
+     "child_weight": 2836,
+     "child_fee": 7090,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "no_ancestry_2000",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "no_ancestry_2000",
+    "family": "no_ancestry",
+    "size": 2000,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": false,
+    "error": "no solution within 100000 rounds",
+    "selected": [],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 140261868,
+     "wall_ns_median": 140261868,
+     "wall_ns_max": 140261868
+    },
+    "peak_rss_kb": 81836,
+    "native": null,
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "no_ancestry_2000",
+    "family": "no_ancestry",
+    "size": 2000,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c052",
+     "c081",
+     "c119",
+     "c161",
+     "c196",
+     "c211",
+     "c225",
+     "c334",
+     "c344",
+     "c360",
+     "c365",
+     "c367",
+     "c374",
+     "c407",
+     "c437",
+     "c452",
+     "c458",
+     "c550",
+     "c567",
+     "c677",
+     "c711",
+     "c722",
+     "c732",
+     "c736",
+     "c753",
+     "c761",
+     "c783",
+     "c821",
+     "c846",
+     "c849",
+     "c855",
+     "c871",
+     "c886",
+     "c911",
+     "c946",
+     "c965",
+     "c984",
+     "c994",
+     "c1023",
+     "c1057",
+     "c1086",
+     "c1104",
+     "c1108",
+     "c1110",
+     "c1119",
+     "c1133",
+     "c1150",
+     "c1175",
+     "c1185",
+     "c1186",
+     "c1191",
+     "c1212",
+     "c1274",
+     "c1327",
+     "c1360",
+     "c1457",
+     "c1458",
+     "c1487",
+     "c1502",
+     "c1513",
+     "c1528",
+     "c1530",
+     "c1564",
+     "c1577",
+     "c1586",
+     "c1625",
+     "c1631",
+     "c1640",
+     "c1647",
+     "c1657",
+     "c1732",
+     "c1742",
+     "c1781",
+     "c1812",
+     "c1849",
+     "c1857",
+     "c1876",
+     "c1883",
+     "c1944",
+     "c1948",
+     "c1951",
+     "c1973"
+    ],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 92650772,
+     "wall_ns_median": 92650772,
+     "wall_ns_max": 92650772
+    },
+    "peak_rss_kb": 6572,
+    "native": {
+     "score": 57310.0,
+     "drain_value": 31610,
+     "child_weight": 22692,
+     "child_fee": 56730,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "no_ancestry_50",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "no_ancestry_50",
+    "family": "no_ancestry",
+    "size": 50,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c016",
+     "c020",
+     "c041",
+     "c049"
+    ],
+    "rounds": 1195,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 1059921,
+     "wall_ns_median": 1059921,
+     "wall_ns_max": 1059921
+    },
+    "peak_rss_kb": 2796,
+    "native": {
+     "score": 4270.0,
+     "drain_value": 920669,
+     "child_weight": 1476,
+     "child_fee": 3690,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "no_ancestry_50",
+    "family": "no_ancestry",
+    "size": 50,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c015",
+     "c016",
+     "c020",
+     "c049"
+    ],
+    "rounds": 1191,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 709553,
+     "wall_ns_median": 709553,
+     "wall_ns_max": 709553
+    },
+    "peak_rss_kb": 2676,
+    "native": {
+     "score": 4270.0,
+     "drain_value": 1211609,
+     "child_weight": 1476,
+     "child_fee": 3690,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "no_ancestry_500",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "no_ancestry_500",
+    "family": "no_ancestry",
+    "size": 500,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": false,
+    "error": "no solution within 100000 rounds",
+    "selected": [],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 112843707,
+     "wall_ns_median": 112843707,
+     "wall_ns_max": 112843707
+    },
+    "peak_rss_kb": 44012,
+    "native": null,
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "no_ancestry_500",
+    "family": "no_ancestry",
+    "size": 500,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c046",
+     "c061",
+     "c069",
+     "c093",
+     "c127",
+     "c136",
+     "c146",
+     "c147",
+     "c195",
+     "c218",
+     "c232",
+     "c255",
+     "c280",
+     "c319",
+     "c344",
+     "c374",
+     "c394",
+     "c404",
+     "c411",
+     "c462",
+     "c472",
+     "c484",
+     "c496"
+    ],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 77454796,
+     "wall_ns_median": 77454796,
+     "wall_ns_max": 77454796
+    },
+    "peak_rss_kb": 6012,
+    "native": {
+     "score": 17190.0,
+     "drain_value": 2032701,
+     "child_weight": 6644,
+     "child_fee": 16610,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "private_ancestry_100",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "private_ancestry_100",
+    "family": "private_ancestry",
+    "size": 100,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c001",
+     "c022",
+     "c032",
+     "c046",
+     "c070",
+     "c094"
+    ],
+    "rounds": 468,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 810283,
+     "wall_ns_median": 810283,
+     "wall_ns_max": 810283
+    },
+    "peak_rss_kb": 2772,
+    "native": {
+     "score": 4637.0,
+     "drain_value": 0,
+     "child_weight": 1848,
+     "child_fee": 4637,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 17,
+     "implied_feerate_sat_per_vb": 10.036797
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "private_ancestry_100",
+    "family": "private_ancestry",
+    "size": 100,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c001",
+     "c022",
+     "c032",
+     "c046",
+     "c070",
+     "c094"
+    ],
+    "rounds": 469,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 463400,
+     "wall_ns_median": 463400,
+     "wall_ns_max": 463400
+    },
+    "peak_rss_kb": 2744,
+    "native": {
+     "score": 4637.0,
+     "drain_value": 0,
+     "child_weight": 1848,
+     "child_fee": 4637,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 17,
+     "implied_feerate_sat_per_vb": 10.036797
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "private_ancestry_20",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "private_ancestry_20",
+    "family": "private_ancestry",
+    "size": 20,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c000",
+     "c007"
+    ],
+    "rounds": 17,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 22863,
+     "wall_ns_median": 22863,
+     "wall_ns_max": 22863
+    },
+    "peak_rss_kb": 2636,
+    "native": {
+     "score": 3958.0,
+     "drain_value": 1096010,
+     "child_weight": 932,
+     "child_fee": 3378,
+     "ancestor_bump": 1048,
+     "ancestor_bump_lower_bound": 1048,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 14.497854
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "private_ancestry_20",
+    "family": "private_ancestry",
+    "size": 20,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c000",
+     "c007"
+    ],
+    "rounds": 17,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 17443,
+     "wall_ns_median": 17443,
+     "wall_ns_max": 17443
+    },
+    "peak_rss_kb": 2660,
+    "native": {
+     "score": 3958.0,
+     "drain_value": 1096010,
+     "child_weight": 932,
+     "child_fee": 3378,
+     "ancestor_bump": 1048,
+     "ancestor_bump_lower_bound": 1048,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 14.497854
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "private_ancestry_200",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "private_ancestry_200",
+    "family": "private_ancestry",
+    "size": 200,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c025",
+     "c044",
+     "c050",
+     "c061",
+     "c070",
+     "c082",
+     "c091",
+     "c104",
+     "c107",
+     "c112",
+     "c131",
+     "c134",
+     "c149",
+     "c170",
+     "c193",
+     "c194"
+    ],
+    "rounds": 24577,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 41150506,
+     "wall_ns_median": 41150506,
+     "wall_ns_max": 41150506
+    },
+    "peak_rss_kb": 11180,
+    "native": {
+     "score": 11420.0,
+     "drain_value": 0,
+     "child_weight": 4568,
+     "child_fee": 11420,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "private_ancestry_200",
+    "family": "private_ancestry",
+    "size": 200,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c025",
+     "c044",
+     "c050",
+     "c061",
+     "c070",
+     "c082",
+     "c091",
+     "c104",
+     "c107",
+     "c112",
+     "c131",
+     "c134",
+     "c149",
+     "c170",
+     "c193",
+     "c194"
+    ],
+    "rounds": 24578,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 40724325,
+     "wall_ns_median": 40724325,
+     "wall_ns_max": 40724325
+    },
+    "peak_rss_kb": 11196,
+    "native": {
+     "score": 11420.0,
+     "drain_value": 0,
+     "child_weight": 4568,
+     "child_fee": 11420,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "private_ancestry_50",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "private_ancestry_50",
+    "family": "private_ancestry",
+    "size": 50,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c006",
+     "c032",
+     "c044"
+    ],
+    "rounds": 841,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 814240,
+     "wall_ns_median": 814240,
+     "wall_ns_max": 814240
+    },
+    "peak_rss_kb": 3036,
+    "native": {
+     "score": 5046.0,
+     "drain_value": 1109604,
+     "child_weight": 1204,
+     "child_fee": 4466,
+     "ancestor_bump": 1456,
+     "ancestor_bump_lower_bound": 1456,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 14.83721
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "private_ancestry_50",
+    "family": "private_ancestry",
+    "size": 50,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c006",
+     "c032",
+     "c044"
+    ],
+    "rounds": 840,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 673767,
+     "wall_ns_median": 673767,
+     "wall_ns_max": 673767
+    },
+    "peak_rss_kb": 2696,
+    "native": {
+     "score": 5046.0,
+     "drain_value": 1109604,
+     "child_weight": 1204,
+     "child_fee": 4466,
+     "ancestor_bump": 1456,
+     "ancestor_bump_lower_bound": 1456,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 14.83721
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "shared_ancestry_100",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "shared_ancestry_100",
+    "family": "shared_ancestry",
+    "size": 100,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c009",
+     "c021",
+     "c023",
+     "c026",
+     "c030",
+     "c032",
+     "c041",
+     "c056",
+     "c070",
+     "c074",
+     "c079"
+    ],
+    "rounds": 2945,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 3918714,
+     "wall_ns_median": 3918714,
+     "wall_ns_max": 3918714
+    },
+    "peak_rss_kb": 3708,
+    "native": {
+     "score": 14878.0,
+     "drain_value": 0,
+     "child_weight": 3208,
+     "child_fee": 14878,
+     "ancestor_bump": 6840,
+     "ancestor_bump_lower_bound": 6840,
+     "excess": 18,
+     "implied_feerate_sat_per_vb": 18.551123
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "shared_ancestry_100",
+    "family": "shared_ancestry",
+    "size": 100,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c009",
+     "c021",
+     "c023",
+     "c026",
+     "c030",
+     "c032",
+     "c041",
+     "c056",
+     "c070",
+     "c074",
+     "c079"
+    ],
+    "rounds": 2945,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 3680636,
+     "wall_ns_median": 3680636,
+     "wall_ns_max": 3680636
+    },
+    "peak_rss_kb": 3516,
+    "native": {
+     "score": 14878.0,
+     "drain_value": 0,
+     "child_weight": 3208,
+     "child_fee": 14878,
+     "ancestor_bump": 6840,
+     "ancestor_bump_lower_bound": 6840,
+     "excess": 18,
+     "implied_feerate_sat_per_vb": 18.551123
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "shared_ancestry_1000",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "shared_ancestry_1000",
+    "family": "shared_ancestry",
+    "size": 1000,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": false,
+    "error": "no solution within 100000 rounds",
+    "selected": [],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 853190636,
+     "wall_ns_median": 853190636,
+     "wall_ns_max": 853190636
+    },
+    "peak_rss_kb": 156728,
+    "native": null,
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "shared_ancestry_1000",
+    "family": "shared_ancestry",
+    "size": 1000,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c001",
+     "c019",
+     "c107",
+     "c112",
+     "c158",
+     "c196",
+     "c203",
+     "c217",
+     "c233",
+     "c268",
+     "c286",
+     "c296",
+     "c302",
+     "c310",
+     "c340",
+     "c346",
+     "c356",
+     "c401",
+     "c420",
+     "c425",
+     "c463",
+     "c507",
+     "c538",
+     "c541",
+     "c547",
+     "c557",
+     "c595",
+     "c617",
+     "c660",
+     "c691",
+     "c697",
+     "c757",
+     "c830",
+     "c832",
+     "c851",
+     "c866",
+     "c874",
+     "c891",
+     "c904",
+     "c905",
+     "c906",
+     "c909",
+     "c941",
+     "c991"
+    ],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 846786512,
+     "wall_ns_median": 846786512,
+     "wall_ns_max": 846786512
+    },
+    "peak_rss_kb": 156688,
+    "native": {
+     "score": 146512.0,
+     "drain_value": 620274,
+     "child_weight": 12356,
+     "child_fee": 145932,
+     "ancestor_bump": 115042,
+     "ancestor_bump_lower_bound": 115042,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 47.242474
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "shared_ancestry_20",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "shared_ancestry_20",
+    "family": "shared_ancestry",
+    "size": 20,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c011",
+     "c017"
+    ],
+    "rounds": 26,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 59402,
+     "wall_ns_median": 59402,
+     "wall_ns_max": 59402
+    },
+    "peak_rss_kb": 2640,
+    "native": {
+     "score": 4899.0,
+     "drain_value": 139401,
+     "child_weight": 932,
+     "child_fee": 4319,
+     "ancestor_bump": 1989,
+     "ancestor_bump_lower_bound": 1989,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 18.53648
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "shared_ancestry_20",
+    "family": "shared_ancestry",
+    "size": 20,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c002",
+     "c011"
+    ],
+    "rounds": 24,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 44493,
+     "wall_ns_median": 44493,
+     "wall_ns_max": 44493
+    },
+    "peak_rss_kb": 2632,
+    "native": {
+     "score": 4899.0,
+     "drain_value": 181597,
+     "child_weight": 932,
+     "child_fee": 4319,
+     "ancestor_bump": 1989,
+     "ancestor_bump_lower_bound": 1989,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 18.53648
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "shared_ancestry_200",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "shared_ancestry_200",
+    "family": "shared_ancestry",
+    "size": 200,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": false,
+    "error": "no solution within 100000 rounds",
+    "selected": [],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 196066513,
+     "wall_ns_median": 196066513,
+     "wall_ns_max": 196066513
+    },
+    "peak_rss_kb": 59672,
+    "native": null,
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "shared_ancestry_200",
+    "family": "shared_ancestry",
+    "size": 200,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c002",
+     "c023",
+     "c025",
+     "c041",
+     "c068",
+     "c102",
+     "c107",
+     "c119",
+     "c139",
+     "c162"
+    ],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 195195766,
+     "wall_ns_median": 195195766,
+     "wall_ns_max": 195195766
+    },
+    "peak_rss_kb": 59580,
+    "native": {
+     "score": 36822.0,
+     "drain_value": 1498718,
+     "child_weight": 3108,
+     "child_fee": 36242,
+     "ancestor_bump": 28472,
+     "ancestor_bump_lower_bound": 28472,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 46.6435
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "shared_ancestry_2000",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "shared_ancestry_2000",
+    "family": "shared_ancestry",
+    "size": 2000,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": false,
+    "error": "no solution within 100000 rounds",
+    "selected": [],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 1534657443,
+     "wall_ns_median": 1534657443,
+     "wall_ns_max": 1534657443
+    },
+    "peak_rss_kb": 279036,
+    "native": null,
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "shared_ancestry_2000",
+    "family": "shared_ancestry",
+    "size": 2000,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c011",
+     "c089",
+     "c093",
+     "c116",
+     "c133",
+     "c148",
+     "c150",
+     "c156",
+     "c163",
+     "c177",
+     "c193",
+     "c222",
+     "c241",
+     "c245",
+     "c280",
+     "c304",
+     "c317",
+     "c337",
+     "c384",
+     "c420",
+     "c433",
+     "c443",
+     "c450",
+     "c473",
+     "c484",
+     "c499",
+     "c506",
+     "c517",
+     "c534",
+     "c557",
+     "c595",
+     "c607",
+     "c626",
+     "c769",
+     "c794",
+     "c819",
+     "c832",
+     "c842",
+     "c858",
+     "c868",
+     "c895",
+     "c903",
+     "c932",
+     "c945",
+     "c951",
+     "c953",
+     "c978",
+     "c992",
+     "c994",
+     "c1041",
+     "c1067",
+     "c1068",
+     "c1081",
+     "c1093",
+     "c1127",
+     "c1171",
+     "c1176",
+     "c1178",
+     "c1214",
+     "c1228",
+     "c1229",
+     "c1251",
+     "c1313",
+     "c1333",
+     "c1403",
+     "c1507",
+     "c1523",
+     "c1528",
+     "c1535",
+     "c1560",
+     "c1562",
+     "c1582",
+     "c1617",
+     "c1665",
+     "c1690",
+     "c1725",
+     "c1728",
+     "c1752",
+     "c1760",
+     "c1784",
+     "c1785",
+     "c1826",
+     "c1848",
+     "c1853",
+     "c1883",
+     "c1888",
+     "c1909",
+     "c1944",
+     "c1977",
+     "c1978",
+     "c1979"
+    ],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 1525434291,
+     "wall_ns_median": 1525434291,
+     "wall_ns_max": 1525434291
+    },
+    "peak_rss_kb": 279144,
+    "native": {
+     "score": 269334.0,
+     "drain_value": 154143,
+     "child_weight": 25140,
+     "child_fee": 268754,
+     "ancestor_bump": 205904,
+     "ancestor_bump_lower_bound": 205904,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 42.761177
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "shared_ancestry_50",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "shared_ancestry_50",
+    "family": "shared_ancestry",
+    "size": 50,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c014",
+     "c015",
+     "c025",
+     "c037",
+     "c045"
+    ],
+    "rounds": 237,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 432924,
+     "wall_ns_median": 432924,
+     "wall_ns_max": 432924
+    },
+    "peak_rss_kb": 2756,
+    "native": {
+     "score": 4098.0,
+     "drain_value": 0,
+     "child_weight": 1576,
+     "child_fee": 4098,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 158,
+     "implied_feerate_sat_per_vb": 10.401015
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "shared_ancestry_50",
+    "family": "shared_ancestry",
+    "size": 50,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c014",
+     "c015",
+     "c025",
+     "c037",
+     "c045"
+    ],
+    "rounds": 238,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 393519,
+     "wall_ns_median": 393519,
+     "wall_ns_max": 393519
+    },
+    "peak_rss_kb": 2712,
+    "native": {
+     "score": 4098.0,
+     "drain_value": 0,
+     "child_weight": 1576,
+     "child_fee": 4098,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 158,
+     "implied_feerate_sat_per_vb": 10.401015
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "shared_ancestry_500",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "shared_ancestry_500",
+    "family": "shared_ancestry",
+    "size": 500,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": false,
+    "error": "no solution within 100000 rounds",
+    "selected": [],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 516469537,
+     "wall_ns_median": 516469537,
+     "wall_ns_max": 516469537
+    },
+    "peak_rss_kb": 93992,
+    "native": null,
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "shared_ancestry_500",
+    "family": "shared_ancestry",
+    "size": 500,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c008",
+     "c009",
+     "c014",
+     "c032",
+     "c050",
+     "c057",
+     "c100",
+     "c104",
+     "c161",
+     "c182",
+     "c234",
+     "c260",
+     "c301",
+     "c328",
+     "c331",
+     "c349",
+     "c366",
+     "c413",
+     "c451",
+     "c486"
+    ],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 519160423,
+     "wall_ns_median": 519160423,
+     "wall_ns_max": 519160423
+    },
+    "peak_rss_kb": 93948,
+    "native": {
+     "score": 78336.0,
+     "drain_value": 1007287,
+     "child_weight": 5828,
+     "child_fee": 77756,
+     "ancestor_bump": 63186,
+     "ancestor_bump_lower_bound": 63186,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 53.36719
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "smoke",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "smoke",
+    "family": "smoke",
+    "size": 8,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c000",
+     "c003"
+    ],
+    "rounds": 35,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 64471,
+     "wall_ns_median": 64471,
+     "wall_ns_max": 64471
+    },
+    "peak_rss_kb": 2640,
+    "native": {
+     "score": 5610.0,
+     "drain_value": 24970,
+     "child_weight": 932,
+     "child_fee": 5030,
+     "ancestor_bump": 2700,
+     "ancestor_bump_lower_bound": 2700,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 21.587982
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "smoke",
+    "family": "smoke",
+    "size": 8,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c000",
+     "c003"
+    ],
+    "rounds": 36,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 62908,
+     "wall_ns_median": 62908,
+     "wall_ns_max": 62908
+    },
+    "peak_rss_kb": 2676,
+    "native": {
+     "score": 5610.0,
+     "drain_value": 24970,
+     "child_weight": 932,
+     "child_fee": 5030,
+     "ancestor_bump": 2700,
+     "ancestor_bump_lower_bound": 2700,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 21.587982
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "subsidizing_ancestry_100",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "subsidizing_ancestry_100",
+    "family": "subsidizing_ancestry",
+    "size": 100,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c013",
+     "c039",
+     "c040",
+     "c042",
+     "c050",
+     "c071",
+     "c072"
+    ],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 148490571,
+     "wall_ns_median": 148490571,
+     "wall_ns_max": 148490571
+    },
+    "peak_rss_kb": 59176,
+    "native": {
+     "score": 19006.0,
+     "drain_value": 0,
+     "child_weight": 2120,
+     "child_fee": 19006,
+     "ancestor_bump": 13635,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 71,
+     "implied_feerate_sat_per_vb": 35.86038
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "subsidizing_ancestry_100",
+    "family": "subsidizing_ancestry",
+    "size": 100,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c013",
+     "c039",
+     "c040",
+     "c042",
+     "c050",
+     "c071",
+     "c072"
+    ],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 149083275,
+     "wall_ns_median": 149083275,
+     "wall_ns_max": 149083275
+    },
+    "peak_rss_kb": 59180,
+    "native": {
+     "score": 19006.0,
+     "drain_value": 0,
+     "child_weight": 2120,
+     "child_fee": 19006,
+     "ancestor_bump": 13635,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 71,
+     "implied_feerate_sat_per_vb": 35.86038
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "subsidizing_ancestry_20",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "subsidizing_ancestry_20",
+    "family": "subsidizing_ancestry",
+    "size": 20,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c001"
+    ],
+    "rounds": 104,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 140434,
+     "wall_ns_median": 140434,
+     "wall_ns_max": 140434
+    },
+    "peak_rss_kb": 2668,
+    "native": {
+     "score": 12727.0,
+     "drain_value": 422734,
+     "child_weight": 660,
+     "child_fee": 12147,
+     "ancestor_bump": 10497,
+     "ancestor_bump_lower_bound": 3237,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 73.61818
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "subsidizing_ancestry_20",
+    "family": "subsidizing_ancestry",
+    "size": 20,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c001"
+    ],
+    "rounds": 105,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 172855,
+     "wall_ns_median": 172855,
+     "wall_ns_max": 172855
+    },
+    "peak_rss_kb": 2656,
+    "native": {
+     "score": 12727.0,
+     "drain_value": 422734,
+     "child_weight": 660,
+     "child_fee": 12147,
+     "ancestor_bump": 10497,
+     "ancestor_bump_lower_bound": 3237,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 73.61818
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "subsidizing_ancestry_200",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "subsidizing_ancestry_200",
+    "family": "subsidizing_ancestry",
+    "size": 200,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c016",
+     "c017",
+     "c052",
+     "c059",
+     "c126",
+     "c147",
+     "c155",
+     "c183"
+    ],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 188692696,
+     "wall_ns_median": 188692696,
+     "wall_ns_max": 188692696
+    },
+    "peak_rss_kb": 87516,
+    "native": {
+     "score": 27861.0,
+     "drain_value": 225167,
+     "child_weight": 2564,
+     "child_fee": 27281,
+     "ancestor_bump": 20871,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 42.560062
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "subsidizing_ancestry_200",
+    "family": "subsidizing_ancestry",
+    "size": 200,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c016",
+     "c017",
+     "c052",
+     "c059",
+     "c126",
+     "c147",
+     "c155",
+     "c183"
+    ],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 182715865,
+     "wall_ns_median": 182715865,
+     "wall_ns_max": 182715865
+    },
+    "peak_rss_kb": 87404,
+    "native": {
+     "score": 27861.0,
+     "drain_value": 225167,
+     "child_weight": 2564,
+     "child_fee": 27281,
+     "ancestor_bump": 20871,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 42.560062
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "subsidizing_ancestry_50",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "subsidizing_ancestry_50",
+    "family": "subsidizing_ancestry",
+    "size": 50,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c006",
+     "c012",
+     "c015",
+     "c035",
+     "c036"
+    ],
+    "rounds": 55738,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 39250988,
+     "wall_ns_median": 39250988,
+     "wall_ns_max": 39250988
+    },
+    "peak_rss_kb": 7208,
+    "native": {
+     "score": 5088.0,
+     "drain_value": 370545,
+     "child_weight": 1748,
+     "child_fee": 4508,
+     "ancestor_bump": 138,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.315789
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "subsidizing_ancestry_50",
+    "family": "subsidizing_ancestry",
+    "size": 50,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c012",
+     "c015",
+     "c035",
+     "c036",
+     "c048"
+    ],
+    "rounds": 55739,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 38990407,
+     "wall_ns_median": 38990407,
+     "wall_ns_max": 38990407
+    },
+    "peak_rss_kb": 7260,
+    "native": {
+     "score": 5088.0,
+     "drain_value": 377687,
+     "child_weight": 1748,
+     "child_fee": 4508,
+     "ancestor_bump": 138,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.315789
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "wallet_mixed_100",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "wallet_mixed_100",
+    "family": "wallet_mixed",
+    "size": 100,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c011",
+     "c023",
+     "c037",
+     "c044",
+     "c048",
+     "c078"
+    ],
+    "rounds": 2006,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 2278532,
+     "wall_ns_median": 2278532,
+     "wall_ns_max": 2278532
+    },
+    "peak_rss_kb": 3376,
+    "native": {
+     "score": 5430.0,
+     "drain_value": 18567,
+     "child_weight": 1940,
+     "child_fee": 4850,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "wallet_mixed_100",
+    "family": "wallet_mixed",
+    "size": 100,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c011",
+     "c037",
+     "c044",
+     "c048",
+     "c078",
+     "c083"
+    ],
+    "rounds": 2007,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 2186929,
+     "wall_ns_median": 2186929,
+     "wall_ns_max": 2186929
+    },
+    "peak_rss_kb": 3132,
+    "native": {
+     "score": 5430.0,
+     "drain_value": 354702,
+     "child_weight": 1940,
+     "child_fee": 4850,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "wallet_mixed_1000",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "wallet_mixed_1000",
+    "family": "wallet_mixed",
+    "size": 1000,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": false,
+    "error": "no solution within 100000 rounds",
+    "selected": [],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 861221136,
+     "wall_ns_median": 861221136,
+     "wall_ns_max": 861221136
+    },
+    "peak_rss_kb": 162980,
+    "native": null,
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "wallet_mixed_1000",
+    "family": "wallet_mixed",
+    "size": 1000,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c034",
+     "c048",
+     "c058",
+     "c104",
+     "c105",
+     "c168",
+     "c190",
+     "c209",
+     "c234",
+     "c236",
+     "c240",
+     "c269",
+     "c272",
+     "c302",
+     "c309",
+     "c314",
+     "c326",
+     "c327",
+     "c332",
+     "c344",
+     "c373",
+     "c388",
+     "c407",
+     "c428",
+     "c433",
+     "c434",
+     "c526",
+     "c581",
+     "c614",
+     "c623",
+     "c625",
+     "c632",
+     "c643",
+     "c658",
+     "c699",
+     "c702",
+     "c706",
+     "c751",
+     "c779",
+     "c809",
+     "c843",
+     "c881",
+     "c887",
+     "c924",
+     "c936",
+     "c937",
+     "c964"
+    ],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 860735183,
+     "wall_ns_median": 860735183,
+     "wall_ns_max": 860735183
+    },
+    "peak_rss_kb": 162876,
+    "native": {
+     "score": 78701.0,
+     "drain_value": 1155370,
+     "child_weight": 12728,
+     "child_fee": 78121,
+     "ancestor_bump": 46301,
+     "ancestor_bump_lower_bound": 46301,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 24.55091
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "wallet_mixed_20",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "wallet_mixed_20",
+    "family": "wallet_mixed",
+    "size": 20,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c008",
+     "c019"
+    ],
+    "rounds": 5,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 25347,
+     "wall_ns_median": 25347,
+     "wall_ns_max": 25347
+    },
+    "peak_rss_kb": 2680,
+    "native": {
+     "score": 2910.0,
+     "drain_value": 336220,
+     "child_weight": 932,
+     "child_fee": 2330,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "wallet_mixed_20",
+    "family": "wallet_mixed",
+    "size": 20,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c008",
+     "c019"
+    ],
+    "rounds": 5,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 17853,
+     "wall_ns_median": 17853,
+     "wall_ns_max": 17853
+    },
+    "peak_rss_kb": 2656,
+    "native": {
+     "score": 2910.0,
+     "drain_value": 336220,
+     "child_weight": 932,
+     "child_fee": 2330,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "wallet_mixed_200",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "wallet_mixed_200",
+    "family": "wallet_mixed",
+    "size": 200,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c022",
+     "c029",
+     "c032",
+     "c039",
+     "c048",
+     "c087",
+     "c092",
+     "c112",
+     "c129",
+     "c142"
+    ],
+    "rounds": 1107,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 1900471,
+     "wall_ns_median": 1900471,
+     "wall_ns_max": 1900471
+    },
+    "peak_rss_kb": 3236,
+    "native": {
+     "score": 7321.0,
+     "drain_value": 0,
+     "child_weight": 2896,
+     "child_fee": 7321,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 81,
+     "implied_feerate_sat_per_vb": 10.111878
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "wallet_mixed_200",
+    "family": "wallet_mixed",
+    "size": 200,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c022",
+     "c029",
+     "c032",
+     "c039",
+     "c048",
+     "c087",
+     "c092",
+     "c112",
+     "c129",
+     "c142"
+    ],
+    "rounds": 1108,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 2183874,
+     "wall_ns_median": 2183874,
+     "wall_ns_max": 2183874
+    },
+    "peak_rss_kb": 3132,
+    "native": {
+     "score": 7321.0,
+     "drain_value": 0,
+     "child_weight": 2896,
+     "child_fee": 7321,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 81,
+     "implied_feerate_sat_per_vb": 10.111878
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "wallet_mixed_2000",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "wallet_mixed_2000",
+    "family": "wallet_mixed",
+    "size": 2000,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": false,
+    "error": "no solution within 100000 rounds",
+    "selected": [],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 1561635388,
+     "wall_ns_median": 1561635388,
+     "wall_ns_max": 1561635388
+    },
+    "peak_rss_kb": 291508,
+    "native": null,
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "wallet_mixed_2000",
+    "family": "wallet_mixed",
+    "size": 2000,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c003",
+     "c020",
+     "c021",
+     "c053",
+     "c059",
+     "c094",
+     "c151",
+     "c193",
+     "c210",
+     "c217",
+     "c248",
+     "c285",
+     "c297",
+     "c307",
+     "c336",
+     "c371",
+     "c433",
+     "c450",
+     "c505",
+     "c519",
+     "c545",
+     "c567",
+     "c590",
+     "c598",
+     "c604",
+     "c621",
+     "c684",
+     "c741",
+     "c778",
+     "c798",
+     "c860",
+     "c866",
+     "c877",
+     "c883",
+     "c900",
+     "c935",
+     "c971",
+     "c1022",
+     "c1048",
+     "c1060",
+     "c1068",
+     "c1086",
+     "c1096",
+     "c1106",
+     "c1117",
+     "c1128",
+     "c1130",
+     "c1139",
+     "c1203",
+     "c1224",
+     "c1229",
+     "c1271",
+     "c1302",
+     "c1370",
+     "c1379",
+     "c1395",
+     "c1397",
+     "c1407",
+     "c1417",
+     "c1420",
+     "c1427",
+     "c1459",
+     "c1460",
+     "c1470",
+     "c1483",
+     "c1489",
+     "c1531",
+     "c1532",
+     "c1543",
+     "c1594",
+     "c1605",
+     "c1636",
+     "c1663",
+     "c1664",
+     "c1680",
+     "c1691",
+     "c1697",
+     "c1710",
+     "c1711",
+     "c1738",
+     "c1751",
+     "c1763",
+     "c1771",
+     "c1795",
+     "c1796",
+     "c1846",
+     "c1864",
+     "c1883",
+     "c1898",
+     "c1909",
+     "c1910",
+     "c1931",
+     "c1950",
+     "c1986"
+    ],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 1550932495,
+     "wall_ns_median": 1550932495,
+     "wall_ns_max": 1550932495
+    },
+    "peak_rss_kb": 291640,
+    "native": {
+     "score": 166888.0,
+     "drain_value": 3812823,
+     "child_weight": 25028,
+     "child_fee": 166308,
+     "ancestor_bump": 103738,
+     "ancestor_bump_lower_bound": 103738,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 26.579512
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "wallet_mixed_50",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "wallet_mixed_50",
+    "family": "wallet_mixed",
+    "size": 50,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c028",
+     "c045"
+    ],
+    "rounds": 55,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 72016,
+     "wall_ns_median": 72016,
+     "wall_ns_max": 72016
+    },
+    "peak_rss_kb": 2708,
+    "native": {
+     "score": 2910.0,
+     "drain_value": 1705646,
+     "child_weight": 932,
+     "child_fee": 2330,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "wallet_mixed_50",
+    "family": "wallet_mixed",
+    "size": 50,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c028",
+     "c045"
+    ],
+    "rounds": 55,
+    "exhausted": true,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 87565,
+     "wall_ns_median": 87565,
+     "wall_ns_max": 87565
+    },
+    "peak_rss_kb": 2672,
+    "native": {
+     "score": 2910.0,
+     "drain_value": 1705646,
+     "child_weight": 932,
+     "child_fee": 2330,
+     "ancestor_bump": 0,
+     "ancestor_bump_lower_bound": 0,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 10.0
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  },
+  {
+   "fixture": "wallet_mixed_500",
+   "track": "changeful",
+   "a": {
+    "runner": "coin-select",
+    "fixture": "wallet_mixed_500",
+    "family": "wallet_mixed",
+    "size": 500,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": false,
+    "error": "no solution within 100000 rounds",
+    "selected": [],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 514975429,
+     "wall_ns_median": 514975429,
+     "wall_ns_max": 514975429
+    },
+    "peak_rss_kb": 97212,
+    "native": null,
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   },
+   "b": {
+    "runner": "coin-select",
+    "fixture": "wallet_mixed_500",
+    "family": "wallet_mixed",
+    "size": 500,
+    "track": "changeful",
+    "objective": "minimise long-term fee, change at the metric's discretion (LowestFee)",
+    "algorithm": "bnb/lowest-fee",
+    "ok": true,
+    "error": null,
+    "selected": [
+     "c019",
+     "c025",
+     "c029",
+     "c036",
+     "c091",
+     "c105",
+     "c110",
+     "c143",
+     "c245",
+     "c251",
+     "c287",
+     "c299",
+     "c303",
+     "c306",
+     "c319",
+     "c332",
+     "c333",
+     "c354",
+     "c361",
+     "c362",
+     "c370",
+     "c390",
+     "c430",
+     "c437",
+     "c445"
+    ],
+    "rounds": 100000,
+    "exhausted": false,
+    "budget": 100000,
+    "deadline_us": null,
+    "timing": {
+     "repeats": 1,
+     "warmup": 0,
+     "wall_ns_min": 520170352,
+     "wall_ns_median": 520170352,
+     "wall_ns_max": 520170352
+    },
+    "peak_rss_kb": 97192,
+    "native": {
+     "score": 37766.0,
+     "drain_value": 2947939,
+     "child_weight": 7425,
+     "child_fee": 37186,
+     "ancestor_bump": 18616,
+     "ancestor_bump_lower_bound": 18616,
+     "excess": 0,
+     "implied_feerate_sat_per_vb": 20.032862
+    },
+    "oracle": {
+     "ran": false,
+     "best_score": null,
+     "best_selected": [],
+     "subsets_evaluated": 0
+    }
+   }
+  }
+ ]
+}

@@ -100,6 +100,7 @@ change amount; coin-select minimises long-term fee — which the report says on 
 | `patches/` | One patch to Core adding benchmark hooks — a node counter and an optional wall-clock deadline — explained in [`patches/README.md`](patches/README.md). No bound, ordering or scoring rule is ever patched. |
 | `results/` | Generated. `SUMMARY.md` is the readable report, `results.csv` the full matrix, and `compare/` holds revision A/B runs. |
 | `FINDINGS.md` | A snapshot of what the current results show, with the revisions they came from. |
+| `DFS-PLAN.md` | A design for replacing the priority-queue traversal with depth-first search, argued from those results. |
 
 ## Commands
 
