@@ -7,8 +7,8 @@ report and `results/results.csv` the full matrix behind everything below.
 - Bitcoin Core `9be056a8a72b624dae9623b2f7bded92c2a21c91` (v31.1), coin-selection algorithms
   unmodified apart from the benchmark hooks in `patches/` (a node counter and an optional
   wall-clock deadline, neither active in this run's default node-budget mode)
-- coin-select `fb5a0219d3ad1d34e48cae6678dbec66595c8a7e` ([PR #69][branch]) — ancestor-aware
-  selection with Bitcoin Core's incumbent-free branch-and-bound prunes ported
+- coin-select `91f5cfeb1163f87a27059adbbe1de6af8afbb08b` ([PR #70][branch]) — ancestor-aware
+  selection, Bitcoin Core's incumbent-free prunes, and a greedy incumbent seeded before the search
 - 42 fixtures: 8 families x 20/50/100/200, three shapes also at 500/1000/2000, plus the smoke
   fixture; three tracks, 100,000-node budget
 - 2 warm-up runs and 9 measured runs per case, median reported
@@ -84,13 +84,13 @@ so "Core missed it" covers both the search and that filter. Both are part of how
 
 | | coin-select | Bitcoin Core |
 | --- | --- | --- |
-| kernel, median wall clock | 2979 us | 571 us |
+| kernel, median wall clock | 3300 us | 722 us |
 | kernel, budget exhausted | 13 of 42 | **32 of 42** |
 | kernel, returned no solution | **11 of 42** | 1 of 42 |
 | kernel, median cost per node | ~530-1280 ns/round | **~6 ns/node** |
-| wallet, median wall clock | 2126 us | 1499 us |
+| wallet, median wall clock | 1821 us | 1517 us |
 | wallet, budget exhausted | 12 of 42 | 25 of 42 |
-| wallet, returned no solution | 3 of 42 | 0 of 42 |
+| wallet, returned no solution | **0 of 42** | 0 of 42 |
 
 Those counts are dominated by the thousand-candidate fixtures added below; restricted to the
 20-200 range coin-select exhausts the budget on 4 of 33 and fails on 2, against Core's 23 and 1.
@@ -114,7 +114,7 @@ whatever it had; coin-select finishing "slow" usually means it proved it had the
 **Memory is the clearest cost.** Core's depth-first search carries one path, so its peak RSS is
 flat process baseline (~19 MB) on every fixture. coin-select's priority queue holds a selection
 cache per live branch — running aggregates plus per-ancestor refcount arrays — and peak RSS runs
-from 2.6 MB up to **293 MB**. That is the price of making per-node evaluation O(1): state that used
+from 2.6 MB up to **286 MB**. That is the price of making per-node evaluation O(1): state that used
 to be recomputed on demand is now carried, per branch, for every branch in the queue.
 
 ## 4. What still exhausts the budget — size, under either metric
@@ -122,60 +122,20 @@ to be recomputed on demand is now carried, per branch, for every branch in the q
 At wallet scale (20-200 candidates) four kernel-track fixtures hit the 100,000-round cap and two
 return nothing, both 200-candidate dense-ancestry cases.
 
-**Above 500 candidates it stops being an edge case.** The matrix runs three shapes at 500, 1000
-and 2000 candidates. Branch and bound returns **no solution on all nine, under either metric** —
-`LowestFeeChangeless` on the kernel track and bare `LowestFee` on the changeful track fail at
-essentially identical times, always at exactly 100,000 rounds — while Core answers every one in
-about a millisecond:
+**Every remaining failure is the changeless metric.** Bare `LowestFee` now solves all 42 fixtures
+on both tracks that use it, including every 2000-candidate case: a greedy incumbent is seeded
+before the search, and a greedy prefix is itself a valid `LowestFee` solution. The eleven failures
+left are all `LowestFeeChangeless` on the kernel track — `no_ancestry_500/1000/2000`,
+`shared_ancestry_200/500/1000/2000`, `subsidizing_ancestry_200`, `wallet_mixed_500/1000/2000`.
 
-| fixture | `LowestFeeChangeless` (kernel) | `LowestFee` (changeful) | `LowestFee` + SRD (wallet) | Bitcoin Core |
-| --- | --- | --- | --- | --- |
-| `no_ancestry_500` | no solution, 97 ms | no solution, 95 ms | solved by SRD | solved, 1.2 ms |
-| `shared_ancestry_500` | no solution, 402 ms | no solution, 405 ms | solved by SRD | solved, 1.2 ms |
-| `no_ancestry_2000` | no solution, 105 ms | no solution, 104 ms | solved by SRD | solved, 1.4 ms |
-| `shared_ancestry_2000` | no solution, **1222 ms** | no solution, **1225 ms** | solved by SRD | solved, 1.4 ms |
-| `wallet_mixed_2000` | no solution, **1266 ms** | no solution, **1261 ms** | **no solution** | solved, 0.7 ms |
+That split is not incidental. A greedy prefix taken in descending value-per-weight overshoots the
+target, so `LowestFee` wants a change output and the changeless metric rejects it — at every prefix
+length. The changeless objective has no cheap greedy seed, so on a large pool it starts with no
+incumbent and never finds one. Seeding fixes exactly the metric it can seed.
 
-Three things to take from the shape of that table. It is **not a changeless problem** — bare
-`LowestFee` is affected identically, so nothing here is attributable to the changeless metric or
-its bound. It is **not an ancestry problem** — `no_ancestry` fails just as reliably. And what
-rescues the wallet track is **the single-random-draw fallback rather than the metric**: six of the
-nine come back with `algorithm: srd`. The three that still fail are all `wallet_mixed`, the only
-family carrying a `max_weight` cap.
-
-Raising the budget tenfold, to 1,000,000 rounds, resolves two of the nine and leaves seven
-failing — and the two that resolve show the cause is **not** what a round budget suggests:
-
-| fixture | 1M rounds | inputs in the solution |
-| --- | --- | --- |
-| `no_ancestry_500` | solved, 175,357 rounds, tree exhausted, 198 ms | 23 |
-| `wallet_mixed_500` | solved, 727,007 rounds, tree exhausted, 3.9 s | 28 |
-| `shared_ancestry_500` | still no solution, 5.6 s | - |
-| `shared_ancestry_2000` | still no solution, **15.4 s** | - |
-| `wallet_mixed_2000` | still no solution, **15.8 s** | - |
-
-The winning selections are 23 and 28 inputs, not hundreds. So this is not the search failing to
-accumulate enough coins one round at a time; a 23-input answer sits 23 levels down a tree the
-search took 175,000 rounds to reach. The bound is too weak to direct the descent, so best-first
-spends its budget spreading across a huge frontier of near-equally-bounded shallow branches. Core's
-depth-first search commits to a funding prefix immediately and always has an answer in hand.
-
-That the two successes *exhausted* their trees is the encouraging part: given enough budget the
-search terminates with a proven optimum rather than grinding indefinitely. The problem is how much
-budget — 727,000 rounds and 3.9 seconds for 500 candidates, and beyond 1,000,000 rounds and 15
-seconds at 2000.
-
-That reframes the earlier conclusion. It is still a bound problem, but the binding constraint above
-a few hundred candidates is that a round budget and a node budget are not comparable units at all —
-which is what `--deadline-us` exists to sidestep.
-
-This is a much narrower failure than the ancestor-aware path used to have. Earlier revisions —
-before `LowestFeeChangeless` replaced the generic `Changeless<M>` wrapper — also failed on
-`nested_ancestry_20` and `subsidizing_ancestry_20`, twenty-candidate problems that Core answered
-in 966 and 52 nodes. Those now solve in 200 and 886 rounds respectively, and land on exactly the
-thirteen- and eleven-input selections the brute-force oracle identifies as optimal. A
-changeless-specific bound, rather than delegating to the unconstrained inner one, is what closed
-that gap.
+What the seed recovers is visible on the wallet track, which previously fell back to single random
+draw: on `no_ancestry_500` that fallback returned a **260-input** selection where the seeded search
+returns **23 inputs** scoring 17190.
 
 ### Time does not buy its way out
 
@@ -229,8 +189,8 @@ coin-select's selections and package fee for Core's:
 | track | coin-select cheaper package | lower waste: coin-select | lower waste: Core |
 | --- | --- | --- | --- |
 | kernel | 26 of 30 | 15 of 30 | 12 of 30 |
-| changeful | 15 of 32 | 15 of 32 | 0 of 32 |
-| wallet | 31 of 39 | 14 of 39 | 22 of 39 |
+| changeful | 20 of 42 | 18 of 42 | 4 of 42 |
+| wallet | 41 of 42 | 18 of 42 | 21 of 42 |
 
 Each engine wins its own objective more often than not, which is what should happen. The part
 worth noting is that coin-select's selections also beat Core on Core's own waste metric about half
@@ -240,7 +200,7 @@ simply better informed.
 Read the fee column with care. Core's portfolio minimises waste, and its knapsack and
 single-random-draw paths deliberately aim for a privacy-friendly change amount rather than the
 smallest fee, so it is not trying to win that column. The median Core-to-coin-select package-fee
-ratio is 1.32x on the kernel track, 1.00x on `changeful` (they tie on half the fixtures) and 1.45x
+ratio is 1.32x on the kernel track, 1.00x on `changeful` (they tie on half the fixtures) and 1.47x
 on `wallet`.
 
 The harness's reimplementation of Core's waste formula agrees with the waste Core itself reports
@@ -253,12 +213,12 @@ The kernel track pairs the two changeless searches. Core's counterpart to *bare*
 
 | | coin-select (`LowestFee`) | Bitcoin Core (`CoinGrinder`) |
 | --- | --- | --- |
-| median wall clock | 1744 us | **12.5 us** |
+| median wall clock | 2008 us | **8.2 us** |
 | median nodes | ~500 | **~24** |
 | budget exhausted | 12 of 42 | **8 of 42** |
-| returned no solution | 10 of 42 | **0 of 42** |
-| lower waste | **15** of 32 | 0 of 32 |
-| cheaper package | **15** of 32 | 1 of 32 |
+| returned no solution | **0 of 42** | **0 of 42** |
+| lower waste | **18** of 42 | 4 of 42 |
+| cheaper package | **20** of 42 | 5 of 42 |
 
 `CoinGrinder` is two orders of magnitude faster and never fails — its objective is
 minimum *selected input weight*, which is monotone as inputs are added and so bounds beautifully.
@@ -306,4 +266,4 @@ inside `max_weight`. `bench.py report` exits non-zero if any of that fails; this
 `bench.py compare-revs` A/Bs two coin-select revisions on these same fixtures if you want to
 attribute a change to a particular commit; past runs are kept in `results/compare/`.
 
-[branch]: https://github.com/bitcoindevkit/coin-select/pull/69
+[branch]: https://github.com/bitcoindevkit/coin-select/pull/70
