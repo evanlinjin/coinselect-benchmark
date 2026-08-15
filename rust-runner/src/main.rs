@@ -123,6 +123,7 @@ struct Args {
     /// Offsets every sample's rng salt, so a policy can be measured over independent draws.
     sample_seed: u64,
     pool_probe: bool,
+    epsilon_probe: bool,
     /// Overrides the fixture's round budget.
     budget: Option<usize>,
     /// Escalate the pool size across phases instead of fixing it; ignores `--restarts`.
@@ -145,6 +146,7 @@ fn parse_args() -> Args {
     let mut cap_on_budget = false;
     let mut sample_seed = 0u64;
     let mut pool_probe = false;
+    let mut epsilon_probe = false;
     let mut budget = None;
     let mut escalate = false;
     let mut prefix = "greedy".to_string();
@@ -164,6 +166,7 @@ fn parse_args() -> Args {
             "--ban-policy" => ban_policy = it.next().expect("--ban-policy needs a value"),
             "--cap-on-budget" => cap_on_budget = true,
             "--pool-probe" => pool_probe = true,
+            "--epsilon-probe" => epsilon_probe = true,
             "--escalate" => escalate = true,
             "--prefix" => prefix = it.next().expect("--prefix needs a value"),
             "--budget" => budget = Some(it.next().expect("--budget needs a value").parse().unwrap()),
@@ -190,6 +193,7 @@ fn parse_args() -> Args {
         cap_on_budget,
         sample_seed,
         pool_probe,
+        epsilon_probe,
         budget,
         escalate,
         prefix,
@@ -410,6 +414,98 @@ fn ancestor_clusters(problem: &SelectionProblem) -> Vec<usize> {
         }
     }
     (0..n).map(|i| find(&mut parent, i)).collect()
+}
+
+
+/// How many *distinct* selections score within a given epsilon of the optimum.
+///
+/// The question this answers: on a fixture whose search exhausts, returning a random near-optimal
+/// selection instead of the unique optimum would buy selection entropy at a stated fee cost. That
+/// is only worth building if the near-optimal set is actually populated.
+///
+/// Two views, because neither alone is enough. Brute force is exact but caps at 20 candidates.
+/// The 1-swap neighbourhood of the optimum (drop one selected coin and/or add one unselected coin)
+/// is a *lower bound* on the count at any size, and it is also the cheapest neighbourhood a real
+/// implementation could search, so it doubles as a feasibility estimate.
+fn epsilon_probe(f: &Fixture, base: &CoinSelector<'_>, budget: usize) {
+    const EPS: [f32; 4] = [0.0, 0.001, 0.01, 0.05];
+    let mut metric = lowest_fee(f);
+    let result = search(base, metric, budget, None);
+    let Some(best) = result.score.map(|s| s.0) else {
+        println!("{}", serde_json::json!({"fixture": f.name, "solved": false}));
+        return;
+    };
+    let n = f.candidates.len();
+
+    let mut score_of = |sel: &CoinSelector<'_>| metric.score(view!(sel)).map(|s| s.0);
+
+    // 1-swap neighbourhood: keep, drop-one, add-one, and swap-one-for-one.
+    let opt = result.selection.expect("scored, so present");
+    let selected: Vec<usize> = opt.selected_indices().iter().collect();
+    let unselected: Vec<usize> = (0..n).filter(|i| !opt.is_selected(*i)).collect();
+    let mut neighbours = vec![best];
+    for &i in &selected {
+        let mut cs = opt.clone();
+        cs.deselect(i);
+        if let Some(v) = score_of(&cs) {
+            neighbours.push(v);
+        }
+        for &j in &unselected {
+            let mut cs2 = cs.clone();
+            cs2.select(j);
+            if let Some(v) = score_of(&cs2) {
+                neighbours.push(v);
+            }
+        }
+    }
+    for &j in &unselected {
+        let mut cs = opt.clone();
+        cs.select(j);
+        if let Some(v) = score_of(&cs) {
+            neighbours.push(v);
+        }
+    }
+
+    // Exhaustive, where it is affordable.
+    let mut exhaustive: Option<Vec<f32>> = None;
+    if n <= ORACLE_MAX_CANDIDATES {
+        let mut all = Vec::new();
+        for mask in 0u32..(1u32 << n) {
+            let mut cs = base.clone();
+            for i in 0..n {
+                if mask >> i & 1 == 1 {
+                    cs.select(i);
+                }
+            }
+            if let Some(v) = score_of(&cs) {
+                all.push(v);
+            }
+        }
+        exhaustive = Some(all);
+    }
+
+    let count_within = |xs: &[f32], eps: f32| -> usize {
+        let cut = best * (1.0 + eps);
+        let mut seen: Vec<f32> = xs.iter().copied().filter(|v| *v <= cut).collect();
+        seen.sort_by(|a, b| a.partial_cmp(b).unwrap());
+        seen.len()
+    };
+
+    let mut out = serde_json::Map::new();
+    out.insert("fixture".into(), f.name.clone().into());
+    out.insert("candidates".into(), n.into());
+    out.insert("solved".into(), true.into());
+    out.insert("exhausted".into(), result.exhausted.into());
+    out.insert("optimum".into(), best.into());
+    out.insert("inputs".into(), selected.len().into());
+    for eps in EPS {
+        let key = format!("swap_within_{}", eps);
+        out.insert(key, count_within(&neighbours, eps).into());
+        if let Some(all) = &exhaustive {
+            out.insert(format!("all_within_{}", eps), count_within(all, eps).into());
+        }
+    }
+    println!("{}", serde_json::to_string(&serde_json::Value::Object(out)).unwrap());
 }
 
 /// Shrink the search pool to at most `max_n` candidates by banning the rest.
@@ -733,6 +829,11 @@ fn main() {
 
     if args.seed_probe {
         seed_probe(&f, &base);
+        return;
+    }
+
+    if args.epsilon_probe {
+        epsilon_probe(&f, &base, args.budget.unwrap_or(f.search_budget));
         return;
     }
 

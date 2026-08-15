@@ -253,6 +253,41 @@ pool construction, and no change to this design fixes it. A wallet that wants un
 selections has to be willing to spend worse coins, which costs fee — a policy decision belonging
 above this layer, not a sampler tweak.
 
+### Buying entropy on the exhausting cases does not work
+
+Sampling only fires when the search runs out of budget, so the 30 of 42 fixtures that exhaust get
+none of it — they return one proven-optimal selection, every time. The obvious repair is to return a
+random selection from among those scoring within some epsilon of the optimum, paying a bounded fee
+for entropy. Measured on all 30, it does not pay:
+
+| tolerance | fixtures gaining any alternative | mean entropy |
+| --- | --- | --- |
+| exact ties (free) | 9 of 30 | 0.52 bits |
+| +0.1% | **0 of 30** | 0.52 bits |
+| +1% | **0 of 30** | 0.52 bits |
+| +5% | 6 of 30 | 1.02 bits |
+
+**Nothing lives between the optimum and +1%.** The reason is structural: for a selection with
+change, `LowestFee`'s score is `implied_fee(weight) + spend_fee`, which depends on the selection's
+*weight*, not on which coins are in it. The score is therefore quantized in steps of roughly one
+input's fee — about 680 sat at 10 sat/vb — and that step is larger than 1% of nearly every optimum
+here. Only at 5%, costing 146-3279 sat, does the next quantum come into range, and even then on just
+six fixtures.
+
+So the exchange rate is bad: about one bit for five percent of the fee. What is worth taking is the
+free part — 9 of 30 fixtures have more than one selection at *exactly* the optimum (up to 7 on
+`wallet_mixed_100`), and picking among those costs nothing. It is also cheap to find: the 1-swap
+neighbourhood of the optimum matched exhaustive enumeration exactly on all nine fixtures small
+enough to brute force, so an implementation needs `O(n * inputs)` rescoring rather than a modified
+search. But 0.52 bits is a rounding error, not a privacy feature.
+
+The conclusion is the same one the previous section reaches from the other direction: under a
+fee-minimizing objective, selection entropy and fee are directly opposed, and the price is bad. A
+wallet that wants uncorrelated selections needs a different objective, not better tie-breaking
+inside this one. (Measured on the wallet track, where change absorbs the value slack. A changeless
+score varies with coin *values* rather than only weight, so its near-optimal set may be denser —
+untested.)
+
 ### Sampling is still a large privacy improvement over what it replaces
 
 The comparison that matters is against today's behaviour, which is a fully deterministic search:
