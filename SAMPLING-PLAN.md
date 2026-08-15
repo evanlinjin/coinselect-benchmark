@@ -119,6 +119,11 @@ draw only the `n - max_n` positions actually needed rather than shuffling the wh
 prefixes are 82 and 91 inputs: everything outside gets banned, the pool *is* the prefix, and there is
 nothing to search over. So `max_n` cannot be a constant chosen without reference to the problem.
 
+This is the same diversity failure as §6, reached from the other direction: those fixtures'
+samples have a mean pairwise overlap of **1.000** — every sample is the identical pool — so the 50
+draws collapse to one no matter how good the sampler is. Headroom is not a tuning nicety, it is what
+gives sampling anything to sample.
+
 Size it as `max(max_n, greedy_len * 2)` — or reject a `PoolSampling` whose `max_n` leaves no
 headroom, which is more honest than silently searching a pool with no freedom in it. Whichever is
 chosen, document it: a caller passing `max_n: 50` to a wallet holding 2000 dust UTXOs should not
@@ -165,13 +170,23 @@ Everything above is measured on `LowestFee`. Two things need checking before it 
 Until both are measured, gate sampling to metrics that can seed a greedy incumbent, or document it
 as best-effort and let the `Err` case stand.
 
-**Ancestry is the other open question.** Random banning can drop the second coin sharing an
-already-bumped ancestor, losing the discount that made the first one worth taking, and
-`sort_candidates_by_descending_value_pwu` does not account for drag-in cost. The ancestry families
-still improved here (`shared_ancestry_200` is the single largest win at -34.3%), so this is not
-disqualifying — but an ancestry-aware sampler that biases toward coins sharing an already-kept
-ancestor is the obvious next experiment, and it should be measured against uniform sampling rather
-than assumed better.
+**Ancestry-aware sampling was measured and lost. Sample uniformly.** Random banning can drop the
+second coin sharing an already-bumped ancestor, which looks like something worth fixing. Two biased
+policies were tried against uniform over five draw seeds (finding 7): keeping whole ancestor
+clusters and preferring clusters the greedy prefix already draws from (-6.0%), and preferring
+candidates that drag in nothing new (-6.2%), against uniform's **-7.4%**.
+
+The mechanism is the part worth carrying into any future attempt. Biasing collapses the mean
+pairwise overlap between samples from 0.23 to 0.96 on `shared_ancestry_200`, and shrinks the
+candidates any sample ever sees from 200 to 85 — fifty samples become approximately one.
+**Sampling's value is cross-draw diversity, not per-cut quality**, so any heuristic that constrains
+which candidates can survive is paying in the currency the whole design runs on.
+
+The one variant that is not disqualified is *unbiased* cluster granularity — keep siblings together,
+but give every cluster an equal chance of being dropped. It matches uniform's diversity (mean
+Jaccard 0.594 against 0.593) and its quality (-11.4% against -10.9%), and wins clearly on one
+fixture (`subsidizing_ancestry_200`, -15.6% against -10.3%). Ship uniform; treat this as an optional
+refinement to revisit only with a fixture set that has more shared-ancestry structure than this one.
 
 ## 7. Correctness strategy
 
@@ -188,6 +203,10 @@ caller sees `Err` and cannot tell "infeasible" from "the sampler cut badly".
 - **Differential against the full search on small pools.** Where `n <= max_n`, sampling must be a
   no-op returning exactly `run_bnb`'s answer. This is the regression test for the trigger logic, and
   it is the one that would have caught the unconditional-capping regression.
+- **Diversity, as a debug-only statistic.** Mean pairwise overlap between samples predicted every
+  quality result in §6 and §4, in both directions: overlap 0.96 explained why biased sampling lost,
+  and overlap 1.000 explained which fixtures never improve. It is the cheapest early warning that a
+  change to the sampler has quietly broken it, and much easier to attribute than a fee delta.
 
 ## 8. Staging
 
@@ -211,6 +230,11 @@ finding 7 reports, wall clock within 2x of the unsampled search, and small pools
 
 The plan is wrong if step 3 does not beat step 2 by a wide margin. That would mean the win is coming
 from searching a smaller pool rather than from sampling several of them — in which case the honest
-version is a single deterministic cut (take the best `max_n` by value-pwu), and all the machinery
-for randomness, seeding and reproducibility can be deleted. The `max_n=100, samples=5` row hints the
-margin is real but not enormous, so this is worth checking rather than assuming.
+version is a single deterministic cut, and all the machinery for randomness, seeding and
+reproducibility can be deleted.
+
+The evidence so far says the margin is real. The deterministic cut is already measured: `worst`,
+which takes the best `max_n` candidates by value-per-weight, returns **-0.3%** against uniform
+sampling's -7.4%. And §6 shows the ordering that follows from it — the policies rank by how much
+cross-draw diversity they preserve, not by how sensible any single cut looks. If step 3 ever fails
+to beat step 2, check the overlap statistic before checking anything else.

@@ -313,6 +313,44 @@ over the twelve fixtures that hit the budget:
 each sample degrades back to returning its own greedy seed. The pool has to be small enough that a
 sample finishes.
 
+### Ancestry-aware sampling does not help, and the reason generalises
+
+Uniform banning can drop the second coin sharing an ancestor the first already paid to bump, which
+looks like an obvious thing to fix. Two ancestry-aware policies were measured against uniform over
+five independent draw seeds, `max_n=50`, 50 samples, on the twelve budget-limited fixtures:
+
+| policy | all twelve | ancestry families only |
+| --- | --- | --- |
+| `random` (uniform) | **-7.4%** | **-9.7%** |
+| `cluster` (keep whole ancestor clusters, preferring ones the greedy prefix draws from) | -6.0% | -7.9% |
+| `shared` (prefer candidates dragging in nothing new) | -6.2% | -8.1% |
+| `worst` (drop lowest value-per-weight; deterministic) | -0.3% | -0.3% |
+
+**Uniform wins.** The mechanism is measurable rather than inferred — mean pairwise Jaccard overlap
+between the 50 sampled pools, and how many distinct candidates any sample ever saw:
+
+| `shared_ancestry_200` | overlap between samples | candidates ever considered |
+| --- | --- | --- |
+| `random` | 0.227 | 200 of 200 |
+| `cluster` | **0.961** | **85 of 200** |
+
+Pinning the greedy prefix's clusters makes 50 samples into approximately one sample, and 115
+candidates are never looked at by any of them. The value of sampling is **cross-draw diversity**,
+not the quality of any individual cut; a smarter cut that costs diversity is a bad trade.
+
+Separating the two effects confirms it. `cluster-soft` keeps whole clusters together but gives every
+cluster an equal chance of being dropped — same granularity, no pinning. It matches uniform's
+diversity exactly (mean Jaccard 0.594 against 0.593) and matches its quality (-11.4% against -10.9%
+on the eight fixtures where both were run), with one real win on `subsidizing_ancestry_200`, -15.6%
+against -10.3%. So ancestor *granularity* is free-to-slightly-positive; ancestor *bias* is what
+costs. If any of this is worth keeping it is `cluster-soft`, and it is a refinement rather than the
+result.
+
+Diversity also explains the fixtures that never improve. `shared_ancestry_2000` and
+`wallet_mixed_2000` have a mean Jaccard of **1.000** — every sample is the same pool — because their
+greedy prefixes (91 and 94 inputs) already exceed `max_n=50`, so there is nothing left to vary. That
+is the headroom limit below, showing up as diversity zero.
+
 ### Two limits
 
 **Keeping the greedy prefix is load-bearing.** Without it a random cut can leave a pool that cannot

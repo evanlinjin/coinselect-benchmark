@@ -123,6 +123,9 @@ struct Args {
     ban_policy: String,
     restarts: usize,
     cap_on_budget: bool,
+    /// Offsets every sample's rng salt, so a policy can be measured over independent draws.
+    sample_seed: u64,
+    pool_probe: bool,
 }
 
 fn parse_args() -> Args {
@@ -137,6 +140,8 @@ fn parse_args() -> Args {
     let mut ban_policy = "random".to_string();
     let mut restarts = 1usize;
     let mut cap_on_budget = false;
+    let mut sample_seed = 0u64;
+    let mut pool_probe = false;
     let mut it = std::env::args().skip(1);
     while let Some(arg) = it.next() {
         match arg.as_str() {
@@ -152,6 +157,10 @@ fn parse_args() -> Args {
             "--max-n" => max_n = Some(it.next().expect("--max-n needs a value").parse().unwrap()),
             "--ban-policy" => ban_policy = it.next().expect("--ban-policy needs a value"),
             "--cap-on-budget" => cap_on_budget = true,
+            "--pool-probe" => pool_probe = true,
+            "--sample-seed" => {
+                sample_seed = it.next().expect("--sample-seed needs a value").parse().unwrap()
+            }
             "--restarts" => {
                 restarts = it.next().expect("--restarts needs a value").parse().unwrap()
             }
@@ -170,6 +179,8 @@ fn parse_args() -> Args {
         ban_policy,
         restarts: restarts.max(1),
         cap_on_budget,
+        sample_seed,
+        pool_probe,
     }
 }
 
@@ -216,8 +227,23 @@ fn seed_probe(f: &Fixture, base: &CoinSelector<'_>) {
         None
     };
 
+    // Cluster structure decides whether an ancestry-aware cut can differ from a uniform one at all:
+    // if every candidate is its own cluster there is no shared ancestor to preserve.
+    let cluster = ancestor_clusters(base.problem());
+    let mut sizes: std::collections::HashMap<usize, usize> = Default::default();
+    for &c in &cluster {
+        *sizes.entry(c).or_default() += 1;
+    }
+    let with_ancestry = (0..base.problem().len())
+        .filter(|&i| !base.problem().drags_in(i).is_empty())
+        .count();
+
     let out = serde_json::json!({
         "fixture": f.name,
+        "candidates_with_ancestry": with_ancestry,
+        "clusters": sizes.len(),
+        "largest_cluster": sizes.values().copied().max().unwrap_or(0),
+        "multi_candidate_clusters": sizes.values().filter(|&&s| s > 1).count(),
         "tail_greedy_inputs": tail.selected_indices().len(),
         "tail_greedy_excess": tail.excess(Drain::NONE),
         "tail_changeless_seeds": tail_changeless.is_some(),
@@ -339,13 +365,57 @@ fn lowest_fee(f: &Fixture) -> LowestFee {
     }
 }
 
+/// Group candidates that can reach each other through a shared unconfirmed ancestor.
+///
+/// Union-find over candidates, joined by every ancestor two of them both drag in. A candidate with
+/// no ancestry, or one whose ancestors nobody else reaches, is its own cluster. Selecting a second
+/// candidate from a cluster costs nothing extra for the ancestors already paid for by the first,
+/// which is the structure a coin-level random cut is blind to.
+fn ancestor_clusters(problem: &SelectionProblem) -> Vec<usize> {
+    fn find(parent: &mut [usize], mut i: usize) -> usize {
+        while parent[i] != i {
+            parent[i] = parent[parent[i]];
+            i = parent[i];
+        }
+        i
+    }
+    let n = problem.len();
+    let mut parent: Vec<usize> = (0..n).collect();
+    let mut first_seen: std::collections::HashMap<usize, usize> = Default::default();
+    for i in 0..n {
+        for ancestor in problem.drags_in(i).iter() {
+            match first_seen.get(&ancestor) {
+                None => {
+                    first_seen.insert(ancestor, i);
+                }
+                Some(&j) => {
+                    let (a, b) = (find(&mut parent, i), find(&mut parent, j));
+                    if a != b {
+                        parent[a] = b;
+                    }
+                }
+            }
+        }
+    }
+    (0..n).map(|i| find(&mut parent, i)).collect()
+}
+
 /// Shrink the search pool to at most `max_n` candidates by banning the rest.
 ///
 /// Every candidate the greedy prefix uses is kept, which is what keeps the reduced pool able to
 /// fund the target at all — without that guarantee a random cut can leave a pool that cannot reach
-/// the value target, turning a slow answer into no answer. From the remainder, `random` samples
-/// uniformly (seeded from the fixture, so a run is reproducible) and `worst` drops the lowest
-/// value-per-weight candidates first.
+/// the value target, turning a slow answer into no answer.
+///
+/// The remainder is ordered by a per-policy key and the lowest keys are banned. All four policies
+/// break ties randomly, seeded from the fixture and the draw, so a run is reproducible:
+///
+/// - `random`: uniform. The baseline every ancestry-aware policy has to beat.
+/// - `worst`: drop the lowest value-per-weight candidates first. Deterministic.
+/// - `cluster`: keep or drop whole ancestor clusters together, preferring clusters the greedy
+///   prefix already draws from. A coin-level cut can drop the second coin sharing an ancestor,
+///   losing the discount that made the first one worth taking; this cannot.
+/// - `shared`: prefer candidates that drag in nothing the greedy prefix has not already paid for,
+///   then candidates with no ancestry, and drop candidates dragging in fresh ancestors first.
 ///
 /// If the greedy prefix alone already needs `max_n` or more inputs, everything outside it is
 /// banned and the search looks for a better subset of the greedy selection.
@@ -367,27 +437,79 @@ fn cap_pool<'a>(
     let _ = greedy.select_until_target_met();
     let keep = greedy.selected_indices().clone();
 
-    // Descending value-per-weight order, which is what `worst` needs and what `random` shuffles.
-    let mut rest: Vec<usize> = cs
+    // Descending value-per-weight order, so a candidate's position here is its pwu rank.
+    let rest: Vec<usize> = cs
         .candidates()
         .map(|(i, _)| i)
         .filter(|i| !keep.contains(*i))
         .collect();
-    match policy {
-        "worst" => rest.reverse(),
-        "random" => {
-            let mut rng = seeded_rng(f.seed ^ salt.wrapping_mul(0x9E37_79B9_7F4A_7C15));
-            for i in (1..rest.len()).rev() {
-                rest.swap(i, (rng() % (i as u64 + 1)) as usize);
+    let mut rng = seeded_rng(f.seed ^ salt.wrapping_mul(0x9E37_79B9_7F4A_7C15));
+    let problem = base.problem();
+
+    // Sorted ascending; the lowest keys are banned. Rank first, random tiebreak second.
+    let mut keyed: Vec<(u64, u64, usize)> = match policy {
+        "random" => rest.iter().map(|&i| (0, rng(), i)).collect(),
+        // `rest` is in descending value-per-weight order, so a high rank is a poor candidate and
+        // must sort low to be banned first.
+        "worst" => rest
+            .iter()
+            .enumerate()
+            .map(|(rank, &i)| (u64::MAX - rank as u64, 0, i))
+            .collect(),
+        // `cluster` pins any cluster the greedy prefix draws from; `cluster-soft` gives every
+        // cluster an equal chance instead. Both keep siblings together; only the first one biases
+        // *which* clusters survive.
+        "cluster" | "cluster-soft" => {
+            let cluster = ancestor_clusters(problem);
+            let mut cluster_key: std::collections::HashMap<usize, u64> = Default::default();
+            for &i in &rest {
+                cluster_key.entry(cluster[i]).or_insert_with(&mut rng);
             }
+            if policy == "cluster" {
+                for i in keep.iter() {
+                    cluster_key.insert(cluster[i], u64::MAX);
+                }
+            }
+            rest.iter()
+                .map(|&i| (cluster_key[&cluster[i]], rng(), i))
+                .collect()
+        }
+        "shared" => {
+            let mut covered = std::collections::HashSet::new();
+            for i in keep.iter() {
+                covered.extend(problem.drags_in(i).iter());
+            }
+            rest.iter()
+                .map(|&i| {
+                    let drags_in = problem.drags_in(i);
+                    let tier = match drags_in.is_empty() {
+                        true => 1,
+                        false => match drags_in.iter().all(|a| covered.contains(&a)) {
+                            true => 2,
+                            false => 0,
+                        },
+                    };
+                    (tier, rng(), i)
+                })
+                .collect()
         }
         other => panic!("unknown --ban-policy {other}"),
-    }
+    };
+    keyed.sort_unstable();
 
-    let to_ban = n - max_n;
-    for &i in rest.iter().take(to_ban) {
+    for &(_, _, i) in keyed.iter().take(n - max_n) {
         cs.ban(i);
     }
+
+    // The load-bearing invariant: whatever the policy banned, the greedy prefix survived, so the
+    // reduced pool can still reach the value target. A cut that breaks this turns a slow answer
+    // into no answer, and would do it silently.
+    let mut check = cs.clone();
+    assert!(
+        check.select_until_target_met().is_ok(),
+        "{} pool of {max_n} under `{policy}` cannot fund the target",
+        f.name,
+    );
     cs
 }
 
@@ -553,6 +675,26 @@ fn main() {
         return;
     }
 
+    // Dump the pool each draw would search, so cross-draw diversity can be measured per policy.
+    if let (Some(max_n), true) = (args.max_n, args.pool_probe) {
+        let pools: Vec<Vec<usize>> = (0..args.restarts)
+            .map(|draw| {
+                let pool = cap_pool(&f, &base, max_n, &args.ban_policy, draw as u64);
+                (0..f.candidates.len())
+                    .filter(|i| !pool.banned().contains(*i))
+                    .collect()
+            })
+            .collect();
+        println!(
+            "{}",
+            serde_json::to_string(&serde_json::json!({
+                "fixture": f.name, "policy": args.ban_policy, "pools": pools,
+            }))
+            .unwrap()
+        );
+        return;
+    }
+
     let (objective, algorithm) = match args.track.as_str() {
         "kernel" => (
             "minimise child fee, changeless (Changeless<LowestFee>)",
@@ -623,7 +765,7 @@ fn main() {
                 // more pool diversity, not more total work.
                 let per_draw = (budget / draws).max(1);
                 for draw in 0..draws {
-                    let pool = cap_pool(&f, &base, max_n, &args.ban_policy, draw as u64);
+                    let pool = cap_pool(&f, &base, max_n, &args.ban_policy, draw as u64 + args.sample_seed * 1_000_003);
                     let r = match args.track.as_str() {
                         "kernel" => search(&pool, changeless_metric(&f), per_draw, deadline),
                         _ => search(&pool, lowest_fee(&f), per_draw, deadline),
