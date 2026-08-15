@@ -119,6 +119,10 @@ struct Args {
     deadline_us: Option<u64>,
     oracle: bool,
     seed_probe: bool,
+    max_n: Option<usize>,
+    ban_policy: String,
+    restarts: usize,
+    cap_on_budget: bool,
 }
 
 fn parse_args() -> Args {
@@ -129,6 +133,10 @@ fn parse_args() -> Args {
     let mut deadline_us = None;
     let mut oracle = false;
     let mut seed_probe = false;
+    let mut max_n = None;
+    let mut ban_policy = "random".to_string();
+    let mut restarts = 1usize;
+    let mut cap_on_budget = false;
     let mut it = std::env::args().skip(1);
     while let Some(arg) = it.next() {
         match arg.as_str() {
@@ -141,6 +149,12 @@ fn parse_args() -> Args {
             }
             "--oracle" => oracle = true,
             "--seed-probe" => seed_probe = true,
+            "--max-n" => max_n = Some(it.next().expect("--max-n needs a value").parse().unwrap()),
+            "--ban-policy" => ban_policy = it.next().expect("--ban-policy needs a value"),
+            "--cap-on-budget" => cap_on_budget = true,
+            "--restarts" => {
+                restarts = it.next().expect("--restarts needs a value").parse().unwrap()
+            }
             other => panic!("unknown argument {other}"),
         }
     }
@@ -152,6 +166,10 @@ fn parse_args() -> Args {
         deadline_us: deadline_us.filter(|us| *us > 0),
         oracle,
         seed_probe,
+        max_n: max_n.filter(|n| *n > 0),
+        ban_policy,
+        restarts: restarts.max(1),
+        cap_on_budget,
     }
 }
 
@@ -319,6 +337,58 @@ fn lowest_fee(f: &Fixture) -> LowestFee {
         dust_relay_feerate: feerate(f.dust_relay_feerate_sat_per_vb),
         drain_weights: drain_weights(f),
     }
+}
+
+/// Shrink the search pool to at most `max_n` candidates by banning the rest.
+///
+/// Every candidate the greedy prefix uses is kept, which is what keeps the reduced pool able to
+/// fund the target at all — without that guarantee a random cut can leave a pool that cannot reach
+/// the value target, turning a slow answer into no answer. From the remainder, `random` samples
+/// uniformly (seeded from the fixture, so a run is reproducible) and `worst` drops the lowest
+/// value-per-weight candidates first.
+///
+/// If the greedy prefix alone already needs `max_n` or more inputs, everything outside it is
+/// banned and the search looks for a better subset of the greedy selection.
+fn cap_pool<'a>(
+    f: &Fixture,
+    base: &CoinSelector<'a>,
+    max_n: usize,
+    policy: &str,
+    salt: u64,
+) -> CoinSelector<'a> {
+    let n = f.candidates.len();
+    let mut cs = base.clone();
+    cs.sort_candidates_by_descending_value_pwu();
+    if n <= max_n {
+        return cs;
+    }
+
+    let mut greedy = cs.clone();
+    let _ = greedy.select_until_target_met();
+    let keep = greedy.selected_indices().clone();
+
+    // Descending value-per-weight order, which is what `worst` needs and what `random` shuffles.
+    let mut rest: Vec<usize> = cs
+        .candidates()
+        .map(|(i, _)| i)
+        .filter(|i| !keep.contains(*i))
+        .collect();
+    match policy {
+        "worst" => rest.reverse(),
+        "random" => {
+            let mut rng = seeded_rng(f.seed ^ salt.wrapping_mul(0x9E37_79B9_7F4A_7C15));
+            for i in (1..rest.len()).rev() {
+                rest.swap(i, (rng() % (i as u64 + 1)) as usize);
+            }
+        }
+        other => panic!("unknown --ban-policy {other}"),
+    }
+
+    let to_ban = n - max_n;
+    for &i in rest.iter().take(to_ban) {
+        cs.ban(i);
+    }
+    cs
 }
 
 struct Search<'a> {
@@ -509,9 +579,73 @@ fn main() {
     for i in 0..(args.warmup + args.repeat) {
         let start = Instant::now();
         let deadline = args.deadline_us.map(|us| start + Duration::from_micros(us));
-        let mut result = match args.track.as_str() {
-            "kernel" => search(&base, changeless_metric(&f), budget, deadline),
-            _ => search(&base, lowest_fee(&f), budget, deadline),
+        // Pool capping is inside the timed region: it is work the wallet would be doing. With
+        // `--restarts`, each draw is an independent sample of the pool and the best answer across
+        // draws wins — a capped search is cheap enough to run many times.
+        // A macro, not a closure: the returned `Search` borrows from the pool's lifetime, which a
+        // closure cannot express.
+        macro_rules! full {
+            ($pool:expr) => {
+                match args.track.as_str() {
+                    "kernel" => search($pool, changeless_metric(&f), budget, deadline),
+                    _ => search($pool, lowest_fee(&f), budget, deadline),
+                }
+            };
+        }
+        // `--cap-on-budget` uses the full search's own budget signal as the trigger: if it
+        // exhausted the tree it already holds the optimum and capping could only throw candidates
+        // the optimum needs away, so keep it. Only a search that ran out of budget gets capped.
+        let mut prior = None;
+        let mut max_n = args.max_n;
+        if args.cap_on_budget {
+            let r = full!(&base);
+            if r.exhausted {
+                max_n = None;
+            }
+            prior = Some(r);
+        }
+        let mut result = match max_n {
+            None => match prior {
+                Some(r) => r,
+                None => full!(&base),
+            },
+            Some(max_n) => {
+                // The budget-exhausted full search, when there was one, is just another draw: its
+                // answer competes with the capped ones rather than being discarded.
+                let mut best: Option<Search> = prior;
+                // Restarts only buy anything when the pool is actually being cut: below the cap
+                // every draw is the same pool, so re-running is pure waste.
+                let draws = match f.candidates.len() <= max_n {
+                    true => 1,
+                    false => args.restarts.max(1),
+                };
+                // One round budget for the whole restart phase, not one per draw: more draws buy
+                // more pool diversity, not more total work.
+                let per_draw = (budget / draws).max(1);
+                for draw in 0..draws {
+                    let pool = cap_pool(&f, &base, max_n, &args.ban_policy, draw as u64);
+                    let r = match args.track.as_str() {
+                        "kernel" => search(&pool, changeless_metric(&f), per_draw, deadline),
+                        _ => search(&pool, lowest_fee(&f), per_draw, deadline),
+                    };
+                    let better = match (&best, &r.score) {
+                        (_, None) => false,
+                        (None, Some(_)) => true,
+                        (Some(b), Some(s)) => b.score.map_or(true, |bs| *s < bs),
+                    };
+                    // Round counts are summed: the caller pays for every draw.
+                    let rounds = best.as_ref().map_or(0, |b| b.rounds) + r.rounds;
+                    if better || best.is_none() {
+                        best = Some(Search { rounds, ..r });
+                    } else if let Some(b) = best.as_mut() {
+                        b.rounds = rounds;
+                    }
+                    if deadline.map_or(false, |d| Instant::now() >= d) {
+                        break;
+                    }
+                }
+                best.expect("at least one draw runs")
+            }
         };
         // Fall back to single random draw exactly as a wallet would: wallet track only, and only
         // when branch and bound came back empty.

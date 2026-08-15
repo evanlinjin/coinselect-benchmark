@@ -458,6 +458,10 @@ def cmd_run(args):
                     cmd += ["--deadline-us", str(args.deadline_us)]
                 if args.oracle:
                     cmd.append("--oracle")
+                # Pool capping is a coin-select-side experiment; the Core runner has no such flag.
+                if runner == "coin-select" and getattr(args, "max_n", 0):
+                    cmd += ["--max-n", str(args.max_n),
+                            "--restarts", str(args.restarts), "--cap-on-budget"]
                 print(f"  {name:28s} {track:7s} {runner}", flush=True)
                 out = subprocess.run(cmd, capture_output=True, text=True)
                 if out.returncode != 0:
@@ -1071,6 +1075,12 @@ def main():
                        help="give each search this wall-clock budget instead of the fixture's "
                             "round budget, so both engines stop on the same criterion")
         p.add_argument("--oracle", action="store_true", help="brute force fixtures of at most 20 candidates")
+        p.add_argument("--max-n", type=int, default=0, metavar="N",
+                       help="coin-select only: when the full search runs out of budget, retry on "
+                            "randomly sampled pools of at most N candidates (see --restarts)")
+        p.add_argument("--restarts", type=int, default=1, metavar="K",
+                       help="coin-select only: independent pool samples to try under --max-n, "
+                            "sharing one round budget between them")
         p.add_argument("--clean", action="store_true", help="drop existing raw results first")
         p.add_argument("--no-strict", dest="strict", action="store_false",
                        help="exit 0 even when verification finds problems")
