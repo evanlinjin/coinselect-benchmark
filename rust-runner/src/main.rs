@@ -127,6 +127,8 @@ struct Args {
     budget: Option<usize>,
     /// Escalate the pool size across phases instead of fixing it; ignores `--restarts`.
     escalate: bool,
+    /// How the pool is guaranteed to be able to fund the target: `greedy` or `random`.
+    prefix: String,
 }
 
 fn parse_args() -> Args {
@@ -145,6 +147,7 @@ fn parse_args() -> Args {
     let mut pool_probe = false;
     let mut budget = None;
     let mut escalate = false;
+    let mut prefix = "greedy".to_string();
     let mut it = std::env::args().skip(1);
     while let Some(arg) = it.next() {
         match arg.as_str() {
@@ -162,6 +165,7 @@ fn parse_args() -> Args {
             "--cap-on-budget" => cap_on_budget = true,
             "--pool-probe" => pool_probe = true,
             "--escalate" => escalate = true,
+            "--prefix" => prefix = it.next().expect("--prefix needs a value"),
             "--budget" => budget = Some(it.next().expect("--budget needs a value").parse().unwrap()),
             "--sample-seed" => {
                 sample_seed = it.next().expect("--sample-seed needs a value").parse().unwrap()
@@ -188,6 +192,7 @@ fn parse_args() -> Args {
         pool_probe,
         budget,
         escalate,
+        prefix,
     }
 }
 
@@ -431,6 +436,7 @@ fn cap_pool<'a>(
     base: &CoinSelector<'a>,
     max_n: usize,
     policy: &str,
+    prefix: &str,
     salt: u64,
 ) -> CoinSelector<'a> {
     let n = f.candidates.len();
@@ -440,9 +446,57 @@ fn cap_pool<'a>(
         return cs;
     }
 
-    let mut greedy = cs.clone();
-    let _ = greedy.select_until_target_met();
-    let keep = greedy.selected_indices().clone();
+    // `--prefix random` pins nothing: draw a uniform pool and extend it only as far as fundability
+    // demands. The greedy prefix guarantees the pool can fund the target, but it is a
+    // *deterministic* guarantee — those candidates sit in every sample of every transaction, so
+    // they are disproportionately available to be selected. Drawing first and repairing on demand
+    // keeps the guarantee without the fixed point.
+    if prefix == "random" {
+        let mut order: Vec<usize> = (0..n).collect();
+        let mut rng = seeded_rng(f.seed ^ salt.wrapping_mul(0x9E37_79B9_7F4A_7C15));
+        for i in (1..order.len()).rev() {
+            order.swap(i, (rng() % (i as u64 + 1)) as usize);
+        }
+        // How far down the shuffled order fundability actually reaches. Taking a prefix at least
+        // this long is enough, because it contains the funding set itself.
+        let mut scratch = cs.clone();
+        let mut need = n;
+        for (k, &i) in order.iter().enumerate() {
+            scratch.select(i);
+            if scratch.is_funded() {
+                need = k + 1;
+                break;
+            }
+        }
+        let take = max_n.max(need);
+        if take >= n {
+            return cs;
+        }
+        for &i in order.iter().skip(take) {
+            cs.ban(i);
+        }
+        return cs;
+    }
+
+    // `--prefix jittered`: a randomized greedy funding set. Take the next coin uniformly from the
+    // best `JITTER_K` remaining by value-per-weight rather than always the very best. The set stays
+    // about as small as the strict greedy prefix — which is what keeps the pool inside `max_n` —
+    // but its membership varies per sample, so no candidate is pinned into every pool.
+    let keep = if prefix.starts_with("jittered") {
+        const JITTER_K: usize = 4;
+        let mut rng = seeded_rng(f.seed ^ salt.wrapping_mul(0x51_7C_C1_B7_27_22_0A_95));
+        let mut chosen = cs.clone();
+        let mut avail: Vec<usize> = cs.candidates().map(|(i, _)| i).collect();
+        while !chosen.is_funded() && !avail.is_empty() {
+            let k = JITTER_K.min(avail.len());
+            chosen.select(avail.remove((rng() % k as u64) as usize));
+        }
+        chosen.selected_indices().clone()
+    } else {
+        let mut greedy = cs.clone();
+        let _ = greedy.select_until_target_met();
+        greedy.selected_indices().clone()
+    };
 
     // Descending value-per-weight order, so a candidate's position here is its pwu rank.
     let rest: Vec<usize> = cs
@@ -686,7 +740,7 @@ fn main() {
     if let (Some(max_n), true) = (args.max_n, args.pool_probe) {
         let pools: Vec<Vec<usize>> = (0..args.restarts)
             .map(|draw| {
-                let pool = cap_pool(&f, &base, max_n, &args.ban_policy, draw as u64);
+                let pool = cap_pool(&f, &base, max_n, &args.ban_policy, &args.prefix, draw as u64);
                 (0..f.candidates.len())
                     .filter(|i| !pool.banned().contains(*i))
                     .collect()
@@ -771,7 +825,7 @@ fn main() {
                         let mut draw = 0u64;
                         while used < phase_budget {
                             let per = $per_draw.min(phase_budget - used).max(1);
-                            let pool = cap_pool(&f, &base, $max_n, &args.ban_policy, $salt + draw);
+                            let pool = cap_pool(&f, &base, $max_n, &args.ban_policy, &args.prefix, $salt + draw);
                             let r = match args.track.as_str() {
                                 "kernel" => search(&pool, changeless_metric(&f), per, deadline),
                                 _ => search(&pool, lowest_fee(&f), per, deadline),
@@ -820,7 +874,7 @@ fn main() {
                         let mut affordable = 25;
                         while m < f.candidates.len() && spent < budget / 2 {
                             let pool =
-                                cap_pool(&f, &base, m, &args.ban_policy, salt_base + m as u64);
+                                cap_pool(&f, &base, m, &args.ban_policy, &args.prefix, salt_base + m as u64);
                             let r = match args.track.as_str() {
                                 "kernel" => {
                                     search(&pool, changeless_metric(&f), probe_cap, deadline)

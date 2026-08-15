@@ -109,13 +109,14 @@ fn sample_pool<'a>(
 
 Sort once, outside the sample loop — `sort_candidates_by_descending_value_pwu` does not change
 candidate indices, only iteration order, so a `Bitset` of kept indices stays valid across samples.
-Compute the greedy prefix once as well; it is the same set for every sample, because the prefix is
-the top of the value-pwu order and sampling only ever removes candidates below it.
+The funding prefix, by contrast, is drawn **per sample**: it is jittered rather than strictly greedy
+(§7), which costs one short pass per sample and both improves the fee and removes a fixed point.
 
-**Keeping the greedy prefix is load-bearing, not an optimisation.** It is what guarantees the
+**Keeping a funding prefix is load-bearing, not an optimisation.** It is what guarantees the
 sampled pool can still fund the target. Without it a random cut can leave a pool that cannot reach
 the value target at all, which converts a slow answer into no answer — a strictly worse failure than
-the one being fixed.
+the one being fixed. What the prefix must *not* be is a uniformly random funding set, which is 4-10x
+larger and defeats the cap entirely (§7).
 
 Per sample the work is one `Bitset` of bans plus a partial Fisher-Yates over the non-kept indices;
 draw only the `n - max_n` positions actually needed rather than shuffling the whole vector.
@@ -209,7 +210,64 @@ Jaccard 0.594 against 0.593) and its quality (-11.4% against -10.9%), and wins c
 fixture (`subsidizing_ancestry_200`, -15.6% against -10.3%). Ship uniform; treat this as an optional
 refinement to revisit only with a fixture set that has more shared-ancestry structure than this one.
 
-## 7. Correctness strategy
+## 7. Privacy: the prefix is a fixed point, and it should be jittered
+
+Keeping the *strict* greedy prefix puts the same candidates in every sample of every transaction.
+That is a deterministic fixed point in an otherwise randomized procedure, and it deserves checking.
+
+**Randomize it, but not naively.** Replacing the greedy prefix with a uniformly random funding set
+destroys the method: random coins are worse value-per-weight, so a random funding set needs 80-530
+candidates where greedy needs 10-47. The pool blows past `max_n`, no sample can exhaust, and every
+fixture falls back to exactly the uncapped answer — `+0.0%` on all ten budget-limited fixtures.
+
+What works is jittering *within* the greedy ordering: take each next coin uniformly from the best
+four remaining by value-per-weight rather than always the very best. The funding set stays the same
+size, so pools stay at `max_n`, but its membership varies per sample.
+
+| prefix | mean fee | pool size | fixtures improved | total fee |
+| --- | --- | --- | --- | --- |
+| strict greedy | -10.5% | `max_n` | 11 of 42 | -5.4% |
+| **jittered (top-4)** | **-12.6%** | `max_n` | **11 of 42** | **-6.5%** |
+| uniform random | +0.0% | 80-530 | 0 of 42 | +0.0% |
+
+**Jittering is free — it improves the fee.** Loosening the prefix lets samples reach selections the
+strict prefix crowded out: `wallet_mixed_500` goes from -23.2% to -31.0%, `wallet_mixed_1000` from
+-8.7% to -13.5%. Make it the default.
+
+### But the prefix is not what concentrates selections
+
+Measuring per-coin selection frequency over twelve independent draws says the fixed point is mostly
+not the sampler's doing:
+
+| fixture | tx size | coins in **all 12** txs, strict | jittered |
+| --- | --- | --- | --- |
+| `shared_ancestry_500` | 23 | 18 | **13** |
+| `wallet_mixed_500` | 27 | 23 | 21 |
+| `wallet_mixed_1000` | 47 | 42 | 42 |
+
+Jittering helps where there is slack between the prefix length and the transaction size, and not at
+all where there is none. That is the real constraint: when a transaction needs 47 inputs and
+`LowestFee` is minimizing fee, the answer *is* "the 47 best coins by value-per-weight", whatever the
+sampler does. The overlap between consecutive transactions is a property of the objective, not of
+pool construction, and no change to this design fixes it. A wallet that wants uncorrelated
+selections has to be willing to spend worse coins, which costs fee — a policy decision belonging
+above this layer, not a sampler tweak.
+
+### Sampling is still a large privacy improvement over what it replaces
+
+The comparison that matters is against today's behaviour, which is a fully deterministic search:
+one selection, always, for a given UTXO set and target.
+
+| | distinct selections in 12 draws | candidates ever used |
+| --- | --- | --- |
+| today (deterministic) | 1 | 44 |
+| sampled | **11.3** | **68** |
+
+So the feature moves selection from "identical every time" to "almost always different", and widens
+the set of coins that can appear by half. The greedy fixed point removes some of that gain; jittering
+gives part of it back at negative cost.
+
+## 8. Correctness strategy
 
 The failure mode to hunt is a sampled pool that cannot fund the target, because it is silent — the
 caller sees `Err` and cannot tell "infeasible" from "the sampler cut badly".
@@ -230,14 +288,14 @@ caller sees `Err` and cannot tell "infeasible" from "the sampler cut badly".
   and overlap 1.000 explained which fixtures never improve. It is the cheapest early warning that a
   change to the sampler has quietly broken it, and much easier to attribute than a fee delta.
 
-## 8. Staging
+## 9. Staging
 
 1. `sample_pool` plus the fundability and no-op assertions. No API surface yet.
 2. `run_bnb_sampled` sampling at one fixed internal size, drawing until the budget is spent. Expect
    the trigger logic to be exercised and no fixture to regress.
 3. The upward probe of §5, which is where the parameters disappear and where the large-pool fixtures
    start improving.
-4. The metric gating in §6.
+4. The metric gating in §6, and the jittered prefix from §7.
 
 Measure after each stage with `bench.py run --tracks wallet --escalate` followed by `bench.py
 report`, which verifies every selection is a valid package before scoring it. Watch four numbers:
@@ -245,7 +303,7 @@ fixtures regressed, wall clock, solutions lost, and the cross-draw overlap stati
 regresses any fixture is a regression regardless of its mean** — the whole claim of this design is
 that it is free when it does not help.
 
-## 9. Expected outcome, and how to know if it is wrong
+## 10. Expected outcome, and how to know if it is wrong
 
 Success looks like: no fixture regressed, the eleven budget-limited fixtures improved by roughly what
 finding 7 reports, wall clock at or below the unsampled search, and small pools bit-identical to

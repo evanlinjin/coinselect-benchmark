@@ -235,14 +235,24 @@ Wallet track, scored by the shared fee model:
 
 | | |
 | --- | --- |
-| fixtures improved | **11 of 42**, up to **-34.3%** long-term fee |
+| fixtures improved | **11 of 42**, up to **-36.7%** long-term fee |
 | fixtures regressed | **0 of 42** |
-| total long-term fee across the matrix | **-5.4%** |
+| total long-term fee across the matrix | **-6.5%** |
 | median wall clock | slightly *below* the uncapped search |
 
 Every improved fixture is one where the full search had hit its budget: `shared_ancestry_200`
-(-34.3%), `wallet_mixed_500` (-17.2%), `shared_ancestry_500` (-15.0%), `subsidizing_ancestry_200`
-(-14.0%), `wallet_mixed_1000` (-9.0%), `shared_ancestry_1000` (-8.2%), and five more.
+(-36.7%), `wallet_mixed_500` (-27.5%), `shared_ancestry_500` (-19.5%), `subsidizing_ancestry_200`
+(-14.0%), `wallet_mixed_1000` (-12.4%), `shared_ancestry_1000` (-8.2%), and five more.
+
+Each sample's funding prefix is jittered rather than strictly greedy — the next coin is taken
+uniformly from the best four remaining by value-per-weight. That both removes a fixed point that
+would otherwise sit in every sample of every transaction and *improves* the fee, from -5.4% to
+-6.5% across the matrix. Randomizing the prefix outright does not work: a uniformly random funding
+set needs 80-530 candidates where greedy needs 10-47, which defeats the cap and returns the
+uncapped answer on every fixture. The privacy analysis is [`SAMPLING-PLAN.md`](SAMPLING-PLAN.md) §7;
+the short version is that sampling moves selection from one deterministic answer to 11.3 distinct
+answers in 12 draws, but the coins that recur across transactions recur because `LowestFee`
+minimises fee, not because of how the pool is built.
 
 Neither the pool size nor the sample count is a tuning parameter: both are derived from the round
 budget, which is what the caller already passes. The evidence for dropping them, and the schedule
