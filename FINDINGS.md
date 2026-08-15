@@ -185,12 +185,14 @@ Extending the budget to **130 seconds** confirms it, and turns up something more
 selection. Across 100,000 rounds, 1,000,000 rounds, 21 seconds and 130 seconds, exactly one
 fixture ever converted.
 
-An in-place DFS on coin-select's `experiment/bnb-dfs` branch confirms the memory diagnosis and
-nothing else: peak RSS **3.6 MB against 286 MB**, flat in the candidate count, and roughly half the
-package fee on `wallet_mixed_1000/2000` in a third of the wall clock — but it returns nothing on
-eight fixtures, every one a dense-ancestry family, which drives its total package fee 184% above
-best-first. See [`DFS-PLAN.md`](DFS-PLAN.md) §9. Sampling does not help here: it bounds the pool,
-the frontier is what grows.
+An in-place DFS on coin-select's `experiment/bnb-dfs` branch confirms the memory diagnosis and,
+at the branch tip, wins outright. Peak RSS **3.6 MB against 558 MB** at a one-second budget, flat in
+the candidate count, *and* a lower total package fee than either best-first (-4.3%) or best-first
+with pool sampling (-2.5%), with no single-random-draw fallbacks. Six fixtures still regress, all
+with ancestry, which is what [`ANCESTOR-BOUND-PLAN.md`](ANCESTOR-BOUND-PLAN.md) targets. See
+[`DFS-PLAN.md`](DFS-PLAN.md) §9 — including a correction: an earlier measurement of this branch used
+its first commit rather than its tip and reported the opposite conclusion. Sampling does not help
+the memory ceiling at all: it bounds the pool, the frontier is what grows.
 
 **The memory ceiling is the harder limit.** Twenty gigabytes on a 500-candidate problem is not a
 slow search, it is one that would exhaust any real machine before it gave up. It follows directly

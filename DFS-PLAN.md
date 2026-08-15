@@ -157,6 +157,56 @@ in the traversal.
 
 ## 9. Measured: what an actual DFS attempt did
 
+> **Correction.** The first version of this section benchmarked `2398ab2`, which is the *first* of
+> five commits on `experiment/bnb-dfs`, and reported DFS at +184% — catastrophically worse. That was
+> an artefact of the wrong commit. At the branch tip (`84816f8`) DFS is **better than everything
+> else measured**, on quality and memory at once. The `2398ab2` figures are kept below only because
+> the contrast is what identifies which commits did the work.
+
+### At the branch tip
+
+Equal wall-clock budget, round cap lifted, wallet track, all 42 fixtures, scored by the harness's
+shared fee model:
+
+| 1000 ms budget | total package fee | vs best-first | fell back to SRD | peak RSS |
+| --- | --- | --- | --- | --- |
+| best-first (pinned) | 1,441,766 | — | 0 | 558.7 MB |
+| `2398ab2` (first DFS commit) | 4,157,257 | +188% | 7 | 3.6 MB |
+| **`84816f8` (DFS branch tip)** | **1,379,617** | **-4.31%** | **0** | **3.6 MB** |
+| best-first + sampling | 1,405,337 | -2.53% | 0 | 298.6 MB |
+
+At a 100 ms budget the ordering is the same: -5.63% for the tip, -3.25% for sampling, and best-first
+peaks at 63.8 MB against the tip's 3.6 MB.
+
+**So depth-first wins outright once its bound work is included.** It beats best-first *and* pool
+sampling on package fee, never falls back to single random draw, and holds peak RSS flat at 3.6 MB
+where best-first reaches 558 MB at a one-second budget — a factor of 150, and the gap widens with
+time because the queue never stops growing.
+
+Three commits separate the two DFS revisions, and the one that matters for correctness is
+`84816f8`, "let the ancestor bound prove the deficits it can": it lets the unfunded path of
+`bound_with_ancestors` prune a subtree when the best input still available cannot close a fee
+deficit at any weight. That is a feasibility test rather than a tighter bound, and it converts seven
+SRD fallbacks into zero.
+
+### What is left
+
+The tip still regresses on six fixtures, and every one has ancestry:
+
+| fixture | vs best-first |
+| --- | --- |
+| `subsidizing_ancestry_50` | +94.0% |
+| `shared_ancestry_200` | +84.0% |
+| `subsidizing_ancestry_100` | +57.1% |
+| `nested_ancestry_200` | +37.2% |
+
+[`ANCESTOR-BOUND-PLAN.md`](ANCESTOR-BOUND-PLAN.md) names `subsidizing_ancestry_50` and
+`subsidizing_ancestry_100` as its sharpest targets, chosen independently from the best-first matrix.
+That they are also where the DFS tip still regresses is the strongest available evidence that a
+bump ceiling is the remaining piece for both traversals.
+
+### The older commit, and why the contrast is worth keeping
+
 An in-place DFS exists on coin-select's `experiment/bnb-dfs` branch (`2398ab2`). Benchmarked against
 the pinned best-first revision and against best-first with pool sampling
 ([`SAMPLING-PLAN.md`](SAMPLING-PLAN.md)), wallet track, all 42 fixtures, scored by the harness's
