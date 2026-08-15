@@ -225,3 +225,59 @@ Recorded because they were found by building it, and the next person should not 
 5. **§7's control was already corrected once** (an earlier draft invented an 8,127-round figure for
    `no_ancestry_200`; it is 24,024 and exhausts). The surviving prediction was half right:
    `subsidizing_ancestry_50` converts, `subsidizing_ancestry_100` and `shared_ancestry_200` do not.
+
+## 10. Ported to depth-first, and compared on an equal clock
+
+The same two commits were cherry-picked onto `experiment/bnb-dfs` as `feat/dfs-ancestor-ceiling`,
+carrying their prerequisites: the branches are *siblings* that diverged at `7e965cf`, and the DFS
+side never received `fb5a021`, which is where `overshot_the_changeless_window` comes from. `bnb.rs`
+is untouched by the picks, so the depth-first traversal arrives byte-identical.
+
+The honest control is `3c4a941` — DFS with the window cut present but still gated off for ancestors —
+**not** the DFS tip. The window cut alone converts nine kernel fixtures, which would otherwise be
+credited to the ceiling.
+
+Wall-clock budgets only, round cap lifted, package fee from the shared model:
+
+| wallet track, 1000 ms | fee vs best-first | no solution | peak RSS |
+| --- | --- | --- | --- |
+| best-first | — | 0 | 555.7 MB |
+| best-first + ceiling | **+0.00%** | 0 | 561.3 MB |
+| best-first + sampling | -2.53% | 0 | 296.9 MB |
+| DFS (control) | **-4.31%** | 0 | **3.6 MB** |
+| DFS + ceiling | -4.31% | 0 | 3.6 MB |
+
+| kernel track, 1000 ms | fee vs best-first | no solution | peak RSS |
+| --- | --- | --- | --- |
+| best-first | — | 7 | 546.5 MB |
+| best-first + ceiling | +0.00% | **7** | 523.8 MB |
+| best-first + sampling | +0.00% | **1** | 298.4 MB |
+| DFS (control) | +128.9% | 6 | 3.6 MB |
+| DFS + ceiling | +128.9% | **4** | 3.6 MB |
+
+Read the fee column with care: it is computed only over the fixtures where *every* arm returned a
+selection (32 of 42 here), so it says nothing about the arms that solve more.
+
+### What the ceiling actually bought
+
+**Nothing at all on the wallet track**, for either traversal — `LowestFee` never consults it, and the
+selections are byte-identical. **Nothing for best-first on the kernel track either**: 7 no-solution
+before, 7 after.
+
+Its entire measured value is under depth-first, where it converts two kernel fixtures the control
+cannot solve at any budget — `private_ancestry_50` (5,589 rounds, tree exhausted) and
+`private_ancestry_200` (43,303, exhausted) — taking no-solution from 6 to 4 at a second, and 7 to 5
+at 100 ms. Both are cases best-first already solved, so the ceiling matters *more* under depth-first
+than under the queue, which is what [`DFS-PLAN.md`](DFS-PLAN.md) §3 predicted about a loose bound
+being survivable for one traversal and not the other.
+
+That is a real result and a small one. Set against it: **pool sampling converts far more kernel
+failures than the ceiling does** — 7 down to 1 at a second — for no crate change at all.
+
+### The standing recommendation, on this evidence
+
+Depth-first is the change worth making. On the wallet track it is the best arm on fee *and* uses
+3.6 MB against best-first's 556 MB, a factor of 150 that widens with the budget. The ceiling is
+worth keeping because it is provably admissible, costs nothing measurable, and converts two fixtures
+under the traversal that is worth adopting — but it is not the unlock this plan hoped for, and the
+kernel track's remaining failures are not explained by ancestor-bound looseness.
