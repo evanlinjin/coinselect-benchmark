@@ -133,6 +133,23 @@ target, so `LowestFee` wants a change output and the changeless metric rejects i
 length. The changeless objective has no cheap greedy seed, so on a large pool it starts with no
 incumbent and never finds one. Seeding fixes exactly the metric it can seed.
 
+That is measured rather than inferred. `coinselect-bench-runner --seed-probe` reproduces
+`seed_greedy_incumbent` and reports which metrics score the prefix it builds:
+
+| | seeds |
+| --- | --- |
+| `LowestFee` | 42 of 42 |
+| `LowestFeeChangeless` | **0 of 42** |
+
+The greedy prefix carries 21k to 3.8M sat of excess on every fixture, so `LowestFee` always wants
+change and the changeless metric always refuses. Seeding is dead weight on the kernel track: one
+clone, one `select_until_target_met` and one discarded `score` per search.
+
+Nor is it a matter of picking a better prefix. The *ascending* value-per-weight prefix overshoots by
+the least of any greedy ordering, and its smallest excess across the matrix is 1270 sat against a
+changeless ceiling of 580 sat — still 0 of 42. Landing inside a ~600-sat window is the exact-match
+problem branch and bound exists to solve; no greedy ordering substitutes for it.
+
 What the seed recovers is visible on the wallet track, which previously fell back to single random
 draw: on `no_ancestry_500` that fallback returned a **260-input** selection where the seeded search
 returns **23 inputs** scoring 17190.
@@ -241,6 +258,77 @@ change-producing pair Core explores far fewer nodes *and* they are cheap. The ch
 change-producing metrics on the coin-select side now behave comparably to each other, which was not
 true when the changeless case was expressed as a constraint wrapped around `LowestFee`.
 
+## 7. Capping the pool beats searching all of it — when the full search was going to fail
+
+Finding 4 leaves the large-pool cases converging on nothing. A cheap answer is available without
+touching the crate: when the search runs out of budget, retry it on a **randomly sampled subset**
+of the candidates, small enough that it actually finishes, and take the best answer across several
+samples. `--max-n N --restarts K --cap-on-budget` on the coin-select runner does this. Each sample
+keeps every candidate the greedy prefix uses — that is what guarantees the reduced pool can still
+fund the target — and bans from the rest until `N` remain.
+
+Wallet track, `--max-n 50 --restarts 50`, scored by the shared fee model:
+
+| | |
+| --- | --- |
+| fixtures improved | 8 of 42, up to **-34.3%** long-term fee |
+| fixtures regressed | **0 of 42** |
+| total long-term fee across the matrix | -3.9% |
+| budget exhausted | 12 of 42 -> **5 of 42** |
+| worst-case slowdown | 1.6x |
+
+Every improved fixture is one where the full search had hit its budget: `shared_ancestry_200`
+(-34.3%), `wallet_mixed_500` (-16.5%), `shared_ancestry_500` (-12.8%), `wallet_mixed_1000` (-6.9%),
+`subsidizing_ancestry_200` (-6.2%), and three more.
+
+### The trigger is budget exhaustion, not candidate count
+
+Capping unconditionally **regresses** 5 fixtures by up to +6.1%. The split is exact and has no
+exceptions in this matrix:
+
+| the full search | capping does |
+| --- | --- |
+| exhausted the tree | **harm** — it already held the optimum, and the cut discards candidates the optimum needs |
+| ran out of budget | **help** — it was returning nothing better than its greedy seed |
+
+Size is the wrong proxy for that: `subsidizing_ancestry_100` runs out of budget at n=100 while
+`wallet_mixed_200` exhausts at n=200. The search's own `exhausted` flag classifies it for free, and
+the failed full search costs nothing extra — it is work a caller pays for today, and its answer
+competes as one more sample.
+
+### Restarts carry the result, not the cap
+
+One capped sample is a lottery on which candidates survive the cut. A 50-candidate pool exhausts in
+about 0.1 ms, so many samples are affordable. Splitting one 100,000-round budget across `K` samples,
+over the twelve fixtures that hit the budget:
+
+| arm | mean | best | worst |
+| --- | --- | --- | --- |
+| `max_n=30, K=50` | -5.6% | -26.0% | +0.0% |
+| **`max_n=50, K=50`** | **-7.2%** | **-34.3%** | **+0.0%** |
+| `max_n=100, K=5` | -5.2% | -36.0% | +0.0% |
+| `max_n=100, K=50` | -3.2% | -26.6% | +0.0% |
+
+`max_n=100` gets *worse* as samples increase: 2,000 rounds cannot exhaust a 100-candidate pool, so
+each sample degrades back to returning its own greedy seed. The pool has to be small enough that a
+sample finishes.
+
+### Two limits
+
+**Keeping the greedy prefix is load-bearing.** Without it a random cut can leave a pool that cannot
+fund the target at all, turning a slow answer into no answer.
+
+**The cap cannot be smaller than the answer.** `no_ancestry_2000` and `shared_ancestry_2000` never
+improve at `max_n` 25-50, because their greedy prefixes are 82 and 91 inputs — everything outside
+gets banned and nothing is left to search over. `max_n` needs headroom above the expected input
+count, which argues for sizing it relative to the greedy prefix rather than fixing it.
+
+This is a caller-side result: `ban`, `select_until_target_met` and `sort_candidates_by_descending_value_pwu`
+are already public, so nothing inside the crate has to change to get it. [`SAMPLING-PLAN.md`](SAMPLING-PLAN.md)
+is a design for making it a first-class part of the crate instead. It is complementary to
+[`DFS-PLAN.md`](DFS-PLAN.md), not an alternative: sampling bounds the *pool*, depth-first bounds the
+*frontier*, and finding 4's memory ceiling is a frontier problem.
+
 ## What this does not answer
 
 The kernel track puts both engines on the same problem and the same budget, but not on literally
@@ -262,6 +350,10 @@ combined bump fees against an independent port of `node::MiniMiner`, waste again
 `SelectionResult::RecalculateWaste`, and input weight against `SelectionResult::GetWeight`. Every
 package reaches the target feerate once its ancestor union is counted, and every selection stays
 inside `max_weight`. `bench.py report` exits non-zero if any of that fails; this run exits 0.
+
+The capped run behind finding 7 (`bench.py run --tracks wallet --max-n 50 --restarts 50`) was put
+through the same verification and also exits 0, so those selections are valid packages and not just
+cheaper scores.
 
 `bench.py compare-revs` A/Bs two coin-select revisions on these same fixtures if you want to
 attribute a change to a particular commit; past runs are kept in `results/compare/`.

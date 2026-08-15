@@ -101,6 +101,7 @@ change amount; coin-select minimises long-term fee — which the report says on 
 | `results/` | Generated. `SUMMARY.md` is the readable report, `results.csv` the full matrix, and `compare/` holds revision A/B runs. |
 | `FINDINGS.md` | A snapshot of what the current results show, with the revisions they came from. |
 | `DFS-PLAN.md` | A design for replacing the priority-queue traversal with depth-first search, argued from those results. |
+| `SAMPLING-PLAN.md` | A design for retrying a budget-limited search on randomly sampled subsets of the pool. |
 
 ## Commands
 
@@ -111,6 +112,8 @@ python3 bench.py run --fixtures 'shared_*'  # one family
 python3 bench.py run --tracks kernel        # one track (kernel, changeful, wallet)
 python3 bench.py report                     # score results/raw/ (exits non-zero on a problem)
 python3 bench.py run --deadline-us 5000     # equal-time instead of equal-rounds (see below)
+python3 bench.py run --max-n 50 --restarts 50   # coin-select only: sample the pool when the
+                                            # full search runs out of budget (see FINDINGS.md #7)
 python3 bench.py smoke                      # the CI-sized fixture, end to end
 python3 genfixtures.py                      # regenerate fixtures/
 
