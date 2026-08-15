@@ -154,3 +154,52 @@ The plan is wrong if stage 2 does not bring node counts down. That would mean th
 prune is not doing the structural cutting this diagnosis assumes, and the remaining gap is bound
 quality rather than search order — in which case the effort belongs in the metric's `bound`, not
 in the traversal.
+
+## 9. Measured: what an actual DFS attempt did
+
+An in-place DFS exists on coin-select's `experiment/bnb-dfs` branch (`2398ab2`). Benchmarked against
+the pinned best-first revision and against best-first with pool sampling
+([`SAMPLING-PLAN.md`](SAMPLING-PLAN.md)), wallet track, all 42 fixtures, scored by the harness's
+shared fee model:
+
+| arm | total package fee | vs best-first | improved | regressed | fell back to SRD | peak RSS |
+| --- | --- | --- | --- | --- | --- | --- |
+| best-first (pinned) | 1,480,114 | — | — | — | 0 | 286 MB |
+| **DFS** (`2398ab2`) | 4,202,996 | **+184%** | 3 | 15 | **8** | **3.6 MB** |
+| best-first + sampling | 1,374,136 | **-7.2%** | 8 | 3 | 0 | 286 MB |
+
+**The memory prediction was right, emphatically.** DFS peaks at 3.6 MB where both best-first arms
+reach 286 MB — a factor of 80, and it is flat in the candidate count rather than growing with it.
+Sampling does nothing for this, because it bounds the pool and not the frontier.
+
+**Where DFS reaches the large fixtures, it is much better than either alternative**, on fee and on
+time at once:
+
+| fixture | best-first | DFS | best-first + sampling |
+| --- | --- | --- | --- |
+| `wallet_mixed_1000` | 97,230 | **56,633** | 85,910 |
+| `wallet_mixed_2000` | 196,970 | **97,653** | 188,760 |
+| `wallet_mixed_2000` wall clock | 1,065 ms | **400 ms** | 1,687 ms |
+
+**But its ancestor handling is broken, and that dominates the total.** On eight fixtures the DFS
+search returns nothing and the wallet falls back to single random draw, which is what the +184%
+is: `shared_ancestry_2000` costs 1,614,450 against best-first's 301,090. Every failure is a
+dense-ancestry family — `shared_ancestry_*`, `nested_ancestry_200`, `subsidizing_ancestry_*`.
+
+The failures are not all unsoundness. Given 500,000,000 rounds and 30 seconds instead of the default
+budget, `nested_ancestry_20` solves and exhausts at 131,250 rounds where best-first needs **30**, and
+`no_ancestry_100` at 8,380,234 rounds against best-first's 2,827. So on those the tree is explored
+correctly and the traversal is simply thousands of times more expensive. `shared_ancestry_100` and
+`private_ancestry_50` still return nothing after 95-180 million rounds, which is a different problem.
+
+### What this says about the plan
+
+Stage 2 of §7 — the monotone value prune — is the stage this attempt is missing, and §8's
+falsification test reads on it directly: node counts must come *down*, and here they went up by
+three to four orders of magnitude on the fixtures that regressed. The bound, not the traversal, is
+where the remaining work is; the ordering change alone buys memory and costs search efficiency.
+
+The two designs are complementary rather than competing, which is what
+[`SAMPLING-PLAN.md`](SAMPLING-PLAN.md) claims and this measures: sampling is the safe win available
+today (-7.2%, no fallbacks, three regressions of at most 1.6%), DFS is the only thing that fixes the
+memory ceiling, and neither substitutes for the other.
