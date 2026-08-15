@@ -22,13 +22,14 @@ Instead, when the budget runs out:
 1. Take the greedy prefix. Keep every candidate in it.
 2. Ban candidates from the rest, uniformly at random, until at most `max_n` remain.
 3. Run the same branch and bound on that pool.
-4. Repeat from 2 with a fresh sample, sharing one round budget across samples.
+4. Repeat from 2 with a fresh sample until the round budget is spent.
 5. Return the best scoring selection across the failed full search and every sample.
 
-Measured on the wallet track at `max_n = 50` over 50 samples: 8 of 42 fixtures improve, by up to
-34.3% of the long-term fee, **none regress**, and the worst-case slowdown is 1.6x.
+`max_n` and the sample count are both derived from the round budget rather than asked of the caller
+(§3, §5). Measured on the wallet track: **11 of 42 fixtures improve, none regress**, total long-term
+fee falls 5.4%, and median wall clock stays at or below the uncapped search.
 
-## 2. Why it works, and why the trigger matters more than `max_n`
+## 2. Why it works, and why the trigger matters more than the pool size
 
 The failure this addresses is not that the tree is large. It is that a best-first search over a
 depth-increasing bound expands every shallow prefix before descending, so on a 500+ candidate pool
@@ -54,15 +55,6 @@ and exact. Do not add a candidate-count threshold; it would misclassify both of 
 Keep the existing entry points untouched and add one that is explicit about being a fallback.
 
 ```rust
-/// How to retry a branch and bound that runs out of budget.
-#[derive(Debug, Clone, Copy)]
-pub struct PoolSampling {
-    /// Largest pool a retry may search. Must leave headroom above the greedy prefix length.
-    pub max_n: usize,
-    /// How many independent samples to draw. They share `max_rounds` between them.
-    pub samples: usize,
-}
-
 impl<'a> CoinSelector<'a> {
     /// Run `run_bnb`, and if it runs out of rounds, retry on sampled subsets of the pool.
     ///
@@ -72,13 +64,29 @@ impl<'a> CoinSelector<'a> {
         &self,
         metric: M,
         max_rounds: usize,
-        sampling: PoolSampling,
         rng: impl FnMut() -> u64,
     ) -> Result<CoinSelector<'a>, NoBnbSolution>;
 }
 ```
 
-Four things this shape is deliberately committing to:
+**No tuning parameters.** Pool size and sample count are both derived from `max_rounds` at runtime
+(§5), which is a budget the caller already passes to `run_bnb`. That is not merely tidier — the
+measurements say neither can be a caller constant:
+
+- **Sample count cannot be derived from pool size.** The quantity linking them is rounds-to-exhaust,
+  and at a fixed pool of 50 it ranges from 224 rounds (`shared_ancestry_1000`) to over 2,000,000
+  (`subsidizing_ancestry_200`). Four orders of magnitude at one pool size, because cost depends on
+  bound quality under ancestry rather than on `n`. Any closed-form `samples = f(max_n)` is wrong by
+  ~10,000x on some input.
+- **Pool size carries a constraint the caller cannot evaluate.** It must exceed the greedy prefix
+  length or every sample is the identical pool — `wallet_mixed_2000` at `max_n=50` has a mean
+  pairwise overlap of 1.000 and never improves. `greedy_len` is computed inside the callee, so
+  exposing `max_n` asks the caller for a number only the callee can validate.
+- **The best fixed pool size moves with the budget.** At 100,000 rounds a pool of 50 beats a pool of
+  100 by 7.1 points; at 1,000,000 rounds they are within 0.3. A caller who hard-codes one is
+  hard-coding an assumption about the other.
+
+Three things this shape still commits to:
 
 - **`rng` is the caller's.** The crate is `no_std` and has no entropy source; `select_srd` already
   takes `impl FnMut() -> u64` and this matches it. It also keeps the result reproducible, which
@@ -87,7 +95,6 @@ Four things this shape is deliberately committing to:
   `run_bnb`. Nothing about existing behaviour changes.
 - **The failed full search's result is not discarded**, it competes as one more sample. Without
   this the fallback could return something worse than what the caller already had.
-- **`max_rounds` is the total**, not per sample. See §5.
 
 ## 4. Building a sample
 
@@ -124,35 +131,49 @@ samples have a mean pairwise overlap of **1.000** — every sample is the identi
 draws collapse to one no matter how good the sampler is. Headroom is not a tuning nicety, it is what
 gives sampling anything to sample.
 
-Size it as `max(max_n, greedy_len * 2)` — or reject a `PoolSampling` whose `max_n` leaves no
-headroom, which is more honest than silently searching a pool with no freedom in it. Whichever is
-chosen, document it: a caller passing `max_n: 50` to a wallet holding 2000 dust UTXOs should not
-silently get a no-op.
+The derived schedule in §5 handles this without a rule: it probes upward from 25 and keeps the
+largest size a sample can still exhaust, so a wallet holding 2000 dust UTXOs with a 94-input greedy
+prefix lands on a pool of 100 or 200 rather than a degenerate 50. That is why `wallet_mixed_2000` and
+`shared_ancestry_2000` improve under the derived schedule (-4.3% and -2.2%) and not at all under a
+fixed `max_n=50`.
 
-## 5. Budget
+## 5. Budget: how both parameters get derived
 
-Samples share one round budget: `max_rounds / samples` each. This is the difference between an
-honest measurement and a flattering one — giving each sample a fresh full budget produced better
-numbers (10 fixtures improved, best -41.3%) at up to 9x the baseline wall clock, which is not a fair
-comparison against a search that got one budget.
+**Sample count is not a parameter.** Draw samples until the round budget is spent, with a per-sample
+cap of `budget / 20` so no single sample can eat the phase. That adapts to the four-orders-of-
+magnitude spread in rounds-to-exhaust that no formula can predict.
 
-Under a shared budget the tuning is a clear inverted U:
+**Pool size is not a parameter either.** Probe upward — 25, 50, 100, 200 — while a single sample
+still exhausts inside a fraction of the budget, then spend everything left sampling at the largest
+size that did. Rounds needed grows roughly tenfold per +25 candidates, so all the probes below the
+largest affordable size together cost a fraction of it (`shared_ancestry_500`: 21 + 964 + 6,983 +
+33,845 = 41,813 rounds against 33,845 for a pool of 100 alone, 1.24x; `wallet_mixed_500`, 1.09x),
+and each probe's answer competes as a sample regardless, so none is wasted.
 
-| arm | mean | best | worst |
+The stopping rule is load-bearing. Escalating blindly and splitting the budget geometrically across
+every size up to the candidate count scores **-7.8%** against a hand-tuned constant's -10.2%,
+because a pool too large to exhaust contributes nothing and still consumes whatever it is given.
+Stopping at the largest exhaustible size turns that into **-10.6%**.
+
+Measured against hand-tuned constants, three seeds, ten budget-limited fixtures:
+
+| | derived (no parameters) | best constant | second constant |
 | --- | --- | --- | --- |
-| `max_n=30, samples=50` | -5.6% | -26.0% | +0.0% |
-| **`max_n=50, samples=50`** | **-7.2%** | **-34.3%** | **+0.0%** |
-| `max_n=100, samples=5` | -5.2% | -36.0% | +0.0% |
-| `max_n=100, samples=50` | -3.2% | -26.6% | +0.0% |
+| 100,000-round budget | **-10.6%**, 632 ms | -10.2% (`n=50, k=50`), 717 ms | -3.2% (`n=100, k=30`) |
+| 1,000,000-round budget | **-4.7%**, 5814 ms | -4.2% (`n=50, k=50`), 6775 ms | -3.9% (`n=100, k=30`) |
 
-`max_n=100` gets worse as samples increase: 2,000 rounds cannot exhaust a 100-candidate pool, so each
-sample degrades back to returning its own greedy seed and the extra samples buy nothing. **The pool
-must be small enough that a sample finishes**, which is the single constraint tying `max_n` and
-`samples` together. `max_n = 50, samples = 50` is the recommended default.
+The derived schedule beats the best hand-tuned constant at both budgets *and* is faster, because it
+stops paying for pools it cannot finish. Note also that the two constants swap places between the
+two budgets, which is the case against exposing either as a caller parameter.
 
-Stop early when a sample exhausts its subtree *and* fails to improve on the incumbent several times
-running — but measure before adding that, since the per-sample cost at `max_n=50` is around 0.1 ms
-and a stopping rule that saves 0.5 ms while losing a 30% fee improvement is a bad trade.
+Over the full 42-fixture wallet track it improves **11 fixtures, regresses 0**, cuts total long-term
+fee by **5.4%**, and leaves median wall clock slightly *below* the uncapped baseline — against 8
+improved and -3.9% for the tuned two-parameter version.
+
+**Sampling is a tight-budget feature.** Its mean gain falls from -10.6% at 100,000 rounds to -4.7%
+at 1,000,000, because a larger budget lets the full search exhaust on more fixtures and the fallback
+stops triggering at all. That is the behaviour to want, and another reason the budget is the right
+and only knob.
 
 ## 6. Interaction with the metrics
 
@@ -199,7 +220,8 @@ caller sees `Err` and cannot tell "infeasible" from "the sampler cut badly".
   full search's own result. This is what makes the fallback safe to enable by default in a wallet,
   and it is cheap to assert.
 - **Determinism.** Same `rng` seed, same pool, same answer. Property-test it; a fallback a wallet
-  cannot reproduce is a fallback it cannot explain to a user.
+  cannot reproduce is a fallback it cannot explain to a user. The derived schedule must be
+  deterministic too: the probe sequence depends only on `max_rounds` and the problem.
 - **Differential against the full search on small pools.** Where `n <= max_n`, sampling must be a
   no-op returning exactly `run_bnb`'s answer. This is the regression test for the trigger logic, and
   it is the one that would have caught the unconditional-capping regression.
@@ -211,30 +233,36 @@ caller sees `Err` and cannot tell "infeasible" from "the sampler cut badly".
 ## 8. Staging
 
 1. `sample_pool` plus the fundability and no-op assertions. No API surface yet.
-2. `run_bnb_sampled` with `samples = 1`. Expect the trigger logic to be exercised and no fixture to
-   regress.
-3. Shared budget across `samples > 1`. This is where the quality arrives.
-4. `max_n` headroom rule, and the metric gating in §6.
+2. `run_bnb_sampled` sampling at one fixed internal size, drawing until the budget is spent. Expect
+   the trigger logic to be exercised and no fixture to regress.
+3. The upward probe of §5, which is where the parameters disappear and where the large-pool fixtures
+   start improving.
+4. The metric gating in §6.
 
-Measure after each stage with `bench.py run --tracks wallet --max-n 50 --restarts 50` followed by
-`bench.py report`, which verifies every selection is a valid package before scoring it. Watch three
-numbers: fixtures regressed, wall clock, and solutions lost. **A stage that regresses any fixture is
-a regression regardless of its mean** — the whole claim of this design is that it is free when it
-does not help.
+Measure after each stage with `bench.py run --tracks wallet --escalate` followed by `bench.py
+report`, which verifies every selection is a valid package before scoring it. Watch four numbers:
+fixtures regressed, wall clock, solutions lost, and the cross-draw overlap statistic. **A stage that
+regresses any fixture is a regression regardless of its mean** — the whole claim of this design is
+that it is free when it does not help.
 
 ## 9. Expected outcome, and how to know if it is wrong
 
-Success looks like: no fixture regressed, the eight budget-limited fixtures improved by roughly what
-finding 7 reports, wall clock within 2x of the unsampled search, and small pools bit-identical to
+Success looks like: no fixture regressed, the eleven budget-limited fixtures improved by roughly what
+finding 7 reports, wall clock at or below the unsampled search, and small pools bit-identical to
 `run_bnb`.
 
-The plan is wrong if step 3 does not beat step 2 by a wide margin. That would mean the win is coming
-from searching a smaller pool rather than from sampling several of them — in which case the honest
-version is a single deterministic cut, and all the machinery for randomness, seeding and
-reproducibility can be deleted.
+Two things would falsify the design, and both are already partly measured:
 
-The evidence so far says the margin is real. The deterministic cut is already measured: `worst`,
-which takes the best `max_n` candidates by value-per-weight, returns **-0.3%** against uniform
-sampling's -7.4%. And §6 shows the ordering that follows from it — the policies rank by how much
-cross-draw diversity they preserve, not by how sensible any single cut looks. If step 3 ever fails
-to beat step 2, check the overlap statistic before checking anything else.
+**If the upward probe does not beat a fixed internal pool size**, the escalation machinery is
+unjustified and stage 2 is the whole feature. Current evidence says it does beat it — -10.6% against
+-10.2% at a 100,000-round budget and -4.7% against -4.2% at 1,000,000, faster in both cases, and 11
+fixtures improved against 8 — but the margin over the *best* constant is small, and the honest
+reading is that escalation mostly buys robustness across problem shapes rather than raw quality. If
+a future fixture set shows one constant dominating everywhere, take the constant.
+
+**If sampling several pools does not beat searching one smaller pool**, the randomness, seeding and
+reproducibility machinery can all be deleted. This one is settled: the deterministic cut is measured
+as `worst`, which takes the best candidates by value-per-weight and returns **-0.3%** against
+uniform sampling's -7.4%. The ordering across every policy tried follows cross-draw diversity rather
+than the plausibility of any single cut, so if a change ever makes sampling stop working, check the
+overlap statistic before anything else.

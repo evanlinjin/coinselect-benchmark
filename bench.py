@@ -459,7 +459,9 @@ def cmd_run(args):
                 if args.oracle:
                     cmd.append("--oracle")
                 # Pool capping is a coin-select-side experiment; the Core runner has no such flag.
-                if runner == "coin-select" and getattr(args, "max_n", 0):
+                if runner == "coin-select" and getattr(args, "escalate", False):
+                    cmd += ["--max-n", "1", "--escalate", "--cap-on-budget"]
+                elif runner == "coin-select" and getattr(args, "max_n", 0):
                     cmd += ["--max-n", str(args.max_n),
                             "--restarts", str(args.restarts), "--cap-on-budget"]
                 print(f"  {name:28s} {track:7s} {runner}", flush=True)
@@ -1078,6 +1080,9 @@ def main():
         p.add_argument("--max-n", type=int, default=0, metavar="N",
                        help="coin-select only: when the full search runs out of budget, retry on "
                             "randomly sampled pools of at most N candidates (see --restarts)")
+        p.add_argument("--escalate", action="store_true",
+                       help="coin-select only: parameter-free pool sampling — probe upward for the "
+                            "largest pool a sample can exhaust, then sample there (overrides --max-n)")
         p.add_argument("--restarts", type=int, default=1, metavar="K",
                        help="coin-select only: independent pool samples to try under --max-n, "
                             "sharing one round budget between them")

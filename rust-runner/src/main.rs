@@ -126,6 +126,10 @@ struct Args {
     /// Offsets every sample's rng salt, so a policy can be measured over independent draws.
     sample_seed: u64,
     pool_probe: bool,
+    /// Overrides the fixture's round budget.
+    budget: Option<usize>,
+    /// Escalate the pool size across phases instead of fixing it; ignores `--restarts`.
+    escalate: bool,
 }
 
 fn parse_args() -> Args {
@@ -142,6 +146,8 @@ fn parse_args() -> Args {
     let mut cap_on_budget = false;
     let mut sample_seed = 0u64;
     let mut pool_probe = false;
+    let mut budget = None;
+    let mut escalate = false;
     let mut it = std::env::args().skip(1);
     while let Some(arg) = it.next() {
         match arg.as_str() {
@@ -158,6 +164,8 @@ fn parse_args() -> Args {
             "--ban-policy" => ban_policy = it.next().expect("--ban-policy needs a value"),
             "--cap-on-budget" => cap_on_budget = true,
             "--pool-probe" => pool_probe = true,
+            "--escalate" => escalate = true,
+            "--budget" => budget = Some(it.next().expect("--budget needs a value").parse().unwrap()),
             "--sample-seed" => {
                 sample_seed = it.next().expect("--sample-seed needs a value").parse().unwrap()
             }
@@ -181,6 +189,8 @@ fn parse_args() -> Args {
         cap_on_budget,
         sample_seed,
         pool_probe,
+        budget,
+        escalate,
     }
 }
 
@@ -668,7 +678,7 @@ fn main() {
     let f = Fixture::load(&args.fixture);
     let problem = build_problem(&f);
     let base = CoinSelector::new(&problem);
-    let budget = f.search_budget;
+    let budget = args.budget.unwrap_or(f.search_budget);
 
     if args.seed_probe {
         seed_probe(&f, &base);
@@ -755,38 +765,99 @@ fn main() {
                 // The budget-exhausted full search, when there was one, is just another draw: its
                 // answer competes with the capped ones rather than being discarded.
                 let mut best: Option<Search> = prior;
-                // Restarts only buy anything when the pool is actually being cut: below the cap
-                // every draw is the same pool, so re-running is pure waste.
-                let draws = match f.candidates.len() <= max_n {
-                    true => 1,
-                    false => args.restarts.max(1),
-                };
-                // One round budget for the whole restart phase, not one per draw: more draws buy
-                // more pool diversity, not more total work.
-                let per_draw = (budget / draws).max(1);
-                for draw in 0..draws {
-                    let pool = cap_pool(&f, &base, max_n, &args.ban_policy, draw as u64 + args.sample_seed * 1_000_003);
-                    let r = match args.track.as_str() {
-                        "kernel" => search(&pool, changeless_metric(&f), per_draw, deadline),
-                        _ => search(&pool, lowest_fee(&f), per_draw, deadline),
-                    };
-                    let better = match (&best, &r.score) {
-                        (_, None) => false,
-                        (None, Some(_)) => true,
-                        (Some(b), Some(s)) => b.score.map_or(true, |bs| *s < bs),
-                    };
-                    // Round counts are summed: the caller pays for every draw.
-                    let rounds = best.as_ref().map_or(0, |b| b.rounds) + r.rounds;
-                    if better || best.is_none() {
-                        best = Some(Search { rounds, ..r });
-                    } else if let Some(b) = best.as_mut() {
-                        b.rounds = rounds;
+                let mut spent = 0usize;
+
+                // One phase of sampling at a fixed pool size, spending at most `phase_budget`
+                // rounds. Draws until that runs out rather than taking a draw count, because how
+                // many rounds a pool needs varies by four orders of magnitude across fixtures at
+                // the same size — a caller cannot predict it and neither can a formula.
+                macro_rules! sample_phase {
+                    ($max_n:expr, $phase_budget:expr, $per_draw:expr, $salt:expr) => {{
+                        let phase_budget: usize = $phase_budget;
+                        let mut used = 0usize;
+                        let mut draw = 0u64;
+                        while used < phase_budget {
+                            let per = $per_draw.min(phase_budget - used).max(1);
+                            let pool = cap_pool(&f, &base, $max_n, &args.ban_policy, $salt + draw);
+                            let r = match args.track.as_str() {
+                                "kernel" => search(&pool, changeless_metric(&f), per, deadline),
+                                _ => search(&pool, lowest_fee(&f), per, deadline),
+                            };
+                            used += r.rounds.max(1);
+                            let better = match (&best, &r.score) {
+                                (_, None) => false,
+                                (None, Some(_)) => true,
+                                (Some(b), Some(s)) => b.score.map_or(true, |bs| *s < bs),
+                            };
+                            if better || best.is_none() {
+                                best = Some(r);
+                            }
+                            draw += 1;
+                            if f.candidates.len() <= $max_n
+                                || deadline.map_or(false, |d| Instant::now() >= d)
+                            {
+                                break;
+                            }
+                        }
+                        spent += used;
+                    }};
+                }
+
+                let salt_base = args.sample_seed * 1_000_003;
+                match args.escalate {
+                    // Fixed pool size, `--restarts` draws, one budget between them.
+                    false => {
+                        let draws = match f.candidates.len() <= max_n {
+                            true => 1,
+                            false => args.restarts.max(1),
+                        };
+                        sample_phase!(max_n, budget, (budget / draws).max(1), salt_base);
                     }
-                    if deadline.map_or(false, |d| Instant::now() >= d) {
-                        break;
+                    // No pool size and no draw count: probe upward for the largest pool a single
+                    // sample can still exhaust, then spend everything left sampling at that size.
+                    //
+                    // Rounds needed grows roughly tenfold per +25 candidates, so every probe below
+                    // the largest affordable size together costs a fraction of that size alone —
+                    // and each probe's answer competes as a sample regardless, so none is wasted.
+                    // Escalating blindly is what does not work: a pool too large to exhaust
+                    // contributes nothing but consumes whatever it is given.
+                    true => {
+                        let probe_cap = (budget / 8).max(1);
+                        let mut m = 25;
+                        let mut affordable = 25;
+                        while m < f.candidates.len() && spent < budget / 2 {
+                            let pool =
+                                cap_pool(&f, &base, m, &args.ban_policy, salt_base + m as u64);
+                            let r = match args.track.as_str() {
+                                "kernel" => {
+                                    search(&pool, changeless_metric(&f), probe_cap, deadline)
+                                }
+                                _ => search(&pool, lowest_fee(&f), probe_cap, deadline),
+                            };
+                            spent += r.rounds;
+                            let exhausted = r.exhausted;
+                            let better = match (&best, &r.score) {
+                                (_, None) => false,
+                                (None, Some(_)) => true,
+                                (Some(b), Some(s)) => b.score.map_or(true, |bs| *s < bs),
+                            };
+                            if better || best.is_none() {
+                                best = Some(r);
+                            }
+                            if !exhausted {
+                                break;
+                            }
+                            affordable = m;
+                            m *= 2;
+                        }
+                        let left = budget.saturating_sub(spent);
+                        // A diversity floor: no single draw may eat the whole remaining phase.
+                        sample_phase!(affordable, left, (left / 20).max(1), salt_base + 7919);
                     }
                 }
-                best.expect("at least one draw runs")
+                let mut out = best.expect("at least one draw runs");
+                out.rounds = spent;
+                out
             }
         };
         // Fall back to single random draw exactly as a wallet would: wallet track only, and only
