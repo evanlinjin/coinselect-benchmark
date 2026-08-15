@@ -214,6 +214,17 @@ correctly and the traversal is simply thousands of times more expensive. `shared
 
 ### What this says about the plan
 
+The ancestor bound is the blocker, and it is not something depth-first introduced. `LowestFee` is
+identical between this branch and the pinned revision, `bound_with_ancestors` included — the whole
+diff is one added lookahead prune that `e45bb58` also lacks while still solving `shared_ancestry_100`
+in 2,945 rounds. The same bound succeeds under best-first and fails under depth-first, because
+best-first is robust to a loose bound (ordering still steers it) and depth-first is not (it commits
+to a subtree and enumerates it). On the wallet track, where the metric is identical, DFS fails on
+8 of 8 ancestry fixtures and 0 of 9 without — including at n=20 and n=50.
+
+[`ANCESTOR-BOUND-PLAN.md`](ANCESTOR-BOUND-PLAN.md) is the prune this needs, and it should be done
+first: it is the only one of the three plans that also improves the traversal shipped today.
+
 Stage 2 of §7 — the monotone value prune — is the stage this attempt is missing, and §8's
 falsification test reads on it directly: node counts must come *down*, and here they went up by
 three to four orders of magnitude on the fixtures that regressed. The bound, not the traversal, is
