@@ -898,7 +898,16 @@ fn main() {
         let mut prior = None;
         let mut max_n = args.max_n;
         if args.cap_on_budget {
-            let r = full!(&base);
+            // Under a wall-clock budget the full search must not be allowed to spend all of it, or
+            // the sampling phase it is supposed to trigger never runs. Give it half.
+            let probe_deadline = match args.deadline_us {
+                Some(us) => Some(start + Duration::from_micros(us / 2)),
+                None => deadline,
+            };
+            let r = match args.track.as_str() {
+                "kernel" => search(&base, changeless_metric(&f), budget, probe_deadline),
+                _ => search(&base, lowest_fee(&f), budget, probe_deadline),
+            };
             if r.exhausted {
                 max_n = None;
             }
