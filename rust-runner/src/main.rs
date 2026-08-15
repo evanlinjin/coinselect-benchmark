@@ -8,9 +8,6 @@
 //! Tracks:
 //! - `kernel`: `Changeless<LowestFee>` branch and bound, no change output allowed.
 //!   Isolates traversal and pruning against Core's `SelectCoinsBnB`.
-//! - `changeful`: bare `LowestFee` branch and bound, no single-random-draw fallback. The
-//!   counterpart to Core's `CoinGrinder`: both may create change, both are deterministic
-//!   searches under the same budget.
 //! - `wallet`: `LowestFee` branch and bound (change is the metric's own decision),
 //!   falling back to single random draw, mirroring how a wallet would drive this crate.
 
@@ -709,10 +706,6 @@ fn main() {
         "kernel" => (
             "minimise child fee, changeless (Changeless<LowestFee>)",
             "bnb/changeless-lowest-fee",
-        ),
-        "changeful" => (
-            "minimise long-term fee, change at the metric's discretion (LowestFee)",
-            "bnb/lowest-fee",
         ),
         "wallet" => (
             "minimise long-term fee, change at the metric's discretion (LowestFee)",

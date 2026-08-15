@@ -35,7 +35,7 @@ RAW = RESULTS / "raw"
 FIXTURES = ROOT / "fixtures"
 PINS = json.loads((ROOT / "pins.json").read_text())
 
-TRACKS = ["kernel", "changeful", "wallet"]
+TRACKS = ["kernel", "wallet"]
 RUNNERS = ["coin-select", "bitcoin-core"]
 
 # Core targets the runner links against. Building these instead of all of Core keeps setup at
