@@ -168,3 +168,60 @@ at a one-second budget — but is unusable until something prunes for it.
 
 A tighter ancestor bound is the only one of the three that improves the search that ships today,
 and both other plans get easier behind it.
+
+## 9. Implemented — what it did, and where this plan was wrong
+
+Built on `experiment/bnb-greedy-seed` as `feat/ancestor-bump-ceiling`: `076e628` (the ceiling, a
+strict no-op) and `8026867` (the window cut enabled with ancestors). `cargo test --all-features`
+and `--no-default-features` both green.
+
+### What it bought
+
+The §7 headline prediction holds. `subsidizing_ancestry_50` — fifty candidates the search could not
+finish — converts from burning its budget to **exhausting the tree in 66,922 rounds**. Other
+kernel-track round counts fall sharply, with every score unchanged:
+
+| fixture | before | after |
+| --- | --- | --- |
+| `subsidizing_ancestry_50` | 100,000, budget hit | **66,922, exhausted** |
+| `adversarial_shared_50` | 3,353 | **217** |
+| `high_feerate_50` | 1,641 | 499 |
+| `nested_ancestry_100` | 4,218 | 1,756 |
+| `high_feerate_100` | 9,320 | 4,972 |
+
+### What it did not buy, and this is the important half
+
+**Zero of the eleven no-solution kernel fixtures converted.** Not one. The gain is entirely on
+fixtures that already solved. `shared_ancestry_200`, which §7 predicted would convert, does not.
+
+**And it is a complete no-op on the wallet track** — 42 of 42 fixtures return byte-identical
+selections and scores, because `LowestFee` never consults the ceiling. Everything above is
+kernel-track only.
+
+So the honest verdict is that a bump ceiling is a real but *narrow* win: it makes the changeless
+search finish trees it could not finish, and it does not rescue a single case that was failing.
+Whatever is defeating the eleven is not ancestor-bound looseness.
+
+### Five things this plan got wrong
+
+Recorded because they were found by building it, and the next person should not re-derive them:
+
+1. **§4.2 (stage 3) is unsound as written.** `bound_with_ancestors` returns an admissible *lower*
+   bound on the fee; an upper bound on the bump cannot raise it. The branches where a ceiling could
+   plausibly tighten it are exactly those where `ancestor_bump_lower_bound() == ancestor_bump()`,
+   so the surplus term is already zero and there is nothing to tighten. Stage 3 was not attempted
+   and probably does not exist.
+2. **§3's state model gets the granularity wrong.** `private_reachable_surplus` nets per *candidate
+   group*, not per ancestor, because a candidate's private ancestors arrive all-or-nothing. The
+   deficit must keep that granularity. The implementation folds both directions into one
+   `Imbalance { surplus, deficit }` updated at each existing site so they cannot drift, which is
+   better than the six mirrored edit sites §3 implies.
+3. **§3 underestimates the float slack.** `ancestor_fee_precision_slack` is **0** below 2^24 sats,
+   but `implied_fee_wu` is an f32 product plus a ceil, so `ancestor_bump` can sit ~3 sats above the
+   exact f64 value even there. "Round up by one" is not enough; the implementation adds a
+   documented 4-sat constant and clamps with `.max(ancestor_bump())`.
+4. **§6 stage 1's `compare-revs` check is unnecessary.** Stage 1 is provably a no-op: the new
+   surplus term is bit-identical to the old `ancestor_surplus` because IEEE negation is exact.
+5. **§7's control was already corrected once** (an earlier draft invented an 8,127-round figure for
+   `no_ancestry_200`; it is 24,024 and exhausts). The surviving prediction was half right:
+   `subsidizing_ancestry_50` converts, `subsidizing_ancestry_100` and `shared_ancestry_200` do not.
