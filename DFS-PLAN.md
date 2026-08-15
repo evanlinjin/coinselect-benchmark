@@ -168,6 +168,26 @@ shared fee model:
 | **DFS** (`2398ab2`) | 4,202,996 | **+184%** | 3 | 15 | **8** | **3.6 MB** |
 | best-first + sampling | 1,374,136 | **-7.2%** | 8 | 3 | 0 | 286 MB |
 
+That table is at an equal *round* budget, which is the unfair framing for DFS: its rounds are
+cheaper (~190 ns against best-first's 530-1310 ns), so equal-rounds hands it less wall clock. Re-run
+with the round cap lifted and an equal wall-clock budget instead, the ranking does not move:
+
+| wall-clock budget | best-first | DFS | best-first + sampling |
+| --- | --- | --- | --- |
+| 10 ms | — | +204% | **-5.3%** |
+| 100 ms | — | +182% | **-3.3%** |
+| 1000 ms | — | +188% | **-2.5%** |
+| peak RSS at 1000 ms | 554 MB | **3.6 MB** | 286 MB |
+
+So the +184% is a property of the implementation, not of the budget unit. Note the memory gap
+*widens* with time — best-first goes 7 MB to 58 MB to 554 MB as the budget grows — while DFS stays
+flat at 3.5 MB. That is finding 4's frontier problem restated: given time, best-first never stops
+growing the queue.
+
+Sampling's advantage narrows as the clock lengthens (-5.3% to -2.5%), for the same reason it narrows
+with a larger round budget: more time lets the full search exhaust on more fixtures, so the fallback
+fires less often.
+
 **The memory prediction was right, emphatically.** DFS peaks at 3.6 MB where both best-first arms
 reach 286 MB — a factor of 80, and it is flat in the candidate count rather than growing with it.
 Sampling does nothing for this, because it bounds the pool and not the frontier.

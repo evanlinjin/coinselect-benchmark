@@ -171,6 +171,12 @@ Over the full 42-fixture wallet track it improves **11 fixtures, regresses 0**, 
 fee by **5.4%**, and leaves median wall clock slightly *below* the uncapped baseline — against 8
 improved and -3.9% for the tuned two-parameter version.
 
+**A wall-clock budget must be split between the search and the samples.** If the initial search is
+given the whole deadline it will spend the whole deadline, the fallback never runs, and the feature
+silently degrades to plain `run_bnb` — measured, exactly +0.00% at 10 ms, 100 ms and 1000 ms. Give
+the initial search half. This is not a tuning choice: without it the feature does nothing under a
+time budget. With it, sampling scores -5.3% / -3.3% / -2.5% at those three budgets.
+
 **Sampling is a tight-budget feature.** Its mean gain falls from -10.6% at 100,000 rounds to -4.7%
 at 1,000,000, because a larger budget lets the full search exhaust on more fixtures and the fallback
 stops triggering at all. That is the behaviour to want, and another reason the budget is the right
