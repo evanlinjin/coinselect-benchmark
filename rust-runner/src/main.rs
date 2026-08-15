@@ -118,6 +118,7 @@ struct Args {
     /// Wall-clock budget for the search. `None` stops on the fixture's round budget instead.
     deadline_us: Option<u64>,
     oracle: bool,
+    seed_probe: bool,
 }
 
 fn parse_args() -> Args {
@@ -127,6 +128,7 @@ fn parse_args() -> Args {
     let mut warmup = 1usize;
     let mut deadline_us = None;
     let mut oracle = false;
+    let mut seed_probe = false;
     let mut it = std::env::args().skip(1);
     while let Some(arg) = it.next() {
         match arg.as_str() {
@@ -138,6 +140,7 @@ fn parse_args() -> Args {
                 deadline_us = Some(it.next().expect("--deadline-us needs a value").parse().unwrap())
             }
             "--oracle" => oracle = true,
+            "--seed-probe" => seed_probe = true,
             other => panic!("unknown argument {other}"),
         }
     }
@@ -148,7 +151,69 @@ fn parse_args() -> Args {
         warmup,
         deadline_us: deadline_us.filter(|us| *us > 0),
         oracle,
+        seed_probe,
     }
+}
+
+/// Reproduce `BnbIter::seed_greedy_incumbent` and report whether it would actually seed.
+///
+/// The seed is only adopted when the metric *scores* the greedy prefix, and each metric refuses a
+/// different prefix: `LowestFeeChangeless` refuses one whose excess is large enough that
+/// `LowestFee` would want change, `LowestFee` refuses nothing once funded. This prints which, so
+/// the "greedy incumbent" claim can be checked per fixture instead of assumed.
+fn seed_probe(f: &Fixture, base: &CoinSelector<'_>) {
+    let mut greedy = base.clone();
+    greedy.sort_candidates_by_descending_value_pwu();
+    let funded = greedy.select_until_target_met().is_ok();
+    let view = greedy.compute_view();
+    let mut lf = lowest_fee(f);
+    let mut cl = changeless_metric(f);
+    let (changeless, lowest, drain, excess) = if funded {
+        (
+            cl.score(&view).map(|s| s.0),
+            lf.score(&view).map(|s| s.0),
+            lf.drain(&view).value,
+            greedy.excess(Drain::NONE),
+        )
+    } else {
+        (None, None, 0, 0)
+    };
+    // The mirror image: select the *worst* value-per-weight candidates first. Descending order
+    // overshoots by whatever the last big coin brings, which is what makes it changeful; ascending
+    // order overshoots by at most the smallest coin still needed, which is the only greedy prefix
+    // with any chance of landing inside the changeless window.
+    let mut tail = base.clone();
+    tail.sort_candidates_by_descending_value_pwu();
+    let n = f.candidates.len();
+    for i in (0..n).rev() {
+        if tail.is_funded() {
+            break;
+        }
+        tail.select(i);
+    }
+    let tail_view = tail.compute_view();
+    let tail_changeless = if tail.is_funded() {
+        cl.score(&tail_view).map(|s| s.0)
+    } else {
+        None
+    };
+
+    let out = serde_json::json!({
+        "fixture": f.name,
+        "tail_greedy_inputs": tail.selected_indices().len(),
+        "tail_greedy_excess": tail.excess(Drain::NONE),
+        "tail_changeless_seeds": tail_changeless.is_some(),
+        "candidates": f.candidates.len(),
+        "greedy_funded": funded,
+        "greedy_inputs": greedy.selected_indices().len(),
+        "greedy_excess": excess,
+        "lowest_fee_drain_value": drain,
+        "lowest_fee_seeds": lowest.is_some(),
+        "lowest_fee_seed_score": lowest,
+        "changeless_seeds": changeless.is_some(),
+        "changeless_seed_score": changeless,
+    });
+    println!("{}", serde_json::to_string(&out).unwrap());
 }
 
 /// Peak resident set size of this process, in KiB. `None` where /proc is unavailable.
@@ -412,6 +477,11 @@ fn main() {
     let problem = build_problem(&f);
     let base = CoinSelector::new(&problem);
     let budget = f.search_budget;
+
+    if args.seed_probe {
+        seed_probe(&f, &base);
+        return;
+    }
 
     let (objective, algorithm) = match args.track.as_str() {
         "kernel" => (
