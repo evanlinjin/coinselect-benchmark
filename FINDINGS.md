@@ -275,37 +275,59 @@ transaction's unconfirmed parents, which is a handful of entries no matter how l
 Dense storage of a set that is 0.002% full is the whole problem. A sparse representation costs
 **0.33 MB** where the dense one costs 667 MB.
 
-### Which sparse representation
+### Which sparse representation — measured
 
 `BTreeSet` fixes the asymptotics but is a poor fit for sets this small: every non-empty set is a
 separate allocation, so 200,000 candidates cost the `Vec` of set structs plus roughly 100,000 B-tree
-nodes — tens of megabytes, and every read is pointer chasing.
+nodes, and every read is pointer chasing.
 
 The access pattern argues for something flatter. **Every hot use of these sets in the crate is
-`.iter()`** — `bump_of`, the cache's add/sub, and the four `shared_drags_in` walks in
+`.iter()`** — `bump_of`, the cache's add and sub, and the four `shared_drags_in` walks in
 `selection_view.rs` — plus one set-equality comparison in `bnb.rs`'s exclusion plan. Nothing needs
-O(1) membership, and the sets are built once in `SelectionProblem::new` and never mutated.
+O(1) membership, and the sets are built once in `SelectionProblem::new` and never mutated. That is
+the case for a compressed-sparse-row layout: one flat `Vec<u32>` of ancestor indices with a
+`Vec<u32>` of per-candidate offsets.
 
-That is the textbook case for a compressed-sparse-row layout: one flat `Vec<u32>` of ancestor
-indices with a `Vec<u32>` of per-candidate offsets. Iteration becomes a slice walk with no
-indirection, equality becomes a slice compare, and there is no per-candidate allocation at all.
+Built and measured, on a branch off [PR #73][pr73]:
 
-| 200,000 candidates, 26,666 ancestors | memory |
-| --- | --- |
-| dense `Bitset` per candidate (today) | 667 MB |
-| `BTreeSet` per candidate | ~20 MB, one allocation per non-empty set |
-| flat indices + offsets | **0.33 MB**, contiguous |
+| 200,000 candidates, 26,666 ancestors | peak RSS | search setup |
+| --- | --- | --- |
+| dense `Bitset` per candidate | 1,332 MB | 464 ms |
+| flat indices + offsets | **58 MB** (-95.7%) | **54 ms** (8.5x) |
 
-`Bitset` is still the right choice where it is used over *candidates* — the selected and banned sets
-are dense and membership-tested constantly. It is only the per-candidate ancestor sets that are
-sparse. This has not been implemented or measured; the sizes above are computed from the fixtures.
+At 20,000 candidates it is 21.6 MB down to 7.6 MB. On `no_ancestry_200000`, which has no ancestors
+to store, nothing changes — the control behaves. Byte-identical on all 42 checked-in fixtures, and
+80 tests green on both feature sets.
 
-### Two other things that appear at that scale
+**The time is the surprise, and it matters more than the memory.** Iterating a dense bitset costs
+O(ancestors) per candidate however few bits are set, so any full pass over every candidate's ancestor
+set — which is what building the selection cache does — is O(candidates x ancestors) in *time* as
+well as space. That is 5.3 billion bit positions where the sparse layout reads 84,000 entries.
 
-**`wallet_mixed_200000` returns no solution at all**, and it is not the fixture being unreasonable:
-funding the target needs 8,798 inputs at 2.6M weight units against a 20.9M cap, so a solution
-plainly exists. Branch and bound expands zero nodes and the single-random-draw fallback does not
-recover either. Unexplained, and the sharpest thing to chase here.
+`Bitset` is still right where it is used over *candidates*: the selected and banned sets are dense
+and membership-tested constantly. Only the per-candidate ancestor sets are sparse.
+
+### The `wallet_mixed_200000` no-solution was the same bug
+
+An earlier draft of this finding recorded that `wallet_mixed_200000` returned no solution at a 100 ms
+budget despite the target being plainly fundable, and called it unexplained and the sharpest thing to
+chase. It was the representation:
+
+| | 100 ms | 1000 ms |
+| --- | --- | --- |
+| dense bitset | **no solution, 0 nodes** | 9,217 inputs, 22,272 nodes |
+| flat indices + offsets | 9,217 inputs, 5,632 nodes | 9,217 inputs, 33,024 nodes |
+
+Setting up the search took 464 ms, so the deadline expired before the first node was expanded and the
+search returned nothing at all. Nothing was wrong with the search, the bound, or the fallback: the
+budget was spent before any of them ran. Giving the dense build a full second is enough for it to
+return the same 9,217 inputs.
+
+The general lesson is worth keeping: a data structure whose *construction* scales worse than the
+search will show up as a search failure, and on a wall-clock budget it shows up as "no solution"
+rather than as a slow answer.
+
+### One other thing that appears at that scale
 
 **The dive floor in the iterative-deepening branch goes inert.** It is 200 x candidates, which is 4M
 nodes at 20,000 candidates — more than a 100 ms budget reaches, so the hybrid never hands over and
