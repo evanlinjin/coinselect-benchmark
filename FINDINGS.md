@@ -246,6 +246,74 @@ The design, the measurements behind it, and the things that do *not* work are in
 [`SAMPLING-PLAN.md`](SAMPLING-PLAN.md) — §11 for this re-measurement, everything before it taken
 against best-first and labelled as such.
 
+## 6. Past a few thousand candidates the search is no longer what costs
+
+The checked-in matrix stops at 2000 candidates. Generating the same families an order of magnitude
+past that — `python3 -c "import genfixtures as g; g.build('wallet_mixed', 200000)"`, not checked in —
+shows the ceiling is somewhere else entirely.
+
+| candidates | peak RSS | what the search does in 100 ms |
+| --- | --- | --- |
+| 2,000 | 3.6 MB | exhausts or gets close |
+| 20,000 | 8–22 MB | 10,000–44,000 nodes, still improving |
+| 200,000 | **1,330 MB** | **0–1 nodes** |
+
+**The memory is not the traversal.** Depth-first still carries one path. It is
+`SelectionProblem::drags_in`, which is one dense `Bitset` per candidate over every ancestor:
+200,000 candidates x 26,666 ancestors = **667 MB of bitset**, and `shared_drags_in` is a second copy
+of the same shape. The control is exact — `no_ancestry_200000`, identical candidate count with zero
+ancestors, peaks at **50.8 MB**.
+
+**Those bitsets are essentially empty.** A candidate drags in its own residing transaction and that
+transaction's unconfirmed parents, which is a handful of entries no matter how large the pool gets:
+
+| fixture | ancestors | dragged per candidate | occupancy |
+| --- | --- | --- | --- |
+| `shared_ancestry_200000` | 25,000 | mean 0.60, max 1 | 0.0024% |
+| `wallet_mixed_200000` | 26,666 | mean 0.42, max 2 | 0.0016% |
+
+Dense storage of a set that is 0.002% full is the whole problem. A sparse representation costs
+**0.33 MB** where the dense one costs 667 MB.
+
+### Which sparse representation
+
+`BTreeSet` fixes the asymptotics but is a poor fit for sets this small: every non-empty set is a
+separate allocation, so 200,000 candidates cost the `Vec` of set structs plus roughly 100,000 B-tree
+nodes — tens of megabytes, and every read is pointer chasing.
+
+The access pattern argues for something flatter. **Every hot use of these sets in the crate is
+`.iter()`** — `bump_of`, the cache's add/sub, and the four `shared_drags_in` walks in
+`selection_view.rs` — plus one set-equality comparison in `bnb.rs`'s exclusion plan. Nothing needs
+O(1) membership, and the sets are built once in `SelectionProblem::new` and never mutated.
+
+That is the textbook case for a compressed-sparse-row layout: one flat `Vec<u32>` of ancestor
+indices with a `Vec<u32>` of per-candidate offsets. Iteration becomes a slice walk with no
+indirection, equality becomes a slice compare, and there is no per-candidate allocation at all.
+
+| 200,000 candidates, 26,666 ancestors | memory |
+| --- | --- |
+| dense `Bitset` per candidate (today) | 667 MB |
+| `BTreeSet` per candidate | ~20 MB, one allocation per non-empty set |
+| flat indices + offsets | **0.33 MB**, contiguous |
+
+`Bitset` is still the right choice where it is used over *candidates* — the selected and banned sets
+are dense and membership-tested constantly. It is only the per-candidate ancestor sets that are
+sparse. This has not been implemented or measured; the sizes above are computed from the fixtures.
+
+### Two other things that appear at that scale
+
+**`wallet_mixed_200000` returns no solution at all**, and it is not the fixture being unreasonable:
+funding the target needs 8,798 inputs at 2.6M weight units against a 20.9M cap, so a solution
+plainly exists. Branch and bound expands zero nodes and the single-random-draw fallback does not
+recover either. Unexplained, and the sharpest thing to chase here.
+
+**The dive floor in the iterative-deepening branch goes inert.** It is 200 x candidates, which is 4M
+nodes at 20,000 candidates — more than a 100 ms budget reaches, so the hybrid never hands over and
+matches the plain dive exactly. Scaling the floor on candidate count is right at small pools and
+wrong at large ones. Pool sampling, by contrast, still pays at 20,000: it exhausts
+`wallet_mixed_20000` and `shared_ancestry_20000` in a few thousand nodes where the full search
+cannot.
+
 ## What this does not answer
 
 Nothing here measures address-grouped selection, Core's per-output-type pass, or behaviour on a
