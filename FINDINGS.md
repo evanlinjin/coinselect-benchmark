@@ -122,6 +122,42 @@ and the branches where it could tighten are the ones whose surplus term is alrea
 plan's §9 and §10. **These two fixtures have no fix in hand**, and what defeats depth-first here is
 not ancestor-bound looseness.
 
+### What does defeat it, measured
+
+Three measurements on `subsidizing_ancestry_50`, in order.
+
+**The bound is sound.** Cut the pool to 20 candidates keeping the optimal five, and depth-first
+finds that optimum and exhausts the tree, agreeing with the brute-force oracle — 14,443 rounds
+against best-first's 765. It is not pruning the answer away.
+
+**The tree explodes with the pool, for depth-first only.** Same fixture, pool grown from 20 to 50
+with the optimal five always present. Both traversals return a child fee of 4508 wherever they
+exhaust:
+
+| candidates | best-first | depth-first |
+| --- | --- | --- |
+| 20 | 93 | 557 |
+| 25 | 223 | 3,389 |
+| 30 | 411 | 6,073 |
+| 35 | 4,248 | 492,419 |
+| 40 | 6,518 | 1,096,424 |
+| 45 | 37,683 | 37.4M, **not exhausted** (fee 11194) |
+| 50 | 55,737 | 36.5M, **not exhausted** (fee 11332) |
+
+Best-first grows 600x across that range; depth-first grows 67,000x and breaks between 40 and 45.
+
+**The incumbent stalls.** Depth-first starts from the greedy seed, which scores exactly 13,370 here
+(`--seed-probe` confirms it), improves once to 11,912 before 100,000 rounds, and then does not
+improve again across 40M more. Every prune it makes is against an incumbent 2.3x worse than the
+optimum's 5088, and the set of nodes whose bound beats 11,912 is enormous. Best-first is not smarter
+about the bound — it pops in bound order, so it walks the optimal region first and is pruning
+against a near-final incumbent almost immediately.
+
+So the lever is **incumbent quality and dive order**, not the bound. Restricting the pool confirms
+it from the other side: `--max-n 20 --restarts 8` reaches a child fee of 6784 with no crate change
+at all, against 11,332 for the full pool — better, and still not 4508, because a random 20 rarely
+holds all five of the right coins. `--escalate` is a no-op on this fixture.
+
 ## 4. Outcomes against Core
 
 | | coin-select | Bitcoin Core |
