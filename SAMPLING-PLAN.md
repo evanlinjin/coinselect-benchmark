@@ -365,3 +365,50 @@ as `worst`, which takes the best candidates by value-per-weight and returns **-0
 uniform sampling's -7.4%. The ordering across every policy tried follows cross-draw diversity rather
 than the plausibility of any single cut, so if a change ever makes sampling stop working, check the
 overlap statistic before anything else.
+
+## 11. Re-measured against the depth-first pin
+
+Everything above was measured against the best-first traversal ([PR #70][pr70-s]). Depth-first
+([PR #73][pr73-s]) changes the baseline enough that the question had to be asked again — and the
+answer moved in the opposite direction to the one expected. The guess recorded in `FINDINGS.md` was
+that depth-first would leave sampling less to do, since it already solves the large pools sampling
+was rescuing. **It leaves it more.**
+
+Wallet track, 42 fixtures, three sample seeds, package fee from the shared model. Baseline is the
+same binary with sampling off:
+
+| budget | package fee | fee the child pays | improved | regressed |
+| --- | --- | --- | --- | --- |
+| 100,000 rounds | **-10.28%** | -6.43% | 12 | 1 |
+| 1,000,000 rounds | **-11.07%** | -7.08% | 9 | 0 |
+| 10 ms | -5.91% | -3.81% | 10 | 3 |
+| 100 ms | -6.30% | -3.67% | 8 | 7 |
+| 1000 ms | -7.90% | -4.78% | 7 | 2 |
+
+Against best-first the same schedule scored -10.6% at 100,000 rounds on the ten budget-limited
+fixtures and -5.4% over the full track. So sampling is *at least as valuable* under depth-first, and
+the reason is [`FINDINGS.md`](FINDINGS.md) finding 3: depth-first prunes against whatever incumbent
+its dive order happens to have found, and a smaller pool is a cheap way to reach a better one.
+
+**It closes the sharpest regression in the matrix outright.** `subsidizing_ancestry_50` goes from
+47,520 to **24,500** — best-first's exhausted, oracle-confirmed optimum, on all three seeds at both
+a 1,000,000-round and a 1000 ms budget. `subsidizing_ancestry_100` goes from 81,050 to 31,180, which
+is *better* than best-first reaches in ten seconds (31,493). The two fixtures depth-first cannot
+solve are the two sampling helps most.
+
+Every arm returned a selection; no run in the grid fell through to single random draw.
+
+### The cost is real and shows up under a wall clock
+
+At 100 ms, seven fixtures regress. That is the deadline split doing exactly what §5 describes: the
+full search is given half the budget so the fallback can run, and a fixture that would have
+exhausted in 60 ms of 100 ms no longer exhausts in 50 ms, so it gets sampled when it should not
+have been. `high_feerate_200` (+2.3%) and `shared_ancestry_100` (+1.6%) are that case; both exhaust
+comfortably inside a full 100 ms. The round-budget regimes, where the trigger is exact, regress one
+fixture and none respectively.
+
+This is an argument for making the trigger cheaper to evaluate rather than against the feature, and
+it is the one place where a caller with a wall-clock budget pays for a fallback they may not need.
+
+[pr70-s]: https://github.com/bitcoindevkit/coin-select/pull/70
+[pr73-s]: https://github.com/bitcoindevkit/coin-select/pull/73

@@ -119,8 +119,8 @@ fix them.** It was a byte-identical no-op on all 42 wallet fixtures under both t
 changeless metrics. It converted `_50` on the retired kernel track only. Wiring it into `LowestFee`
 instead is unsound as described — an upper bound on the bump cannot raise a lower bound on the fee,
 and the branches where it could tighten are the ones whose surplus term is already zero. See that
-plan's §9 and §10. **These two fixtures have no fix in hand**, and what defeats depth-first here is
-not ancestor-bound looseness.
+plan's §9 and §10. What defeats depth-first here is not ancestor-bound looseness — and the thing
+that does fix both fixtures is pool sampling, which is finding 5.
 
 ### What does defeat it, measured
 
@@ -154,9 +154,8 @@ about the bound — it pops in bound order, so it walks the optimal region first
 against a near-final incumbent almost immediately.
 
 So the lever is **incumbent quality and dive order**, not the bound. Restricting the pool confirms
-it from the other side: `--max-n 20 --restarts 8` reaches a child fee of 6784 with no crate change
-at all, against 11,332 for the full pool — better, and still not 4508, because a random 20 rarely
-holds all five of the right coins. `--escalate` is a no-op on this fixture.
+it from the other side, and finding 5 shows it is not a curiosity: sampling recovers this fixture's
+optimum exactly.
 
 ## 4. Outcomes against Core
 
@@ -173,17 +172,37 @@ trying to win that column.
 The harness's reimplementation of Core's waste formula agrees with the waste Core itself reports on
 every one of its own selections, which is what makes the cross-scoring trustworthy.
 
-## 5. Capping the pool still helps, but the headroom has shrunk
+## 5. Capping the pool helps depth-first *more* than it helped best-first
 
 When the search runs out of budget, retrying it on randomly sampled subsets of the candidates and
-keeping the best answer — `bench.py run --escalate` — was worth **-6.5%** total package fee against
-the best-first traversal, improving 11 fixtures and regressing none.
+keeping the best answer — `bench.py run --escalate` — was worth around -5.4% total against the
+best-first traversal. The expectation recorded here was that depth-first would leave it less to do,
+having already solved the large pools sampling was rescuing. Re-measured against this pin, over 42
+fixtures and three sample seeds, that is wrong:
 
-Against depth-first the headroom is smaller, because depth-first already solves the large pools that
-sampling was rescuing. The design, the measurements behind it, and the things that do *not* work are
-in [`SAMPLING-PLAN.md`](SAMPLING-PLAN.md); its numbers were taken against best-first and are
-labelled as such. **Re-measuring it against this pin has not been done** and is the obvious next
-step.
+| budget | package fee | fee the child pays | improved | regressed |
+| --- | --- | --- | --- | --- |
+| 100,000 rounds | **-10.28%** | -6.43% | 12 | 1 |
+| 1,000,000 rounds | **-11.07%** | -7.08% | 9 | 0 |
+| 10 ms | -5.91% | -3.81% | 10 | 3 |
+| 100 ms | -6.30% | -3.67% | 8 | 7 |
+| 1000 ms | -7.90% | -4.78% | 7 | 2 |
+
+Finding 3 explains why: depth-first prunes against whatever incumbent its dive order found, and a
+smaller pool is a cheap way to reach a better one. **It closes finding 3's open problem.**
+`subsidizing_ancestry_50` goes from 47,520 to **24,500** — best-first's exhausted, oracle-confirmed
+optimum, on all three seeds — and `subsidizing_ancestry_100` from 81,050 to 31,180, better than
+best-first reaches in ten seconds. The two fixtures depth-first cannot solve are the two sampling
+helps most.
+
+The cost is visible at 100 ms, where seven fixtures regress: a wall-clock budget has to be split so
+the fallback can run at all, so a fixture that would have exhausted in 60 ms of 100 ms does not
+exhaust in 50 ms and gets sampled when it should not have been. Under a round budget, where the
+trigger is exact, that falls to one fixture and then none.
+
+The design, the measurements behind it, and the things that do *not* work are in
+[`SAMPLING-PLAN.md`](SAMPLING-PLAN.md) — §11 for this re-measurement, everything before it taken
+against best-first and labelled as such.
 
 ## What this does not answer
 

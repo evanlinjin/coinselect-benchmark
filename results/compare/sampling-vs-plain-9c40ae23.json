@@ -1,0 +1,7782 @@
+{
+ "100,000 rounds": [
+  [
+   "adversarial_shared_100",
+   {
+    "pkg": 3690,
+    "child": 3690,
+    "score": 4270.0,
+    "rounds": 486,
+    "exh": true,
+    "ms": 0.317696
+   },
+   [
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 486,
+     "exh": true,
+     "ms": 0.24538
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 486,
+     "exh": true,
+     "ms": 0.311514
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 486,
+     "exh": true,
+     "ms": 0.217428
+    }
+   ]
+  ],
+  [
+   "adversarial_shared_20",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 49,
+    "exh": true,
+    "ms": 0.039675
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 49,
+     "exh": true,
+     "ms": 0.039875
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 49,
+     "exh": true,
+     "ms": 0.039364
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 49,
+     "exh": true,
+     "ms": 0.039514
+    }
+   ]
+  ],
+  [
+   "adversarial_shared_200",
+   {
+    "pkg": 5050,
+    "child": 5050,
+    "score": 5630.0,
+    "rounds": 2480,
+    "exh": true,
+    "ms": 1.264493
+   },
+   [
+    {
+     "pkg": 5050,
+     "child": 5050,
+     "score": 5630.0,
+     "rounds": 2480,
+     "exh": true,
+     "ms": 1.446374
+    },
+    {
+     "pkg": 5050,
+     "child": 5050,
+     "score": 5630.0,
+     "rounds": 2480,
+     "exh": true,
+     "ms": 1.42829
+    },
+    {
+     "pkg": 5050,
+     "child": 5050,
+     "score": 5630.0,
+     "rounds": 2480,
+     "exh": true,
+     "ms": 1.211694
+    }
+   ]
+  ],
+  [
+   "adversarial_shared_50",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 19,
+    "exh": true,
+    "ms": 0.029836
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 19,
+     "exh": true,
+     "ms": 0.029315
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 19,
+     "exh": true,
+     "ms": 0.029225
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 19,
+     "exh": true,
+     "ms": 0.030387
+    }
+   ]
+  ],
+  [
+   "high_feerate_100",
+   {
+    "pkg": 21720,
+    "child": 21720,
+    "score": 22300.0,
+    "rounds": 1631,
+    "exh": true,
+    "ms": 0.839175
+   },
+   [
+    {
+     "pkg": 21720,
+     "child": 21720,
+     "score": 22300.0,
+     "rounds": 1631,
+     "exh": true,
+     "ms": 0.473489
+    },
+    {
+     "pkg": 21720,
+     "child": 21720,
+     "score": 22300.0,
+     "rounds": 1631,
+     "exh": true,
+     "ms": 0.7727
+    },
+    {
+     "pkg": 21720,
+     "child": 21720,
+     "score": 22300.0,
+     "rounds": 1631,
+     "exh": true,
+     "ms": 0.825369
+    }
+   ]
+  ],
+  [
+   "high_feerate_20",
+   {
+    "pkg": 8920,
+    "child": 8920,
+    "score": 9500.0,
+    "rounds": 15,
+    "exh": true,
+    "ms": 0.024095
+   },
+   [
+    {
+     "pkg": 8920,
+     "child": 8920,
+     "score": 9500.0,
+     "rounds": 15,
+     "exh": true,
+     "ms": 0.103474
+    },
+    {
+     "pkg": 8920,
+     "child": 8920,
+     "score": 9500.0,
+     "rounds": 15,
+     "exh": true,
+     "ms": 0.024036
+    },
+    {
+     "pkg": 8920,
+     "child": 8920,
+     "score": 9500.0,
+     "rounds": 15,
+     "exh": true,
+     "ms": 0.024055
+    }
+   ]
+  ],
+  [
+   "high_feerate_200",
+   {
+    "pkg": 72579,
+    "child": 69624,
+    "score": 69624.0,
+    "rounds": 100000,
+    "exh": false,
+    "ms": 34.635119
+   },
+   [
+    {
+     "pkg": 72579,
+     "child": 69624,
+     "score": 69624.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 89.743709
+    },
+    {
+     "pkg": 72139,
+     "child": 69609,
+     "score": 69609.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 82.911257
+    },
+    {
+     "pkg": 72579,
+     "child": 69624,
+     "score": 69624.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 82.653594
+    }
+   ]
+  ],
+  [
+   "high_feerate_50",
+   {
+    "pkg": 17200,
+    "child": 17200,
+    "score": 17780.0,
+    "rounds": 288,
+    "exh": true,
+    "ms": 0.166322
+   },
+   [
+    {
+     "pkg": 17200,
+     "child": 17200,
+     "score": 17780.0,
+     "rounds": 288,
+     "exh": true,
+     "ms": 0.171923
+    },
+    {
+     "pkg": 17200,
+     "child": 17200,
+     "score": 17780.0,
+     "rounds": 288,
+     "exh": true,
+     "ms": 0.22864
+    },
+    {
+     "pkg": 17200,
+     "child": 17200,
+     "score": 17780.0,
+     "rounds": 288,
+     "exh": true,
+     "ms": 0.226295
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_100",
+   {
+    "pkg": 4370,
+    "child": 4370,
+    "score": 4950.0,
+    "rounds": 5945,
+    "exh": true,
+    "ms": 2.628212
+   },
+   [
+    {
+     "pkg": 4370,
+     "child": 4370,
+     "score": 4950.0,
+     "rounds": 5945,
+     "exh": true,
+     "ms": 3.099196
+    },
+    {
+     "pkg": 4370,
+     "child": 4370,
+     "score": 4950.0,
+     "rounds": 5945,
+     "exh": true,
+     "ms": 3.102853
+    },
+    {
+     "pkg": 4370,
+     "child": 4370,
+     "score": 4950.0,
+     "rounds": 5945,
+     "exh": true,
+     "ms": 3.101631
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_20",
+   {
+    "pkg": 1650,
+    "child": 1650,
+    "score": 2230.0,
+    "rounds": 2,
+    "exh": true,
+    "ms": 0.012223
+   },
+   [
+    {
+     "pkg": 1650,
+     "child": 1650,
+     "score": 2230.0,
+     "rounds": 2,
+     "exh": true,
+     "ms": 0.012022
+    },
+    {
+     "pkg": 1650,
+     "child": 1650,
+     "score": 2230.0,
+     "rounds": 2,
+     "exh": true,
+     "ms": 0.012423
+    },
+    {
+     "pkg": 1650,
+     "child": 1650,
+     "score": 2230.0,
+     "rounds": 2,
+     "exh": true,
+     "ms": 0.012002
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_200",
+   {
+    "pkg": 37940,
+    "child": 33216,
+    "score": 33796.0,
+    "rounds": 100000,
+    "exh": false,
+    "ms": 40.759773
+   },
+   [
+    {
+     "pkg": 25747,
+     "child": 23460,
+     "score": 23460.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 102.95422
+    },
+    {
+     "pkg": 25290,
+     "child": 23003,
+     "score": 23583.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 92.184169
+    },
+    {
+     "pkg": 25290,
+     "child": 23003,
+     "score": 23583.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 107.98376
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_50",
+   {
+    "pkg": 14400,
+    "child": 12919,
+    "score": 13499.0,
+    "rounds": 1317,
+    "exh": true,
+    "ms": 0.679956
+   },
+   [
+    {
+     "pkg": 14400,
+     "child": 12919,
+     "score": 13499.0,
+     "rounds": 1317,
+     "exh": true,
+     "ms": 0.704522
+    },
+    {
+     "pkg": 14400,
+     "child": 12919,
+     "score": 13499.0,
+     "rounds": 1317,
+     "exh": true,
+     "ms": 0.715883
+    },
+    {
+     "pkg": 14400,
+     "child": 12919,
+     "score": 13499.0,
+     "rounds": 1317,
+     "exh": true,
+     "ms": 0.720662
+    }
+   ]
+  ],
+  [
+   "no_ancestry_100",
+   {
+    "pkg": 3690,
+    "child": 3690,
+    "score": 4270.0,
+    "rounds": 2212,
+    "exh": true,
+    "ms": 0.995008
+   },
+   [
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 2212,
+     "exh": true,
+     "ms": 1.000046
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 2212,
+     "exh": true,
+     "ms": 1.015937
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 2212,
+     "exh": true,
+     "ms": 1.058416
+    }
+   ]
+  ],
+  [
+   "no_ancestry_1000",
+   {
+    "pkg": 30733,
+    "child": 30733,
+    "score": 30733.0,
+    "rounds": 100000,
+    "exh": false,
+    "ms": 103.469158
+   },
+   [
+    {
+     "pkg": 30505,
+     "child": 30505,
+     "score": 30505.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 214.428934
+    },
+    {
+     "pkg": 30705,
+     "child": 30705,
+     "score": 30705.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 208.941555
+    },
+    {
+     "pkg": 30488,
+     "child": 30488,
+     "score": 30488.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 200.819092
+    }
+   ]
+  ],
+  [
+   "no_ancestry_20",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 13,
+    "exh": true,
+    "ms": 0.021871
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 13,
+     "exh": true,
+     "ms": 0.021601
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 13,
+     "exh": true,
+     "ms": 0.015169
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 13,
+     "exh": true,
+     "ms": 0.021119
+    }
+   ]
+  ],
+  [
+   "no_ancestry_200",
+   {
+    "pkg": 7090,
+    "child": 7090,
+    "score": 7670.0,
+    "rounds": 8127,
+    "exh": true,
+    "ms": 3.868029
+   },
+   [
+    {
+     "pkg": 7090,
+     "child": 7090,
+     "score": 7670.0,
+     "rounds": 8127,
+     "exh": true,
+     "ms": 4.037216
+    },
+    {
+     "pkg": 7090,
+     "child": 7090,
+     "score": 7670.0,
+     "rounds": 8127,
+     "exh": true,
+     "ms": 4.183371
+    },
+    {
+     "pkg": 7090,
+     "child": 7090,
+     "score": 7670.0,
+     "rounds": 8127,
+     "exh": true,
+     "ms": 3.870323
+    }
+   ]
+  ],
+  [
+   "no_ancestry_2000",
+   {
+    "pkg": 56730,
+    "child": 56730,
+    "score": 57310.0,
+    "rounds": 100000,
+    "exh": false,
+    "ms": 258.751273
+   },
+   [
+    {
+     "pkg": 56993,
+     "child": 56993,
+     "score": 56993.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 416.141454
+    },
+    {
+     "pkg": 56993,
+     "child": 56993,
+     "score": 56993.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 403.7608
+    },
+    {
+     "pkg": 56993,
+     "child": 56993,
+     "score": 56993.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 417.371144
+    }
+   ]
+  ],
+  [
+   "no_ancestry_50",
+   {
+    "pkg": 3690,
+    "child": 3690,
+    "score": 4270.0,
+    "rounds": 1191,
+    "exh": true,
+    "ms": 0.743926
+   },
+   [
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 1191,
+     "exh": true,
+     "ms": 0.763733
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 1191,
+     "exh": true,
+     "ms": 0.524034
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 1191,
+     "exh": true,
+     "ms": 0.579758
+    }
+   ]
+  ],
+  [
+   "no_ancestry_500",
+   {
+    "pkg": 16885,
+    "child": 16885,
+    "score": 16885.0,
+    "rounds": 100000,
+    "exh": false,
+    "ms": 71.857514
+   },
+   [
+    {
+     "pkg": 16862,
+     "child": 16862,
+     "score": 16862.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 147.444006
+    },
+    {
+     "pkg": 16885,
+     "child": 16885,
+     "score": 16885.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 152.705571
+    },
+    {
+     "pkg": 16860,
+     "child": 16860,
+     "score": 16860.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 139.279144
+    }
+   ]
+  ],
+  [
+   "private_ancestry_100",
+   {
+    "pkg": 4637,
+    "child": 4637,
+    "score": 4637.0,
+    "rounds": 929,
+    "exh": true,
+    "ms": 0.520787
+   },
+   [
+    {
+     "pkg": 4637,
+     "child": 4637,
+     "score": 4637.0,
+     "rounds": 929,
+     "exh": true,
+     "ms": 0.66118
+    },
+    {
+     "pkg": 4637,
+     "child": 4637,
+     "score": 4637.0,
+     "rounds": 929,
+     "exh": true,
+     "ms": 0.663435
+    },
+    {
+     "pkg": 4637,
+     "child": 4637,
+     "score": 4637.0,
+     "rounds": 929,
+     "exh": true,
+     "ms": 0.675367
+    }
+   ]
+  ],
+  [
+   "private_ancestry_20",
+   {
+    "pkg": 3640,
+    "child": 3378,
+    "score": 3958.0,
+    "rounds": 17,
+    "exh": true,
+    "ms": 0.022452
+   },
+   [
+    {
+     "pkg": 3640,
+     "child": 3378,
+     "score": 3958.0,
+     "rounds": 17,
+     "exh": true,
+     "ms": 0.022291
+    },
+    {
+     "pkg": 3640,
+     "child": 3378,
+     "score": 3958.0,
+     "rounds": 17,
+     "exh": true,
+     "ms": 0.022442
+    },
+    {
+     "pkg": 3640,
+     "child": 3378,
+     "score": 3958.0,
+     "rounds": 17,
+     "exh": true,
+     "ms": 0.011612
+    }
+   ]
+  ],
+  [
+   "private_ancestry_200",
+   {
+    "pkg": 11420,
+    "child": 11420,
+    "score": 11420.0,
+    "rounds": 41309,
+    "exh": true,
+    "ms": 18.422753
+   },
+   [
+    {
+     "pkg": 11420,
+     "child": 11420,
+     "score": 11420.0,
+     "rounds": 41309,
+     "exh": true,
+     "ms": 20.157079
+    },
+    {
+     "pkg": 11420,
+     "child": 11420,
+     "score": 11420.0,
+     "rounds": 41309,
+     "exh": true,
+     "ms": 17.686513
+    },
+    {
+     "pkg": 11420,
+     "child": 11420,
+     "score": 11420.0,
+     "rounds": 41309,
+     "exh": true,
+     "ms": 21.608663
+    }
+   ]
+  ],
+  [
+   "private_ancestry_50",
+   {
+    "pkg": 5090,
+    "child": 4466,
+    "score": 5046.0,
+    "rounds": 839,
+    "exh": true,
+    "ms": 0.410981
+   },
+   [
+    {
+     "pkg": 5090,
+     "child": 4466,
+     "score": 5046.0,
+     "rounds": 839,
+     "exh": true,
+     "ms": 0.350928
+    },
+    {
+     "pkg": 5090,
+     "child": 4466,
+     "score": 5046.0,
+     "rounds": 839,
+     "exh": true,
+     "ms": 0.452629
+    },
+    {
+     "pkg": 5090,
+     "child": 4466,
+     "score": 5046.0,
+     "rounds": 839,
+     "exh": true,
+     "ms": 0.333356
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_100",
+   {
+    "pkg": 16588,
+    "child": 16034,
+    "score": 16034.0,
+    "rounds": 100000,
+    "exh": false,
+    "ms": 35.030241
+   },
+   [
+    {
+     "pkg": 16050,
+     "child": 15290,
+     "score": 15870.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 81.630566
+    },
+    {
+     "pkg": 16796,
+     "child": 15722,
+     "score": 15722.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 75.797038
+    },
+    {
+     "pkg": 16410,
+     "child": 15650,
+     "score": 15650.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 80.329493
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_1000",
+   {
+    "pkg": 165350,
+    "child": 145932,
+    "score": 146512.0,
+    "rounds": 100000,
+    "exh": false,
+    "ms": 61.194413
+   },
+   [
+    {
+     "pkg": 151970,
+     "child": 133890,
+     "score": 134470.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 210.215499
+    },
+    {
+     "pkg": 151430,
+     "child": 133540,
+     "score": 134120.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 201.292404
+    },
+    {
+     "pkg": 151970,
+     "child": 133890,
+     "score": 134470.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 199.791668
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_20",
+   {
+    "pkg": 4540,
+    "child": 4319,
+    "score": 4899.0,
+    "rounds": 20,
+    "exh": true,
+    "ms": 0.03171
+   },
+   [
+    {
+     "pkg": 4540,
+     "child": 4319,
+     "score": 4899.0,
+     "rounds": 20,
+     "exh": true,
+     "ms": 0.019136
+    },
+    {
+     "pkg": 4540,
+     "child": 4319,
+     "score": 4899.0,
+     "rounds": 20,
+     "exh": true,
+     "ms": 0.027442
+    },
+    {
+     "pkg": 4540,
+     "child": 4319,
+     "score": 4899.0,
+     "rounds": 20,
+     "exh": true,
+     "ms": 0.027402
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_200",
+   {
+    "pkg": 42680,
+    "child": 36242,
+    "score": 36822.0,
+    "rounds": 100000,
+    "exh": false,
+    "ms": 48.15908
+   },
+   [
+    {
+     "pkg": 28400,
+     "child": 24954,
+     "score": 25534.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 94.476214
+    },
+    {
+     "pkg": 27330,
+     "child": 24098,
+     "score": 24678.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 108.985152
+    },
+    {
+     "pkg": 28114,
+     "child": 24668,
+     "score": 24668.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 91.976682
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_2000",
+   {
+    "pkg": 301090,
+    "child": 268754,
+    "score": 269334.0,
+    "rounds": 100000,
+    "exh": false,
+    "ms": 125.127246
+   },
+   [
+    {
+     "pkg": 292400,
+     "child": 260714,
+     "score": 261294.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 193.342726
+    },
+    {
+     "pkg": 292410,
+     "child": 261010,
+     "score": 261590.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 202.386628
+    },
+    {
+     "pkg": 293210,
+     "child": 261730,
+     "score": 262310.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 193.798562
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_50",
+   {
+    "pkg": 4098,
+    "child": 4098,
+    "score": 4098.0,
+    "rounds": 230,
+    "exh": true,
+    "ms": 0.13846
+   },
+   [
+    {
+     "pkg": 4098,
+     "child": 4098,
+     "score": 4098.0,
+     "rounds": 230,
+     "exh": true,
+     "ms": 0.188474
+    },
+    {
+     "pkg": 4098,
+     "child": 4098,
+     "score": 4098.0,
+     "rounds": 230,
+     "exh": true,
+     "ms": 0.152847
+    },
+    {
+     "pkg": 4098,
+     "child": 4098,
+     "score": 4098.0,
+     "rounds": 230,
+     "exh": true,
+     "ms": 0.092784
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_500",
+   {
+    "pkg": 89990,
+    "child": 77756,
+    "score": 78336.0,
+    "rounds": 100000,
+    "exh": false,
+    "ms": 54.608574
+   },
+   [
+    {
+     "pkg": 77104,
+     "child": 66487,
+     "score": 66487.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 119.114102
+    },
+    {
+     "pkg": 74980,
+     "child": 64315,
+     "score": 64895.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 119.267911
+    },
+    {
+     "pkg": 74980,
+     "child": 64315,
+     "score": 64895.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 114.454657
+    }
+   ]
+  ],
+  [
+   "smoke",
+   {
+    "pkg": 5330,
+    "child": 5030,
+    "score": 5610.0,
+    "rounds": 25,
+    "exh": true,
+    "ms": 0.03166
+   },
+   [
+    {
+     "pkg": 5330,
+     "child": 5030,
+     "score": 5610.0,
+     "rounds": 25,
+     "exh": true,
+     "ms": 0.034845
+    },
+    {
+     "pkg": 5330,
+     "child": 5030,
+     "score": 5610.0,
+     "rounds": 25,
+     "exh": true,
+     "ms": 0.034655
+    },
+    {
+     "pkg": 5330,
+     "child": 5030,
+     "score": 5610.0,
+     "rounds": 25,
+     "exh": true,
+     "ms": 0.024115
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_100",
+   {
+    "pkg": 81050,
+    "child": 30140,
+    "score": 30720.0,
+    "rounds": 100000,
+    "exh": false,
+    "ms": 32.439619
+   },
+   [
+    {
+     "pkg": 31180,
+     "child": 18612,
+     "score": 19192.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 75.194267
+    },
+    {
+     "pkg": 31180,
+     "child": 18612,
+     "score": 19192.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 68.267267
+    },
+    {
+     "pkg": 31758,
+     "child": 19190,
+     "score": 19190.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 68.343791
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_20",
+   {
+    "pkg": 28870,
+    "child": 12147,
+    "score": 12727.0,
+    "rounds": 18,
+    "exh": true,
+    "ms": 0.024406
+   },
+   [
+    {
+     "pkg": 28870,
+     "child": 12147,
+     "score": 12727.0,
+     "rounds": 18,
+     "exh": true,
+     "ms": 0.0268
+    },
+    {
+     "pkg": 28870,
+     "child": 12147,
+     "score": 12727.0,
+     "rounds": 18,
+     "exh": true,
+     "ms": 0.02654
+    },
+    {
+     "pkg": 28870,
+     "child": 12147,
+     "score": 12727.0,
+     "rounds": 18,
+     "exh": true,
+     "ms": 0.018264
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_200",
+   {
+    "pkg": 75880,
+    "child": 27281,
+    "score": 27861.0,
+    "rounds": 100000,
+    "exh": false,
+    "ms": 38.547262
+   },
+   [
+    {
+     "pkg": 57520,
+     "child": 23373,
+     "score": 23953.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 78.950227
+    },
+    {
+     "pkg": 74494,
+     "child": 26132,
+     "score": 26132.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 87.209987
+    },
+    {
+     "pkg": 74190,
+     "child": 25828,
+     "score": 26408.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 88.05858
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_50",
+   {
+    "pkg": 47520,
+    "child": 11332,
+    "score": 11912.0,
+    "rounds": 100000,
+    "exh": false,
+    "ms": 28.801753
+   },
+   [
+    {
+     "pkg": 25741,
+     "child": 5749,
+     "score": 5749.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 58.009707
+    },
+    {
+     "pkg": 24500,
+     "child": 4508,
+     "score": 5088.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 60.213493
+    },
+    {
+     "pkg": 24500,
+     "child": 4508,
+     "score": 5088.0,
+     "rounds": 100000,
+     "exh": true,
+     "ms": 57.725594
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_100",
+   {
+    "pkg": 4850,
+    "child": 4850,
+    "score": 5430.0,
+    "rounds": 2486,
+    "exh": true,
+    "ms": 1.328543
+   },
+   [
+    {
+     "pkg": 4850,
+     "child": 4850,
+     "score": 5430.0,
+     "rounds": 2486,
+     "exh": true,
+     "ms": 1.248433
+    },
+    {
+     "pkg": 4850,
+     "child": 4850,
+     "score": 5430.0,
+     "rounds": 2486,
+     "exh": true,
+     "ms": 1.320268
+    },
+    {
+     "pkg": 4850,
+     "child": 4850,
+     "score": 5430.0,
+     "rounds": 2486,
+     "exh": true,
+     "ms": 1.466883
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_1000",
+   {
+    "pkg": 56633,
+    "child": 56633,
+    "score": 56633.0,
+    "rounds": 100000,
+    "exh": false,
+    "ms": 116.420026
+   },
+   [
+    {
+     "pkg": 56633,
+     "child": 56633,
+     "score": 56633.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 258.952438
+    },
+    {
+     "pkg": 56633,
+     "child": 56633,
+     "score": 56633.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 270.55334
+    },
+    {
+     "pkg": 56633,
+     "child": 56633,
+     "score": 56633.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 262.448951
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_20",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 5,
+    "exh": true,
+    "ms": 0.018164
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 5,
+     "exh": true,
+     "ms": 0.01085
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 5,
+     "exh": true,
+     "ms": 0.015088
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 5,
+     "exh": true,
+     "ms": 0.015409
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_200",
+   {
+    "pkg": 7321,
+    "child": 7321,
+    "score": 7321.0,
+    "rounds": 17345,
+    "exh": true,
+    "ms": 9.966554
+   },
+   [
+    {
+     "pkg": 7321,
+     "child": 7321,
+     "score": 7321.0,
+     "rounds": 17345,
+     "exh": true,
+     "ms": 10.42764
+    },
+    {
+     "pkg": 7321,
+     "child": 7321,
+     "score": 7321.0,
+     "rounds": 17345,
+     "exh": true,
+     "ms": 10.14012
+    },
+    {
+     "pkg": 7321,
+     "child": 7321,
+     "score": 7321.0,
+     "rounds": 17345,
+     "exh": true,
+     "ms": 9.197401
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_2000",
+   {
+    "pkg": 97653,
+    "child": 97653,
+    "score": 97653.0,
+    "rounds": 100000,
+    "exh": false,
+    "ms": 221.139685
+   },
+   [
+    {
+     "pkg": 97653,
+     "child": 97653,
+     "score": 97653.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 308.921036
+    },
+    {
+     "pkg": 97653,
+     "child": 97653,
+     "score": 97653.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 284.368339
+    },
+    {
+     "pkg": 97653,
+     "child": 97653,
+     "score": 97653.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 314.753033
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_50",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 54,
+    "exh": true,
+    "ms": 0.050545
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 54,
+     "exh": true,
+     "ms": 0.044193
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 54,
+     "exh": true,
+     "ms": 0.061756
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 54,
+     "exh": true,
+     "ms": 0.05835
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_500",
+   {
+    "pkg": 19960,
+    "child": 19960,
+    "score": 20540.0,
+    "rounds": 100000,
+    "exh": false,
+    "ms": 59.619299
+   },
+   [
+    {
+     "pkg": 19960,
+     "child": 19960,
+     "score": 20540.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 111.5195
+    },
+    {
+     "pkg": 19960,
+     "child": 19960,
+     "score": 20540.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 122.840978
+    },
+    {
+     "pkg": 19960,
+     "child": 19960,
+     "score": 20540.0,
+     "rounds": 100000,
+     "exh": false,
+     "ms": 120.025965
+    }
+   ]
+  ]
+ ],
+ "1,000,000 rounds": [
+  [
+   "adversarial_shared_100",
+   {
+    "pkg": 3690,
+    "child": 3690,
+    "score": 4270.0,
+    "rounds": 486,
+    "exh": true,
+    "ms": 0.227447
+   },
+   [
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 486,
+     "exh": true,
+     "ms": 0.45862
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 486,
+     "exh": true,
+     "ms": 0.306936
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 486,
+     "exh": true,
+     "ms": 0.499838
+    }
+   ]
+  ],
+  [
+   "adversarial_shared_20",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 49,
+    "exh": true,
+    "ms": 0.050484
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 49,
+     "exh": true,
+     "ms": 0.028063
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 49,
+     "exh": true,
+     "ms": 0.039133
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 49,
+     "exh": true,
+     "ms": 0.040085
+    }
+   ]
+  ],
+  [
+   "adversarial_shared_200",
+   {
+    "pkg": 5050,
+    "child": 5050,
+    "score": 5630.0,
+    "rounds": 2480,
+    "exh": true,
+    "ms": 1.318735
+   },
+   [
+    {
+     "pkg": 5050,
+     "child": 5050,
+     "score": 5630.0,
+     "rounds": 2480,
+     "exh": true,
+     "ms": 1.198158
+    },
+    {
+     "pkg": 5050,
+     "child": 5050,
+     "score": 5630.0,
+     "rounds": 2480,
+     "exh": true,
+     "ms": 1.346678
+    },
+    {
+     "pkg": 5050,
+     "child": 5050,
+     "score": 5630.0,
+     "rounds": 2480,
+     "exh": true,
+     "ms": 1.187729
+    }
+   ]
+  ],
+  [
+   "adversarial_shared_50",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 19,
+    "exh": true,
+    "ms": 0.020449
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 19,
+     "exh": true,
+     "ms": 0.028704
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 19,
+     "exh": true,
+     "ms": 0.020208
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 19,
+     "exh": true,
+     "ms": 0.028644
+    }
+   ]
+  ],
+  [
+   "high_feerate_100",
+   {
+    "pkg": 21720,
+    "child": 21720,
+    "score": 22300.0,
+    "rounds": 1631,
+    "exh": true,
+    "ms": 0.726614
+   },
+   [
+    {
+     "pkg": 21720,
+     "child": 21720,
+     "score": 22300.0,
+     "rounds": 1631,
+     "exh": true,
+     "ms": 0.807015
+    },
+    {
+     "pkg": 21720,
+     "child": 21720,
+     "score": 22300.0,
+     "rounds": 1631,
+     "exh": true,
+     "ms": 0.863951
+    },
+    {
+     "pkg": 21720,
+     "child": 21720,
+     "score": 22300.0,
+     "rounds": 1631,
+     "exh": true,
+     "ms": 0.476375
+    }
+   ]
+  ],
+  [
+   "high_feerate_20",
+   {
+    "pkg": 8920,
+    "child": 8920,
+    "score": 9500.0,
+    "rounds": 15,
+    "exh": true,
+    "ms": 0.016741
+   },
+   [
+    {
+     "pkg": 8920,
+     "child": 8920,
+     "score": 9500.0,
+     "rounds": 15,
+     "exh": true,
+     "ms": 0.016772
+    },
+    {
+     "pkg": 8920,
+     "child": 8920,
+     "score": 9500.0,
+     "rounds": 15,
+     "exh": true,
+     "ms": 0.018264
+    },
+    {
+     "pkg": 8920,
+     "child": 8920,
+     "score": 9500.0,
+     "rounds": 15,
+     "exh": true,
+     "ms": 0.016591
+    }
+   ]
+  ],
+  [
+   "high_feerate_200",
+   {
+    "pkg": 66591,
+    "child": 65586,
+    "score": 65586.0,
+    "rounds": 166686,
+    "exh": true,
+    "ms": 62.529481
+   },
+   [
+    {
+     "pkg": 66591,
+     "child": 65586,
+     "score": 65586.0,
+     "rounds": 166686,
+     "exh": true,
+     "ms": 55.74586
+    },
+    {
+     "pkg": 66591,
+     "child": 65586,
+     "score": 65586.0,
+     "rounds": 166686,
+     "exh": true,
+     "ms": 63.272846
+    },
+    {
+     "pkg": 66591,
+     "child": 65586,
+     "score": 65586.0,
+     "rounds": 166686,
+     "exh": true,
+     "ms": 64.125285
+    }
+   ]
+  ],
+  [
+   "high_feerate_50",
+   {
+    "pkg": 17200,
+    "child": 17200,
+    "score": 17780.0,
+    "rounds": 288,
+    "exh": true,
+    "ms": 0.167745
+   },
+   [
+    {
+     "pkg": 17200,
+     "child": 17200,
+     "score": 17780.0,
+     "rounds": 288,
+     "exh": true,
+     "ms": 0.210255
+    },
+    {
+     "pkg": 17200,
+     "child": 17200,
+     "score": 17780.0,
+     "rounds": 288,
+     "exh": true,
+     "ms": 0.158577
+    },
+    {
+     "pkg": 17200,
+     "child": 17200,
+     "score": 17780.0,
+     "rounds": 288,
+     "exh": true,
+     "ms": 0.224472
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_100",
+   {
+    "pkg": 4370,
+    "child": 4370,
+    "score": 4950.0,
+    "rounds": 5945,
+    "exh": true,
+    "ms": 3.397647
+   },
+   [
+    {
+     "pkg": 4370,
+     "child": 4370,
+     "score": 4950.0,
+     "rounds": 5945,
+     "exh": true,
+     "ms": 3.119675
+    },
+    {
+     "pkg": 4370,
+     "child": 4370,
+     "score": 4950.0,
+     "rounds": 5945,
+     "exh": true,
+     "ms": 3.295926
+    },
+    {
+     "pkg": 4370,
+     "child": 4370,
+     "score": 4950.0,
+     "rounds": 5945,
+     "exh": true,
+     "ms": 3.199495
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_20",
+   {
+    "pkg": 1650,
+    "child": 1650,
+    "score": 2230.0,
+    "rounds": 2,
+    "exh": true,
+    "ms": 0.012434
+   },
+   [
+    {
+     "pkg": 1650,
+     "child": 1650,
+     "score": 2230.0,
+     "rounds": 2,
+     "exh": true,
+     "ms": 0.012203
+    },
+    {
+     "pkg": 1650,
+     "child": 1650,
+     "score": 2230.0,
+     "rounds": 2,
+     "exh": true,
+     "ms": 0.014016
+    },
+    {
+     "pkg": 1650,
+     "child": 1650,
+     "score": 2230.0,
+     "rounds": 2,
+     "exh": true,
+     "ms": 0.012073
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_200",
+   {
+    "pkg": 33040,
+    "child": 30203,
+    "score": 30203.0,
+    "rounds": 1000000,
+    "exh": false,
+    "ms": 426.33336
+   },
+   [
+    {
+     "pkg": 25673,
+     "child": 23386,
+     "score": 23386.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 887.06513
+    },
+    {
+     "pkg": 26275,
+     "child": 23988,
+     "score": 23988.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 909.642636
+    },
+    {
+     "pkg": 25735,
+     "child": 23448,
+     "score": 23448.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 891.560034
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_50",
+   {
+    "pkg": 14400,
+    "child": 12919,
+    "score": 13499.0,
+    "rounds": 1317,
+    "exh": true,
+    "ms": 0.748665
+   },
+   [
+    {
+     "pkg": 14400,
+     "child": 12919,
+     "score": 13499.0,
+     "rounds": 1317,
+     "exh": true,
+     "ms": 0.665338
+    },
+    {
+     "pkg": 14400,
+     "child": 12919,
+     "score": 13499.0,
+     "rounds": 1317,
+     "exh": true,
+     "ms": 0.682972
+    },
+    {
+     "pkg": 14400,
+     "child": 12919,
+     "score": 13499.0,
+     "rounds": 1317,
+     "exh": true,
+     "ms": 0.701527
+    }
+   ]
+  ],
+  [
+   "no_ancestry_100",
+   {
+    "pkg": 3690,
+    "child": 3690,
+    "score": 4270.0,
+    "rounds": 2212,
+    "exh": true,
+    "ms": 1.047576
+   },
+   [
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 2212,
+     "exh": true,
+     "ms": 1.096117
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 2212,
+     "exh": true,
+     "ms": 1.092601
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 2212,
+     "exh": true,
+     "ms": 1.040553
+    }
+   ]
+  ],
+  [
+   "no_ancestry_1000",
+   {
+    "pkg": 30462,
+    "child": 30462,
+    "score": 30462.0,
+    "rounds": 1000000,
+    "exh": false,
+    "ms": 602.932818
+   },
+   [
+    {
+     "pkg": 30462,
+     "child": 30462,
+     "score": 30462.0,
+     "rounds": 1000000,
+     "exh": false,
+     "ms": 1486.651008
+    },
+    {
+     "pkg": 30462,
+     "child": 30462,
+     "score": 30462.0,
+     "rounds": 1000000,
+     "exh": false,
+     "ms": 1473.315692
+    },
+    {
+     "pkg": 30462,
+     "child": 30462,
+     "score": 30462.0,
+     "rounds": 1000000,
+     "exh": false,
+     "ms": 1371.94706
+    }
+   ]
+  ],
+  [
+   "no_ancestry_20",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 13,
+    "exh": true,
+    "ms": 0.022442
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 13,
+     "exh": true,
+     "ms": 0.023575
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 13,
+     "exh": true,
+     "ms": 0.015839
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 13,
+     "exh": true,
+     "ms": 0.014648
+    }
+   ]
+  ],
+  [
+   "no_ancestry_200",
+   {
+    "pkg": 7090,
+    "child": 7090,
+    "score": 7670.0,
+    "rounds": 8127,
+    "exh": true,
+    "ms": 3.870134
+   },
+   [
+    {
+     "pkg": 7090,
+     "child": 7090,
+     "score": 7670.0,
+     "rounds": 8127,
+     "exh": true,
+     "ms": 4.063186
+    },
+    {
+     "pkg": 7090,
+     "child": 7090,
+     "score": 7670.0,
+     "rounds": 8127,
+     "exh": true,
+     "ms": 3.831781
+    },
+    {
+     "pkg": 7090,
+     "child": 7090,
+     "score": 7670.0,
+     "rounds": 8127,
+     "exh": true,
+     "ms": 3.971072
+    }
+   ]
+  ],
+  [
+   "no_ancestry_2000",
+   {
+    "pkg": 56995,
+    "child": 56995,
+    "score": 56995.0,
+    "rounds": 1000000,
+    "exh": false,
+    "ms": 1714.558053
+   },
+   [
+    {
+     "pkg": 56982,
+     "child": 56982,
+     "score": 56982.0,
+     "rounds": 1000000,
+     "exh": false,
+     "ms": 2907.226104
+    },
+    {
+     "pkg": 56980,
+     "child": 56980,
+     "score": 56980.0,
+     "rounds": 1000000,
+     "exh": false,
+     "ms": 2847.153996
+    },
+    {
+     "pkg": 56993,
+     "child": 56993,
+     "score": 56993.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 2931.880245
+    }
+   ]
+  ],
+  [
+   "no_ancestry_50",
+   {
+    "pkg": 3690,
+    "child": 3690,
+    "score": 4270.0,
+    "rounds": 1191,
+    "exh": true,
+    "ms": 0.528272
+   },
+   [
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 1191,
+     "exh": true,
+     "ms": 0.688873
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 1191,
+     "exh": true,
+     "ms": 0.709662
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 1191,
+     "exh": true,
+     "ms": 0.530836
+    }
+   ]
+  ],
+  [
+   "no_ancestry_500",
+   {
+    "pkg": 16226,
+    "child": 16226,
+    "score": 16226.0,
+    "rounds": 665889,
+    "exh": true,
+    "ms": 304.156438
+   },
+   [
+    {
+     "pkg": 16226,
+     "child": 16226,
+     "score": 16226.0,
+     "rounds": 665889,
+     "exh": true,
+     "ms": 298.715668
+    },
+    {
+     "pkg": 16226,
+     "child": 16226,
+     "score": 16226.0,
+     "rounds": 665889,
+     "exh": true,
+     "ms": 299.47902
+    },
+    {
+     "pkg": 16226,
+     "child": 16226,
+     "score": 16226.0,
+     "rounds": 665889,
+     "exh": true,
+     "ms": 303.43235
+    }
+   ]
+  ],
+  [
+   "private_ancestry_100",
+   {
+    "pkg": 4637,
+    "child": 4637,
+    "score": 4637.0,
+    "rounds": 929,
+    "exh": true,
+    "ms": 0.521579
+   },
+   [
+    {
+     "pkg": 4637,
+     "child": 4637,
+     "score": 4637.0,
+     "rounds": 929,
+     "exh": true,
+     "ms": 0.915198
+    },
+    {
+     "pkg": 4637,
+     "child": 4637,
+     "score": 4637.0,
+     "rounds": 929,
+     "exh": true,
+     "ms": 0.723067
+    },
+    {
+     "pkg": 4637,
+     "child": 4637,
+     "score": 4637.0,
+     "rounds": 929,
+     "exh": true,
+     "ms": 0.499327
+    }
+   ]
+  ],
+  [
+   "private_ancestry_20",
+   {
+    "pkg": 3640,
+    "child": 3378,
+    "score": 3958.0,
+    "rounds": 17,
+    "exh": true,
+    "ms": 0.033633
+   },
+   [
+    {
+     "pkg": 3640,
+     "child": 3378,
+     "score": 3958.0,
+     "rounds": 17,
+     "exh": true,
+     "ms": 0.017042
+    },
+    {
+     "pkg": 3640,
+     "child": 3378,
+     "score": 3958.0,
+     "rounds": 17,
+     "exh": true,
+     "ms": 0.022542
+    },
+    {
+     "pkg": 3640,
+     "child": 3378,
+     "score": 3958.0,
+     "rounds": 17,
+     "exh": true,
+     "ms": 0.022161
+    }
+   ]
+  ],
+  [
+   "private_ancestry_200",
+   {
+    "pkg": 11420,
+    "child": 11420,
+    "score": 11420.0,
+    "rounds": 41309,
+    "exh": true,
+    "ms": 19.478909
+   },
+   [
+    {
+     "pkg": 11420,
+     "child": 11420,
+     "score": 11420.0,
+     "rounds": 41309,
+     "exh": true,
+     "ms": 15.324431
+    },
+    {
+     "pkg": 11420,
+     "child": 11420,
+     "score": 11420.0,
+     "rounds": 41309,
+     "exh": true,
+     "ms": 15.818258
+    },
+    {
+     "pkg": 11420,
+     "child": 11420,
+     "score": 11420.0,
+     "rounds": 41309,
+     "exh": true,
+     "ms": 17.214479
+    }
+   ]
+  ],
+  [
+   "private_ancestry_50",
+   {
+    "pkg": 5090,
+    "child": 4466,
+    "score": 5046.0,
+    "rounds": 839,
+    "exh": true,
+    "ms": 0.346681
+   },
+   [
+    {
+     "pkg": 5090,
+     "child": 4466,
+     "score": 5046.0,
+     "rounds": 839,
+     "exh": true,
+     "ms": 0.463851
+    },
+    {
+     "pkg": 5090,
+     "child": 4466,
+     "score": 5046.0,
+     "rounds": 839,
+     "exh": true,
+     "ms": 0.345969
+    },
+    {
+     "pkg": 5090,
+     "child": 4466,
+     "score": 5046.0,
+     "rounds": 839,
+     "exh": true,
+     "ms": 0.336652
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_100",
+   {
+    "pkg": 15638,
+    "child": 14878,
+    "score": 14878.0,
+    "rounds": 142160,
+    "exh": true,
+    "ms": 48.234127
+   },
+   [
+    {
+     "pkg": 15638,
+     "child": 14878,
+     "score": 14878.0,
+     "rounds": 142160,
+     "exh": true,
+     "ms": 47.536608
+    },
+    {
+     "pkg": 15638,
+     "child": 14878,
+     "score": 14878.0,
+     "rounds": 142160,
+     "exh": true,
+     "ms": 48.437739
+    },
+    {
+     "pkg": 15638,
+     "child": 14878,
+     "score": 14878.0,
+     "rounds": 142160,
+     "exh": true,
+     "ms": 48.220171
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_1000",
+   {
+    "pkg": 165350,
+    "child": 145932,
+    "score": 146512.0,
+    "rounds": 1000000,
+    "exh": false,
+    "ms": 591.152353
+   },
+   [
+    {
+     "pkg": 150156,
+     "child": 133616,
+     "score": 133616.0,
+     "rounds": 1000000,
+     "exh": false,
+     "ms": 1182.653528
+    },
+    {
+     "pkg": 150520,
+     "child": 132253,
+     "score": 132833.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 1929.225215
+    },
+    {
+     "pkg": 149720,
+     "child": 131933,
+     "score": 132513.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 1912.203077
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_20",
+   {
+    "pkg": 4540,
+    "child": 4319,
+    "score": 4899.0,
+    "rounds": 20,
+    "exh": true,
+    "ms": 0.02676
+   },
+   [
+    {
+     "pkg": 4540,
+     "child": 4319,
+     "score": 4899.0,
+     "rounds": 20,
+     "exh": true,
+     "ms": 0.040636
+    },
+    {
+     "pkg": 4540,
+     "child": 4319,
+     "score": 4899.0,
+     "rounds": 20,
+     "exh": true,
+     "ms": 0.019186
+    },
+    {
+     "pkg": 4540,
+     "child": 4319,
+     "score": 4899.0,
+     "rounds": 20,
+     "exh": true,
+     "ms": 0.026991
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_200",
+   {
+    "pkg": 42680,
+    "child": 36242,
+    "score": 36822.0,
+    "rounds": 1000000,
+    "exh": false,
+    "ms": 408.16043
+   },
+   [
+    {
+     "pkg": 25970,
+     "child": 22738,
+     "score": 23318.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 896.019597
+    },
+    {
+     "pkg": 27311,
+     "child": 23865,
+     "score": 23865.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 886.659413
+    },
+    {
+     "pkg": 25970,
+     "child": 22738,
+     "score": 23318.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 879.612972
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_2000",
+   {
+    "pkg": 301090,
+    "child": 268754,
+    "score": 269334.0,
+    "rounds": 1000000,
+    "exh": false,
+    "ms": 1211.772541
+   },
+   [
+    {
+     "pkg": 288480,
+     "child": 257473,
+     "score": 258053.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 1757.29347
+    },
+    {
+     "pkg": 288240,
+     "child": 256631,
+     "score": 257211.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 1755.359656
+    },
+    {
+     "pkg": 287330,
+     "child": 256438,
+     "score": 257018.0,
+     "rounds": 1000000,
+     "exh": false,
+     "ms": 1740.108347
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_50",
+   {
+    "pkg": 4098,
+    "child": 4098,
+    "score": 4098.0,
+    "rounds": 230,
+    "exh": true,
+    "ms": 0.124434
+   },
+   [
+    {
+     "pkg": 4098,
+     "child": 4098,
+     "score": 4098.0,
+     "rounds": 230,
+     "exh": true,
+     "ms": 0.2133
+    },
+    {
+     "pkg": 4098,
+     "child": 4098,
+     "score": 4098.0,
+     "rounds": 230,
+     "exh": true,
+     "ms": 0.187031
+    },
+    {
+     "pkg": 4098,
+     "child": 4098,
+     "score": 4098.0,
+     "rounds": 230,
+     "exh": true,
+     "ms": 0.155021
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_500",
+   {
+    "pkg": 89990,
+    "child": 77756,
+    "score": 78336.0,
+    "rounds": 1000000,
+    "exh": false,
+    "ms": 476.786766
+   },
+   [
+    {
+     "pkg": 70340,
+     "child": 61147,
+     "score": 61727.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 1138.247433
+    },
+    {
+     "pkg": 73720,
+     "child": 63618,
+     "score": 63618.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 1136.901674
+    },
+    {
+     "pkg": 76601,
+     "child": 65936,
+     "score": 65936.0,
+     "rounds": 1000000,
+     "exh": false,
+     "ms": 1093.637556
+    }
+   ]
+  ],
+  [
+   "smoke",
+   {
+    "pkg": 5330,
+    "child": 5030,
+    "score": 5610.0,
+    "rounds": 25,
+    "exh": true,
+    "ms": 0.027291
+   },
+   [
+    {
+     "pkg": 5330,
+     "child": 5030,
+     "score": 5610.0,
+     "rounds": 25,
+     "exh": true,
+     "ms": 0.023224
+    },
+    {
+     "pkg": 5330,
+     "child": 5030,
+     "score": 5610.0,
+     "rounds": 25,
+     "exh": true,
+     "ms": 0.032111
+    },
+    {
+     "pkg": 5330,
+     "child": 5030,
+     "score": 5610.0,
+     "rounds": 25,
+     "exh": true,
+     "ms": 0.03239
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_100",
+   {
+    "pkg": 81050,
+    "child": 30140,
+    "score": 30720.0,
+    "rounds": 1000000,
+    "exh": false,
+    "ms": 318.047653
+   },
+   [
+    {
+     "pkg": 31180,
+     "child": 18612,
+     "score": 19192.0,
+     "rounds": 1000000,
+     "exh": false,
+     "ms": 645.613662
+    },
+    {
+     "pkg": 31180,
+     "child": 18612,
+     "score": 19192.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 634.093933
+    },
+    {
+     "pkg": 51591,
+     "child": 19006,
+     "score": 19006.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 648.820466
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_20",
+   {
+    "pkg": 28870,
+    "child": 12147,
+    "score": 12727.0,
+    "rounds": 18,
+    "exh": true,
+    "ms": 0.02646
+   },
+   [
+    {
+     "pkg": 28870,
+     "child": 12147,
+     "score": 12727.0,
+     "rounds": 18,
+     "exh": true,
+     "ms": 0.026871
+    },
+    {
+     "pkg": 28870,
+     "child": 12147,
+     "score": 12727.0,
+     "rounds": 18,
+     "exh": true,
+     "ms": 0.027321
+    },
+    {
+     "pkg": 28870,
+     "child": 12147,
+     "score": 12727.0,
+     "rounds": 18,
+     "exh": true,
+     "ms": 0.02631
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_200",
+   {
+    "pkg": 75880,
+    "child": 27281,
+    "score": 27861.0,
+    "rounds": 1000000,
+    "exh": false,
+    "ms": 395.749348
+   },
+   [
+    {
+     "pkg": 57146,
+     "child": 22999,
+     "score": 22999.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 787.834321
+    },
+    {
+     "pkg": 57627,
+     "child": 23480,
+     "score": 23480.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 804.290521
+    },
+    {
+     "pkg": 57520,
+     "child": 23373,
+     "score": 23953.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 808.445774
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_50",
+   {
+    "pkg": 47520,
+    "child": 11332,
+    "score": 11912.0,
+    "rounds": 1000000,
+    "exh": false,
+    "ms": 275.615137
+   },
+   [
+    {
+     "pkg": 24500,
+     "child": 4508,
+     "score": 5088.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 572.174858
+    },
+    {
+     "pkg": 24500,
+     "child": 4508,
+     "score": 5088.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 570.707274
+    },
+    {
+     "pkg": 24500,
+     "child": 4508,
+     "score": 5088.0,
+     "rounds": 1000000,
+     "exh": true,
+     "ms": 558.808453
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_100",
+   {
+    "pkg": 4850,
+    "child": 4850,
+    "score": 5430.0,
+    "rounds": 2486,
+    "exh": true,
+    "ms": 1.378227
+   },
+   [
+    {
+     "pkg": 4850,
+     "child": 4850,
+     "score": 5430.0,
+     "rounds": 2486,
+     "exh": true,
+     "ms": 1.319005
+    },
+    {
+     "pkg": 4850,
+     "child": 4850,
+     "score": 5430.0,
+     "rounds": 2486,
+     "exh": true,
+     "ms": 1.405929
+    },
+    {
+     "pkg": 4850,
+     "child": 4850,
+     "score": 5430.0,
+     "rounds": 2486,
+     "exh": true,
+     "ms": 1.307344
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_1000",
+   {
+    "pkg": 56162,
+    "child": 56162,
+    "score": 56162.0,
+    "rounds": 1000000,
+    "exh": false,
+    "ms": 855.42292
+   },
+   [
+    {
+     "pkg": 56162,
+     "child": 56162,
+     "score": 56162.0,
+     "rounds": 1000000,
+     "exh": false,
+     "ms": 1251.79858
+    },
+    {
+     "pkg": 56162,
+     "child": 56162,
+     "score": 56162.0,
+     "rounds": 1000000,
+     "exh": false,
+     "ms": 2272.854893
+    },
+    {
+     "pkg": 56162,
+     "child": 56162,
+     "score": 56162.0,
+     "rounds": 1000000,
+     "exh": false,
+     "ms": 2235.077581
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_20",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 5,
+    "exh": true,
+    "ms": 0.014647
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 5,
+     "exh": true,
+     "ms": 0.015669
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 5,
+     "exh": true,
+     "ms": 0.015128
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 5,
+     "exh": true,
+     "ms": 0.01078
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_200",
+   {
+    "pkg": 7321,
+    "child": 7321,
+    "score": 7321.0,
+    "rounds": 17345,
+    "exh": true,
+    "ms": 10.223209
+   },
+   [
+    {
+     "pkg": 7321,
+     "child": 7321,
+     "score": 7321.0,
+     "rounds": 17345,
+     "exh": true,
+     "ms": 9.988188
+    },
+    {
+     "pkg": 7321,
+     "child": 7321,
+     "score": 7321.0,
+     "rounds": 17345,
+     "exh": true,
+     "ms": 9.692874
+    },
+    {
+     "pkg": 7321,
+     "child": 7321,
+     "score": 7321.0,
+     "rounds": 17345,
+     "exh": true,
+     "ms": 10.052519
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_2000",
+   {
+    "pkg": 97553,
+    "child": 97553,
+    "score": 97553.0,
+    "rounds": 1000000,
+    "exh": false,
+    "ms": 1165.996346
+   },
+   [
+    {
+     "pkg": 97553,
+     "child": 97553,
+     "score": 97553.0,
+     "rounds": 1000000,
+     "exh": false,
+     "ms": 1722.910053
+    },
+    {
+     "pkg": 97553,
+     "child": 97553,
+     "score": 97553.0,
+     "rounds": 1000000,
+     "exh": false,
+     "ms": 1681.290508
+    },
+    {
+     "pkg": 97553,
+     "child": 97553,
+     "score": 97553.0,
+     "rounds": 1000000,
+     "exh": false,
+     "ms": 1688.501217
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_50",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 54,
+    "exh": true,
+    "ms": 0.055594
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 54,
+     "exh": true,
+     "ms": 0.057508
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 54,
+     "exh": true,
+     "ms": 0.055835
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 54,
+     "exh": true,
+     "ms": 0.056557
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_500",
+   {
+    "pkg": 20247,
+    "child": 20247,
+    "score": 20247.0,
+    "rounds": 873718,
+    "exh": true,
+    "ms": 342.931371
+   },
+   [
+    {
+     "pkg": 20247,
+     "child": 20247,
+     "score": 20247.0,
+     "rounds": 873718,
+     "exh": true,
+     "ms": 346.125298
+    },
+    {
+     "pkg": 20247,
+     "child": 20247,
+     "score": 20247.0,
+     "rounds": 873718,
+     "exh": true,
+     "ms": 348.185285
+    },
+    {
+     "pkg": 20247,
+     "child": 20247,
+     "score": 20247.0,
+     "rounds": 873718,
+     "exh": true,
+     "ms": 352.607516
+    }
+   ]
+  ]
+ ],
+ "10 ms": [
+  [
+   "adversarial_shared_100",
+   {
+    "pkg": 3690,
+    "child": 3690,
+    "score": 4270.0,
+    "rounds": 486,
+    "exh": true,
+    "ms": 0.224531
+   },
+   [
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 486,
+     "exh": true,
+     "ms": 0.236203
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 486,
+     "exh": true,
+     "ms": 0.30334
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 486,
+     "exh": true,
+     "ms": 0.214914
+    }
+   ]
+  ],
+  [
+   "adversarial_shared_20",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 49,
+    "exh": true,
+    "ms": 0.040056
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 49,
+     "exh": true,
+     "ms": 0.024256
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 49,
+     "exh": true,
+     "ms": 0.028553
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 49,
+     "exh": true,
+     "ms": 0.040356
+    }
+   ]
+  ],
+  [
+   "adversarial_shared_200",
+   {
+    "pkg": 5050,
+    "child": 5050,
+    "score": 5630.0,
+    "rounds": 2480,
+    "exh": true,
+    "ms": 1.481561
+   },
+   [
+    {
+     "pkg": 5050,
+     "child": 5050,
+     "score": 5630.0,
+     "rounds": 2480,
+     "exh": true,
+     "ms": 1.242993
+    },
+    {
+     "pkg": 5050,
+     "child": 5050,
+     "score": 5630.0,
+     "rounds": 2480,
+     "exh": true,
+     "ms": 1.215161
+    },
+    {
+     "pkg": 5050,
+     "child": 5050,
+     "score": 5630.0,
+     "rounds": 2480,
+     "exh": true,
+     "ms": 1.238244
+    }
+   ]
+  ],
+  [
+   "adversarial_shared_50",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 19,
+    "exh": true,
+    "ms": 0.028884
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 19,
+     "exh": true,
+     "ms": 0.029316
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 19,
+     "exh": true,
+     "ms": 0.020488
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 19,
+     "exh": true,
+     "ms": 0.020279
+    }
+   ]
+  ],
+  [
+   "high_feerate_100",
+   {
+    "pkg": 21720,
+    "child": 21720,
+    "score": 22300.0,
+    "rounds": 1631,
+    "exh": true,
+    "ms": 1.057225
+   },
+   [
+    {
+     "pkg": 21720,
+     "child": 21720,
+     "score": 22300.0,
+     "rounds": 1631,
+     "exh": true,
+     "ms": 0.910609
+    },
+    {
+     "pkg": 21720,
+     "child": 21720,
+     "score": 22300.0,
+     "rounds": 1631,
+     "exh": true,
+     "ms": 0.882487
+    },
+    {
+     "pkg": 21720,
+     "child": 21720,
+     "score": 22300.0,
+     "rounds": 1631,
+     "exh": true,
+     "ms": 0.980961
+    }
+   ]
+  ],
+  [
+   "high_feerate_20",
+   {
+    "pkg": 8920,
+    "child": 8920,
+    "score": 9500.0,
+    "rounds": 15,
+    "exh": true,
+    "ms": 0.017132
+   },
+   [
+    {
+     "pkg": 8920,
+     "child": 8920,
+     "score": 9500.0,
+     "rounds": 15,
+     "exh": true,
+     "ms": 0.038833
+    },
+    {
+     "pkg": 8920,
+     "child": 8920,
+     "score": 9500.0,
+     "rounds": 15,
+     "exh": true,
+     "ms": 0.026049
+    },
+    {
+     "pkg": 8920,
+     "child": 8920,
+     "score": 9500.0,
+     "rounds": 15,
+     "exh": true,
+     "ms": 0.024335
+    }
+   ]
+  ],
+  [
+   "high_feerate_200",
+   {
+    "pkg": 77888,
+    "child": 77888,
+    "score": 77888.0,
+    "rounds": 20736,
+    "exh": false,
+    "ms": 10.008526
+   },
+   [
+    {
+     "pkg": 78045,
+     "child": 78045,
+     "score": 78045.0,
+     "rounds": 11417,
+     "exh": false,
+     "ms": 10.184206
+    },
+    {
+     "pkg": 73160,
+     "child": 69200,
+     "score": 69780.0,
+     "rounds": 12011,
+     "exh": true,
+     "ms": 10.103746
+    },
+    {
+     "pkg": 74200,
+     "child": 70240,
+     "score": 70240.0,
+     "rounds": 12989,
+     "exh": true,
+     "ms": 10.055264
+    }
+   ]
+  ],
+  [
+   "high_feerate_50",
+   {
+    "pkg": 17200,
+    "child": 17200,
+    "score": 17780.0,
+    "rounds": 288,
+    "exh": true,
+    "ms": 0.162475
+   },
+   [
+    {
+     "pkg": 17200,
+     "child": 17200,
+     "score": 17780.0,
+     "rounds": 288,
+     "exh": true,
+     "ms": 0.109746
+    },
+    {
+     "pkg": 17200,
+     "child": 17200,
+     "score": 17780.0,
+     "rounds": 288,
+     "exh": true,
+     "ms": 0.158788
+    },
+    {
+     "pkg": 17200,
+     "child": 17200,
+     "score": 17780.0,
+     "rounds": 288,
+     "exh": true,
+     "ms": 0.158137
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_100",
+   {
+    "pkg": 4370,
+    "child": 4370,
+    "score": 4950.0,
+    "rounds": 5945,
+    "exh": true,
+    "ms": 3.246624
+   },
+   [
+    {
+     "pkg": 4370,
+     "child": 4370,
+     "score": 4950.0,
+     "rounds": 5945,
+     "exh": true,
+     "ms": 3.335971
+    },
+    {
+     "pkg": 4370,
+     "child": 4370,
+     "score": 4950.0,
+     "rounds": 5945,
+     "exh": true,
+     "ms": 3.207832
+    },
+    {
+     "pkg": 4370,
+     "child": 4370,
+     "score": 4950.0,
+     "rounds": 5945,
+     "exh": true,
+     "ms": 3.346181
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_20",
+   {
+    "pkg": 1650,
+    "child": 1650,
+    "score": 2230.0,
+    "rounds": 2,
+    "exh": true,
+    "ms": 0.008656
+   },
+   [
+    {
+     "pkg": 1650,
+     "child": 1650,
+     "score": 2230.0,
+     "rounds": 2,
+     "exh": true,
+     "ms": 0.012763
+    },
+    {
+     "pkg": 1650,
+     "child": 1650,
+     "score": 2230.0,
+     "rounds": 2,
+     "exh": true,
+     "ms": 0.021411
+    },
+    {
+     "pkg": 1650,
+     "child": 1650,
+     "score": 2230.0,
+     "rounds": 2,
+     "exh": true,
+     "ms": 0.008747
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_200",
+   {
+    "pkg": 37940,
+    "child": 33216,
+    "score": 33796.0,
+    "rounds": 25088,
+    "exh": false,
+    "ms": 10.144491
+   },
+   [
+    {
+     "pkg": 35690,
+     "child": 31851,
+     "score": 32431.0,
+     "rounds": 8306,
+     "exh": true,
+     "ms": 10.055034
+    },
+    {
+     "pkg": 30785,
+     "child": 27613,
+     "score": 27613.0,
+     "rounds": 7479,
+     "exh": true,
+     "ms": 10.061936
+    },
+    {
+     "pkg": 25290,
+     "child": 23003,
+     "score": 23583.0,
+     "rounds": 7309,
+     "exh": true,
+     "ms": 10.09583
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_50",
+   {
+    "pkg": 14400,
+    "child": 12919,
+    "score": 13499.0,
+    "rounds": 1317,
+    "exh": true,
+    "ms": 0.674145
+   },
+   [
+    {
+     "pkg": 14400,
+     "child": 12919,
+     "score": 13499.0,
+     "rounds": 1317,
+     "exh": true,
+     "ms": 0.888658
+    },
+    {
+     "pkg": 14400,
+     "child": 12919,
+     "score": 13499.0,
+     "rounds": 1317,
+     "exh": true,
+     "ms": 0.856337
+    },
+    {
+     "pkg": 14400,
+     "child": 12919,
+     "score": 13499.0,
+     "rounds": 1317,
+     "exh": true,
+     "ms": 0.865685
+    }
+   ]
+  ],
+  [
+   "no_ancestry_100",
+   {
+    "pkg": 3690,
+    "child": 3690,
+    "score": 4270.0,
+    "rounds": 2212,
+    "exh": true,
+    "ms": 1.149057
+   },
+   [
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 2212,
+     "exh": true,
+     "ms": 1.179004
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 2212,
+     "exh": true,
+     "ms": 1.136594
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 2212,
+     "exh": true,
+     "ms": 1.079336
+    }
+   ]
+  ],
+  [
+   "no_ancestry_1000",
+   {
+    "pkg": 30210,
+    "child": 30210,
+    "score": 30790.0,
+    "rounds": 7168,
+    "exh": false,
+    "ms": 10.198122
+   },
+   [
+    {
+     "pkg": 30210,
+     "child": 30210,
+     "score": 30790.0,
+     "rounds": 3173,
+     "exh": false,
+     "ms": 10.401834
+    },
+    {
+     "pkg": 30210,
+     "child": 30210,
+     "score": 30790.0,
+     "rounds": 5209,
+     "exh": false,
+     "ms": 10.198223
+    },
+    {
+     "pkg": 30210,
+     "child": 30210,
+     "score": 30790.0,
+     "rounds": 2887,
+     "exh": false,
+     "ms": 10.395593
+    }
+   ]
+  ],
+  [
+   "no_ancestry_20",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 13,
+    "exh": true,
+    "ms": 0.0158
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 13,
+     "exh": true,
+     "ms": 0.022933
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 13,
+     "exh": true,
+     "ms": 0.022182
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 13,
+     "exh": true,
+     "ms": 0.02133
+    }
+   ]
+  ],
+  [
+   "no_ancestry_200",
+   {
+    "pkg": 7090,
+    "child": 7090,
+    "score": 7670.0,
+    "rounds": 8127,
+    "exh": true,
+    "ms": 3.97934
+   },
+   [
+    {
+     "pkg": 7090,
+     "child": 7090,
+     "score": 7670.0,
+     "rounds": 8127,
+     "exh": true,
+     "ms": 3.923575
+    },
+    {
+     "pkg": 7090,
+     "child": 7090,
+     "score": 7670.0,
+     "rounds": 8127,
+     "exh": true,
+     "ms": 3.910731
+    },
+    {
+     "pkg": 7090,
+     "child": 7090,
+     "score": 7670.0,
+     "rounds": 8127,
+     "exh": true,
+     "ms": 3.95843
+    }
+   ]
+  ],
+  [
+   "no_ancestry_2000",
+   {
+    "pkg": 56730,
+    "child": 56730,
+    "score": 57310.0,
+    "rounds": 3840,
+    "exh": false,
+    "ms": 10.443403
+   },
+   [
+    {
+     "pkg": 56730,
+     "child": 56730,
+     "score": 57310.0,
+     "rounds": 1560,
+     "exh": false,
+     "ms": 10.780145
+    },
+    {
+     "pkg": 57281,
+     "child": 57281,
+     "score": 57281.0,
+     "rounds": 1731,
+     "exh": true,
+     "ms": 10.506682
+    },
+    {
+     "pkg": 56730,
+     "child": 56730,
+     "score": 57310.0,
+     "rounds": 1019,
+     "exh": false,
+     "ms": 10.889791
+    }
+   ]
+  ],
+  [
+   "no_ancestry_50",
+   {
+    "pkg": 3690,
+    "child": 3690,
+    "score": 4270.0,
+    "rounds": 1191,
+    "exh": true,
+    "ms": 0.510288
+   },
+   [
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 1191,
+     "exh": true,
+     "ms": 0.51661
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 1191,
+     "exh": true,
+     "ms": 0.508304
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 1191,
+     "exh": true,
+     "ms": 0.526368
+    }
+   ]
+  ],
+  [
+   "no_ancestry_500",
+   {
+    "pkg": 16610,
+    "child": 16610,
+    "score": 17190.0,
+    "rounds": 10240,
+    "exh": false,
+    "ms": 10.153779
+   },
+   [
+    {
+     "pkg": 16610,
+     "child": 16610,
+     "score": 17190.0,
+     "rounds": 7414,
+     "exh": false,
+     "ms": 10.165281
+    },
+    {
+     "pkg": 16610,
+     "child": 16610,
+     "score": 17190.0,
+     "rounds": 5345,
+     "exh": false,
+     "ms": 10.182593
+    },
+    {
+     "pkg": 16610,
+     "child": 16610,
+     "score": 17190.0,
+     "rounds": 5425,
+     "exh": false,
+     "ms": 10.35155
+    }
+   ]
+  ],
+  [
+   "private_ancestry_100",
+   {
+    "pkg": 4637,
+    "child": 4637,
+    "score": 4637.0,
+    "rounds": 929,
+    "exh": true,
+    "ms": 0.515157
+   },
+   [
+    {
+     "pkg": 4637,
+     "child": 4637,
+     "score": 4637.0,
+     "rounds": 929,
+     "exh": true,
+     "ms": 0.579828
+    },
+    {
+     "pkg": 4637,
+     "child": 4637,
+     "score": 4637.0,
+     "rounds": 929,
+     "exh": true,
+     "ms": 0.497003
+    },
+    {
+     "pkg": 4637,
+     "child": 4637,
+     "score": 4637.0,
+     "rounds": 929,
+     "exh": true,
+     "ms": 0.505088
+    }
+   ]
+  ],
+  [
+   "private_ancestry_20",
+   {
+    "pkg": 3640,
+    "child": 3378,
+    "score": 3958.0,
+    "rounds": 17,
+    "exh": true,
+    "ms": 0.016
+   },
+   [
+    {
+     "pkg": 3640,
+     "child": 3378,
+     "score": 3958.0,
+     "rounds": 17,
+     "exh": true,
+     "ms": 0.016811
+    },
+    {
+     "pkg": 3640,
+     "child": 3378,
+     "score": 3958.0,
+     "rounds": 17,
+     "exh": true,
+     "ms": 0.023714
+    },
+    {
+     "pkg": 3640,
+     "child": 3378,
+     "score": 3958.0,
+     "rounds": 17,
+     "exh": true,
+     "ms": 0.016161
+    }
+   ]
+  ],
+  [
+   "private_ancestry_200",
+   {
+    "pkg": 11430,
+    "child": 11430,
+    "score": 11430.0,
+    "rounds": 21248,
+    "exh": false,
+    "ms": 10.082045
+   },
+   [
+    {
+     "pkg": 11946,
+     "child": 11946,
+     "score": 11946.0,
+     "rounds": 10408,
+     "exh": false,
+     "ms": 10.128852
+    },
+    {
+     "pkg": 11946,
+     "child": 11946,
+     "score": 11946.0,
+     "rounds": 9563,
+     "exh": false,
+     "ms": 10.098966
+    },
+    {
+     "pkg": 11946,
+     "child": 11946,
+     "score": 11946.0,
+     "rounds": 8114,
+     "exh": false,
+     "ms": 10.137939
+    }
+   ]
+  ],
+  [
+   "private_ancestry_50",
+   {
+    "pkg": 5090,
+    "child": 4466,
+    "score": 5046.0,
+    "rounds": 839,
+    "exh": true,
+    "ms": 0.429957
+   },
+   [
+    {
+     "pkg": 5090,
+     "child": 4466,
+     "score": 5046.0,
+     "rounds": 839,
+     "exh": true,
+     "ms": 0.337904
+    },
+    {
+     "pkg": 5090,
+     "child": 4466,
+     "score": 5046.0,
+     "rounds": 839,
+     "exh": true,
+     "ms": 0.339036
+    },
+    {
+     "pkg": 5090,
+     "child": 4466,
+     "score": 5046.0,
+     "rounds": 839,
+     "exh": true,
+     "ms": 0.362921
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_100",
+   {
+    "pkg": 21040,
+    "child": 19373,
+    "score": 19953.0,
+    "rounds": 27648,
+    "exh": false,
+    "ms": 10.022703
+   },
+   [
+    {
+     "pkg": 18196,
+     "child": 17122,
+     "score": 17122.0,
+     "rounds": 9511,
+     "exh": true,
+     "ms": 10.106491
+    },
+    {
+     "pkg": 16796,
+     "child": 15722,
+     "score": 15722.0,
+     "rounds": 11160,
+     "exh": true,
+     "ms": 10.006052
+    },
+    {
+     "pkg": 16470,
+     "child": 15396,
+     "score": 15976.0,
+     "rounds": 9391,
+     "exh": true,
+     "ms": 10.053441
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_1000",
+   {
+    "pkg": 165350,
+    "child": 145932,
+    "score": 146512.0,
+    "rounds": 15104,
+    "exh": false,
+    "ms": 10.136196
+   },
+   [
+    {
+     "pkg": 164440,
+     "child": 144645,
+     "score": 145225.0,
+     "rounds": 7771,
+     "exh": true,
+     "ms": 10.586471
+    },
+    {
+     "pkg": 162150,
+     "child": 142034,
+     "score": 142614.0,
+     "rounds": 9819,
+     "exh": true,
+     "ms": 10.258626
+    },
+    {
+     "pkg": 164209,
+     "child": 145872,
+     "score": 145872.0,
+     "rounds": 4443,
+     "exh": false,
+     "ms": 10.513384
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_20",
+   {
+    "pkg": 4540,
+    "child": 4319,
+    "score": 4899.0,
+    "rounds": 20,
+    "exh": true,
+    "ms": 0.020088
+   },
+   [
+    {
+     "pkg": 4540,
+     "child": 4319,
+     "score": 4899.0,
+     "rounds": 20,
+     "exh": true,
+     "ms": 0.027452
+    },
+    {
+     "pkg": 4540,
+     "child": 4319,
+     "score": 4899.0,
+     "rounds": 20,
+     "exh": true,
+     "ms": 0.026991
+    },
+    {
+     "pkg": 4540,
+     "child": 4319,
+     "score": 4899.0,
+     "rounds": 20,
+     "exh": true,
+     "ms": 0.027011
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_200",
+   {
+    "pkg": 42680,
+    "child": 36242,
+    "score": 36822.0,
+    "rounds": 19712,
+    "exh": false,
+    "ms": 10.056436
+   },
+   [
+    {
+     "pkg": 31200,
+     "child": 26650,
+     "score": 27230.0,
+     "rounds": 13480,
+     "exh": true,
+     "ms": 10.094097
+    },
+    {
+     "pkg": 32560,
+     "child": 28010,
+     "score": 28590.0,
+     "rounds": 8086,
+     "exh": true,
+     "ms": 10.118793
+    },
+    {
+     "pkg": 37240,
+     "child": 31346,
+     "score": 31926.0,
+     "rounds": 8845,
+     "exh": true,
+     "ms": 10.054703
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_2000",
+   {
+    "pkg": 301090,
+    "child": 268754,
+    "score": 269334.0,
+    "rounds": 5632,
+    "exh": false,
+    "ms": 10.222157
+   },
+   [
+    {
+     "pkg": 301090,
+     "child": 268754,
+     "score": 269334.0,
+     "rounds": 9750,
+     "exh": false,
+     "ms": 10.489519
+    },
+    {
+     "pkg": 296360,
+     "child": 264497,
+     "score": 265077.0,
+     "rounds": 4373,
+     "exh": true,
+     "ms": 10.814169
+    },
+    {
+     "pkg": 301090,
+     "child": 268754,
+     "score": 269334.0,
+     "rounds": 8725,
+     "exh": false,
+     "ms": 10.523443
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_50",
+   {
+    "pkg": 4098,
+    "child": 4098,
+    "score": 4098.0,
+    "rounds": 230,
+    "exh": true,
+    "ms": 0.1918
+   },
+   [
+    {
+     "pkg": 4098,
+     "child": 4098,
+     "score": 4098.0,
+     "rounds": 230,
+     "exh": true,
+     "ms": 0.130074
+    },
+    {
+     "pkg": 4098,
+     "child": 4098,
+     "score": 4098.0,
+     "rounds": 230,
+     "exh": true,
+     "ms": 0.142888
+    },
+    {
+     "pkg": 4098,
+     "child": 4098,
+     "score": 4098.0,
+     "rounds": 230,
+     "exh": true,
+     "ms": 0.190558
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_500",
+   {
+    "pkg": 89990,
+    "child": 77756,
+    "score": 78336.0,
+    "rounds": 16640,
+    "exh": false,
+    "ms": 10.07481
+   },
+   [
+    {
+     "pkg": 81970,
+     "child": 71204,
+     "score": 71784.0,
+     "rounds": 5859,
+     "exh": true,
+     "ms": 10.26092
+    },
+    {
+     "pkg": 82120,
+     "child": 70673,
+     "score": 71253.0,
+     "rounds": 5794,
+     "exh": true,
+     "ms": 10.333657
+    },
+    {
+     "pkg": 87270,
+     "child": 75308,
+     "score": 75888.0,
+     "rounds": 5923,
+     "exh": true,
+     "ms": 10.217048
+    }
+   ]
+  ],
+  [
+   "smoke",
+   {
+    "pkg": 5330,
+    "child": 5030,
+    "score": 5610.0,
+    "rounds": 25,
+    "exh": true,
+    "ms": 0.035106
+   },
+   [
+    {
+     "pkg": 5330,
+     "child": 5030,
+     "score": 5610.0,
+     "rounds": 25,
+     "exh": true,
+     "ms": 0.033162
+    },
+    {
+     "pkg": 5330,
+     "child": 5030,
+     "score": 5610.0,
+     "rounds": 25,
+     "exh": true,
+     "ms": 0.032611
+    },
+    {
+     "pkg": 5330,
+     "child": 5030,
+     "score": 5610.0,
+     "rounds": 25,
+     "exh": true,
+     "ms": 0.035928
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_100",
+   {
+    "pkg": 81050,
+    "child": 30140,
+    "score": 30720.0,
+    "rounds": 23552,
+    "exh": false,
+    "ms": 10.062478
+   },
+   [
+    {
+     "pkg": 55740,
+     "child": 25233,
+     "score": 25813.0,
+     "rounds": 11009,
+     "exh": false,
+     "ms": 10.155202
+    },
+    {
+     "pkg": 31180,
+     "child": 18612,
+     "score": 19192.0,
+     "rounds": 14956,
+     "exh": true,
+     "ms": 10.067637
+    },
+    {
+     "pkg": 31180,
+     "child": 18612,
+     "score": 19192.0,
+     "rounds": 10486,
+     "exh": true,
+     "ms": 10.129684
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_20",
+   {
+    "pkg": 28870,
+    "child": 12147,
+    "score": 12727.0,
+    "rounds": 18,
+    "exh": true,
+    "ms": 0.027662
+   },
+   [
+    {
+     "pkg": 28870,
+     "child": 12147,
+     "score": 12727.0,
+     "rounds": 18,
+     "exh": true,
+     "ms": 0.02658
+    },
+    {
+     "pkg": 28870,
+     "child": 12147,
+     "score": 12727.0,
+     "rounds": 18,
+     "exh": true,
+     "ms": 0.018665
+    },
+    {
+     "pkg": 28870,
+     "child": 12147,
+     "score": 12727.0,
+     "rounds": 18,
+     "exh": true,
+     "ms": 0.02663
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_200",
+   {
+    "pkg": 75880,
+    "child": 27281,
+    "score": 27861.0,
+    "rounds": 25088,
+    "exh": false,
+    "ms": 10.002836
+   },
+   [
+    {
+     "pkg": 75880,
+     "child": 27281,
+     "score": 27861.0,
+     "rounds": 8705,
+     "exh": false,
+     "ms": 10.088567
+    },
+    {
+     "pkg": 75880,
+     "child": 27281,
+     "score": 27861.0,
+     "rounds": 13782,
+     "exh": false,
+     "ms": 10.125156
+    },
+    {
+     "pkg": 75880,
+     "child": 27281,
+     "score": 27861.0,
+     "rounds": 8128,
+     "exh": false,
+     "ms": 10.163296
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_50",
+   {
+    "pkg": 48200,
+    "child": 12012,
+    "score": 12592.0,
+    "rounds": 33792,
+    "exh": false,
+    "ms": 10.040326
+   },
+   [
+    {
+     "pkg": 44990,
+     "child": 6784,
+     "score": 7364.0,
+     "rounds": 12224,
+     "exh": false,
+     "ms": 10.082636
+    },
+    {
+     "pkg": 27220,
+     "child": 7228,
+     "score": 7808.0,
+     "rounds": 14933,
+     "exh": true,
+     "ms": 10.069881
+    },
+    {
+     "pkg": 44990,
+     "child": 6784,
+     "score": 7364.0,
+     "rounds": 12924,
+     "exh": false,
+     "ms": 10.042239
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_100",
+   {
+    "pkg": 4850,
+    "child": 4850,
+    "score": 5430.0,
+    "rounds": 2486,
+    "exh": true,
+    "ms": 1.52386
+   },
+   [
+    {
+     "pkg": 4850,
+     "child": 4850,
+     "score": 5430.0,
+     "rounds": 2486,
+     "exh": true,
+     "ms": 1.288548
+    },
+    {
+     "pkg": 4850,
+     "child": 4850,
+     "score": 5430.0,
+     "rounds": 2486,
+     "exh": true,
+     "ms": 1.440043
+    },
+    {
+     "pkg": 4850,
+     "child": 4850,
+     "score": 5430.0,
+     "rounds": 2486,
+     "exh": true,
+     "ms": 1.516988
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_1000",
+   {
+    "pkg": 57079,
+    "child": 57079,
+    "score": 57079.0,
+    "rounds": 5120,
+    "exh": false,
+    "ms": 10.316034
+   },
+   [
+    {
+     "pkg": 57139,
+     "child": 57139,
+     "score": 57139.0,
+     "rounds": 8803,
+     "exh": false,
+     "ms": 10.361418
+    },
+    {
+     "pkg": 57139,
+     "child": 57139,
+     "score": 57139.0,
+     "rounds": 6157,
+     "exh": false,
+     "ms": 10.330661
+    },
+    {
+     "pkg": 57139,
+     "child": 57139,
+     "score": 57139.0,
+     "rounds": 13921,
+     "exh": false,
+     "ms": 10.255931
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_20",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 5,
+    "exh": true,
+    "ms": 0.011742
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 5,
+     "exh": true,
+     "ms": 0.015549
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 5,
+     "exh": true,
+     "ms": 0.015359
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 5,
+     "exh": true,
+     "ms": 0.01071
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_200",
+   {
+    "pkg": 7321,
+    "child": 7321,
+    "score": 7321.0,
+    "rounds": 17345,
+    "exh": true,
+    "ms": 7.992963
+   },
+   [
+    {
+     "pkg": 6890,
+     "child": 6890,
+     "score": 7470.0,
+     "rounds": 10897,
+     "exh": true,
+     "ms": 10.036058
+    },
+    {
+     "pkg": 6890,
+     "child": 6890,
+     "score": 7470.0,
+     "rounds": 6507,
+     "exh": true,
+     "ms": 10.076804
+    },
+    {
+     "pkg": 6890,
+     "child": 6890,
+     "score": 7470.0,
+     "rounds": 10636,
+     "exh": true,
+     "ms": 10.066054
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_2000",
+   {
+    "pkg": 98540,
+    "child": 98540,
+    "score": 99120.0,
+    "rounds": 4096,
+    "exh": false,
+    "ms": 10.029746
+   },
+   [
+    {
+     "pkg": 98540,
+     "child": 98540,
+     "score": 99120.0,
+     "rounds": 3771,
+     "exh": false,
+     "ms": 10.640502
+    },
+    {
+     "pkg": 98540,
+     "child": 98540,
+     "score": 99120.0,
+     "rounds": 7461,
+     "exh": false,
+     "ms": 10.508345
+    },
+    {
+     "pkg": 98540,
+     "child": 98540,
+     "score": 99120.0,
+     "rounds": 4404,
+     "exh": false,
+     "ms": 10.690035
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_50",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 54,
+    "exh": true,
+    "ms": 0.043672
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 54,
+     "exh": true,
+     "ms": 0.039134
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 54,
+     "exh": true,
+     "ms": 0.039634
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 54,
+     "exh": true,
+     "ms": 0.039825
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_500",
+   {
+    "pkg": 20663,
+    "child": 20663,
+    "score": 20663.0,
+    "rounds": 11264,
+    "exh": false,
+    "ms": 10.105759
+   },
+   [
+    {
+     "pkg": 20663,
+     "child": 20663,
+     "score": 20663.0,
+     "rounds": 9185,
+     "exh": false,
+     "ms": 10.155903
+    },
+    {
+     "pkg": 20663,
+     "child": 20663,
+     "score": 20663.0,
+     "rounds": 8345,
+     "exh": false,
+     "ms": 10.124083
+    },
+    {
+     "pkg": 20663,
+     "child": 20663,
+     "score": 20663.0,
+     "rounds": 7120,
+     "exh": false,
+     "ms": 10.102623
+    }
+   ]
+  ]
+ ],
+ "100 ms": [
+  [
+   "adversarial_shared_100",
+   {
+    "pkg": 3690,
+    "child": 3690,
+    "score": 4270.0,
+    "rounds": 486,
+    "exh": true,
+    "ms": 0.212468
+   },
+   [
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 486,
+     "exh": true,
+     "ms": 0.280025
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 486,
+     "exh": true,
+     "ms": 0.203031
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 486,
+     "exh": true,
+     "ms": 0.304351
+    }
+   ]
+  ],
+  [
+   "adversarial_shared_20",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 49,
+    "exh": true,
+    "ms": 0.040245
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 49,
+     "exh": true,
+     "ms": 0.027432
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 49,
+     "exh": true,
+     "ms": 0.040245
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 49,
+     "exh": true,
+     "ms": 0.039815
+    }
+   ]
+  ],
+  [
+   "adversarial_shared_200",
+   {
+    "pkg": 5050,
+    "child": 5050,
+    "score": 5630.0,
+    "rounds": 2480,
+    "exh": true,
+    "ms": 1.25742
+   },
+   [
+    {
+     "pkg": 5050,
+     "child": 5050,
+     "score": 5630.0,
+     "rounds": 2480,
+     "exh": true,
+     "ms": 1.193971
+    },
+    {
+     "pkg": 5050,
+     "child": 5050,
+     "score": 5630.0,
+     "rounds": 2480,
+     "exh": true,
+     "ms": 1.406329
+    },
+    {
+     "pkg": 5050,
+     "child": 5050,
+     "score": 5630.0,
+     "rounds": 2480,
+     "exh": true,
+     "ms": 1.24138
+    }
+   ]
+  ],
+  [
+   "adversarial_shared_50",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 19,
+    "exh": true,
+    "ms": 0.020588
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 19,
+     "exh": true,
+     "ms": 0.028364
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 19,
+     "exh": true,
+     "ms": 0.029765
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 19,
+     "exh": true,
+     "ms": 0.028864
+    }
+   ]
+  ],
+  [
+   "high_feerate_100",
+   {
+    "pkg": 21720,
+    "child": 21720,
+    "score": 22300.0,
+    "rounds": 1631,
+    "exh": true,
+    "ms": 0.723158
+   },
+   [
+    {
+     "pkg": 21720,
+     "child": 21720,
+     "score": 22300.0,
+     "rounds": 1631,
+     "exh": true,
+     "ms": 0.743846
+    },
+    {
+     "pkg": 21720,
+     "child": 21720,
+     "score": 22300.0,
+     "rounds": 1631,
+     "exh": true,
+     "ms": 0.843483
+    },
+    {
+     "pkg": 21720,
+     "child": 21720,
+     "score": 22300.0,
+     "rounds": 1631,
+     "exh": true,
+     "ms": 0.903847
+    }
+   ]
+  ],
+  [
+   "high_feerate_20",
+   {
+    "pkg": 8920,
+    "child": 8920,
+    "score": 9500.0,
+    "rounds": 15,
+    "exh": true,
+    "ms": 0.024075
+   },
+   [
+    {
+     "pkg": 8920,
+     "child": 8920,
+     "score": 9500.0,
+     "rounds": 15,
+     "exh": true,
+     "ms": 0.024085
+    },
+    {
+     "pkg": 8920,
+     "child": 8920,
+     "score": 9500.0,
+     "rounds": 15,
+     "exh": true,
+     "ms": 0.016821
+    },
+    {
+     "pkg": 8920,
+     "child": 8920,
+     "score": 9500.0,
+     "rounds": 15,
+     "exh": true,
+     "ms": 0.023965
+    }
+   ]
+  ],
+  [
+   "high_feerate_200",
+   {
+    "pkg": 66591,
+    "child": 65586,
+    "score": 65586.0,
+    "rounds": 166686,
+    "exh": true,
+    "ms": 68.841909
+   },
+   [
+    {
+     "pkg": 68112,
+     "child": 67107,
+     "score": 67107.0,
+     "rounds": 124933,
+     "exh": false,
+     "ms": 100.06705
+    },
+    {
+     "pkg": 68112,
+     "child": 67107,
+     "score": 67107.0,
+     "rounds": 127213,
+     "exh": false,
+     "ms": 100.098118
+    },
+    {
+     "pkg": 68112,
+     "child": 67107,
+     "score": 67107.0,
+     "rounds": 138941,
+     "exh": false,
+     "ms": 100.10949
+    }
+   ]
+  ],
+  [
+   "high_feerate_50",
+   {
+    "pkg": 17200,
+    "child": 17200,
+    "score": 17780.0,
+    "rounds": 288,
+    "exh": true,
+    "ms": 0.197811
+   },
+   [
+    {
+     "pkg": 17200,
+     "child": 17200,
+     "score": 17780.0,
+     "rounds": 288,
+     "exh": true,
+     "ms": 0.222047
+    },
+    {
+     "pkg": 17200,
+     "child": 17200,
+     "score": 17780.0,
+     "rounds": 288,
+     "exh": true,
+     "ms": 0.223991
+    },
+    {
+     "pkg": 17200,
+     "child": 17200,
+     "score": 17780.0,
+     "rounds": 288,
+     "exh": true,
+     "ms": 0.226585
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_100",
+   {
+    "pkg": 4370,
+    "child": 4370,
+    "score": 4950.0,
+    "rounds": 5945,
+    "exh": true,
+    "ms": 3.212349
+   },
+   [
+    {
+     "pkg": 4370,
+     "child": 4370,
+     "score": 4950.0,
+     "rounds": 5945,
+     "exh": true,
+     "ms": 2.357114
+    },
+    {
+     "pkg": 4370,
+     "child": 4370,
+     "score": 4950.0,
+     "rounds": 5945,
+     "exh": true,
+     "ms": 3.323778
+    },
+    {
+     "pkg": 4370,
+     "child": 4370,
+     "score": 4950.0,
+     "rounds": 5945,
+     "exh": true,
+     "ms": 3.104958
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_20",
+   {
+    "pkg": 1650,
+    "child": 1650,
+    "score": 2230.0,
+    "rounds": 2,
+    "exh": true,
+    "ms": 0.012503
+   },
+   [
+    {
+     "pkg": 1650,
+     "child": 1650,
+     "score": 2230.0,
+     "rounds": 2,
+     "exh": true,
+     "ms": 0.012494
+    },
+    {
+     "pkg": 1650,
+     "child": 1650,
+     "score": 2230.0,
+     "rounds": 2,
+     "exh": true,
+     "ms": 0.008586
+    },
+    {
+     "pkg": 1650,
+     "child": 1650,
+     "score": 2230.0,
+     "rounds": 2,
+     "exh": true,
+     "ms": 0.012574
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_200",
+   {
+    "pkg": 34816,
+    "child": 32124,
+    "score": 32124.0,
+    "rounds": 248832,
+    "exh": false,
+    "ms": 100.085585
+   },
+   [
+    {
+     "pkg": 33250,
+     "child": 30078,
+     "score": 30078.0,
+     "rounds": 112466,
+     "exh": true,
+     "ms": 100.091566
+    },
+    {
+     "pkg": 27595,
+     "child": 25308,
+     "score": 25308.0,
+     "rounds": 110903,
+     "exh": true,
+     "ms": 100.117244
+    },
+    {
+     "pkg": 25290,
+     "child": 23003,
+     "score": 23583.0,
+     "rounds": 106418,
+     "exh": true,
+     "ms": 100.037756
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_50",
+   {
+    "pkg": 14400,
+    "child": 12919,
+    "score": 13499.0,
+    "rounds": 1317,
+    "exh": true,
+    "ms": 0.677481
+   },
+   [
+    {
+     "pkg": 14400,
+     "child": 12919,
+     "score": 13499.0,
+     "rounds": 1317,
+     "exh": true,
+     "ms": 0.898046
+    },
+    {
+     "pkg": 14400,
+     "child": 12919,
+     "score": 13499.0,
+     "rounds": 1317,
+     "exh": true,
+     "ms": 0.753044
+    },
+    {
+     "pkg": 14400,
+     "child": 12919,
+     "score": 13499.0,
+     "rounds": 1317,
+     "exh": true,
+     "ms": 0.693251
+    }
+   ]
+  ],
+  [
+   "no_ancestry_100",
+   {
+    "pkg": 3690,
+    "child": 3690,
+    "score": 4270.0,
+    "rounds": 2212,
+    "exh": true,
+    "ms": 1.001821
+   },
+   [
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 2212,
+     "exh": true,
+     "ms": 1.259274
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 2212,
+     "exh": true,
+     "ms": 1.135542
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 2212,
+     "exh": true,
+     "ms": 1.082753
+    }
+   ]
+  ],
+  [
+   "no_ancestry_1000",
+   {
+    "pkg": 30733,
+    "child": 30733,
+    "score": 30733.0,
+    "rounds": 94208,
+    "exh": false,
+    "ms": 100.279859
+   },
+   [
+    {
+     "pkg": 30210,
+     "child": 30210,
+     "score": 30790.0,
+     "rounds": 53475,
+     "exh": false,
+     "ms": 100.284018
+    },
+    {
+     "pkg": 30500,
+     "child": 30500,
+     "score": 30500.0,
+     "rounds": 74543,
+     "exh": true,
+     "ms": 100.247649
+    },
+    {
+     "pkg": 30210,
+     "child": 30210,
+     "score": 30790.0,
+     "rounds": 49707,
+     "exh": false,
+     "ms": 100.27415
+    }
+   ]
+  ],
+  [
+   "no_ancestry_20",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 13,
+    "exh": true,
+    "ms": 0.018796
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 13,
+     "exh": true,
+     "ms": 0.014778
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 13,
+     "exh": true,
+     "ms": 0.021371
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 13,
+     "exh": true,
+     "ms": 0.02134
+    }
+   ]
+  ],
+  [
+   "no_ancestry_200",
+   {
+    "pkg": 7090,
+    "child": 7090,
+    "score": 7670.0,
+    "rounds": 8127,
+    "exh": true,
+    "ms": 3.907063
+   },
+   [
+    {
+     "pkg": 7090,
+     "child": 7090,
+     "score": 7670.0,
+     "rounds": 8127,
+     "exh": true,
+     "ms": 3.322807
+    },
+    {
+     "pkg": 7090,
+     "child": 7090,
+     "score": 7670.0,
+     "rounds": 8127,
+     "exh": true,
+     "ms": 3.819499
+    },
+    {
+     "pkg": 7090,
+     "child": 7090,
+     "score": 7670.0,
+     "rounds": 8127,
+     "exh": true,
+     "ms": 3.786177
+    }
+   ]
+  ],
+  [
+   "no_ancestry_2000",
+   {
+    "pkg": 56730,
+    "child": 56730,
+    "score": 57310.0,
+    "rounds": 37120,
+    "exh": false,
+    "ms": 100.130359
+   },
+   [
+    {
+     "pkg": 57018,
+     "child": 57018,
+     "score": 57018.0,
+     "rounds": 45080,
+     "exh": false,
+     "ms": 100.45614
+    },
+    {
+     "pkg": 56990,
+     "child": 56990,
+     "score": 56990.0,
+     "rounds": 33475,
+     "exh": false,
+     "ms": 100.300118
+    },
+    {
+     "pkg": 56730,
+     "child": 56730,
+     "score": 57310.0,
+     "rounds": 36347,
+     "exh": false,
+     "ms": 100.745253
+    }
+   ]
+  ],
+  [
+   "no_ancestry_50",
+   {
+    "pkg": 3690,
+    "child": 3690,
+    "score": 4270.0,
+    "rounds": 1191,
+    "exh": true,
+    "ms": 0.542749
+   },
+   [
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 1191,
+     "exh": true,
+     "ms": 0.789743
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 1191,
+     "exh": true,
+     "ms": 0.755519
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 1191,
+     "exh": true,
+     "ms": 0.572033
+    }
+   ]
+  ],
+  [
+   "no_ancestry_500",
+   {
+    "pkg": 16862,
+    "child": 16862,
+    "score": 16862.0,
+    "rounds": 140288,
+    "exh": false,
+    "ms": 100.086877
+   },
+   [
+    {
+     "pkg": 16862,
+     "child": 16862,
+     "score": 16862.0,
+     "rounds": 76689,
+     "exh": true,
+     "ms": 100.193719
+    },
+    {
+     "pkg": 16865,
+     "child": 16865,
+     "score": 16865.0,
+     "rounds": 83878,
+     "exh": true,
+     "ms": 100.183228
+    },
+    {
+     "pkg": 16864,
+     "child": 16864,
+     "score": 16864.0,
+     "rounds": 80110,
+     "exh": true,
+     "ms": 100.217153
+    }
+   ]
+  ],
+  [
+   "private_ancestry_100",
+   {
+    "pkg": 4637,
+    "child": 4637,
+    "score": 4637.0,
+    "rounds": 929,
+    "exh": true,
+    "ms": 0.542779
+   },
+   [
+    {
+     "pkg": 4637,
+     "child": 4637,
+     "score": 4637.0,
+     "rounds": 929,
+     "exh": true,
+     "ms": 0.698882
+    },
+    {
+     "pkg": 4637,
+     "child": 4637,
+     "score": 4637.0,
+     "rounds": 929,
+     "exh": true,
+     "ms": 0.695916
+    },
+    {
+     "pkg": 4637,
+     "child": 4637,
+     "score": 4637.0,
+     "rounds": 929,
+     "exh": true,
+     "ms": 0.370285
+    }
+   ]
+  ],
+  [
+   "private_ancestry_20",
+   {
+    "pkg": 3640,
+    "child": 3378,
+    "score": 3958.0,
+    "rounds": 17,
+    "exh": true,
+    "ms": 0.011662
+   },
+   [
+    {
+     "pkg": 3640,
+     "child": 3378,
+     "score": 3958.0,
+     "rounds": 17,
+     "exh": true,
+     "ms": 0.018565
+    },
+    {
+     "pkg": 3640,
+     "child": 3378,
+     "score": 3958.0,
+     "rounds": 17,
+     "exh": true,
+     "ms": 0.023424
+    },
+    {
+     "pkg": 3640,
+     "child": 3378,
+     "score": 3958.0,
+     "rounds": 17,
+     "exh": true,
+     "ms": 0.022572
+    }
+   ]
+  ],
+  [
+   "private_ancestry_200",
+   {
+    "pkg": 11420,
+    "child": 11420,
+    "score": 11420.0,
+    "rounds": 41309,
+    "exh": true,
+    "ms": 21.361948
+   },
+   [
+    {
+     "pkg": 11420,
+     "child": 11420,
+     "score": 11420.0,
+     "rounds": 41309,
+     "exh": true,
+     "ms": 21.424845
+    },
+    {
+     "pkg": 11420,
+     "child": 11420,
+     "score": 11420.0,
+     "rounds": 41309,
+     "exh": true,
+     "ms": 16.945407
+    },
+    {
+     "pkg": 11420,
+     "child": 11420,
+     "score": 11420.0,
+     "rounds": 41309,
+     "exh": true,
+     "ms": 16.487398
+    }
+   ]
+  ],
+  [
+   "private_ancestry_50",
+   {
+    "pkg": 5090,
+    "child": 4466,
+    "score": 5046.0,
+    "rounds": 839,
+    "exh": true,
+    "ms": 0.239239
+   },
+   [
+    {
+     "pkg": 5090,
+     "child": 4466,
+     "score": 5046.0,
+     "rounds": 839,
+     "exh": true,
+     "ms": 0.350638
+    },
+    {
+     "pkg": 5090,
+     "child": 4466,
+     "score": 5046.0,
+     "rounds": 839,
+     "exh": true,
+     "ms": 0.421081
+    },
+    {
+     "pkg": 5090,
+     "child": 4466,
+     "score": 5046.0,
+     "rounds": 839,
+     "exh": true,
+     "ms": 0.452229
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_100",
+   {
+    "pkg": 15638,
+    "child": 14878,
+    "score": 14878.0,
+    "rounds": 142160,
+    "exh": true,
+    "ms": 49.41279
+   },
+   [
+    {
+     "pkg": 16389,
+     "child": 15629,
+     "score": 15629.0,
+     "rounds": 113302,
+     "exh": true,
+     "ms": 100.03497
+    },
+    {
+     "pkg": 15638,
+     "child": 14878,
+     "score": 14878.0,
+     "rounds": 142160,
+     "exh": true,
+     "ms": 49.709457
+    },
+    {
+     "pkg": 15638,
+     "child": 14878,
+     "score": 14878.0,
+     "rounds": 142160,
+     "exh": true,
+     "ms": 49.259132
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_1000",
+   {
+    "pkg": 165350,
+    "child": 145932,
+    "score": 146512.0,
+    "rounds": 158720,
+    "exh": false,
+    "ms": 100.148934
+   },
+   [
+    {
+     "pkg": 157650,
+     "child": 139349,
+     "score": 139929.0,
+     "rounds": 112115,
+     "exh": false,
+     "ms": 100.346065
+    },
+    {
+     "pkg": 162150,
+     "child": 142034,
+     "score": 142614.0,
+     "rounds": 124763,
+     "exh": true,
+     "ms": 100.403683
+    },
+    {
+     "pkg": 154436,
+     "child": 135338,
+     "score": 135338.0,
+     "rounds": 91227,
+     "exh": false,
+     "ms": 100.648663
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_20",
+   {
+    "pkg": 4540,
+    "child": 4319,
+    "score": 4899.0,
+    "rounds": 20,
+    "exh": true,
+    "ms": 0.03207
+   },
+   [
+    {
+     "pkg": 4540,
+     "child": 4319,
+     "score": 4899.0,
+     "rounds": 20,
+     "exh": true,
+     "ms": 0.027282
+    },
+    {
+     "pkg": 4540,
+     "child": 4319,
+     "score": 4899.0,
+     "rounds": 20,
+     "exh": true,
+     "ms": 0.027582
+    },
+    {
+     "pkg": 4540,
+     "child": 4319,
+     "score": 4899.0,
+     "rounds": 20,
+     "exh": true,
+     "ms": 0.026901
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_200",
+   {
+    "pkg": 42680,
+    "child": 36242,
+    "score": 36822.0,
+    "rounds": 241920,
+    "exh": false,
+    "ms": 100.088672
+   },
+   [
+    {
+     "pkg": 31200,
+     "child": 26650,
+     "score": 27230.0,
+     "rounds": 126632,
+     "exh": true,
+     "ms": 100.131252
+    },
+    {
+     "pkg": 32560,
+     "child": 28010,
+     "score": 28590.0,
+     "rounds": 113814,
+     "exh": true,
+     "ms": 100.126002
+    },
+    {
+     "pkg": 37240,
+     "child": 31346,
+     "score": 31926.0,
+     "rounds": 126605,
+     "exh": true,
+     "ms": 100.090054
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_2000",
+   {
+    "pkg": 301090,
+    "child": 268754,
+    "score": 269334.0,
+    "rounds": 76032,
+    "exh": false,
+    "ms": 100.30064
+   },
+   [
+    {
+     "pkg": 301090,
+     "child": 268754,
+     "score": 269334.0,
+     "rounds": 132118,
+     "exh": false,
+     "ms": 100.606063
+    },
+    {
+     "pkg": 296360,
+     "child": 264497,
+     "score": 265077.0,
+     "rounds": 121109,
+     "exh": true,
+     "ms": 100.528217
+    },
+    {
+     "pkg": 301090,
+     "child": 268754,
+     "score": 269334.0,
+     "rounds": 141845,
+     "exh": false,
+     "ms": 100.550499
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_50",
+   {
+    "pkg": 4098,
+    "child": 4098,
+    "score": 4098.0,
+    "rounds": 230,
+    "exh": true,
+    "ms": 0.1975
+   },
+   [
+    {
+     "pkg": 4098,
+     "child": 4098,
+     "score": 4098.0,
+     "rounds": 230,
+     "exh": true,
+     "ms": 0.136136
+    },
+    {
+     "pkg": 4098,
+     "child": 4098,
+     "score": 4098.0,
+     "rounds": 230,
+     "exh": true,
+     "ms": 0.135835
+    },
+    {
+     "pkg": 4098,
+     "child": 4098,
+     "score": 4098.0,
+     "rounds": 230,
+     "exh": true,
+     "ms": 0.18606
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_500",
+   {
+    "pkg": 89990,
+    "child": 77756,
+    "score": 78336.0,
+    "rounds": 206848,
+    "exh": false,
+    "ms": 100.120712
+   },
+   [
+    {
+     "pkg": 81970,
+     "child": 71204,
+     "score": 71784.0,
+     "rounds": 88035,
+     "exh": true,
+     "ms": 100.255826
+    },
+    {
+     "pkg": 82120,
+     "child": 70673,
+     "score": 71253.0,
+     "rounds": 72866,
+     "exh": true,
+     "ms": 100.254233
+    },
+    {
+     "pkg": 84448,
+     "child": 73001,
+     "score": 73001.0,
+     "rounds": 103346,
+     "exh": true,
+     "ms": 100.214008
+    }
+   ]
+  ],
+  [
+   "smoke",
+   {
+    "pkg": 5330,
+    "child": 5030,
+    "score": 5610.0,
+    "rounds": 25,
+    "exh": true,
+    "ms": 0.040055
+   },
+   [
+    {
+     "pkg": 5330,
+     "child": 5030,
+     "score": 5610.0,
+     "rounds": 25,
+     "exh": true,
+     "ms": 0.040306
+    },
+    {
+     "pkg": 5330,
+     "child": 5030,
+     "score": 5610.0,
+     "rounds": 25,
+     "exh": true,
+     "ms": 0.02126
+    },
+    {
+     "pkg": 5330,
+     "child": 5030,
+     "score": 5610.0,
+     "rounds": 25,
+     "exh": true,
+     "ms": 0.046107
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_100",
+   {
+    "pkg": 81050,
+    "child": 30140,
+    "score": 30720.0,
+    "rounds": 310784,
+    "exh": false,
+    "ms": 100.028229
+   },
+   [
+    {
+     "pkg": 54670,
+     "child": 22085,
+     "score": 22665.0,
+     "rounds": 154058,
+     "exh": true,
+     "ms": 100.056663
+    },
+    {
+     "pkg": 31180,
+     "child": 18612,
+     "score": 19192.0,
+     "rounds": 155244,
+     "exh": true,
+     "ms": 100.063756
+    },
+    {
+     "pkg": 31180,
+     "child": 18612,
+     "score": 19192.0,
+     "rounds": 149494,
+     "exh": true,
+     "ms": 100.037166
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_20",
+   {
+    "pkg": 28870,
+    "child": 12147,
+    "score": 12727.0,
+    "rounds": 18,
+    "exh": true,
+    "ms": 0.030447
+   },
+   [
+    {
+     "pkg": 28870,
+     "child": 12147,
+     "score": 12727.0,
+     "rounds": 18,
+     "exh": true,
+     "ms": 0.019026
+    },
+    {
+     "pkg": 28870,
+     "child": 12147,
+     "score": 12727.0,
+     "rounds": 18,
+     "exh": true,
+     "ms": 0.028854
+    },
+    {
+     "pkg": 28870,
+     "child": 12147,
+     "score": 12727.0,
+     "rounds": 18,
+     "exh": true,
+     "ms": 0.0268
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_200",
+   {
+    "pkg": 75880,
+    "child": 27281,
+    "score": 27861.0,
+    "rounds": 258560,
+    "exh": false,
+    "ms": 100.084816
+   },
+   [
+    {
+     "pkg": 75880,
+     "child": 27281,
+     "score": 27861.0,
+     "rounds": 135158,
+     "exh": false,
+     "ms": 100.074856
+    },
+    {
+     "pkg": 75880,
+     "child": 27281,
+     "score": 27861.0,
+     "rounds": 141014,
+     "exh": false,
+     "ms": 100.085456
+    },
+    {
+     "pkg": 75880,
+     "child": 27281,
+     "score": 27861.0,
+     "rounds": 122816,
+     "exh": false,
+     "ms": 100.079415
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_50",
+   {
+    "pkg": 47520,
+    "child": 11332,
+    "score": 11912.0,
+    "rounds": 348928,
+    "exh": false,
+    "ms": 100.048808
+   },
+   [
+    {
+     "pkg": 24500,
+     "child": 4508,
+     "score": 5088.0,
+     "rounds": 167556,
+     "exh": true,
+     "ms": 100.030383
+    },
+    {
+     "pkg": 24500,
+     "child": 4508,
+     "score": 5088.0,
+     "rounds": 176819,
+     "exh": true,
+     "ms": 100.02828
+    },
+    {
+     "pkg": 44990,
+     "child": 6784,
+     "score": 7364.0,
+     "rounds": 174623,
+     "exh": true,
+     "ms": 100.042988
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_100",
+   {
+    "pkg": 4850,
+    "child": 4850,
+    "score": 5430.0,
+    "rounds": 2486,
+    "exh": true,
+    "ms": 1.366946
+   },
+   [
+    {
+     "pkg": 4850,
+     "child": 4850,
+     "score": 5430.0,
+     "rounds": 2486,
+     "exh": true,
+     "ms": 1.395119
+    },
+    {
+     "pkg": 4850,
+     "child": 4850,
+     "score": 5430.0,
+     "rounds": 2486,
+     "exh": true,
+     "ms": 1.152383
+    },
+    {
+     "pkg": 4850,
+     "child": 4850,
+     "score": 5430.0,
+     "rounds": 2486,
+     "exh": true,
+     "ms": 1.430275
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_1000",
+   {
+    "pkg": 56633,
+    "child": 56633,
+    "score": 56633.0,
+    "rounds": 80128,
+    "exh": false,
+    "ms": 100.09207
+   },
+   [
+    {
+     "pkg": 56744,
+     "child": 56744,
+     "score": 56744.0,
+     "rounds": 113819,
+     "exh": false,
+     "ms": 100.202697
+    },
+    {
+     "pkg": 56744,
+     "child": 56744,
+     "score": 56744.0,
+     "rounds": 120589,
+     "exh": false,
+     "ms": 100.298326
+    },
+    {
+     "pkg": 56744,
+     "child": 56744,
+     "score": 56744.0,
+     "rounds": 147041,
+     "exh": false,
+     "ms": 100.313956
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_20",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 5,
+    "exh": true,
+    "ms": 0.014577
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 5,
+     "exh": true,
+     "ms": 0.015879
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 5,
+     "exh": true,
+     "ms": 0.017082
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 5,
+     "exh": true,
+     "ms": 0.01585
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_200",
+   {
+    "pkg": 7321,
+    "child": 7321,
+    "score": 7321.0,
+    "rounds": 17345,
+    "exh": true,
+    "ms": 10.077115
+   },
+   [
+    {
+     "pkg": 7321,
+     "child": 7321,
+     "score": 7321.0,
+     "rounds": 17345,
+     "exh": true,
+     "ms": 10.120346
+    },
+    {
+     "pkg": 7321,
+     "child": 7321,
+     "score": 7321.0,
+     "rounds": 17345,
+     "exh": true,
+     "ms": 10.022352
+    },
+    {
+     "pkg": 7321,
+     "child": 7321,
+     "score": 7321.0,
+     "rounds": 17345,
+     "exh": true,
+     "ms": 9.930831
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_2000",
+   {
+    "pkg": 98138,
+    "child": 98138,
+    "score": 98138.0,
+    "rounds": 36096,
+    "exh": false,
+    "ms": 100.227274
+   },
+   [
+    {
+     "pkg": 98314,
+     "child": 98314,
+     "score": 98314.0,
+     "rounds": 115643,
+     "exh": false,
+     "ms": 100.498603
+    },
+    {
+     "pkg": 98454,
+     "child": 98454,
+     "score": 98454.0,
+     "rounds": 103717,
+     "exh": false,
+     "ms": 100.553937
+    },
+    {
+     "pkg": 98454,
+     "child": 98454,
+     "score": 98454.0,
+     "rounds": 126516,
+     "exh": false,
+     "ms": 100.567713
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_50",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 54,
+    "exh": true,
+    "ms": 0.048621
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 54,
+     "exh": true,
+     "ms": 0.041869
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 54,
+     "exh": true,
+     "ms": 0.038141
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 54,
+     "exh": true,
+     "ms": 0.050154
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_500",
+   {
+    "pkg": 20247,
+    "child": 20247,
+    "score": 20247.0,
+    "rounds": 176896,
+    "exh": false,
+    "ms": 100.012901
+   },
+   [
+    {
+     "pkg": 20561,
+     "child": 20561,
+     "score": 20561.0,
+     "rounds": 74209,
+     "exh": false,
+     "ms": 100.108882
+    },
+    {
+     "pkg": 20561,
+     "child": 20561,
+     "score": 20561.0,
+     "rounds": 90183,
+     "exh": false,
+     "ms": 100.20942
+    },
+    {
+     "pkg": 20561,
+     "child": 20561,
+     "score": 20561.0,
+     "rounds": 70608,
+     "exh": false,
+     "ms": 100.208889
+    }
+   ]
+  ]
+ ],
+ "1000 ms": [
+  [
+   "adversarial_shared_100",
+   {
+    "pkg": 3690,
+    "child": 3690,
+    "score": 4270.0,
+    "rounds": 486,
+    "exh": true,
+    "ms": 0.236965
+   },
+   [
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 486,
+     "exh": true,
+     "ms": 0.307577
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 486,
+     "exh": true,
+     "ms": 0.260509
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 486,
+     "exh": true,
+     "ms": 0.306074
+    }
+   ]
+  ],
+  [
+   "adversarial_shared_20",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 49,
+    "exh": true,
+    "ms": 0.029214
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 49,
+     "exh": true,
+     "ms": 0.029185
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 49,
+     "exh": true,
+     "ms": 0.040056
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 49,
+     "exh": true,
+     "ms": 0.028944
+    }
+   ]
+  ],
+  [
+   "adversarial_shared_200",
+   {
+    "pkg": 5050,
+    "child": 5050,
+    "score": 5630.0,
+    "rounds": 2480,
+    "exh": true,
+    "ms": 1.252301
+   },
+   [
+    {
+     "pkg": 5050,
+     "child": 5050,
+     "score": 5630.0,
+     "rounds": 2480,
+     "exh": true,
+     "ms": 1.386572
+    },
+    {
+     "pkg": 5050,
+     "child": 5050,
+     "score": 5630.0,
+     "rounds": 2480,
+     "exh": true,
+     "ms": 1.275554
+    },
+    {
+     "pkg": 5050,
+     "child": 5050,
+     "score": 5630.0,
+     "rounds": 2480,
+     "exh": true,
+     "ms": 0.843003
+    }
+   ]
+  ],
+  [
+   "adversarial_shared_50",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 19,
+    "exh": true,
+    "ms": 0.030037
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 19,
+     "exh": true,
+     "ms": 0.029506
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 19,
+     "exh": true,
+     "ms": 0.029446
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 19,
+     "exh": true,
+     "ms": 0.030257
+    }
+   ]
+  ],
+  [
+   "high_feerate_100",
+   {
+    "pkg": 21720,
+    "child": 21720,
+    "score": 22300.0,
+    "rounds": 1631,
+    "exh": true,
+    "ms": 0.704362
+   },
+   [
+    {
+     "pkg": 21720,
+     "child": 21720,
+     "score": 22300.0,
+     "rounds": 1631,
+     "exh": true,
+     "ms": 0.725231
+    },
+    {
+     "pkg": 21720,
+     "child": 21720,
+     "score": 22300.0,
+     "rounds": 1631,
+     "exh": true,
+     "ms": 0.778321
+    },
+    {
+     "pkg": 21720,
+     "child": 21720,
+     "score": 22300.0,
+     "rounds": 1631,
+     "exh": true,
+     "ms": 0.478759
+    }
+   ]
+  ],
+  [
+   "high_feerate_20",
+   {
+    "pkg": 8920,
+    "child": 8920,
+    "score": 9500.0,
+    "rounds": 15,
+    "exh": true,
+    "ms": 0.019547
+   },
+   [
+    {
+     "pkg": 8920,
+     "child": 8920,
+     "score": 9500.0,
+     "rounds": 15,
+     "exh": true,
+     "ms": 0.018294
+    },
+    {
+     "pkg": 8920,
+     "child": 8920,
+     "score": 9500.0,
+     "rounds": 15,
+     "exh": true,
+     "ms": 0.024426
+    },
+    {
+     "pkg": 8920,
+     "child": 8920,
+     "score": 9500.0,
+     "rounds": 15,
+     "exh": true,
+     "ms": 0.017703
+    }
+   ]
+  ],
+  [
+   "high_feerate_200",
+   {
+    "pkg": 66591,
+    "child": 65586,
+    "score": 65586.0,
+    "rounds": 166686,
+    "exh": true,
+    "ms": 58.677281
+   },
+   [
+    {
+     "pkg": 66591,
+     "child": 65586,
+     "score": 65586.0,
+     "rounds": 166686,
+     "exh": true,
+     "ms": 63.990625
+    },
+    {
+     "pkg": 66591,
+     "child": 65586,
+     "score": 65586.0,
+     "rounds": 166686,
+     "exh": true,
+     "ms": 58.989698
+    },
+    {
+     "pkg": 66591,
+     "child": 65586,
+     "score": 65586.0,
+     "rounds": 166686,
+     "exh": true,
+     "ms": 62.524944
+    }
+   ]
+  ],
+  [
+   "high_feerate_50",
+   {
+    "pkg": 17200,
+    "child": 17200,
+    "score": 17780.0,
+    "rounds": 288,
+    "exh": true,
+    "ms": 0.111921
+   },
+   [
+    {
+     "pkg": 17200,
+     "child": 17200,
+     "score": 17780.0,
+     "rounds": 288,
+     "exh": true,
+     "ms": 0.164529
+    },
+    {
+     "pkg": 17200,
+     "child": 17200,
+     "score": 17780.0,
+     "rounds": 288,
+     "exh": true,
+     "ms": 0.110217
+    },
+    {
+     "pkg": 17200,
+     "child": 17200,
+     "score": 17780.0,
+     "rounds": 288,
+     "exh": true,
+     "ms": 0.162395
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_100",
+   {
+    "pkg": 4370,
+    "child": 4370,
+    "score": 4950.0,
+    "rounds": 5945,
+    "exh": true,
+    "ms": 2.19519
+   },
+   [
+    {
+     "pkg": 4370,
+     "child": 4370,
+     "score": 4950.0,
+     "rounds": 5945,
+     "exh": true,
+     "ms": 3.459815
+    },
+    {
+     "pkg": 4370,
+     "child": 4370,
+     "score": 4950.0,
+     "rounds": 5945,
+     "exh": true,
+     "ms": 3.314702
+    },
+    {
+     "pkg": 4370,
+     "child": 4370,
+     "score": 4950.0,
+     "rounds": 5945,
+     "exh": true,
+     "ms": 3.144303
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_20",
+   {
+    "pkg": 1650,
+    "child": 1650,
+    "score": 2230.0,
+    "rounds": 2,
+    "exh": true,
+    "ms": 0.012143
+   },
+   [
+    {
+     "pkg": 1650,
+     "child": 1650,
+     "score": 2230.0,
+     "rounds": 2,
+     "exh": true,
+     "ms": 0.012373
+    },
+    {
+     "pkg": 1650,
+     "child": 1650,
+     "score": 2230.0,
+     "rounds": 2,
+     "exh": true,
+     "ms": 0.012583
+    },
+    {
+     "pkg": 1650,
+     "child": 1650,
+     "score": 2230.0,
+     "rounds": 2,
+     "exh": true,
+     "ms": 0.024686
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_200",
+   {
+    "pkg": 33040,
+    "child": 30203,
+    "score": 30203.0,
+    "rounds": 2358528,
+    "exh": false,
+    "ms": 1000.053486
+   },
+   [
+    {
+     "pkg": 25673,
+     "child": 23386,
+     "score": 23386.0,
+     "rounds": 1100400,
+     "exh": true,
+     "ms": 1000.011362
+    },
+    {
+     "pkg": 26275,
+     "child": 23988,
+     "score": 23988.0,
+     "rounds": 1117984,
+     "exh": true,
+     "ms": 1000.004133
+    },
+    {
+     "pkg": 25735,
+     "child": 23448,
+     "score": 23448.0,
+     "rounds": 1100315,
+     "exh": true,
+     "ms": 1000.040166
+    }
+   ]
+  ],
+  [
+   "nested_ancestry_50",
+   {
+    "pkg": 14400,
+    "child": 12919,
+    "score": 13499.0,
+    "rounds": 1317,
+    "exh": true,
+    "ms": 0.986733
+   },
+   [
+    {
+     "pkg": 14400,
+     "child": 12919,
+     "score": 13499.0,
+     "rounds": 1317,
+     "exh": true,
+     "ms": 0.674426
+    },
+    {
+     "pkg": 14400,
+     "child": 12919,
+     "score": 13499.0,
+     "rounds": 1317,
+     "exh": true,
+     "ms": 0.828325
+    },
+    {
+     "pkg": 14400,
+     "child": 12919,
+     "score": 13499.0,
+     "rounds": 1317,
+     "exh": true,
+     "ms": 0.863872
+    }
+   ]
+  ],
+  [
+   "no_ancestry_100",
+   {
+    "pkg": 3690,
+    "child": 3690,
+    "score": 4270.0,
+    "rounds": 2212,
+    "exh": true,
+    "ms": 1.019183
+   },
+   [
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 2212,
+     "exh": true,
+     "ms": 0.788941
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 2212,
+     "exh": true,
+     "ms": 0.9963
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 2212,
+     "exh": true,
+     "ms": 1.175046
+    }
+   ]
+  ],
+  [
+   "no_ancestry_1000",
+   {
+    "pkg": 30462,
+    "child": 30462,
+    "score": 30462.0,
+    "rounds": 1549804,
+    "exh": true,
+    "ms": 786.035172
+   },
+   [
+    {
+     "pkg": 30462,
+     "child": 30462,
+     "score": 30462.0,
+     "rounds": 759927,
+     "exh": false,
+     "ms": 1000.172954
+    },
+    {
+     "pkg": 30462,
+     "child": 30462,
+     "score": 30462.0,
+     "rounds": 725596,
+     "exh": false,
+     "ms": 1000.204928
+    },
+    {
+     "pkg": 30462,
+     "child": 30462,
+     "score": 30462.0,
+     "rounds": 688343,
+     "exh": false,
+     "ms": 1000.312745
+    }
+   ]
+  ],
+  [
+   "no_ancestry_20",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 13,
+    "exh": true,
+    "ms": 0.018935
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 13,
+     "exh": true,
+     "ms": 0.020989
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 13,
+     "exh": true,
+     "ms": 0.02106
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 13,
+     "exh": true,
+     "ms": 0.02131
+    }
+   ]
+  ],
+  [
+   "no_ancestry_200",
+   {
+    "pkg": 7090,
+    "child": 7090,
+    "score": 7670.0,
+    "rounds": 8127,
+    "exh": true,
+    "ms": 4.763321
+   },
+   [
+    {
+     "pkg": 7090,
+     "child": 7090,
+     "score": 7670.0,
+     "rounds": 8127,
+     "exh": true,
+     "ms": 3.885885
+    },
+    {
+     "pkg": 7090,
+     "child": 7090,
+     "score": 7670.0,
+     "rounds": 8127,
+     "exh": true,
+     "ms": 3.385144
+    },
+    {
+     "pkg": 7090,
+     "child": 7090,
+     "score": 7670.0,
+     "rounds": 8127,
+     "exh": true,
+     "ms": 2.693366
+    }
+   ]
+  ],
+  [
+   "no_ancestry_2000",
+   {
+    "pkg": 57001,
+    "child": 57001,
+    "score": 57001.0,
+    "rounds": 516096,
+    "exh": false,
+    "ms": 1000.069814
+   },
+   [
+    {
+     "pkg": 57018,
+     "child": 57018,
+     "score": 57018.0,
+     "rounds": 487709,
+     "exh": true,
+     "ms": 1000.498945
+    },
+    {
+     "pkg": 56990,
+     "child": 56990,
+     "score": 56990.0,
+     "rounds": 498630,
+     "exh": true,
+     "ms": 1000.400033
+    },
+    {
+     "pkg": 57177,
+     "child": 57177,
+     "score": 57177.0,
+     "rounds": 560951,
+     "exh": true,
+     "ms": 1000.542626
+    }
+   ]
+  ],
+  [
+   "no_ancestry_50",
+   {
+    "pkg": 3690,
+    "child": 3690,
+    "score": 4270.0,
+    "rounds": 1191,
+    "exh": true,
+    "ms": 0.536858
+   },
+   [
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 1191,
+     "exh": true,
+     "ms": 0.525707
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 1191,
+     "exh": true,
+     "ms": 0.539323
+    },
+    {
+     "pkg": 3690,
+     "child": 3690,
+     "score": 4270.0,
+     "rounds": 1191,
+     "exh": true,
+     "ms": 0.66079
+    }
+   ]
+  ],
+  [
+   "no_ancestry_500",
+   {
+    "pkg": 16226,
+    "child": 16226,
+    "score": 16226.0,
+    "rounds": 665889,
+    "exh": true,
+    "ms": 316.508067
+   },
+   [
+    {
+     "pkg": 16226,
+     "child": 16226,
+     "score": 16226.0,
+     "rounds": 665889,
+     "exh": true,
+     "ms": 313.738979
+    },
+    {
+     "pkg": 16226,
+     "child": 16226,
+     "score": 16226.0,
+     "rounds": 665889,
+     "exh": true,
+     "ms": 306.912595
+    },
+    {
+     "pkg": 16226,
+     "child": 16226,
+     "score": 16226.0,
+     "rounds": 665889,
+     "exh": true,
+     "ms": 300.570832
+    }
+   ]
+  ],
+  [
+   "private_ancestry_100",
+   {
+    "pkg": 4637,
+    "child": 4637,
+    "score": 4637.0,
+    "rounds": 929,
+    "exh": true,
+    "ms": 0.514325
+   },
+   [
+    {
+     "pkg": 4637,
+     "child": 4637,
+     "score": 4637.0,
+     "rounds": 929,
+     "exh": true,
+     "ms": 0.515417
+    },
+    {
+     "pkg": 4637,
+     "child": 4637,
+     "score": 4637.0,
+     "rounds": 929,
+     "exh": true,
+     "ms": 0.597251
+    },
+    {
+     "pkg": 4637,
+     "child": 4637,
+     "score": 4637.0,
+     "rounds": 929,
+     "exh": true,
+     "ms": 0.633138
+    }
+   ]
+  ],
+  [
+   "private_ancestry_20",
+   {
+    "pkg": 3640,
+    "child": 3378,
+    "score": 3958.0,
+    "rounds": 17,
+    "exh": true,
+    "ms": 0.017072
+   },
+   [
+    {
+     "pkg": 3640,
+     "child": 3378,
+     "score": 3958.0,
+     "rounds": 17,
+     "exh": true,
+     "ms": 0.023033
+    },
+    {
+     "pkg": 3640,
+     "child": 3378,
+     "score": 3958.0,
+     "rounds": 17,
+     "exh": true,
+     "ms": 0.022682
+    },
+    {
+     "pkg": 3640,
+     "child": 3378,
+     "score": 3958.0,
+     "rounds": 17,
+     "exh": true,
+     "ms": 0.02099
+    }
+   ]
+  ],
+  [
+   "private_ancestry_200",
+   {
+    "pkg": 11420,
+    "child": 11420,
+    "score": 11420.0,
+    "rounds": 41309,
+    "exh": true,
+    "ms": 21.841419
+   },
+   [
+    {
+     "pkg": 11420,
+     "child": 11420,
+     "score": 11420.0,
+     "rounds": 41309,
+     "exh": true,
+     "ms": 21.493867
+    },
+    {
+     "pkg": 11420,
+     "child": 11420,
+     "score": 11420.0,
+     "rounds": 41309,
+     "exh": true,
+     "ms": 21.790524
+    },
+    {
+     "pkg": 11420,
+     "child": 11420,
+     "score": 11420.0,
+     "rounds": 41309,
+     "exh": true,
+     "ms": 21.32485
+    }
+   ]
+  ],
+  [
+   "private_ancestry_50",
+   {
+    "pkg": 5090,
+    "child": 4466,
+    "score": 5046.0,
+    "rounds": 839,
+    "exh": true,
+    "ms": 0.387167
+   },
+   [
+    {
+     "pkg": 5090,
+     "child": 4466,
+     "score": 5046.0,
+     "rounds": 839,
+     "exh": true,
+     "ms": 0.47437
+    },
+    {
+     "pkg": 5090,
+     "child": 4466,
+     "score": 5046.0,
+     "rounds": 839,
+     "exh": true,
+     "ms": 0.345548
+    },
+    {
+     "pkg": 5090,
+     "child": 4466,
+     "score": 5046.0,
+     "rounds": 839,
+     "exh": true,
+     "ms": 0.496232
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_100",
+   {
+    "pkg": 15638,
+    "child": 14878,
+    "score": 14878.0,
+    "rounds": 142160,
+    "exh": true,
+    "ms": 52.789723
+   },
+   [
+    {
+     "pkg": 15638,
+     "child": 14878,
+     "score": 14878.0,
+     "rounds": 142160,
+     "exh": true,
+     "ms": 54.176297
+    },
+    {
+     "pkg": 15638,
+     "child": 14878,
+     "score": 14878.0,
+     "rounds": 142160,
+     "exh": true,
+     "ms": 46.9279
+    },
+    {
+     "pkg": 15638,
+     "child": 14878,
+     "score": 14878.0,
+     "rounds": 142160,
+     "exh": true,
+     "ms": 61.209779
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_1000",
+   {
+    "pkg": 165350,
+    "child": 145932,
+    "score": 146512.0,
+    "rounds": 1663744,
+    "exh": false,
+    "ms": 1000.102061
+   },
+   [
+    {
+     "pkg": 157650,
+     "child": 139349,
+     "score": 139929.0,
+     "rounds": 1346291,
+     "exh": false,
+     "ms": 1000.335544
+    },
+    {
+     "pkg": 159910,
+     "child": 140636,
+     "score": 141216.0,
+     "rounds": 1324396,
+     "exh": true,
+     "ms": 1000.366437
+    },
+    {
+     "pkg": 154436,
+     "child": 135338,
+     "score": 135338.0,
+     "rounds": 1506612,
+     "exh": true,
+     "ms": 1000.304234
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_20",
+   {
+    "pkg": 4540,
+    "child": 4319,
+    "score": 4899.0,
+    "rounds": 20,
+    "exh": true,
+    "ms": 0.026961
+   },
+   [
+    {
+     "pkg": 4540,
+     "child": 4319,
+     "score": 4899.0,
+     "rounds": 20,
+     "exh": true,
+     "ms": 0.027201
+    },
+    {
+     "pkg": 4540,
+     "child": 4319,
+     "score": 4899.0,
+     "rounds": 20,
+     "exh": true,
+     "ms": 0.027512
+    },
+    {
+     "pkg": 4540,
+     "child": 4319,
+     "score": 4899.0,
+     "rounds": 20,
+     "exh": true,
+     "ms": 0.0271
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_200",
+   {
+    "pkg": 42680,
+    "child": 36242,
+    "score": 36822.0,
+    "rounds": 2390272,
+    "exh": false,
+    "ms": 1000.007552
+   },
+   [
+    {
+     "pkg": 25551,
+     "child": 23423,
+     "score": 23423.0,
+     "rounds": 1235389,
+     "exh": true,
+     "ms": 1000.106803
+    },
+    {
+     "pkg": 27353,
+     "child": 23907,
+     "score": 23907.0,
+     "rounds": 1206690,
+     "exh": true,
+     "ms": 1000.00698
+    },
+    {
+     "pkg": 27578,
+     "child": 24132,
+     "score": 24132.0,
+     "rounds": 1243989,
+     "exh": true,
+     "ms": 1000.006063
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_2000",
+   {
+    "pkg": 301090,
+    "child": 268754,
+    "score": 269334.0,
+    "rounds": 827904,
+    "exh": false,
+    "ms": 1000.11388
+   },
+   [
+    {
+     "pkg": 301090,
+     "child": 268754,
+     "score": 269334.0,
+     "rounds": 1331990,
+     "exh": false,
+     "ms": 1000.650292
+    },
+    {
+     "pkg": 296360,
+     "child": 264497,
+     "score": 265077.0,
+     "rounds": 1002517,
+     "exh": true,
+     "ms": 1000.831226
+    },
+    {
+     "pkg": 301090,
+     "child": 268754,
+     "score": 269334.0,
+     "rounds": 1356053,
+     "exh": false,
+     "ms": 1000.686519
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_50",
+   {
+    "pkg": 4098,
+    "child": 4098,
+    "score": 4098.0,
+    "rounds": 230,
+    "exh": true,
+    "ms": 0.142417
+   },
+   [
+    {
+     "pkg": 4098,
+     "child": 4098,
+     "score": 4098.0,
+     "rounds": 230,
+     "exh": true,
+     "ms": 0.189336
+    },
+    {
+     "pkg": 4098,
+     "child": 4098,
+     "score": 4098.0,
+     "rounds": 230,
+     "exh": true,
+     "ms": 0.129894
+    },
+    {
+     "pkg": 4098,
+     "child": 4098,
+     "score": 4098.0,
+     "rounds": 230,
+     "exh": true,
+     "ms": 0.161122
+    }
+   ]
+  ],
+  [
+   "shared_ancestry_500",
+   {
+    "pkg": 89990,
+    "child": 77756,
+    "score": 78336.0,
+    "rounds": 2082816,
+    "exh": false,
+    "ms": 1000.087439
+   },
+   [
+    {
+     "pkg": 80025,
+     "child": 69360,
+     "score": 69360.0,
+     "rounds": 1052925,
+     "exh": true,
+     "ms": 1000.226575
+    },
+    {
+     "pkg": 71178,
+     "child": 61076,
+     "score": 61076.0,
+     "rounds": 973108,
+     "exh": true,
+     "ms": 1000.190582
+    },
+    {
+     "pkg": 84448,
+     "child": 73001,
+     "score": 73001.0,
+     "rounds": 924082,
+     "exh": true,
+     "ms": 1000.146513
+    }
+   ]
+  ],
+  [
+   "smoke",
+   {
+    "pkg": 5330,
+    "child": 5030,
+    "score": 5610.0,
+    "rounds": 25,
+    "exh": true,
+    "ms": 0.032732
+   },
+   [
+    {
+     "pkg": 5330,
+     "child": 5030,
+     "score": 5610.0,
+     "rounds": 25,
+     "exh": true,
+     "ms": 0.034975
+    },
+    {
+     "pkg": 5330,
+     "child": 5030,
+     "score": 5610.0,
+     "rounds": 25,
+     "exh": true,
+     "ms": 0.022492
+    },
+    {
+     "pkg": 5330,
+     "child": 5030,
+     "score": 5610.0,
+     "rounds": 25,
+     "exh": true,
+     "ms": 0.033523
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_100",
+   {
+    "pkg": 81050,
+    "child": 30140,
+    "score": 30720.0,
+    "rounds": 3216384,
+    "exh": false,
+    "ms": 1000.065375
+   },
+   [
+    {
+     "pkg": 54670,
+     "child": 22085,
+     "score": 22665.0,
+     "rounds": 1533386,
+     "exh": true,
+     "ms": 1000.087431
+    },
+    {
+     "pkg": 31180,
+     "child": 18612,
+     "score": 19192.0,
+     "rounds": 1652332,
+     "exh": true,
+     "ms": 1000.04148
+    },
+    {
+     "pkg": 31180,
+     "child": 18612,
+     "score": 19192.0,
+     "rounds": 1536758,
+     "exh": true,
+     "ms": 1000.056101
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_20",
+   {
+    "pkg": 28870,
+    "child": 12147,
+    "score": 12727.0,
+    "rounds": 18,
+    "exh": true,
+    "ms": 0.046718
+   },
+   [
+    {
+     "pkg": 28870,
+     "child": 12147,
+     "score": 12727.0,
+     "rounds": 18,
+     "exh": true,
+     "ms": 0.019286
+    },
+    {
+     "pkg": 28870,
+     "child": 12147,
+     "score": 12727.0,
+     "rounds": 18,
+     "exh": true,
+     "ms": 0.026249
+    },
+    {
+     "pkg": 28870,
+     "child": 12147,
+     "score": 12727.0,
+     "rounds": 18,
+     "exh": true,
+     "ms": 0.02648
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_200",
+   {
+    "pkg": 75880,
+    "child": 27281,
+    "score": 27861.0,
+    "rounds": 2592512,
+    "exh": false,
+    "ms": 1000.034456
+   },
+   [
+    {
+     "pkg": 75880,
+     "child": 27281,
+     "score": 27861.0,
+     "rounds": 1354998,
+     "exh": false,
+     "ms": 1000.139878
+    },
+    {
+     "pkg": 75880,
+     "child": 27281,
+     "score": 27861.0,
+     "rounds": 1144534,
+     "exh": false,
+     "ms": 1000.056506
+    },
+    {
+     "pkg": 75880,
+     "child": 27281,
+     "score": 27861.0,
+     "rounds": 1232320,
+     "exh": false,
+     "ms": 1000.100543
+    }
+   ]
+  ],
+  [
+   "subsidizing_ancestry_50",
+   {
+    "pkg": 47520,
+    "child": 11332,
+    "score": 11912.0,
+    "rounds": 3567360,
+    "exh": false,
+    "ms": 1000.031087
+   },
+   [
+    {
+     "pkg": 24500,
+     "child": 4508,
+     "score": 5088.0,
+     "rounds": 1785796,
+     "exh": true,
+     "ms": 1000.010442
+    },
+    {
+     "pkg": 24500,
+     "child": 4508,
+     "score": 5088.0,
+     "rounds": 1775814,
+     "exh": true,
+     "ms": 1000.036466
+    },
+    {
+     "pkg": 24500,
+     "child": 4508,
+     "score": 5088.0,
+     "rounds": 1813262,
+     "exh": true,
+     "ms": 1000.021292
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_100",
+   {
+    "pkg": 4850,
+    "child": 4850,
+    "score": 5430.0,
+    "rounds": 2486,
+    "exh": true,
+    "ms": 1.347319
+   },
+   [
+    {
+     "pkg": 4850,
+     "child": 4850,
+     "score": 5430.0,
+     "rounds": 2486,
+     "exh": true,
+     "ms": 1.343202
+    },
+    {
+     "pkg": 4850,
+     "child": 4850,
+     "score": 5430.0,
+     "rounds": 2486,
+     "exh": true,
+     "ms": 1.452307
+    },
+    {
+     "pkg": 4850,
+     "child": 4850,
+     "score": 5430.0,
+     "rounds": 2486,
+     "exh": true,
+     "ms": 1.319567
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_1000",
+   {
+    "pkg": 56141,
+    "child": 56141,
+    "score": 56141.0,
+    "rounds": 1246208,
+    "exh": false,
+    "ms": 1000.160047
+   },
+   [
+    {
+     "pkg": 56188,
+     "child": 56188,
+     "score": 56188.0,
+     "rounds": 1515931,
+     "exh": false,
+     "ms": 1000.417134
+    },
+    {
+     "pkg": 56183,
+     "child": 56183,
+     "score": 56183.0,
+     "rounds": 1589517,
+     "exh": false,
+     "ms": 1000.277176
+    },
+    {
+     "pkg": 56183,
+     "child": 56183,
+     "score": 56183.0,
+     "rounds": 1675105,
+     "exh": false,
+     "ms": 1000.356298
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_20",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 5,
+    "exh": true,
+    "ms": 0.017904
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 5,
+     "exh": true,
+     "ms": 0.01619
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 5,
+     "exh": true,
+     "ms": 0.015069
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 5,
+     "exh": true,
+     "ms": 0.017011
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_200",
+   {
+    "pkg": 7321,
+    "child": 7321,
+    "score": 7321.0,
+    "rounds": 17345,
+    "exh": true,
+    "ms": 10.140296
+   },
+   [
+    {
+     "pkg": 7321,
+     "child": 7321,
+     "score": 7321.0,
+     "rounds": 17345,
+     "exh": true,
+     "ms": 9.603749
+    },
+    {
+     "pkg": 7321,
+     "child": 7321,
+     "score": 7321.0,
+     "rounds": 17345,
+     "exh": true,
+     "ms": 10.190581
+    },
+    {
+     "pkg": 7321,
+     "child": 7321,
+     "score": 7321.0,
+     "rounds": 17345,
+     "exh": true,
+     "ms": 11.185769
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_2000",
+   {
+    "pkg": 97653,
+    "child": 97653,
+    "score": 97653.0,
+    "rounds": 854528,
+    "exh": false,
+    "ms": 1000.328611
+   },
+   [
+    {
+     "pkg": 97653,
+     "child": 97653,
+     "score": 97653.0,
+     "rounds": 643515,
+     "exh": false,
+     "ms": 1000.656291
+    },
+    {
+     "pkg": 97653,
+     "child": 97653,
+     "score": 97653.0,
+     "rounds": 1108005,
+     "exh": false,
+     "ms": 1000.670291
+    },
+    {
+     "pkg": 97653,
+     "child": 97653,
+     "score": 97653.0,
+     "rounds": 1242164,
+     "exh": false,
+     "ms": 1000.517448
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_50",
+   {
+    "pkg": 2330,
+    "child": 2330,
+    "score": 2910.0,
+    "rounds": 54,
+    "exh": true,
+    "ms": 0.04831
+   },
+   [
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 54,
+     "exh": true,
+     "ms": 0.058249
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 54,
+     "exh": true,
+     "ms": 0.057047
+    },
+    {
+     "pkg": 2330,
+     "child": 2330,
+     "score": 2910.0,
+     "rounds": 54,
+     "exh": true,
+     "ms": 0.056647
+    }
+   ]
+  ],
+  [
+   "wallet_mixed_500",
+   {
+    "pkg": 20247,
+    "child": 20247,
+    "score": 20247.0,
+    "rounds": 873718,
+    "exh": true,
+    "ms": 347.41397
+   },
+   [
+    {
+     "pkg": 20247,
+     "child": 20247,
+     "score": 20247.0,
+     "rounds": 873718,
+     "exh": true,
+     "ms": 343.099361
+    },
+    {
+     "pkg": 20247,
+     "child": 20247,
+     "score": 20247.0,
+     "rounds": 873718,
+     "exh": true,
+     "ms": 341.057468
+    },
+    {
+     "pkg": 20247,
+     "child": 20247,
+     "score": 20247.0,
+     "rounds": 873718,
+     "exh": true,
+     "ms": 338.66669
+    }
+   ]
+  ]
+ ]
+}
