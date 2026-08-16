@@ -193,9 +193,12 @@ That also disposes of the dynamic version — re-keying a candidate whenever a s
 for. Re-keying only ever *reduces* a candidate's charge, by at most its own bump, so it moves the
 order strictly less than the static key does. The largest bump anywhere in this fixture is 21,258.
 
-The conclusion is not that the order should be ancestry-aware. It is that **no per-candidate key can
-express this**: the optimum here is "avoid `c044` and `c009`", which is a property of the set, not a
-ranking of coins. Only the bound sees sets. Note also that the depth-first traversal already
+The conclusion is not that the order should be ancestry-aware *here*. It is that **no per-candidate
+key can express this fixture**: the optimum is "avoid `c044` and `c009`", which is a property of the
+set, not a ranking of coins. (Finding 6 qualifies this. On a 200,000-candidate pool the same key
+recovers 91% of what coin-select loses to Core, because there the bump is large relative to the value
+gaps between adjacent coins rather than three orders of magnitude too small. The key is worth what
+ancestry costs relative to what the ordering is otherwise sorting on.) Only the bound sees sets. Note also that the depth-first traversal already
 consults the bound where it cheaply can — `descend()` evaluates both children and takes the better
 one — so the remaining gap is node *expansion* order, which is what best-first buys with its
 frontier. Iterative deepening on the bound is the standard way to buy it back at depth-first memory;
@@ -300,6 +303,56 @@ the scale tier now targets what 400 inputs can fund. And **an engine returning n
 automatically the engine losing**; it may be the only one enforcing a rule. `max_weight` is optional
 in `SelectionProblem`, so a caller who omits it gets no protection from coin-select — which is worth
 knowing independently of this benchmark.
+
+### What Core picks that coin-select will not
+
+The two `shared_ancestry` losses are worth understanding, because they are not what they look like.
+
+**coin-select's answer is the greedy seed, unimproved.** Its returned score equals
+`lowest_fee_seed_score` exactly on both fixtures, at every budget from 100 ms to 10 s. The search
+contributes nothing: 118,784 nodes of a tree over 200,000 candidates never beat the greedy prefix,
+and the answer is byte-identical at a hundred times the clock. **At this scale the ordering is the
+whole algorithm.**
+
+**Core's advantage is entirely that it touches fewer unconfirmed parents.**
+
+| `shared_ancestry_200000` | inputs | with no unconfirmed parent | parents touched | union bump | child fee |
+| --- | --- | --- | --- | --- | --- |
+| coin-select | 360 | 134 | 226 | 955,403 | 1,201,193 |
+| Bitcoin Core | 360 | **141** | **219** | **923,621** | **1,169,084** |
+
+The bump difference is 31,782 sat and the fee difference is 32,109 — so **99% of Core's win is that
+it dragged in seven fewer parents.** Core gets there structurally rather than cleverly: it charges
+each coin its own bump inside the effective value *before* the search, so coins with unconfirmed
+parents look worse and it drifts away from them. coin-select's greedy prefix sorts on raw
+value-per-weight and cannot see ancestry at all.
+
+**This is finding 3's mechanism with the magnitudes inverted.** Finding 3 measured an ancestry-aware
+branching key on a 50-candidate fixture and found it useless, because demoting the offending coin
+would have taken 1,063,000 sat of charge against a parent that owed 6,144. Here the pool is 200,000
+near-identical coins: adjacent ones differ by about 230 sat while a parent costs 1,600 to 7,200 sat
+to bump, mean 4,234. The ancestry-blind order is wrong by roughly **eighteen positions** per
+parent-laden coin, and unlike at n=50 there is no search to recover from it.
+
+So the key that failed there works here:
+
+| `shared_ancestry_200000`, greedy prefix under | child fee | union bump |
+| --- | --- | --- |
+| `value / weight` — what the crate does | 1,201,193 | 955,403 |
+| `(value - own bump) / weight` | **1,172,027** | 926,237 |
+| Bitcoin Core, for reference | 1,169,084 | 923,621 |
+
+That closes **91% of the gap** for a change to one sort key. It is worth trusting to that precision:
+the same emulation under the current key reproduces coin-select's actual returned child fee exactly,
+on both this fixture and the 20,000 one.
+
+At 20,000 candidates the ancestry-aware key changes nothing — same selection, same fee — so the 0.4%
+Core wins there is something else and is still unexplained.
+
+**The qualification finding 3 needs:** "no per-candidate key can express this" is true of the fixture
+it was measured on and false in general. A static ancestry-aware key is worth exactly as much as the
+ancestor bump is worth relative to the value gaps between adjacent coins — negligible on 50 coins
+that differ by millions of sats, decisive on 200,000 that differ by hundreds.
 
 ### Getting here needed the ancestor sets stored sparsely
 
