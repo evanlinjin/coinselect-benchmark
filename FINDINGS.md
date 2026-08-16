@@ -248,34 +248,58 @@ The design, the measurements behind it, and the things that do *not* work are in
 [`SAMPLING-PLAN.md`](SAMPLING-PLAN.md) — §11 for this re-measurement, everything before it taken
 against best-first and labelled as such.
 
-## 6. At twenty and two hundred thousand candidates, coin-select still answers and Core does not
+## 6. At twenty and two hundred thousand candidates, both engines still answer
 
 The checked-in matrix stops at 2000. `python3 genfixtures.py --scale && python3 bench.py scale` adds
 a tier an order of magnitude past it — 20,000 and 200,000 candidates for the three large families.
 Those fixtures are **not checked in**: one is 30 MB and they are deterministic from their seed, so
-regenerating costs less than storing them. A 100 ms wall-clock budget per search:
+regenerating costs less than storing them.
 
-| fixture | | fee the child pays | nodes | peak RSS | process |
-| --- | --- | --- | --- | --- | --- |
-| `no_ancestry_20000` | coin-select | **595,310** | 11,008 | **7.1 MB** | 0.1 s |
-| | Bitcoin Core | 595,544 | 100,000 | 31.9 MB | 0.4 s |
-| `shared_ancestry_20000` | coin-select | **2,650,578** | 47,104 | **7.8 MB** | 0.1 s |
-| | Bitcoin Core | 2,651,238 | 100,000 | 140.4 MB | 0.4 s |
-| `wallet_mixed_20000` | coin-select | **1,570,104** | 39,936 | **7.8 MB** | 0.1 s |
-| | Bitcoin Core | 1,607,754 | 100,000 | 173.9 MB | 0.1 s |
-| `no_ancestry_200000` | coin-select | **5,995,190** | 1 | **49.8 MB** | 0.1 s |
-| | Bitcoin Core | **no solution** | — | 276.3 MB | 4.8 s |
-| `shared_ancestry_200000` | coin-select | **25,960,321** | 6,144 | **58.0 MB** | 0.2 s |
-| | Bitcoin Core | **no solution** | — | 293.1 MB | 4.9 s |
-| `wallet_mixed_200000` | coin-select | 15,862,540 | 5,888 | **57.6 MB** | 0.2 s |
-| | Bitcoin Core | **15,823,657** | 100,000 | 294.4 MB | 0.6 s |
+The scale tier caps `max_weight` at `MAX_STANDARD_TX_WEIGHT` (400,000 weight units) and sets a target
+around 400 inputs can fund. That is not cosmetic — see the correction below. A 100 ms wall-clock
+budget per search:
 
-coin-select is cheaper on four of six, uses **4 to 22 times less memory throughout**, and answers
-every one of them. Core returns nothing on two of the three 200,000-candidate pools, and spends
-nearly five seconds doing it. The one Core wins it wins by 0.25%.
+| fixture | | fee the child pays | nodes | peak RSS |
+| --- | --- | --- | --- | --- |
+| `no_ancestry_20000` | coin-select | **243,750** | 11,776 | **7.2 MB** |
+| | Bitcoin Core | 277,300 | — | 32.0 MB |
+| `no_ancestry_200000` | coin-select | **245,790** | 9,728 | **49.7 MB** |
+| | Bitcoin Core | 248,060 | — | 276.2 MB |
+| `shared_ancestry_20000` | coin-select | 1,079,551 | 21,504 | **7.9 MB** |
+| | Bitcoin Core | **1,075,299** | 100,000 | 140.1 MB |
+| `shared_ancestry_200000` | coin-select | 1,201,193 | 7,424 | **58.0 MB** |
+| | Bitcoin Core | **1,169,084** | 100,000 | 292.7 MB |
+| `wallet_mixed_20000` | coin-select | **595,756** | 26,368 | **7.9 MB** |
+| | Bitcoin Core | 639,659 | 100,000 | 173.1 MB |
+| `wallet_mixed_200000` | coin-select | **638,866** | 7,424 | **57.6 MB** |
+| | Bitcoin Core | 655,534 | 100,000 | 294.6 MB |
 
-`no_ancestry_200000` exhausting in a single node is not a bug: with no ancestors and a target at 45%
-of the pool, every candidate is worth selecting, and the metric says so in one step.
+coin-select is cheaper on four of six and uses **4 to 22 times less memory throughout**. Both engines
+return an answer on every fixture, inside half a second including parsing a 30 MB file.
+
+The two Core wins are both `shared_ancestry`, which is the family built to punish exactly the thing
+coin-select is supposed to be good at. Worth a look, and not something the smaller sizes show.
+
+### Correction: Core's earlier "no solution" was Core being right
+
+An earlier version of this finding reported that Core returned no solution on two of the three
+200,000-candidate pools while coin-select answered all six, and read that as a win. **It was a
+broken comparison, and the fault was in the fixtures.**
+
+Those fixtures set no `max_weight`, and `core-runner/main.cpp` falls back to Core's
+`MAX_STANDARD_TX_WEIGHT` when a fixture does not set one. The target was the usual 45% of the pool,
+which at 200,000 candidates needs about 8,800 inputs and **2.4M weight units — six times the
+400,000-unit standardness limit.** No standard transaction can fund it, so Core correctly declined.
+coin-select answered only because nothing had told it the limit existed: its selections there were
+transactions no node would relay. Raising `max_weight` to 20M makes Core answer that same fixture in
+292 ms with 30,444 inputs, via `KnapsackSolver`.
+
+Two things to take from it. **A target of 45% of the pool stops being a sensible benchmark once the
+pool is large** — a wallet with 200,000 UTXOs does not spend half its balance in one transaction, and
+the scale tier now targets what 400 inputs can fund. And **an engine returning nothing is not
+automatically the engine losing**; it may be the only one enforcing a rule. `max_weight` is optional
+in `SelectionProblem`, so a caller who omits it gets no protection from coin-select — which is worth
+knowing independently of this benchmark.
 
 ### Getting here needed the ancestor sets stored sparsely
 

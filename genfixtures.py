@@ -52,6 +52,27 @@ LARGE_FAMILIES = ["no_ancestry", "shared_ancestry", "wallet_mixed"]
 # checking them in would buy nothing that regenerating does not. `bench.py scale` runs them.
 SCALE_SIZES = [20_000, 200_000]
 
+# Bitcoin Core refuses to build a transaction heavier than this, and falls back to it whenever a
+# fixture does not set `max_weight`. The other sizes never come near it; the scale tier would blow
+# through it sixfold if its target were the usual 45% of the pool, so the tier sets both an explicit
+# cap and a target a standard transaction can actually fund. Without that the comparison is not one:
+# Core correctly returns nothing and coin-select returns a transaction no node would relay.
+MAX_STANDARD_TX_WEIGHT = 400_000
+
+# Inputs the scale target should need, well inside the cap, leaving the search a real choice among
+# the rest of the pool.
+SCALE_TARGET_INPUTS = 400
+
+
+def build_scale(family: str, size: int) -> dict:
+    """A scale-tier fixture: same shape, but sized so a standard transaction can fund it."""
+    f = build(family, size)
+    values = sorted((c["value"] for c in f["candidates"]), reverse=True)
+    f["target"]["value"] = int(sum(values[:SCALE_TARGET_INPUTS]) * 0.9) // 1000 * 1000
+    f["max_weight"] = MAX_STANDARD_TX_WEIGHT
+    f["name"] = f"{family}_{size}"
+    return f
+
 # Families that override the default feerates. CoinGrinder only runs in Core's portfolio above
 # 3x the long-term feerate, and at feerate == long_term_feerate Core's waste degenerates
 # (`coin.fee - coin.long_term_fee` is 0 for every input, leaving only excess), so one family
@@ -431,7 +452,7 @@ def main():
         scale_dir.mkdir(exist_ok=True)
         for fam in LARGE_FAMILIES:
             for n in SCALE_SIZES:
-                f = build(fam, n)
+                f = build_scale(fam, n)
                 validate(f)
                 path = scale_dir / f"{f['name']}.json"
                 path.write_text(json.dumps(f, indent=1) + "\n")

@@ -116,10 +116,12 @@ a speedup. The runner reads its aggregates from `SelectionView`, so `compare-rev
 coin-select PR #53 and later; revisions before it take `&CoinSelector` in `BnbMetric` and will not
 build. Output lands in `results/compare/`.
 
-`bench.py scale` runs pools an order of magnitude past the checked-in matrix. At that size neither
-engine exhausts anything, so what it measures is whether a search can start at all inside a budget:
-memory, setup cost and whether an answer came back. Bitcoin Core returns no solution on two of the
-three 200,000-candidate pools; coin-select answers all six in 4 to 22 times less memory.
+`bench.py scale` runs pools an order of magnitude past the checked-in matrix — 20,000 and 200,000
+candidates. Neither engine exhausts anything at that size, so what it measures is memory, setup cost
+and answer quality rather than optimality. The tier caps `max_weight` at `MAX_STANDARD_TX_WEIGHT` and
+targets what roughly 400 inputs can fund: at 200,000 candidates the usual "45% of the pool" target
+needs a transaction six times the standardness limit, which Core correctly refuses to build and
+coin-select will happily build if nothing tells it not to (see FINDINGS.md #6).
 
 `--oracle` brute forces every fixture with at most 20 candidates against coin-select's own
 objective, so a disagreement can be attributed rather than merely observed: it says whether the
