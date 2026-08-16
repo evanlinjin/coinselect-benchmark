@@ -157,6 +157,48 @@ So the lever is **incumbent quality and dive order**, not the bound. Restricting
 it from the other side, and finding 5 shows it is not a curiosity: sampling recovers this fixture's
 optimum exactly.
 
+### An ancestry-aware branching order does not fix it
+
+The obvious repair is to stop branching in an ancestry-blind order: sort by
+`(value - the candidate's own ancestor bump) / weight` instead of `value / weight`. Measured, on a
+patched crate whose control run is byte-identical to the pin on all 42 fixtures:
+
+| | rounds | total fee the child pays |
+| --- | --- | --- |
+| `value / weight` (the pin) | — | 1,149,154 |
+| `(value - own bump) / weight` | mostly *more* | 1,158,448 (**+0.81%**) |
+
+Every fixture that exhausts returns the same selection under both orders, so the bound stays
+admissible; two budget-limited fixtures get worse. On `subsidizing_ancestry_50` nothing moves at
+all: 7.18M rounds becomes 7.25M, and the answer is unchanged.
+
+**The reason is worth recording, because it generalises.** The new key does reorder candidates — 17
+of 50 change rank, some by 425% — but every one of those changes happens far down the order, among
+small coins whose bump is comparable to their value. The top is untouched:
+
+| rank | coin | value | own bump |
+| --- | --- | --- | --- |
+| 0 | `c036` | 4,809,618 | 0 |
+| 1 | `c044` | 4,678,368 | 6,144 |
+| 2 | `c009` | 4,674,449 | 3,636 |
+| 3 | `c035` | 3,615,368 | 138 |
+
+To demote `c044` below `c035` the key would have to charge it 1,063,000 sat. Its parent owes 6,144.
+**Ancestor bumps are three orders of magnitude too small to reorder the top of a value-per-weight
+sort**, which is where the greedy prefix and the first dive come from.
+
+That also disposes of the dynamic version — re-keying a candidate whenever a shared parent gets paid
+for. Re-keying only ever *reduces* a candidate's charge, by at most its own bump, so it moves the
+order strictly less than the static key does. The largest bump anywhere in this fixture is 21,258.
+
+The conclusion is not that the order should be ancestry-aware. It is that **no per-candidate key can
+express this**: the optimum here is "avoid `c044` and `c009`", which is a property of the set, not a
+ranking of coins. Only the bound sees sets. Note also that the depth-first traversal already
+consults the bound where it cheaply can — `descend()` evaluates both children and takes the better
+one — so the remaining gap is node *expansion* order, which is what best-first buys with its
+frontier. Iterative deepening on the bound is the standard way to buy it back at depth-first memory;
+untested here.
+
 ## 4. Outcomes against Core
 
 | | coin-select | Bitcoin Core |
