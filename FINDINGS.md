@@ -76,24 +76,41 @@ The three improvements are the large pools, and they are not marginal:
 | `wallet_mixed_2000` | 196970 | **97653** | -50.4% |
 | `wallet_mixed_1000` | 97230 | **56633** | -41.8% |
 
-**Four of the seven regressions are the budget, not the search.** Give both engines an equal *wall
-clock* with the round cap lifted and they converge: `high_feerate_200` and `shared_ancestry_100`
-match exactly at 100 ms, and `nested_ancestry_200` matches once depth-first is allowed to exhaust —
-which takes it 3,145,352 rounds against best-first's 23,217. A depth-first round is a much cheaper
-unit than a queue pop, so a matrix giving each 100,000 hands depth-first several times less work.
-**Round counts are not comparable across this repin.**
+**Five of the seven regressions are the budget, not the search.** Give both engines an equal *wall
+clock* with the round cap lifted and they converge:
 
-**Three do not converge, and `subsidizing_ancestry` is a real regression:**
-
-| fixture | best-first | depth-first |
+| fixture | converges at | |
 | --- | --- | --- |
-| `subsidizing_ancestry_50` | 5088, tree exhausted in **55,737 rounds** | 11912, **74.8M rounds in 20 s, still not exhausted** |
-| `subsidizing_ancestry_100` | 18925 | 30720 |
+| `high_feerate_200` | 100 ms | identical, both exhausted |
+| `shared_ancestry_100` | 100 ms | identical, both exhausted |
+| `no_ancestry_500` | 1 s | identical at 16226, both exhausted |
+| `no_ancestry_1000` | 1 s | 30462 against best-first's 30463 — depth-first one sat *cheaper* |
+| `nested_ancestry_200` | 2 s | identical, after 3,145,352 rounds against best-first's 23,217 |
 
-`subsidizing_ancestry_50` is fifty candidates. Best-first proves the optimum in under sixty thousand
-rounds; depth-first does more than a thousand times that work and is still short. This is not budget
-starvation — the answer is identical at 100 ms and at 1000 ms. It is the clearest open problem in
-this matrix, and it is a regression a reviewer should weigh against the large-pool wins.
+A depth-first round is a much cheaper unit than a queue pop, so a matrix giving each 100,000 hands
+depth-first several times less work. **Round counts are not comparable across this repin.**
+(`no_ancestry_1000` is a separate small puzzle: both traversals report the tree exhausted and they
+disagree by one sat, so one of the two bounds is unsound at the margin. Unresolved; f32 in the bound
+is the suspicion.)
+
+**Two do not converge at any budget tried, and both are `subsidizing_ancestry`:**
+
+| | best-first | depth-first | |
+| --- | --- | --- | --- |
+| **`subsidizing_ancestry_50`** — 50 candidates, 0.131 BTC target, 10 sat/vB | | | |
+| fee the child pays | 4508 | 11332 | **2.51x** |
+| package fee | 24500 | 47520 | 1.94x |
+| inputs / change | 5 / 370545 | 6 / 4747 | |
+| search | exhausted in **55,737 rounds** | 36.6M rounds in 10 s, **not exhausted** | |
+| **`subsidizing_ancestry_100`** — neither exhausts | | | |
+| fee the child pays | 18925 | 30140 | **1.59x** |
+| package fee | 31493 | 81050 | 2.57x |
+
+Best-first proves the optimum on `_50` in under sixty thousand rounds; depth-first does six hundred
+times that work and is still short. This is not budget starvation — its answer is byte-identical at
+100 ms, 1 s and 10 s, so it is stuck rather than slow. In absolute terms the wallet pays 6824 sat
+more on a 0.131 BTC send, two and a half times the fee. It is the clearest open problem in this
+matrix, and a regression a reviewer should weigh against the large-pool wins.
 
 [`ANCESTOR-BOUND-PLAN.md`](ANCESTOR-BOUND-PLAN.md) named `subsidizing_ancestry_50` and `_100` as its
 sharpest targets, from independent evidence on the old traversal. The ceiling it proposes was built
