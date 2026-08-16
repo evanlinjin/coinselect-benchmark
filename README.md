@@ -112,9 +112,13 @@ pinned to one core so drifting background load moves both together, and compares
 rather than medians — background load can only ever add time, so the fastest observed run is the
 closest thing to an uncontended measurement. It reports behaviour first (identical selections,
 round counts, solved/unsolved) and speed second, because a speedup that changed the answers is not
-a speedup. The runner reads its aggregates from `SelectionView`, so `compare-revs` reaches
-coin-select PR #53 and later; revisions before it take `&CoinSelector` in `BnbMetric` and will not
-build. Output lands in `results/compare/`.
+a speedup. Output lands in `results/compare/`.
+
+**How far back `compare-revs` reaches is bounded by the runner, not by the harness.** The runner
+reads its aggregates from `SelectionView` — so revisions before PR #53, which take `&CoinSelector`
+in `BnbMetric`, will not build — and it now consumes `drags_in` as `&[u32]`, so revisions before
+[PR #75][pr75], where it was a `Bitset`, will not build either. Reaching further back than the
+current pin means checking out a runner from this repository's history alongside it.
 
 `bench.py scale` runs pools an order of magnitude past the checked-in matrix — 20,000 and 200,000
 candidates. Neither engine exhausts anything at that size, so what it measures is memory, setup cost
@@ -176,5 +180,6 @@ portfolio has no single objective to enumerate, and its results may carry change
 [pr64]: https://github.com/bitcoindevkit/coin-select/pull/64
 [pr53]: https://github.com/bitcoindevkit/coin-select/pull/53
 [pr73]: https://github.com/bitcoindevkit/coin-select/pull/73
+[pr75]: https://github.com/bitcoindevkit/coin-select/pull/75
 [issue67]: https://github.com/bitcoindevkit/coin-select/issues/67
 [core]: https://github.com/bitcoin/bitcoin

@@ -732,6 +732,14 @@ def _at_a_glance(fixtures, by_key):
                 f"| {sum(1 for r in runs if not r['ok'])} "
                 f"| {fee_wins[slot]} of {len(scored)} | {waste_wins[slot]} of {len(wasted)} |"
             )
+    lines.append(
+        "\n**`median time` is the one column here that is not reproducible.** Every other number in "
+        "this report is deterministic — repeat the run and it comes back identical — but this is a "
+        "median over fixtures whose own times span four orders of magnitude, so it moves with "
+        "background load: three consecutive runs of the same binaries on the same machine gave "
+        "967, 968 and 1,228 us. Read it as an order of magnitude, and use `bench.py compare-revs` "
+        "(interleaved, pinned to one core, minimum rather than median) to compare two revisions."
+    )
     return "\n".join(lines)
 
 
