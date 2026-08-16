@@ -342,3 +342,76 @@ should be ignored as an artefact of sampling the wrong part of the tree.
 (`91f5cfeb1163f87a27059adbbe1de6af8afbb08b`, PR #70) and histogram the bounds of the 55,737 nodes it
 expands. That is the population iterative deepening has to traverse, and its distinct-bound count is
 the pass count that matters. Do this before trusting any estimate for that fixture.
+
+## 12. Implemented — it works, with one caveat the plan did not anticipate
+
+Built on `experiment/iterative-deepening` (`7a0c0d3`), a single commit on top of `9c40ae2`. The
+disabled build is byte-identical to the pinned revision on all 42 fixtures; `cargo test` is green on
+`--all-features` and `--no-default-features` (64 tests).
+
+### The headline test passes, by a wide margin
+
+`subsidizing_ancestry_50`, wall clock, round cap lifted:
+
+| arm | nodes | passes | exhausted | fee the child pays | wall |
+| --- | --- | --- | --- | --- | --- |
+| plain dive | 40,000,000 | — | no | 11,332 | 11,370 ms |
+| deepening, `eps=0.1` | **64,544** | 8 | **yes** | **4,508** | **21 ms** |
+| deepening, `eps=0.5` | 69,821 | 2 | yes | 4,508 | 24 ms |
+
+That is 1.16x best-first's 55,737 nodes, at 3.5 MB instead of a frontier. §3's acceptance test asked
+for a few hundred thousand nodes; it took sixty-five thousand.
+
+At a 1000 ms budget across the matrix, `eps=0.1`: exhausted rises **31 -> 34 of 42**, peak RSS stays
+**3.5 MB**, and five fixtures improve sharply — `shared_ancestry_200` -41.9%, `subsidizing_ancestry_100`
+-37.2%, `nested_ancestry_200` -25.6%, `subsidizing_ancestry_200` -15.7%, `subsidizing_ancestry_50`
+-60.2%.
+
+Correctness held everywhere it could be checked: on the **32 fixtures where both traversals report
+the tree exhausted, the scores agree 32 out of 32**, and the brute-force oracle confirms the optimum
+on all 9 fixtures small enough to enumerate.
+
+### The caveat: on its own it is a net regression
+
+| | total fee the child pays |
+| --- | --- |
+| plain dive | 1,149,139 |
+| deepening `eps=0.1`, replacing the dive | 1,194,554 (**+3.95%**) |
+
+Two fixtures pay for all of it: `wallet_mixed_1000` (+39%) and `wallet_mixed_2000` (+70%). Both are
+large pools that **never exhaust under any arm**. Deepening spends its budget re-expanding the
+low-bound region and never dives deep enough to reach a good complete selection, so its incumbent
+stays near the greedy seed. This is the anytime weakness of iterative deepening, and it is not
+fixable by tuning: `eps` large enough to protect those two (4.0) is large enough to lose
+`subsidizing_ancestry_50` entirely.
+
+### The fix is to add it to the dive rather than substitute it for the dive
+
+The incumbent only ever improves, so a search that dives first and then deepens *cannot* do worse
+than the dive alone. Measured by splitting a 1000 ms budget in half and keeping the better answer:
+
+| | total fee the child pays | improved | regressed |
+| --- | --- | --- | --- |
+| plain dive, whole clock | 1,149,139 | — | — |
+| half dive + half deepening | **1,103,777 (-3.95%)** | 6 | 1 (+0.2%) |
+
+The single regression is `wallet_mixed_1000` at +0.2%, and it is an artefact of the measurement
+rather than the design: the two arms were run separately with half a budget each, so the dive lost
+half its clock. **An in-crate hybrid that carries the incumbent from the dive into the deepening
+passes cannot regress at all**, and that is the form to build.
+
+### What the plan got wrong
+
+1. **§9's staging is backwards**, as §11 already recorded: the strict schedule is unusable and the
+   relaxed one is mandatory.
+2. **§3's node target was derived from the wrong quantity.** It reasoned that iterative deepening
+   must visit best-first's 55,737 nodes once per pass, predicting 55,737 x passes. The real figure is
+   64,544 across all 8 passes *in total*, because the early passes are tiny — the cost is dominated
+   by the last pass, not multiplied by the pass count.
+3. **The plan never considered that deepening could lose.** It framed the risk entirely as
+   re-expansion overhead on fixtures that had nothing to gain, and §7's outcome 3 proposed gating on
+   `has_shared_ancestors()`. That gate would not have helped: `wallet_mixed_1000` and `_2000` both
+   have shared ancestors. The real discriminator is whether the tree is exhaustible within the
+   budget, which is not known in advance — hence the hybrid.
+4. **§5 said nothing outside `bnb.rs` should need to change.** One public entry point was needed on
+   `CoinSelector` so the old behaviour stays the default and the control run is possible at all.
