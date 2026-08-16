@@ -10,13 +10,6 @@ bdk_coin_select = { git = "https://github.com/evanlinjin/coin-select.git", rev =
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 
-[features]
-# The pinned revision takes `&SelectionView` in `BnbMetric`, so this is on by default. Revisions
-# from before coin-select PR #53 take `&CoinSelector` instead; build those with
-# `--no-default-features`. `bench.py compare-revs` picks the right shape by trying both.
-default = ["selection-view"]
-selection-view = []
-
 [profile.release]
 debug = true
 lto = false

@@ -108,9 +108,9 @@ pinned to one core so drifting background load moves both together, and compares
 rather than medians — background load can only ever add time, so the fastest observed run is the
 closest thing to an uncontended measurement. It reports behaviour first (identical selections,
 round counts, solved/unsolved) and speed second, because a speedup that changed the answers is not
-a speedup. Revisions either side of coin-select PR #53 have different `BnbMetric` signatures; the
-runner carries a `selection-view` feature for that and `compare-revs` picks the right one by
-trying both. Output lands in `results/compare/`.
+a speedup. The runner reads its aggregates from `SelectionView`, so `compare-revs` reaches
+coin-select PR #53 and later; revisions before it take `&CoinSelector` in `BnbMetric` and will not
+build. Output lands in `results/compare/`.
 
 `--oracle` brute forces every fixture with at most 20 candidates against coin-select's own
 objective, so a disagreement can be attributed rather than merely observed: it says whether the
@@ -122,10 +122,8 @@ portfolio has no single objective to enumerate, and its results may carry change
 - Both revisions are pinned by commit in `pins.json`; `bench.py setup` checks out exactly those
   and re-applies patches from scratch every time, so it is idempotent.
 - `rust-runner/Cargo.toml` pins the same coin-select revision; setup refuses to build if the two
-  pins have drifted apart. The runner's `selection-view` feature is on by default because the
-  pinned revision takes `&SelectionView` in `BnbMetric`, and reads every aggregate — weight, fee,
-  excess, ancestor bump — from that view rather than from `CoinSelector`. Revisions from before
-  coin-select PR #53 differ; `compare-revs` reaches them by trying each feature in turn.
+  pins have drifted apart. The runner reads every aggregate — weight, fee, excess, ancestor bump —
+  from the `SelectionView` the metric is handed, rather than from `CoinSelector`.
 - Fixtures are deterministic from a per-fixture seed and are checked in.
 - Core is built at `-O3` with assertions on (it refuses to compile with `NDEBUG`); the Rust runner
   at `--release` with `codegen-units = 1`. Compiler versions, host and the applied patch list are

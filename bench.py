@@ -44,12 +44,6 @@ RUNNERS = ["coin-select", "bitcoin-core"]
 # well under a minute and avoids the node's storage dependencies.
 CORE_LIB_TARGETS = ["bitcoin_util", "bitcoin_crypto", "bitcoin_consensus", "bitcoin_clientversion", "univalue"]
 
-# Build configurations tried, in order, when targeting an arbitrary coin-select revision.
-FEATURE_ATTEMPTS = [
-    ("selection-view", []),
-    ("pre-SelectionView", ["--no-default-features"]),
-]
-
 WITNESS_SCALE_FACTOR = 4
 TX_FIXED_FIELD_WEIGHT = 32
 
@@ -873,11 +867,11 @@ def parse_rev_spec(spec):
 
 
 def build_runner_at(repo, rev):
-    """Build the runner against one coin-select revision. Returns (binary, features).
+    """Build the runner against one coin-select revision. Returns the binary.
 
     The runner source is copied rather than edited in place, so the checked-in manifest keeps
-    pointing at the pinned revision. Feature detection is by trial: PR #53 changed the
-    `BnbMetric` signature, and trying both is more robust than inspecting the tree.
+    pointing at the pinned revision. The runner calls `compute_view()`, so revisions from before
+    coin-select PR #53 will not build.
     """
     dest = BUILD / f"runner-{rev[:12]}"
     dest.mkdir(parents=True, exist_ok=True)
@@ -886,16 +880,12 @@ def build_runner_at(repo, rev):
     manifest = re.sub(r'git = "[^"]+", rev = "[^"]+"', f'git = "{repo}", rev = "{rev}"', manifest)
     (dest / "Cargo.toml").write_text(manifest)
 
-    binary = dest / "target" / "release" / "coinselect-bench-runner"
-    # PR #53 changed what `BnbMetric` receives, so the runner carries both shapes behind a
-    # feature; trying them in turn identifies the revision's shape without inspecting the tree.
-    for features, extra in FEATURE_ATTEMPTS:
-        cmd = ["cargo", "build", "--release", "--manifest-path", str(dest / "Cargo.toml")] + extra
-        print("$ " + " ".join(cmd), flush=True)
-        built = subprocess.run(cmd, capture_output=True, text=True)
-        if built.returncode == 0:
-            return binary, features
-    sys.exit(f"cannot build the runner against {rev}:\n{built.stderr[-3000:]}")
+    cmd = ["cargo", "build", "--release", "--manifest-path", str(dest / "Cargo.toml")]
+    print("$ " + " ".join(cmd), flush=True)
+    built = subprocess.run(cmd, capture_output=True, text=True)
+    if built.returncode != 0:
+        sys.exit(f"cannot build the runner against {rev}:\n{built.stderr[-3000:]}")
+    return dest / "target" / "release" / "coinselect-bench-runner"
 
 
 def pin_prefix():
@@ -924,7 +914,7 @@ def cmd_compare_revs(args):
             # Interleaved: the two runs for one case sit next to each other in time, so drifting
             # background load moves both rather than one.
             for label in ("a", "b"):
-                binary, _ = built[label]
+                binary = built[label]
                 out = subprocess.run(
                     pin + [str(binary), "--fixture", fixture_path, "--track", track,
                            "--repeat", str(args.repeat), "--warmup", str(args.warmup)]
@@ -940,8 +930,8 @@ def cmd_compare_revs(args):
     out_dir.mkdir(parents=True, exist_ok=True)
     stem = f"{a_rev[:12]}-vs-{b_rev[:12]}"
     (out_dir / f"{stem}.json").write_text(json.dumps(
-        {"a": {"repo": a_repo, "rev": a_rev, "features": built["a"][1]},
-         "b": {"repo": b_repo, "rev": b_rev, "features": built["b"][1]},
+        {"a": {"repo": a_repo, "rev": a_rev},
+         "b": {"repo": b_repo, "rev": b_rev},
          "pinned_to_core": pin[-1] if pin else None,
          "runs": [{"fixture": k[0], "track": k[1], "a": got["a"][k], "b": got["b"][k]}
                   for k in sorted(got["a"])]}, indent=1) + "\n")
@@ -970,8 +960,8 @@ def _compare_report(a_rev, b_rev, built, pin, got):
     out = []
     w = out.append
     w(f"# `{a_rev[:12]}` vs `{b_rev[:12]}`\n")
-    w(f"- A: `{a_rev}` (features: {built['a'][1] or 'none'})")
-    w(f"- B: `{b_rev}` (features: {built['b'][1] or 'none'})")
+    w(f"- A: `{a_rev}`")
+    w(f"- B: `{b_rev}`")
     w(f"- {len(keys)} fixture/track pairs, interleaved A/B per case"
       + (f", both pinned to core {pin[-1]}" if pin else "") + "")
     first = got["a"][keys[0]]["timing"]
