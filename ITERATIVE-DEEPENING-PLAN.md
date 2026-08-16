@@ -287,3 +287,58 @@ the loop; and `reset_to_root()` might not be as cheap as unwinding suggests if t
 does work per undo that is fine once per backtrack but not once per pass.
 
 [pr73]: https://github.com/bitcoindevkit/coin-select/pull/73
+
+## 11. Stage 1 measured — the schedule question is settled, and §3's target number is not obtainable this way
+
+Run with the throwaway instrumentation described in §9 stage 1: a histogram of every bound the
+traversal computes, keyed on `f32` bits, with the env lookup hoisted into a `OnceLock`. The probe
+build with the probe disabled is byte-identical to the pinned revision on all 42 fixtures, so the
+numbers below are the pinned traversal's own behaviour.
+
+| fixture | nodes | bound evals | distinct bounds | distinct / evals |
+| --- | --- | --- | --- | --- |
+| `subsidizing_ancestry_50` | 20,000,000 (capped) | 46,658,548 | **980** | 0.002% |
+| `nested_ancestry_100` | 5,945 (exhausted) | 12,225 | 1,389 | 11.4% |
+| `no_ancestry_100` | 2,212 (exhausted) | 4,535 | 555 | 12.2% |
+| `adversarial_shared_100` | 486 (exhausted) | 1,034 | 262 | 25.3% |
+
+**The quadratic fear in §4 is unfounded.** Distinct bounds are few in absolute terms — hundreds, not
+millions — so the strict schedule terminates in a bounded number of passes. That was the one risk
+identified as able to kill the design, and it does not.
+
+**But the strict schedule is still not viable, for a different reason.** Simulating the pass
+structure from each histogram — total nodes visited across all passes, including the final one that
+proves optimality — against what the traversal costs today:
+
+| fixture | today | strict schedule | `eps = 0.1` |
+| --- | --- | --- | --- |
+| `no_ancestry_100` | 2,212 | 428,658 (**194x worse**) | 3,156 (1.4x) |
+| `adversarial_shared_100` | 486 | 43,552 (**90x worse**) | 706 (1.5x) |
+| `nested_ancestry_100` | 5,945 | 991 | 111 |
+
+The fixtures that already match best-first node for node are exactly the ones the strict schedule
+ruins, because they pay for re-expansion and buy nothing. **§9's staging is therefore wrong: build
+the relaxed schedule first, not the strict one.** §7's outcome 3 is not a contingency to check for,
+it is the expected result, and the gate on `has_shared_ancestors()` should be assumed necessary
+until measured otherwise.
+
+`eps` around `0.1` holds the overhead on those fixtures to about 1.5x while collapsing the pass count
+to single digits. Sweep it, but start there rather than at `1e-3`.
+
+### What this method cannot answer, and why
+
+§3 sets the acceptance target from best-first's expansion count on `subsidizing_ancestry_50`: 55,737
+nodes, on the reasoning that a queue expands exactly the nodes whose bound is below the optimum. The
+histogram says only **141 of 46.6 million bound evaluations** on that fixture are at or below the
+optimum's score of 5,088.
+
+Both are right, and the gap between them *is the bug*. The histogram is drawn from where depth-first
+goes, and depth-first never reaches the region containing the optimum — that is the entire finding in
+`FINDINGS.md` finding 3. So a depth-first-derived histogram cannot estimate iterative deepening's
+work on the one fixture that matters, and the 6,159-node estimate the simulation produces for it
+should be ignored as an artefact of sampling the wrong part of the tree.
+
+**To get a real target, port the same instrumentation to the best-first revision**
+(`91f5cfeb1163f87a27059adbbe1de6af8afbb08b`, PR #70) and histogram the bounds of the 55,737 nodes it
+expands. That is the population iterative deepening has to traverse, and its distinct-bound count is
+the pass count that matters. Do this before trusting any estimate for that fixture.
