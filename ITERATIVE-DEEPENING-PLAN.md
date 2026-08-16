@@ -415,3 +415,64 @@ passes cannot regress at all**, and that is the form to build.
    budget, which is not known in advance — hence the hybrid.
 4. **§5 said nothing outside `bnb.rs` should need to change.** One public entry point was needed on
    `CoinSelector` so the old behaviour stays the default and the control run is possible at all.
+
+## 13. The hybrid, built in the crate
+
+`experiment/iterative-deepening` (`1a281f8`, on top of `7a0c0d3`). The default path is untouched —
+no flag, no behaviour change, byte-identical to the pin on all 42 fixtures — and the hybrid is
+reached through `bnb_solutions_hybrid`.
+
+**Dive until it stops paying, then deepen, keeping the incumbent.** The dive hands over once it has
+gone as long without an improvement as it took to find the one it holds. That keeps the budget on a
+pool still creeping downward and gives up quickly on one that is stuck, which is the failure this
+exists to fix.
+
+**The rule needs a floor**, and finding that out cost a measurement. The greedy incumbent is set
+before the first node, so "time since the last improvement" has nothing to measure against and the
+rule fires immediately — at node 1,025 on nearly every fixture, handing `wallet_mixed_2000` over
+before it had found anything and reproducing the full +70% regression.
+
+The floor cannot scale on the budget, which is not visible inside the iterator: a caller may be
+spending rounds or wall clock. It scales on **candidate count** instead — a dive to a leaf costs at
+most one node per candidate, so the floor is that depth times a constant. Swept over 42 fixtures at
+three budgets:
+
+| floor | 10 ms | 100 ms | 1000 ms |
+| --- | --- | --- | --- |
+| 200 x candidates | **-0.51%** | **-3.81%**, 0 regressions | -3.89%, one +0.9% |
+| 1000 x candidates | -0.07% | -1.54% | **-3.94%**, 0 regressions |
+| 5000 x candidates | -0.06% | +0.00% | -3.94% |
+
+200 is the default. The metric is not sharply peaked around it.
+
+### Result
+
+| budget | total fee the child pays | improved | regressed | exhausted |
+| --- | --- | --- | --- | --- |
+| 10 ms | **-0.48%** | 2 | 0 | 25 -> 24 |
+| 100 ms | **-3.81%** | 5 | **0** | 28 -> 31 |
+| 1000 ms | **-3.89%** | 5 | 1 (+0.9%) | 31 -> 33 |
+
+`subsidizing_ancestry_50` reaches the optimum — child fee 4,508 — after a 10,001-node dive and 8
+passes. `shared_ancestry_200` -41.9%, `subsidizing_ancestry_100` -37.2%, `nested_ancestry_200`
+-25.6%. Peak RSS stays at **3.6 MB**.
+
+Correctness: control byte-identical on 42 of 42; on the 32 fixtures where both traversals report the
+tree exhausted the scores agree 32 of 32; the brute-force oracle agrees on every fixture small enough
+to enumerate; 64 tests green on both feature sets.
+
+### A claim from §12 that was too strong
+
+§12 said an in-crate hybrid carrying the incumbent "cannot regress at all". That is wrong, and
+`wallet_mixed_1000` at +0.9% is the counterexample. Carrying the incumbent means the deepening phase
+cannot return something worse than **the dive it actually ran**. It does not mean the hybrid matches
+a dive that keeps the *whole* budget: handing over ends the dive, and on a pool too large to exhaust
+the dive would have gone on improving. The guarantee is against the truncated dive, not the full one.
+
+### Still open
+
+The comparison against pool sampling in §8 has not been run. Sampling is -10.28% at a round budget
+and also recovers `subsidizing_ancestry_50` exactly, so on current evidence **sampling is still the
+stronger arm on total fee**; what the hybrid adds is that it *proves* optimality where sampling only
+finds, needs no randomness, and lifts the exhausted count. The four-arm comparison is the next
+measurement.
