@@ -2,8 +2,13 @@
 
 An apples-to-apples benchmark of ancestor-aware coin selection: [`bdk_coin_select`][coin-select]
 — ancestor-aware selection ([PR #64][pr64]) on the delta-aware branch-and-bound evaluator
-([PR #53][pr53]), searched depth-first ([PR #73][pr73]) — against [Bitcoin Core][core]'s wallet
-coin selection.
+([PR #53][pr53]), searched depth-first ([PR #73][pr73]), with ancestor sets stored sparsely
+([PR #75][pr75]) and a second ancestry-aware greedy seed ([PR #76][pr76]) — against
+[Bitcoin Core][core]'s wallet coin selection.
+
+The last two are pinned for what they do past the checked-in fixtures: neither changes a single row
+of the 42-fixture matrix, and both matter at 200,000 candidates (see [`FINDINGS.md`](FINDINGS.md)
+#6). `pins.json` says why each was chosen.
 
 Grew out of [bitcoindevkit/coin-select#67][issue67], which asked for both searches run on the same
 changeless objective. The pinned revision has no changeless metric left, so what remains is the
@@ -181,5 +186,6 @@ portfolio has no single objective to enumerate, and its results may carry change
 [pr53]: https://github.com/bitcoindevkit/coin-select/pull/53
 [pr73]: https://github.com/bitcoindevkit/coin-select/pull/73
 [pr75]: https://github.com/bitcoindevkit/coin-select/pull/75
+[pr76]: https://github.com/bitcoindevkit/coin-select/pull/76
 [issue67]: https://github.com/bitcoindevkit/coin-select/issues/67
 [core]: https://github.com/bitcoin/bitcoin

@@ -7,10 +7,13 @@ report and `results/results.csv` the full matrix behind everything below.
 - Bitcoin Core `9be056a8a72b624dae9623b2f7bded92c2a21c91` (v31.1), coin-selection algorithms
   unmodified apart from the benchmark hooks in `patches/` (a node counter and an optional
   wall-clock deadline, neither active in this run's default node-budget mode)
-- coin-select `5dded08f92376e4f4d808c102763459682130e14` ([PR #75][pr75]) — per-candidate ancestor
-  sets stored sparsely, on top of [PR #73][pr73]'s depth-first branch and bound with the changeless
-  metrics removed. PR #75 is a representation change only: all 84 rows of this matrix are identical
-  to the #73 pin, so findings 1 to 5 are unaffected by it and finding 6 is what it buys
+- coin-select `e93d1f982c3d548613b0d1b5510f80967b2e057e` ([PR #76][pr76]) — a second, ancestry-aware
+  greedy seed, on top of [PR #75][pr75]'s sparsely stored per-candidate ancestor sets, on top of
+  [PR #73][pr73]'s depth-first branch and bound with the changeless metrics removed. **Neither of
+  the two additions moves this matrix at all**: all 84 rows are identical across the #73, #75 and
+  #76 pins in every column but wall clock, verified field by field. Findings 1 to 5 are therefore
+  unaffected by both, and finding 6 — which needs pools an order of magnitude larger than anything
+  checked in — is the whole of what they buy
 - 42 fixtures: 8 families x 20/50/100/200, three shapes also at 500/1000/2000, plus the smoke
   fixture; one track, 100,000-round budget
 - 2 warm-up runs and 9 measured runs per case, median reported
@@ -266,24 +269,29 @@ budget per search:
 
 | fixture | | fee the child pays | nodes | peak RSS |
 | --- | --- | --- | --- | --- |
-| `no_ancestry_20000` | coin-select | **243,750** | 11,776 | **7.2 MB** |
+| `no_ancestry_20000` | coin-select | **243,750** | 11,008 | **7.0 MB** |
 | | Bitcoin Core | 277,300 | — | 32.0 MB |
-| `no_ancestry_200000` | coin-select | **245,790** | 9,728 | **49.7 MB** |
-| | Bitcoin Core | 248,060 | — | 276.2 MB |
-| `shared_ancestry_20000` | coin-select | 1,079,551 | 21,504 | **7.9 MB** |
-| | Bitcoin Core | **1,075,299** | 100,000 | 140.1 MB |
-| `shared_ancestry_200000` | coin-select | 1,201,193 | 7,424 | **58.0 MB** |
-| | Bitcoin Core | **1,169,084** | 100,000 | 292.7 MB |
-| `wallet_mixed_20000` | coin-select | **595,756** | 26,368 | **7.9 MB** |
+| `no_ancestry_200000` | coin-select | **245,790** | 8,192 | **49.6 MB** |
+| | Bitcoin Core | 248,060 | — | 276.5 MB |
+| `shared_ancestry_20000` | coin-select | 1,079,551 | 17,408 | **7.7 MB** |
+| | Bitcoin Core | **1,075,299** | 100,000 | 140.4 MB |
+| `shared_ancestry_200000` | coin-select | 1,172,027 | 4,864 | **58.2 MB** |
+| | Bitcoin Core | **1,169,084** | 100,000 | 293.1 MB |
+| `wallet_mixed_20000` | coin-select | **595,756** | 22,784 | **7.9 MB** |
 | | Bitcoin Core | 639,659 | 100,000 | 173.1 MB |
-| `wallet_mixed_200000` | coin-select | **638,866** | 7,424 | **57.6 MB** |
-| | Bitcoin Core | 655,534 | 100,000 | 294.6 MB |
+| `wallet_mixed_200000` | coin-select | **636,093** | 4,352 | **57.6 MB** |
+| | Bitcoin Core | 655,534 | 100,000 | 294.3 MB |
 
 coin-select is cheaper on four of six and uses **4 to 22 times less memory throughout**. Both engines
 return an answer on every fixture, inside half a second including parsing a 30 MB file.
 
 The two Core wins are both `shared_ancestry`, which is the family built to punish exactly the thing
 coin-select is supposed to be good at. Worth a look, and not something the smaller sizes show.
+
+**Those two columns already include [PR #76][pr76]**, which is in this pin and which the rest of this
+finding is the argument for: on `shared_ancestry_200000` it is what takes the child fee from 1,201,193
+to the 1,172,027 above, and on `wallet_mixed_200000` from 638,866 to 636,093. Core's remaining lead on
+`shared_ancestry_200000` is **0.25%**, down from 2.7%.
 
 ### Correction: Core's earlier "no solution" was Core being right
 
@@ -341,7 +349,7 @@ keeps whichever of the two the metric scores better:
 
 | `shared_ancestry_200000`, greedy prefix under | child fee | union bump | parents |
 | --- | --- | --- | --- |
-| `value / weight` — what [PR #75][pr75] does | 1,201,193 | 955,403 | 226 |
+| `value / weight` alone — [PR #75][pr75] | 1,201,193 | 955,403 | 226 |
 | `(value - own bump) / weight` ([PR #76][pr76]) | **1,172,027** | 926,237 | 220 |
 | Bitcoin Core, for reference | 1,169,084 | 923,621 | 219 |
 
@@ -351,7 +359,7 @@ the change was written, and the in-crate implementation returns exactly that.
 
 ### Why the same key is worth nothing at 20,000 candidates
 
-At 20,000 candidates [PR #76][pr76] is byte-identical to the pin on every fixture, while Core still
+At 20,000 candidates [PR #76][pr76] is byte-identical to [PR #75][pr75] on every fixture, while Core still
 wins `shared_ancestry_20000` by 0.4%. That is not a second mechanism — it is the same one, one extra
 unconfirmed parent:
 
@@ -385,7 +393,7 @@ decisive on 200,000 that differ by hundreds. It is a fix for one regime, not for
 
 ### What the ancestry-aware seed costs elsewhere
 
-Across the 42-fixture matrix at four budget regimes, [PR #76][pr76] against the pin:
+Across the 42-fixture matrix at four budget regimes, [PR #76][pr76] against [PR #75][pr75]:
 
 | regime | total package fee |
 | --- | --- |
@@ -397,7 +405,7 @@ Across the 42-fixture matrix at four budget regimes, [PR #76][pr76] against the 
 The nonzero regimes are deadline noise rather than the change, and the worst-looking entry is the
 proof. `wallet_mixed_200` appears to regress **+6.3%** at 10 ms — but that fixture exhausts in 17,345
 rounds and 9.8 ms, right at the deadline. Both arms exhaust to the identical selection given a
-millisecond more, and it is the *pin* that got the anomaly: truncated mid-search, it returned a
+millisecond more, and it is *#75* that got the anomaly: truncated mid-search, it returned a
 selection the harness happens to score better on package fee while scoring worse on the metric the
 search is actually minimising. The two moves at 1 s are `no_ancestry_2000` (+0.007%) and
 `wallet_mixed_2000` (+0.103%), both with a union bump of zero, and `no_ancestry_2000` has no

@@ -6,7 +6,7 @@ publish = false
 
 [dependencies]
 # Pinned by scripts in ../bench.py; see ../pins.json. Kept in sync by `bench.py setup`.
-bdk_coin_select = { git = "https://github.com/evanlinjin/coin-select.git", rev = "5dded08f92376e4f4d808c102763459682130e14" }
+bdk_coin_select = { git = "https://github.com/evanlinjin/coin-select.git", rev = "e93d1f982c3d548613b0d1b5510f80967b2e057e" }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 
