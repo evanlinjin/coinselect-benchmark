@@ -195,10 +195,12 @@ order strictly less than the static key does. The largest bump anywhere in this 
 
 The conclusion is not that the order should be ancestry-aware *here*. It is that **no per-candidate
 key can express this fixture**: the optimum is "avoid `c044` and `c009`", which is a property of the
-set, not a ranking of coins. (Finding 6 qualifies this. On a 200,000-candidate pool the same key
-recovers 91% of what coin-select loses to Core, because there the bump is large relative to the value
-gaps between adjacent coins rather than three orders of magnitude too small. The key is worth what
-ancestry costs relative to what the ordering is otherwise sorting on.) Only the bound sees sets. Note also that the depth-first traversal already
+set, not a ranking of coins. (Finding 6 qualifies this, and only for one regime. On a
+200,000-candidate pool the same key recovers 91% of what coin-select loses to Core — [PR #76][pr76]
+adopts it there as a second greedy seed — because the bump is finally large relative to the value
+gaps between adjacent coins rather than three orders of magnitude too small. At 20,000 candidates it
+is already back to changing nothing. The key is worth what ancestry costs relative to what the
+ordering is otherwise sorting on.) Only the bound sees sets. Note also that the depth-first traversal already
 consults the bound where it cheaply can — `descend()` evaluates both children and takes the better
 one — so the remaining gap is node *expansion* order, which is what best-first buys with its
 frontier. Iterative deepening on the bound is the standard way to buy it back at depth-first memory;
@@ -330,29 +332,81 @@ value-per-weight and cannot see ancestry at all.
 **This is finding 3's mechanism with the magnitudes inverted.** Finding 3 measured an ancestry-aware
 branching key on a 50-candidate fixture and found it useless, because demoting the offending coin
 would have taken 1,063,000 sat of charge against a parent that owed 6,144. Here the pool is 200,000
-near-identical coins: adjacent ones differ by about 230 sat while a parent costs 1,600 to 7,200 sat
-to bump, mean 4,234. The ancestry-blind order is wrong by roughly **eighteen positions** per
+near-identical coins: adjacent ones in the order differ by a median 148 sat while a parent costs a
+median 4,221 sat to bump. The ancestry-blind order is wrong by roughly **twenty-eight positions** per
 parent-laden coin, and unlike at n=50 there is no search to recover from it.
 
-So the key that failed there works here:
+So the key that failed there works here — [PR #76][pr76] takes a second greedy prefix under it and
+keeps whichever of the two the metric scores better:
 
-| `shared_ancestry_200000`, greedy prefix under | child fee | union bump |
-| --- | --- | --- |
-| `value / weight` — what the crate does | 1,201,193 | 955,403 |
-| `(value - own bump) / weight` | **1,172,027** | 926,237 |
-| Bitcoin Core, for reference | 1,169,084 | 923,621 |
+| `shared_ancestry_200000`, greedy prefix under | child fee | union bump | parents |
+| --- | --- | --- | --- |
+| `value / weight` — what [PR #75][pr75] does | 1,201,193 | 955,403 | 226 |
+| `(value - own bump) / weight` ([PR #76][pr76]) | **1,172,027** | 926,237 | 220 |
+| Bitcoin Core, for reference | 1,169,084 | 923,621 | 219 |
 
-That closes **91% of the gap** for a change to one sort key. It is worth trusting to that precision:
-the same emulation under the current key reproduces coin-select's actual returned child fee exactly,
-on both this fixture and the 20,000 one.
+That closes **91% of the gap** for a change to one sort key, and it is a measurement of the crate,
+not a model: an emulation of the greedy prefix in Python predicted 1,172,027 to the satoshi before
+the change was written, and the in-crate implementation returns exactly that.
 
-At 20,000 candidates the ancestry-aware key changes nothing — same selection, same fee — so the 0.4%
-Core wins there is something else and is still unexplained.
+### Why the same key is worth nothing at 20,000 candidates
+
+At 20,000 candidates [PR #76][pr76] is byte-identical to the pin on every fixture, while Core still
+wins `shared_ancestry_20000` by 0.4%. That is not a second mechanism — it is the same one, one extra
+unconfirmed parent:
+
+| `shared_ancestry_20000` | inputs | with no unconfirmed parent | parents touched | union bump | child fee |
+| --- | --- | --- | --- | --- | --- |
+| coin-select | 357 | 146 | **204** | 835,801 | 1,079,551 |
+| Bitcoin Core | 358 | 148 | **203** | 830,889 | **1,075,299** |
+
+One parent is worth 4,912 sat against a 680 sat saving from coin-select's one fewer input. Net 4,252
+— the entire gap, again fully accounted for.
+
+What the reprice cannot do is find it, and the reason is measurable. What the key buys is the ratio
+of a parent's charge to the gap between adjacent coins in the order:
+
+| | median solo bump | median neighbour gap | positions a parent moves a coin | coins crossing the prefix cutoff |
+| --- | --- | --- | --- | --- |
+| 20,000 candidates | 4,185 sat | 1,656 sat | 2.5 | **0** (still 0 at top-1,000) |
+| 200,000 candidates | 4,221 sat | 148 sat | 28.4 | 6 |
+
+Ten times the coins drawn from the same value distribution means the top of the order is ten times
+denser — the top 1,000 spans 4,998,053..2,792,317 sat at 20,000 candidates and 4,999,816..4,770,018
+at 200,000. The same ~4,200 sat charge therefore reorders ten times further. Below that threshold the
+reprice shifts parent-laden coins around without moving any of them across the cutoff, and the prefix
+comes out the same set of coins.
 
 **The qualification finding 3 needs:** "no per-candidate key can express this" is true of the fixture
-it was measured on and false in general. A static ancestry-aware key is worth exactly as much as the
-ancestor bump is worth relative to the value gaps between adjacent coins — negligible on 50 coins
-that differ by millions of sats, decisive on 200,000 that differ by hundreds.
+it was measured on and false in general — but only just. A static ancestry-aware key is worth exactly
+as much as the ancestor bump is worth relative to the value gaps between adjacent coins: negligible
+on 50 coins that differ by millions of sats, still negligible on 20,000 that differ by thousands,
+decisive on 200,000 that differ by hundreds. It is a fix for one regime, not for ancestry blindness.
+
+### What the ancestry-aware seed costs elsewhere
+
+Across the 42-fixture matrix at four budget regimes, [PR #76][pr76] against the pin:
+
+| regime | total package fee |
+| --- | --- |
+| 100,000 rounds | +0.000% — all 42 selections identical |
+| 10 ms | −0.041% |
+| 100 ms | +0.000% — all 42 selections identical |
+| 1 s | +0.008% |
+
+The nonzero regimes are deadline noise rather than the change, and the worst-looking entry is the
+proof. `wallet_mixed_200` appears to regress **+6.3%** at 10 ms — but that fixture exhausts in 17,345
+rounds and 9.8 ms, right at the deadline. Both arms exhaust to the identical selection given a
+millisecond more, and it is the *pin* that got the anomaly: truncated mid-search, it returned a
+selection the harness happens to score better on package fee while scoring worse on the metric the
+search is actually minimising. The two moves at 1 s are `no_ancestry_2000` (+0.007%) and
+`wallet_mixed_2000` (+0.103%), both with a union bump of zero, and `no_ancestry_2000` has no
+ancestors at all — the second pass is skipped outright on it.
+
+Where the extra pass is not free it is a few milliseconds: `shared_ancestry_2000` 121 -> 124 ms and
+`subsidizing_ancestry_50` 27 -> 32 ms at 100,000 rounds, both with identical round counts and
+identical scores. On a pool small enough for that to matter, the search was going to fix the ordering
+anyway.
 
 ### Getting here needed the ancestor sets stored sparsely
 
@@ -425,3 +479,4 @@ attribute a change to a particular commit; past runs are kept in `results/compar
 [pr70]: https://github.com/bitcoindevkit/coin-select/pull/70
 [pr74]: https://github.com/bitcoindevkit/coin-select/pull/74
 [pr75]: https://github.com/bitcoindevkit/coin-select/pull/75
+[pr76]: https://github.com/bitcoindevkit/coin-select/pull/76
