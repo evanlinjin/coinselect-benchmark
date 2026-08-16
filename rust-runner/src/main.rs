@@ -52,6 +52,16 @@ struct Native {
     implied_feerate_sat_per_vb: Option<f32>,
 }
 
+#[derive(Serialize, Clone)]
+struct Improvement {
+    round: usize,
+    ns: u128,
+    /// The change the metric chose for *this* selection. Without it the entry cannot be scored:
+    /// the same inputs with and without a change output are different answers.
+    drain_value: u64,
+    selected: Vec<String>,
+}
+
 #[derive(Serialize)]
 struct Oracle {
     ran: bool,
@@ -75,6 +85,27 @@ struct Output {
     selected: Vec<String>,
     /// Branch-and-bound rounds, i.e. nodes popped from the priority queue.
     rounds: usize,
+    /// The round that produced the returned selection, i.e. the last one that improved on the
+    /// incumbent. Everything after it was spent proving there was nothing better, or failing to.
+    ///
+    /// This is the number to compare against Core's node count when asking how much work finding
+    /// an answer took, rather than `rounds`, which on a budget-limited fixture is just the budget.
+    /// 0 means the greedy seed was never improved on.
+    best_round: usize,
+    /// Nanoseconds from the start of the search to the round that produced the returned selection.
+    ///
+    /// The distinction this draws matters on every budget-limited fixture: `wall_ns_median` is how
+    /// long the search *ran*, which on those is just the budget, while this is how long it took to
+    /// *arrive* at the answer it returned. Everything between the two was spent proving there was
+    /// nothing better, or failing to.
+    best_ns: u128,
+    /// Every improvement the search made, in order: the round, the nanoseconds into the search, and
+    /// what was selected.
+    ///
+    /// This is what lets the report ask when coin-select first held an answer better than Core's
+    /// *final* one, rather than only comparing the two finished searches. Recording it is cheap
+    /// because improvements are rare — a few dozen at most across a whole search.
+    trajectory: Vec<Improvement>,
     /// True when the search finished the tree; false when it stopped at `search_budget`.
     exhausted: bool,
     budget: usize,
@@ -622,6 +653,12 @@ struct Search<'a> {
     selection: Option<CoinSelector<'a>>,
     score: Option<Ordf32>,
     rounds: usize,
+    /// The round the returned selection was found on. See `Output::best_round`.
+    best_round: usize,
+    /// Nanoseconds into the search when that round ran. See `Output::best_ns`.
+    best_ns: u128,
+    /// One entry per improvement, as `(round, ns, drain value, selector)`. See `Output::trajectory`.
+    trajectory: Vec<(usize, u128, u64, CoinSelector<'a>)>,
     exhausted: bool,
 }
 
@@ -636,9 +673,13 @@ fn search<'a, M: BnbMetric + Copy>(
     budget: usize,
     deadline: Option<Instant>,
 ) -> Search<'a> {
+    let started = Instant::now();
     let mut iter = cs.bnb_solutions(metric);
     let mut rounds = 0;
     let mut best = None;
+    let mut best_round = 0;
+    let mut best_ns = 0_u128;
+    let mut trajectory: Vec<(usize, u128, u64, CoinSelector<'a>)> = Vec::new();
     let mut exhausted = true;
     let mut deadline_hit = false;
     for _ in 0..budget {
@@ -655,6 +696,15 @@ fn search<'a, M: BnbMetric + Copy>(
                 rounds += 1;
                 if let Some(found) = solution {
                     best = Some(found);
+                    // The seed is yielded before any node is expanded, so it lands on round 1;
+                    // report it as 0 to keep "no node found anything" distinguishable.
+                    best_round = rounds - 1;
+                    // Only on an improvement, which is rare — a clock read per round would cost a
+                    // meaningful fraction of one, which is why the deadline check is every 256th.
+                    best_ns = started.elapsed().as_nanos();
+                    let found = best.as_ref().unwrap().0.clone();
+                    let drain = metric.clone().drain(&found.compute_view());
+                    trajectory.push((best_round, best_ns, drain.value, found));
                 }
             }
             None => break,
@@ -671,6 +721,9 @@ fn search<'a, M: BnbMetric + Copy>(
         selection,
         score,
         rounds,
+        best_round,
+        best_ns,
+        trajectory,
         exhausted,
     }
 }
@@ -1010,6 +1063,18 @@ fn main() {
         error,
         selected,
         rounds: result.rounds,
+        best_round: result.best_round,
+        best_ns: result.best_ns,
+        trajectory: result
+            .trajectory
+            .iter()
+            .map(|(round, ns, drain_value, cs)| Improvement {
+                round: *round,
+                ns: *ns,
+                drain_value: *drain_value,
+                selected: selected_ids(&f, cs),
+            })
+            .collect(),
         exhausted: result.exhausted,
         budget,
         deadline_us: args.deadline_us,

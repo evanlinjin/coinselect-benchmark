@@ -474,7 +474,7 @@ def cmd_run(args):
 
 CSV_COLUMNS = [
     "fixture", "family", "size", "track", "runner", "algorithm", "ok",
-    "wall_ns_median", "rounds", "exhausted", "peak_rss_kb",
+    "wall_ns_median", "rounds", "best_round", "exhausted", "peak_rss_kb",
     "n_inputs", "n_legacy_inputs", "child_weight", "child_fee", "change_value", "child_surplus",
     "ancestors_in_union", "union_bump", "core_summed_individual_bump", "core_combined_bump",
     "covers_union_bump", "covers_core_bump",
