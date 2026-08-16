@@ -27,6 +27,7 @@ import shutil
 import statistics
 import subprocess
 import sys
+import time
 
 ROOT = pathlib.Path(__file__).parent.resolve()
 BUILD = ROOT / ".build"
@@ -857,6 +858,63 @@ def _oracle_section(by_key):
     return "\n".join(lines)
 
 
+# --- scale ------------------------------------------------------------------
+
+
+def cmd_scale(args):
+    """Run the on-demand scale tier: pools an order of magnitude past the checked-in matrix.
+
+    Reports memory and setup cost rather than fee quality. At these sizes neither engine exhausts
+    anything, so what is being measured is whether a search can start at all inside a budget — the
+    dense per-candidate ancestor sets that coin-select used before PR #75 cost 464 ms of setup on a
+    200,000-candidate pool, which is a whole wall-clock budget spent before the first node.
+    """
+    scale_dir = FIXTURES / "scale"
+    fixtures = sorted(glob.glob(str(scale_dir / args.fixtures)))
+    if not fixtures:
+        sys.exit(f"no scale fixtures yet; run `python3 genfixtures.py --scale` (they are not checked "
+                 f"in: 30 MB each and deterministic from their seed)")
+    paths = runner_paths()
+
+    rows = []
+    for fixture_path in fixtures:
+        name = pathlib.Path(fixture_path).stem
+        fixture = load_fixture(fixture_path)
+        for runner, binary in paths.items():
+            cmd = [str(binary), "--fixture", fixture_path, "--track", "wallet",
+                   "--repeat", "1", "--warmup", "0", "--deadline-us", str(args.deadline_us)]
+            if runner == "coin-select":
+                cmd += ["--budget", "4000000000"]
+            started = time.time()
+            out = subprocess.run(cmd, capture_output=True, text=True)
+            elapsed = time.time() - started
+            if out.returncode != 0:
+                rows.append((name, runner, None, None, None, elapsed, out.stderr.strip()[-60:]))
+                print(f"  {name:26s} {runner:12s} FAILED", flush=True)
+                continue
+            raw = json.loads(out.stdout)
+            metrics = evaluate(fixture, raw["selected"], change_value_of(raw)) if raw["selected"] else None
+            rows.append((name, runner, raw, metrics, raw["peak_rss_kb"], elapsed, None))
+            print(f"  {name:26s} {runner:12s} "
+                  f"{'no solution' if metrics is None else format(metrics['child_fee'], ',')}", flush=True)
+
+    width = max(len(r[0]) for r in rows)
+    print(f"\n{'fixture':{width}s} {'runner':12s} {'child fee':>14} {'nodes':>10} "
+          f"{'peak RSS':>10} {'process':>9}")
+    for name, runner, raw, metrics, rss, elapsed, err in rows:
+        if err is not None:
+            print(f"{name:{width}s} {runner:12s} {'FAILED: ' + err:>14}")
+            continue
+        fee = "no solution" if metrics is None else format(metrics["child_fee"], ",")
+        # Core reports no node count when its answer came from a path that does not have one.
+        nodes = "-" if raw["rounds"] is None else format(raw["rounds"], ",")
+        print(f"{name:{width}s} {runner:12s} {fee:>14} {nodes:>10} "
+              f"{rss / 1024:>9.1f}M {elapsed:>8.1f}s")
+    print(f"\nwall-clock budget {args.deadline_us / 1000:.0f} ms per search; 'process' is the whole "
+          f"run including parsing a fixture of up to 30 MB.")
+    return 0
+
+
 # --- compare-revs -----------------------------------------------------------
 
 
@@ -1088,6 +1146,11 @@ def main():
                         help="exit 0 even when verification finds problems")
     sub.add_parser("self-check", help="check this file's mini-miner port against Core's own example")
 
+    scale = sub.add_parser("scale", help="run the on-demand scale tier (20k and 200k candidates)")
+    scale.add_argument("--fixtures", default="*.json", help="glob within fixtures/scale/")
+    scale.add_argument("--deadline-us", type=int, default=100_000, metavar="US",
+                       help="wall-clock budget per search (default: 100 ms)")
+
     cmp = sub.add_parser("compare-revs", help="A/B two coin-select revisions on the same fixtures")
     cmp.add_argument("--a", required=True, metavar="[REPO#]REV", help="baseline revision")
     cmp.add_argument("--b", required=True, metavar="[REPO#]REV", help="revision to compare against it")
@@ -1109,6 +1172,8 @@ def main():
         return cmd_report(args)
     if args.command == "self-check":
         return cmd_self_check(args)
+    if args.command == "scale":
+        return cmd_scale(args)
     if args.command == "compare-revs":
         return cmd_compare_revs(args)
     if args.command == "all":

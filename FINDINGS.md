@@ -7,8 +7,10 @@ report and `results/results.csv` the full matrix behind everything below.
 - Bitcoin Core `9be056a8a72b624dae9623b2f7bded92c2a21c91` (v31.1), coin-selection algorithms
   unmodified apart from the benchmark hooks in `patches/` (a node counter and an optional
   wall-clock deadline, neither active in this run's default node-budget mode)
-- coin-select `9c40ae23aa9386d4dd3e5ac4491e2645f6e3f396` ([PR #73][pr73]) — depth-first branch and
-  bound, ancestor-aware selection, the changeless metrics removed
+- coin-select `5dded08f92376e4f4d808c102763459682130e14` ([PR #75][pr75]) — per-candidate ancestor
+  sets stored sparsely, on top of [PR #73][pr73]'s depth-first branch and bound with the changeless
+  metrics removed. PR #75 is a representation change only: all 84 rows of this matrix are identical
+  to the #73 pin, so findings 1 to 5 are unaffected by it and finding 6 is what it buys
 - 42 fixtures: 8 families x 20/50/100/200, three shapes also at 500/1000/2000, plus the smoke
   fixture; one track, 100,000-round budget
 - 2 warm-up runs and 9 measured runs per case, median reported
@@ -246,93 +248,75 @@ The design, the measurements behind it, and the things that do *not* work are in
 [`SAMPLING-PLAN.md`](SAMPLING-PLAN.md) — §11 for this re-measurement, everything before it taken
 against best-first and labelled as such.
 
-## 6. Past a few thousand candidates the search is no longer what costs
+## 6. At twenty and two hundred thousand candidates, coin-select still answers and Core does not
 
-The checked-in matrix stops at 2000 candidates. Generating the same families an order of magnitude
-past that — `python3 -c "import genfixtures as g; g.build('wallet_mixed', 200000)"`, not checked in —
-shows the ceiling is somewhere else entirely.
+The checked-in matrix stops at 2000. `python3 genfixtures.py --scale && python3 bench.py scale` adds
+a tier an order of magnitude past it — 20,000 and 200,000 candidates for the three large families.
+Those fixtures are **not checked in**: one is 30 MB and they are deterministic from their seed, so
+regenerating costs less than storing them. A 100 ms wall-clock budget per search:
 
-| candidates | peak RSS | what the search does in 100 ms |
-| --- | --- | --- |
-| 2,000 | 3.6 MB | exhausts or gets close |
-| 20,000 | 8–22 MB | 10,000–44,000 nodes, still improving |
-| 200,000 | **1,330 MB** | **0–1 nodes** |
+| fixture | | fee the child pays | nodes | peak RSS | process |
+| --- | --- | --- | --- | --- | --- |
+| `no_ancestry_20000` | coin-select | **595,310** | 11,008 | **7.1 MB** | 0.1 s |
+| | Bitcoin Core | 595,544 | 100,000 | 31.9 MB | 0.4 s |
+| `shared_ancestry_20000` | coin-select | **2,650,578** | 47,104 | **7.8 MB** | 0.1 s |
+| | Bitcoin Core | 2,651,238 | 100,000 | 140.4 MB | 0.4 s |
+| `wallet_mixed_20000` | coin-select | **1,570,104** | 39,936 | **7.8 MB** | 0.1 s |
+| | Bitcoin Core | 1,607,754 | 100,000 | 173.9 MB | 0.1 s |
+| `no_ancestry_200000` | coin-select | **5,995,190** | 1 | **49.8 MB** | 0.1 s |
+| | Bitcoin Core | **no solution** | — | 276.3 MB | 4.8 s |
+| `shared_ancestry_200000` | coin-select | **25,960,321** | 6,144 | **58.0 MB** | 0.2 s |
+| | Bitcoin Core | **no solution** | — | 293.1 MB | 4.9 s |
+| `wallet_mixed_200000` | coin-select | 15,862,540 | 5,888 | **57.6 MB** | 0.2 s |
+| | Bitcoin Core | **15,823,657** | 100,000 | 294.4 MB | 0.6 s |
 
-**The memory is not the traversal.** Depth-first still carries one path. It is
-`SelectionProblem::drags_in`, which is one dense `Bitset` per candidate over every ancestor:
-200,000 candidates x 26,666 ancestors = **667 MB of bitset**, and `shared_drags_in` is a second copy
-of the same shape. The control is exact — `no_ancestry_200000`, identical candidate count with zero
-ancestors, peaks at **50.8 MB**.
+coin-select is cheaper on four of six, uses **4 to 22 times less memory throughout**, and answers
+every one of them. Core returns nothing on two of the three 200,000-candidate pools, and spends
+nearly five seconds doing it. The one Core wins it wins by 0.25%.
 
-**Those bitsets are essentially empty.** A candidate drags in its own residing transaction and that
-transaction's unconfirmed parents, which is a handful of entries no matter how large the pool gets:
+`no_ancestry_200000` exhausting in a single node is not a bug: with no ancestors and a target at 45%
+of the pool, every candidate is worth selecting, and the metric says so in one step.
 
-| fixture | ancestors | dragged per candidate | occupancy |
-| --- | --- | --- | --- |
-| `shared_ancestry_200000` | 25,000 | mean 0.60, max 1 | 0.0024% |
-| `wallet_mixed_200000` | 26,666 | mean 0.42, max 2 | 0.0016% |
+### Getting here needed the ancestor sets stored sparsely
 
-Dense storage of a set that is 0.002% full is the whole problem. A sparse representation costs
-**0.33 MB** where the dense one costs 667 MB.
-
-### Which sparse representation — measured
-
-`BTreeSet` fixes the asymptotics but is a poor fit for sets this small: every non-empty set is a
-separate allocation, so 200,000 candidates cost the `Vec` of set structs plus roughly 100,000 B-tree
-nodes, and every read is pointer chasing.
-
-The access pattern argues for something flatter. **Every hot use of these sets in the crate is
-`.iter()`** — `bump_of`, the cache's add and sub, and the four `shared_drags_in` walks in
-`selection_view.rs` — plus one set-equality comparison in `bnb.rs`'s exclusion plan. Nothing needs
-O(1) membership, and the sets are built once in `SelectionProblem::new` and never mutated. That is
-the case for a compressed-sparse-row layout: one flat `Vec<u32>` of ancestor indices with a
-`Vec<u32>` of per-candidate offsets.
-
-Built and measured, on a branch off [PR #73][pr73]:
+This tier was unrunnable before [PR #75][pr75], which is in this pin. `drags_in` and
+`shared_drags_in` were one dense `Bitset` per candidate over every ancestor — candidates x ancestors
+bits — while a candidate actually drags in **mean 0.42 to 0.60 entries and never more than two**.
+The sets were 0.002% full.
 
 | 200,000 candidates, 26,666 ancestors | peak RSS | search setup |
 | --- | --- | --- |
 | dense `Bitset` per candidate | 1,332 MB | 464 ms |
-| flat indices + offsets | **58 MB** (-95.7%) | **54 ms** (8.5x) |
+| flat indices + offsets ([PR #75][pr75]) | **58 MB** | **54 ms** |
 
-At 20,000 candidates it is 21.6 MB down to 7.6 MB. On `no_ancestry_200000`, which has no ancestors
-to store, nothing changes — the control behaves. Byte-identical on all 42 checked-in fixtures, and
-80 tests green on both feature sets.
+**The time mattered more than the memory.** Iterating a dense bitset costs O(ancestors) per candidate
+however few bits are set, so building the selection cache — a full pass over every candidate's
+ancestor set — was O(candidates x ancestors) in time as well as space: 5.3 billion bit positions
+where the entries number 84,000.
 
-**The time is the surprise, and it matters more than the memory.** Iterating a dense bitset costs
-O(ancestors) per candidate however few bits are set, so any full pass over every candidate's ancestor
-set — which is what building the selection cache does — is O(candidates x ancestors) in *time* as
-well as space. That is 5.3 billion bit positions where the sparse layout reads 84,000 entries.
+That is also the answer to a puzzle an earlier version of this finding recorded as unexplained.
+`wallet_mixed_200000` returned **no solution with zero nodes** at a 100 ms budget, despite a target
+fundable by 8,798 inputs at 2.6M weight units against a 20.9M cap. Setup took 464 ms, so the deadline
+expired before the first node: the search, the bound and the single-random-draw fallback were all
+fine and none of them ran. The dense build returns the same 9,217 inputs given a full second.
 
-`Bitset` is still right where it is used over *candidates*: the selected and banned sets are dense
-and membership-tested constantly. Only the per-candidate ancestor sets are sparse.
+**A structure whose construction scales worse than the search shows up as a search failure**, and on
+a wall-clock budget it shows up as "no solution" rather than as a slow answer. Core's two
+no-solutions above are worth reading with that in mind rather than as a statement about its
+algorithms.
 
-### The `wallet_mixed_200000` no-solution was the same bug
+A `BTreeSet` per candidate would fix the asymptotics too, but for sets of nought to two entries it
+pays an allocation per non-empty set — around 100,000 of them here — and a pointer chase per read.
+Every use of these sets in the crate is a full walk of one candidate's entries and none of them
+mutate after construction, so a flat layout is both smaller and faster. `Bitset` is still right where
+it is used over *candidates*: the selected and banned sets are dense and membership-tested constantly.
 
-An earlier draft of this finding recorded that `wallet_mixed_200000` returned no solution at a 100 ms
-budget despite the target being plainly fundable, and called it unexplained and the sharpest thing to
-chase. It was the representation:
+### One thing that does not survive the trip
 
-| | 100 ms | 1000 ms |
-| --- | --- | --- |
-| dense bitset | **no solution, 0 nodes** | 9,217 inputs, 22,272 nodes |
-| flat indices + offsets | 9,217 inputs, 5,632 nodes | 9,217 inputs, 33,024 nodes |
-
-Setting up the search took 464 ms, so the deadline expired before the first node was expanded and the
-search returned nothing at all. Nothing was wrong with the search, the bound, or the fallback: the
-budget was spent before any of them ran. Giving the dense build a full second is enough for it to
-return the same 9,217 inputs.
-
-The general lesson is worth keeping: a data structure whose *construction* scales worse than the
-search will show up as a search failure, and on a wall-clock budget it shows up as "no solution"
-rather than as a slow answer.
-
-### One other thing that appears at that scale
-
-**The dive floor in the iterative-deepening branch goes inert.** It is 200 x candidates, which is 4M
-nodes at 20,000 candidates — more than a 100 ms budget reaches, so the hybrid never hands over and
-matches the plain dive exactly. Scaling the floor on candidate count is right at small pools and
-wrong at large ones. Pool sampling, by contrast, still pays at 20,000: it exhausts
+**The dive floor in the iterative-deepening branch ([PR #74][pr74]) goes inert.** It is 200 x
+candidates, which is 4M nodes at 20,000 candidates — more than a 100 ms budget reaches — so the
+hybrid never hands over and matches the plain dive exactly. Scaling the floor on candidate count is
+right at small pools and wrong at large ones. Pool sampling still pays at 20,000: it exhausts
 `wallet_mixed_20000` and `shared_ancestry_20000` in a few thousand nodes where the full search
 cannot.
 
@@ -362,3 +346,5 @@ attribute a change to a particular commit; past runs are kept in `results/compar
 
 [pr73]: https://github.com/bitcoindevkit/coin-select/pull/73
 [pr70]: https://github.com/bitcoindevkit/coin-select/pull/70
+[pr74]: https://github.com/bitcoindevkit/coin-select/pull/74
+[pr75]: https://github.com/bitcoindevkit/coin-select/pull/75

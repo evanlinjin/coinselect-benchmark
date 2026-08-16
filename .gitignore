@@ -3,3 +3,5 @@
 /rust-runner/target/
 /results/raw/
 __pycache__/
+# Scale-tier fixtures: 30 MB each and deterministic, so regenerate rather than store.
+/fixtures/scale/

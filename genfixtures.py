@@ -47,6 +47,11 @@ SIZES = [20, 50, 100, 200]
 LARGE_SIZES = [500, 1000, 2000]
 LARGE_FAMILIES = ["no_ancestry", "shared_ancestry", "wallet_mixed"]
 
+# Sizes for the scale tier, which is generated on demand into `fixtures/scale/` rather than checked
+# in: at 200,000 candidates one file is 30 MB, and the fixtures are deterministic from their seed, so
+# checking them in would buy nothing that regenerating does not. `bench.py scale` runs them.
+SCALE_SIZES = [20_000, 200_000]
+
 # Families that override the default feerates. CoinGrinder only runs in Core's portfolio above
 # 3x the long-term feerate, and at feerate == long_term_feerate Core's waste degenerates
 # (`coin.fee - coin.long_term_fee` is 0 for every input, leaving only excess), so one family
@@ -415,9 +420,25 @@ def validate(f: dict) -> None:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true", help="verify fixtures/ is up to date")
+    ap.add_argument("--scale", action="store_true",
+                    help="also write the on-demand scale tier into fixtures/scale/")
     args = ap.parse_args()
 
     OUT_DIR.mkdir(exist_ok=True)
+
+    if args.scale:
+        scale_dir = OUT_DIR / "scale"
+        scale_dir.mkdir(exist_ok=True)
+        for fam in LARGE_FAMILIES:
+            for n in SCALE_SIZES:
+                f = build(fam, n)
+                validate(f)
+                path = scale_dir / f"{f['name']}.json"
+                path.write_text(json.dumps(f, indent=1) + "\n")
+                print(f"{path}  {len(f['candidates']):,} candidates, "
+                      f"{len(f['ancestors']):,} ancestors, {path.stat().st_size / 1e6:.1f} MB")
+        return 0
+
     fixtures = [build_smoke()]
     fixtures += [build(fam, n) for fam in FAMILIES for n in SIZES]
     fixtures += [build(fam, n) for fam in LARGE_FAMILIES for n in LARGE_SIZES]

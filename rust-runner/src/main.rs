@@ -337,7 +337,8 @@ fn ancestor_clusters(problem: &SelectionProblem) -> Vec<usize> {
     let mut parent: Vec<usize> = (0..n).collect();
     let mut first_seen: std::collections::HashMap<usize, usize> = Default::default();
     for i in 0..n {
-        for ancestor in problem.drags_in(i).iter() {
+        for &ancestor in problem.drags_in(i) {
+            let ancestor = ancestor as usize;
             match first_seen.get(&ancestor) {
                 None => {
                     first_seen.insert(ancestor, i);
@@ -579,9 +580,9 @@ fn cap_pool<'a>(
                 .collect()
         }
         "shared" => {
-            let mut covered = std::collections::HashSet::new();
+            let mut covered: std::collections::HashSet<u32> = Default::default();
             for &i in &keep {
-                covered.extend(problem.drags_in(i).iter());
+                covered.extend(problem.drags_in(i).iter().copied());
             }
             rest.iter()
                 .map(|&i| {

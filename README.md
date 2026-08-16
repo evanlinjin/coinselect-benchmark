@@ -76,6 +76,7 @@ excess — which is the second reason that family is there.
 | `pins.json` | The two pinned revisions, with a note on why each was chosen. |
 | `genfixtures.py` | Regenerates `fixtures/`. Deterministic; `--check` fails if the checked-in files are stale. |
 | `fixtures/` | The datasets, plus [`fixtures/README.md`](fixtures/README.md) — the schema and **every semantic conversion either adapter makes**. |
+| `fixtures/scale/` | Generated on demand by `genfixtures.py --scale`, not checked in: 20,000 and 200,000 candidates, 30 MB a file and deterministic from their seed. |
 | `rust-runner/` | The coin-select runner. |
 | `core-runner/` | The Bitcoin Core runner, including a port of `node::MiniMiner`'s bump-fee calculation. |
 | `patches/` | One patch to Core adding benchmark hooks — a node counter and an optional wall-clock deadline — explained in [`patches/README.md`](patches/README.md). No bound, ordering or scoring rule is ever patched. |
@@ -99,6 +100,8 @@ python3 bench.py run --escalate             # coin-select only: sample the pool 
                                             # search runs out of budget (see FINDINGS.md #6)
 python3 bench.py smoke                      # the CI-sized fixture, end to end
 python3 genfixtures.py                      # regenerate fixtures/
+python3 genfixtures.py --scale              # write the 20k/200k tier into fixtures/scale/
+python3 bench.py scale                      # run it (see FINDINGS.md #6)
 
 # A/B two coin-select revisions on the same fixtures
 python3 bench.py compare-revs --a <rev> --b 'https://github.com/you/coin-select.git#<rev>'
@@ -112,6 +115,11 @@ round counts, solved/unsolved) and speed second, because a speedup that changed 
 a speedup. The runner reads its aggregates from `SelectionView`, so `compare-revs` reaches
 coin-select PR #53 and later; revisions before it take `&CoinSelector` in `BnbMetric` and will not
 build. Output lands in `results/compare/`.
+
+`bench.py scale` runs pools an order of magnitude past the checked-in matrix. At that size neither
+engine exhausts anything, so what it measures is whether a search can start at all inside a budget:
+memory, setup cost and whether an answer came back. Bitcoin Core returns no solution on two of the
+three 200,000-candidate pools; coin-select answers all six in 4 to 22 times less memory.
 
 `--oracle` brute forces every fixture with at most 20 candidates against coin-select's own
 objective, so a disagreement can be attributed rather than merely observed: it says whether the
