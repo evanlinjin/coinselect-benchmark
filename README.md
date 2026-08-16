@@ -85,6 +85,7 @@ excess — which is the second reason that family is there.
 | `ANCESTOR-BOUND-PLAN.md` | A design for an ancestor-bump ceiling — the prune both other plans turn out to need. |
 | `DFS-PLAN.md` | A design for replacing the priority-queue traversal with depth-first search, argued from those results. |
 | `SAMPLING-PLAN.md` | A design for retrying a budget-limited search on randomly sampled subsets of the pool. |
+| `ITERATIVE-DEEPENING-PLAN.md` | A design for recovering best-first's node ordering at depth-first memory, by deepening on the bound. |
 
 ## Commands
 
