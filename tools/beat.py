@@ -27,16 +27,17 @@ for fx in sorted(glob.glob("fixtures/*.json")):
     core = run(CORE, fx)
     core_fee = bench.evaluate(f, core["selected"], bench.change_value_of(core))["package_fee"]
     core_ms = core["timing"]["wall_ns_median"] / 1e6
-    row = {"name": name, "core_fee": core_fee, "core_ms": core_ms, "arms": {}}
+    row = {"name": name, "core_fee": core_fee, "core_ms": core_ms,
+           "core_nodes": core["rounds"], "arms": {}}
     for label, binary in RUNNERS:
         r = run(binary, fx)
-        beat_ms = None
+        beat_ms = beat_round = None
         for e in r.get("trajectory", []):
             if bench.evaluate(f, e["selected"], e["drain_value"])["package_fee"] < core_fee:
-                beat_ms = e["ns"] / 1e6
+                beat_ms, beat_round = e["ns"] / 1e6, e["round"]
                 break
         final = bench.evaluate(f, r["selected"], bench.change_value_of(r))["package_fee"]
-        row["arms"][label] = {"beat_ms": beat_ms, "fee": final}
+        row["arms"][label] = {"beat_ms": beat_ms, "beat_round": beat_round, "fee": final}
     rows.append(row)
 
 W = max(len(r["name"]) for r in rows)
@@ -68,6 +69,13 @@ for r in rows:
 print(f"\n{'arm':24s} {'ahead of Core sooner than Core finished':>44}")
 for l in labels:
     print(f"{l:24s} {won[l]:>3} of {len(rows)}")
+    # Same question in rounds rather than milliseconds, where Core reports a node count at all.
+    cmp = [(r["name"], r["arms"][l]["beat_round"], r["core_nodes"]) for r in rows
+           if r["core_nodes"] is not None and r["arms"][l]["beat_round"] is not None]
+    lost_work = [n for n, a, b in cmp if a >= b]
+    print(f"    on work: ahead within fewer rounds than Core spent nodes on "
+          f"{len(cmp) - len(lost_work)} of {len(cmp)} comparable"
+          + (f"; still behind on {', '.join(lost_work)}" if lost_work else ""))
     if never[l]:
         print(f"    never gets ahead on fee: {', '.join(never[l])}")
     if slower[l]:

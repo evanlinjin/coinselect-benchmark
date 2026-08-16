@@ -23,7 +23,7 @@ signing key is on a smartcard that needs a physical touch:
 | axis | what it measures |
 | --- | --- |
 | **fee** | package fee of the returned selection, harness fee model, both engines scored identically |
-| **work** | rounds spent to *reach* the returned answer, against Core's node count |
+| **work** | rounds spent before coin-select is ahead of Core, against the nodes Core spent |
 | **wall clock** | when coin-select first holds an answer better than Core's finished one, against how long Core took |
 
 The wall-clock axis took three tries to state correctly, which is itself the finding. "How long did
@@ -37,11 +37,14 @@ start, when am I ahead of Core?**
 
 ## Scoreboard
 
-| arm | fee | work | ahead of Core sooner than Core finished |
+| arm | fee | work to get ahead | wall clock to get ahead |
 | --- | --- | --- | --- |
-| [#76][pr76], the current pin | 38 / 42 | 41 / 42 | 37 / 42 |
-| \+ cheap nodes (attempt 1) | 38 / 42 | 41 / 42 | 37 / 42 |
-| \+ deepening (attempt 2) | **41 / 42** | 41 / 42 | **38 / 42** |
+| [#76][pr76], the current pin | 38 / 42 | 31 / 31 | 37 / 42 |
+| \+ cheap nodes (attempt 1) | 38 / 42 | 31 / 31 | 37 / 42 |
+| \+ deepening (attempt 2) | **41 / 42** | **31 / 31** | **38 / 42** |
+
+Work is out of 31 rather than 42 because Core reports no node count on the other eleven — it answered
+them with `KnapsackSolver` or a single random draw, neither of which counts nodes.
 
 **Fee is won.** The one fixture coin-select does not beat Core on is `high_feerate_20`, where the
 brute-force oracle enumerates all 2^20 subsets and coin-select returns the exact optimum with the
@@ -52,10 +55,27 @@ Total package fee across all 42 fixtures fell **−6.51%**, six fixtures improve
 
 What is left:
 
-- **work** — `high_feerate_200` only: 92,201 rounds to reach its answer against Core's 329 nodes.
 - **wall clock** — three fixtures (`subsidizing_ancestry_50`, `subsidizing_ancestry_100`,
   `nested_ancestry_200`) now overtake Core on fee by 17–35%, but need roughly 5–10x Core's wall clock
   to get there.
+
+### The work axis was measured wrong at first, and it mattered
+
+Comparing *final* round count against Core's node count made `high_feerate_200` look like a bad loss:
+92,201 rounds against 329 nodes. But the two searches were not answering the same question — Core
+stopped at 101,680 and coin-select carried on to 66,591, a 35% better fee, exhausting the tree.
+
+Measured like for like, the fixture is not close:
+
+| `high_feerate_200` | | |
+| --- | --- | --- |
+| Core, `CoinGrinder` | 101,680 | 329 nodes, 1.88 ms |
+| coin-select, first answer beating that | 81,737 | **200 rounds, 0.068 ms** |
+| coin-select, final | 66,591 | 79,399 rounds, tree exhausted |
+
+It passes Core in **fewer rounds and 28x less wall clock**, then spends the rest of the budget getting
+much further ahead. Charging it for the work it did *after* winning is the wrong comparison, and once
+it is fixed the axis is a clean sweep.
 
 ### Why `ran` is not in that table any more
 
@@ -228,11 +248,6 @@ scoreboard reports fee and timing together and neither is allowed to move alone.
 ---
 
 ## What is left
-
-**`high_feerate_200`, the work axis.** 92,201 rounds to reach its answer against Core's 329 nodes.
-Core solves it with `CoinGrinder`, which the fixture family exists to exercise; this is the one
-fixture where Core's portfolio has an algorithm that fits the shape of the problem and coin-select
-has one general search.
 
 **Three fixtures overtake Core late.** `subsidizing_ancestry_50`, `subsidizing_ancestry_100` and
 `nested_ancestry_200` end 17–35% ahead on fee but need roughly 5–10x Core's wall clock to get there.
