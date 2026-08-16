@@ -6,9 +6,9 @@
   "why": "latest tagged release at the time the harness was written; the coin-selection algorithms are used as-is, with only the instrumentation patch in patches/ applied"
  },
  "coin_select": {
-  "repo": "https://github.com/bitcoindevkit/coin-select.git",
-  "rev": "91f5cfeb1163f87a27059adbbe1de6af8afbb08b",
-  "describes": "PR #70: ancestor-aware selection, Core's incumbent-free prunes, and a greedy incumbent seeded before the search",
-  "why": "the ancestor-aware selection work this benchmark exists to measure, on the search that both prunes without an incumbent and starts with one"
+  "repo": "https://github.com/evanlinjin/coin-select.git",
+  "rev": "9c40ae23aa9386d4dd3e5ac4491e2645f6e3f396",
+  "describes": "PR #73: depth-first branch and bound, the changeless metrics removed, aggregate queries moved onto SelectionView",
+  "why": "the ancestor-aware selection work this benchmark exists to measure, now traversed depth-first instead of from a priority queue; `Changeless` and `LowestFeeChangeless` are gone with it, so there is no changeless metric left to pit against Core's SelectCoinsBnB and the harness runs the wallet track alone"
  }
 }

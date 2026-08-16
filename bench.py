@@ -35,7 +35,9 @@ RAW = RESULTS / "raw"
 FIXTURES = ROOT / "fixtures"
 PINS = json.loads((ROOT / "pins.json").read_text())
 
-TRACKS = ["kernel", "wallet"]
+# One track only: the pinned coin-select revision has no changeless metric, so there is nothing
+# left to run against Core's `SelectCoinsBnB` in isolation.
+TRACKS = ["wallet"]
 RUNNERS = ["coin-select", "bitcoin-core"]
 
 # Core targets the runner links against. Building these instead of all of Core keeps setup at
@@ -44,8 +46,7 @@ CORE_LIB_TARGETS = ["bitcoin_util", "bitcoin_crypto", "bitcoin_consensus", "bitc
 
 # Build configurations tried, in order, when targeting an arbitrary coin-select revision.
 FEATURE_ATTEMPTS = [
-    ("selection-view + lowest-fee-changeless", []),
-    ("selection-view", ["--no-default-features", "--features", "selection-view"]),
+    ("selection-view", []),
     ("pre-SelectionView", ["--no-default-features"]),
 ]
 
@@ -652,10 +653,10 @@ def build_summary(fixtures, records, problems, notes):
     repeats = next((r["raw"]["timing"]["repeats"] for r in records), 0)
     w(f"- timing: {warmup} warm-up run(s), {repeats} measured run(s), median reported\n")
 
-    w("**The objectives are not identical.** Core's `SelectCoinsBnB` looks for the least-waste")
-    w("selection whose effective value lands inside `[target, target + cost_of_change]`;")
-    w("coin-select's `Changeless<LowestFee>` minimises the child transaction's fee over every")
-    w("changeless selection. Runtime and node counts are therefore compared directly, while")
+    w("**The objectives are not identical.** Core takes the least-waste selection across its whole")
+    w("algorithm portfolio and deliberately aims for a privacy-friendly change amount;")
+    w("coin-select's `LowestFee` minimises the child transaction's long-term fee, with change at")
+    w("the metric's discretion. Runtime and node counts are therefore compared directly, while")
     w("solution quality is only ever compared through the shared metrics below.\n")
 
     w("## At a glance\n")
@@ -886,10 +887,8 @@ def build_runner_at(repo, rev):
     (dest / "Cargo.toml").write_text(manifest)
 
     binary = dest / "target" / "release" / "coinselect-bench-runner"
-    # coin-select's API has moved twice in ways the runner has to follow: PR #53 changed what
-    # `BnbMetric` receives, and a later revision replaced `Changeless<M>` with a dedicated
-    # `LowestFeeChangeless`. The feature combinations are mutually exclusive — a revision compiles
-    # under exactly one — so trying them in turn identifies the shape without inspecting the tree.
+    # PR #53 changed what `BnbMetric` receives, so the runner carries both shapes behind a
+    # feature; trying them in turn identifies the revision's shape without inspecting the tree.
     for features, extra in FEATURE_ATTEMPTS:
         cmd = ["cargo", "build", "--release", "--manifest-path", str(dest / "Cargo.toml")] + extra
         print("$ " + " ".join(cmd), flush=True)

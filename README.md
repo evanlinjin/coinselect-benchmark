@@ -1,19 +1,21 @@
 # coinselect-benchmark
 
 An apples-to-apples benchmark of ancestor-aware coin selection: [`bdk_coin_select`][coin-select]
-on the [`feature/lowest-fee-changeless`][branch] branch — ancestor-aware selection
-([PR #64][pr64]) on the delta-aware branch-and-bound evaluator ([PR #53][pr53]), with a dedicated
-changeless metric — against [Bitcoin Core][core]'s wallet coin selection.
+— ancestor-aware selection ([PR #64][pr64]) on the delta-aware branch-and-bound evaluator
+([PR #53][pr53]), searched depth-first ([PR #73][pr73]) — against [Bitcoin Core][core]'s wallet
+coin selection.
 
-Answers [bitcoindevkit/coin-select#67][issue67].
+Grew out of [bitcoindevkit/coin-select#67][issue67], which asked for both searches run on the same
+changeless objective. The pinned revision has no changeless metric left, so what remains is the
+wallet comparison.
 
 ```
 python3 bench.py all --oracle
 ```
 
-That clones and builds both pinned revisions, runs every fixture on both engines and both tracks,
-and writes `results/results.csv`, `results/results.json` and `results/SUMMARY.md`. On a 24-core
-machine the whole thing takes about a minute — most of it building Core.
+That clones and builds both pinned revisions, runs every fixture on both engines, and writes
+`results/results.csv`, `results/results.json` and `results/SUMMARY.md`. On a 24-core machine the
+whole thing takes about a minute — most of it building Core.
 
 Prerequisites: a C++20 compiler, CMake 3.22+, a Rust toolchain, `git`, and Python 3.9+ (stdlib
 only). No Bitcoin Core dependencies beyond what the coin-selection primitives need.
@@ -32,9 +34,9 @@ would be meaningless. Instead:
 
   | shared model | checked against |
   | --- | --- |
-  | child weight | `CoinSelector::weight` |
-  | child fee | `CoinSelector::fee` |
-  | ancestor union bump | `CoinSelector::ancestor_bump` |
+  | child weight | `SelectionView::weight` |
+  | child fee | `SelectionView::fee` |
+  | ancestor union bump | `SelectionView::ancestor_bump` |
   | individual and combined bump fees | the Core runner's port of `node::MiniMiner` |
   | waste | `SelectionResult::RecalculateWaste` |
   | selected input weight | `SelectionResult::GetWeight` |
@@ -44,22 +46,7 @@ would be meaningless. Instead:
   the report either way but exits non-zero when something failed, so CI does not need to parse it.
   Pass `--no-strict` to look at a run that has known problems.
 
-## The two tracks
-
-### `kernel` — search behaviour
-
-Both engines run a changeless branch and bound over the same candidates, target, effective
-feerate, weight cap and 100,000-node budget:
-
-| | |
-| --- | --- |
-| Bitcoin Core | `SelectCoinsBnB`: depth-first, least waste among selections whose effective value lands in `[target, target + cost_of_change]` |
-| coin-select | `LowestFeeChangeless`: priority-queue branch and bound, minimising the child transaction's fee over all changeless selections |
-
-The objectives are related but **not identical**, so this track compares traversal and pruning —
-node counts, wall clock, whether the tree was exhausted — and reports solution quality only
-through the shared metrics. coin-select minimises fee by construction, so "coin-select found a
-cheaper selection" on this track is a restatement of its objective, not a result.
+## The track
 
 ### `wallet` — what a wallet would actually build
 
@@ -68,14 +55,13 @@ cheaper selection" on this track is a restatement of its objective, not a result
 | Bitcoin Core | The full portfolio from `wallet/spend.cpp`'s `ChooseSelectionResult`: BnB, `KnapsackSolver`, `CoinGrinder` (only above 3x the long-term feerate), single random draw; then the shared-ancestry bump discount; then least waste wins |
 | coin-select | `LowestFee` branch and bound with change at the metric's discretion, falling back to single random draw |
 
-Different objectives again — Core minimises waste and deliberately targets a privacy-friendly
+Different objectives — Core minimises waste and deliberately targets a privacy-friendly
 change amount; coin-select minimises long-term fee — which the report says on every table.
 
-This is the track that answers what a caller should do, and every result in
-[`SAMPLING-PLAN.md`](SAMPLING-PLAN.md) comes from it. `kernel` is kept alongside it because
-isolating `SelectCoinsBnB` is the only way to see *why* the two engines differ on ancestry: run
-alone, Core's changeless search returns no solution on fixtures its full portfolio recovers from,
-which is finding 2 in [`FINDINGS.md`](FINDINGS.md).
+This is the only track, and every result in [`SAMPLING-PLAN.md`](SAMPLING-PLAN.md) comes from it.
+A second `kernel` track used to isolate Core's `SelectCoinsBnB` against coin-select's changeless
+metric; the pinned revision removes `Changeless` and `LowestFeeChangeless`, so there is no
+changeless objective left to run against it and the track is gone.
 
 Core's portfolio only reaches for `CoinGrinder` above 3x the long-term feerate, so the
 `high_feerate` fixture family exists to exercise that gate. At `feerate == long_term_feerate` Core's
@@ -105,7 +91,6 @@ excess — which is the second reason that family is there.
 python3 bench.py setup                      # clone + build both pinned revisions
 python3 bench.py run --oracle               # run the matrix into results/raw/
 python3 bench.py run --fixtures 'shared_*'  # one family
-python3 bench.py run --tracks wallet        # one track (kernel, wallet)
 python3 bench.py report                     # score results/raw/ (exits non-zero on a problem)
 python3 bench.py run --deadline-us 5000     # equal-time instead of equal-rounds (see below)
 python3 bench.py run --escalate             # coin-select only: sample the pool when the full
@@ -126,11 +111,10 @@ a speedup. Revisions either side of coin-select PR #53 have different `BnbMetric
 runner carries a `selection-view` feature for that and `compare-revs` picks the right one by
 trying both. Output lands in `results/compare/`.
 
-`--oracle` brute forces every fixture with at most 20 candidates against **each engine's own**
-objective, so a disagreement can be attributed rather than merely observed: it says whether a
-runner found the best answer to the question it was asking. Core's oracle enumerates every subset,
-including coins Core's own positive-effective-value filter drops before the search — so "Core
-missed it" can mean either the search or that filter.
+`--oracle` brute forces every fixture with at most 20 candidates against coin-select's own
+objective, so a disagreement can be attributed rather than merely observed: it says whether the
+search found the best answer to the question it was asking. Core has no oracle here — its wallet
+portfolio has no single objective to enumerate, and its results may carry change.
 
 ## Reproducibility
 
@@ -138,9 +122,9 @@ missed it" can mean either the search or that filter.
   and re-applies patches from scratch every time, so it is idempotent.
 - `rust-runner/Cargo.toml` pins the same coin-select revision; setup refuses to build if the two
   pins have drifted apart. The runner's `selection-view` feature is on by default because the
-  pinned revision takes `&SelectionView` in `BnbMetric` and expresses the changeless case as a
-  dedicated `LowestFeeChangeless` metric. Older revisions differ on both counts; `compare-revs`
-  reaches them by trying each feature combination in turn.
+  pinned revision takes `&SelectionView` in `BnbMetric`, and reads every aggregate — weight, fee,
+  excess, ancestor bump — from that view rather than from `CoinSelector`. Revisions from before
+  coin-select PR #53 differ; `compare-revs` reaches them by trying each feature in turn.
 - Fixtures are deterministic from a per-fixture seed and are checked in.
 - Core is built at `-O3` with assertions on (it refuses to compile with `NDEBUG`); the Rust runner
   at `--release` with `codegen-units = 1`. Compiler versions, host and the applied patch list are
@@ -149,22 +133,22 @@ missed it" can mean either the search or that filter.
   the median is reported, and only the search itself is inside the timed region — fixture parsing
   and problem construction are not.
 - Peak RSS is process-wide and read before the oracle runs. It tracks the search for the
-  coin-select runner (2.9 MB to 23 MB across the matrix, since the priority queue holds a branch
-  per live node); the Core runner sits at a flat ~17 MB of process baseline on every fixture, so
-  its figure says nothing about the search and the two are not comparable.
+  coin-select runner (2.7 MB to 3.6 MB across the matrix: the depth-first search keeps one stack
+  frame per decision, not a queue entry per live node); the Core runner sits at a flat ~19 MB of
+  process baseline on every fixture, so its figure says nothing about the search and the two are
+  not comparable.
 
 ## Known limits
 
-- **The kernel track shares a constraint, not an objective.** Issue #67 asks for both searches to
-  run "the same changeless objective". They share the changeless constraint, the candidates, the
-  target, the feerate, the weight cap and the budget — but each still minimises its own score.
-  Making them literally identical would mean writing a Core-waste `BnbMetric`, bound included, for
-  coin-select. That bound would be this harness's code, so the track would end up measuring a
-  bound written here rather than the crate's, which is a worse answer than an honest gap. What
-  fills it instead: the report scores both selections on **both** objectives, and `--oracle` says
-  whether each engine reached the optimum of the question it was actually asking.
+- **Neither engine's objective is the other's.** Core minimises waste across its portfolio;
+  coin-select minimises long-term fee. Making them literally identical would mean writing a
+  Core-waste `BnbMetric`, bound included, for coin-select — that bound would be this harness's
+  code, so the comparison would end up measuring a bound written here rather than the crate's,
+  which is a worse answer than an honest gap. What fills it instead: the report scores both
+  selections on **both** objectives, and `--oracle` says whether coin-select reached the optimum
+  of the question it was actually asking.
 - **The default budgets are not the same unit.** Core's `TOTAL_TRIES` counts depth-first nodes;
-  coin-select's `max_rounds` counts priority-queue pops. Both are 100,000, so the default matrix
+  coin-select's `max_rounds` counts branch-and-bound iterator rounds. Both are 100,000, so the default matrix
   says how much work each engine needs rather than which wins under a fixed latency budget. Pass
   `--deadline-us` to give both the same wall-clock budget instead — that is the framing closest to
   what a wallet actually constrains, and it sidesteps the unit mismatch entirely.
@@ -179,8 +163,8 @@ missed it" can mean either the search or that filter.
   the runner always searches the combined pool.
 
 [coin-select]: https://github.com/bitcoindevkit/coin-select
-[branch]: https://github.com/evanlinjin/coin-select/tree/feature/lowest-fee-changeless
 [pr64]: https://github.com/bitcoindevkit/coin-select/pull/64
 [pr53]: https://github.com/bitcoindevkit/coin-select/pull/53
+[pr73]: https://github.com/bitcoindevkit/coin-select/pull/73
 [issue67]: https://github.com/bitcoindevkit/coin-select/issues/67
 [core]: https://github.com/bitcoin/bitcoin

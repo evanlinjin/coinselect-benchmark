@@ -4,11 +4,11 @@
 // stdout in the same shape as ../rust-runner, so ../bench.py can score both with one formula.
 //
 // Tracks:
-//   kernel  SelectCoinsBnB only: Core's changeless branch and bound, same candidates, target,
-//           effective feerate, weight cap and 100,000-node budget as the coin-select side.
 //   wallet  Core's algorithm portfolio, replicating wallet/spend.cpp's ChooseSelectionResult:
 //           BnB, KnapsackSolver, CoinGrinder (only above 3x the long-term feerate), SRD; then
 //           the post-selection shared-ancestry bump discount; then pick the least waste.
+//           The only track: the pinned coin-select revision has no changeless metric left, so
+//           there is nothing to run SelectCoinsBnB against on its own.
 //
 // Everything from Core is used as-is at the pinned revision. The adapter's job is only to turn
 // the fixture into COutputs and OutputGroups; every conversion it makes is listed in
@@ -56,9 +56,6 @@ using bench::AncestorTx;
 using bench::MiniMinerLite;
 
 namespace {
-
-/// Largest candidate count we are willing to brute force (2^20 subsets).
-constexpr int ORACLE_MAX_CANDIDATES = 20;
 
 struct Candidate {
     std::string id;
@@ -338,69 +335,6 @@ const char* AlgoName(SelectionAlgorithm algo)
     return "unknown";
 }
 
-/// Exhaustive optimum of Core's changeless branch-and-bound objective.
-///
-/// Feasible = effective value inside [target, target + cost_of_change] and within the weight
-/// cap, which is exactly the window SelectCoinsBnB searches. Waste is Core's formula, including
-/// the shared-ancestry discount the search itself only applies afterwards — so a mismatch is
-/// evidence that discounting after the fact costs Core the optimum.
-///
-/// Only meaningful for the kernel track: the wallet portfolio has no single objective to
-/// enumerate, and its results are allowed to carry change and so fall outside this window.
-UniValue RunOracle(const Fixture& f, const Problem& p, bool enabled)
-{
-    UniValue out(UniValue::VOBJ);
-    const int n = static_cast<int>(f.candidates.size());
-    if (!enabled || n > ORACLE_MAX_CANDIDATES) {
-        out.pushKV("ran", false);
-        out.pushKV("best_waste", UniValue{});
-        out.pushKV("best_selected", UniValue{UniValue::VARR});
-        out.pushKV("subsets_evaluated", 0);
-        return out;
-    }
-    std::optional<CAmount> best_waste;
-    uint32_t best_mask = 0;
-    for (uint32_t mask = 0; mask < (uint32_t{1} << n); ++mask) {
-        CAmount effective = 0;
-        CAmount fee_delta = 0;
-        int weight = 0;
-        CAmount summed_bump = 0;
-        std::vector<std::string> txids;
-        for (int i = 0; i < n; ++i) {
-            if (!((mask >> i) & 1)) continue;
-            const auto& coin = *p.outputs[i];
-            effective += coin.GetEffectiveValue();
-            fee_delta += coin.GetFee() - coin.long_term_fee;
-            weight += std::max(coin.input_bytes, 0) * WITNESS_SCALE_FACTOR;
-            if (coin.depth == 0) {
-                summed_bump += coin.ancestor_bump_fees;
-                txids.push_back(f.candidates[i].residing_txid);
-            }
-        }
-        if (mask == 0 || weight > p.max_selection_weight) continue;
-        const CAmount discount = std::max<CAmount>(summed_bump - p.mini_miner->CombinedBumpFee(txids), 0);
-        const CAmount selection_amount = effective + discount;
-        if (selection_amount < p.selection_target) continue;
-        if (selection_amount > p.selection_target + p.params.m_cost_of_change) continue;
-        const CAmount waste = fee_delta - discount + (selection_amount - p.selection_target);
-        if (!best_waste || waste < *best_waste) {
-            best_waste = waste;
-            best_mask = mask;
-        }
-    }
-    out.pushKV("ran", true);
-    if (best_waste) out.pushKV("best_waste", *best_waste); else out.pushKV("best_waste", UniValue{});
-    UniValue selected(UniValue::VARR);
-    if (best_waste) {
-        for (int i = 0; i < n; ++i) {
-            if ((best_mask >> i) & 1) selected.push_back(f.candidates[i].id);
-        }
-    }
-    out.pushKV("best_selected", selected);
-    out.pushKV("subsets_evaluated", static_cast<int64_t>(uint64_t{1} << n));
-    return out;
-}
-
 int64_t PeakRssKb()
 {
     struct rusage usage{};
@@ -460,11 +394,10 @@ void SelfCheck()
 int main(int argc, char** argv)
 {
     std::string fixture_path;
-    std::string track = "kernel";
+    std::string track = "wallet";
     int repeat = 5;
     int warmup = 1;
     int deadline_us = 0; // 0 = no deadline, stop on Core's node budget instead
-    bool oracle = false;
 
     for (int i = 1; i < argc; ++i) {
         const std::string arg = argv[i];
@@ -477,12 +410,15 @@ int main(int argc, char** argv)
         else if (arg == "--repeat") repeat = std::max(1, std::stoi(next()));
         else if (arg == "--warmup") warmup = std::stoi(next());
         else if (arg == "--deadline-us") deadline_us = std::stoi(next());
-        else if (arg == "--oracle") oracle = true;
+        // Accepted and ignored: Core's oracle enumerated the changeless BnB window, which only
+        // ever described the kernel track. The wallet portfolio has no single objective to
+        // enumerate, and its results may carry change and so fall outside that window.
+        else if (arg == "--oracle") {}
         else if (arg == "--self-check") { SelfCheck(); return 0; }
         else Die("unknown argument " + arg);
     }
     if (fixture_path.empty()) Die("--fixture is required");
-    if (track != "kernel" && track != "wallet") Die("unknown track " + track);
+    if (track != "wallet") Die("unknown track " + track);
 
     const Fixture f = LoadFixture(fixture_path);
     // Core's branch and bound budget (TOTAL_TRIES) is a compile-time constant. Fixtures state
@@ -508,30 +444,21 @@ int main(int argc, char** argv)
         // every repeat would search from a different random state and the reported selection
         // would depend on --repeat. Reseeding makes each repeat identical.
         rng.Reseed(uint256::ZERO);
-        auto pool = problem.positive_groups;
         const auto start = std::chrono::steady_clock::now();
         // Give the search a wall-clock budget instead of a node budget when asked, so both
         // engines can be compared on the same termination criterion.
         g_bench_deadline = deadline_us > 0
             ? start + std::chrono::microseconds(deadline_us)
             : std::chrono::steady_clock::time_point{};
-        std::optional<SelectionResult> attempt;
-        if (track == "kernel") {
-            if (auto bnb = SelectCoinsBnB(pool, problem.selection_target, problem.params.m_cost_of_change, problem.max_selection_weight)) {
-                attempt = *bnb;
-            }
-        } else {
-            attempt = RunWalletTrack(f, problem);
-        }
+        std::optional<SelectionResult> attempt = RunWalletTrack(f, problem);
         const auto elapsed = std::chrono::steady_clock::now() - start;
         if (i >= warmup) samples.push_back(std::chrono::duration_cast<std::chrono::nanoseconds>(elapsed).count());
-        // Both tracks start with SelectCoinsBnB and nothing else writes these, so they still
+        // The portfolio starts with SelectCoinsBnB and nothing else writes these, so they still
         // describe this run's branch-and-bound search.
         bnb_nodes = g_bnb_selections_evaluated;
         bnb_completed = g_bnb_algo_completed;
         result = attempt;
     }
-    if (track == "kernel" && result) FinishResult(f, problem, *result);
 
     std::sort(samples.begin(), samples.end());
 
@@ -541,10 +468,7 @@ int main(int argc, char** argv)
     out.pushKV("family", f.family);
     out.pushKV("size", static_cast<int64_t>(f.candidates.size()));
     out.pushKV("track", track);
-    out.pushKV("objective",
-        track == "kernel"
-            ? "minimise waste within [target, target + cost_of_change], changeless (SelectCoinsBnB)"
-            : "least waste across Core's algorithm portfolio (ChooseSelectionResult)");
+    out.pushKV("objective", "least waste across Core's algorithm portfolio (ChooseSelectionResult)");
     out.pushKV("algorithm", result ? AlgoName(result->GetAlgo()) : "none");
     out.pushKV("ok", result.has_value());
     if (result) {
@@ -559,7 +483,7 @@ int main(int argc, char** argv)
 
     // Node counts only mean something for the two searches that have a node budget. Knapsack and
     // single random draw are reported as null rather than as a number that cannot be compared.
-    const bool from_bnb = track == "kernel" || (result && result->GetAlgo() == SelectionAlgorithm::BNB);
+    const bool from_bnb = result && result->GetAlgo() == SelectionAlgorithm::BNB;
     if (from_bnb) {
         out.pushKV("rounds", static_cast<int64_t>(bnb_nodes));
         out.pushKV("exhausted", bnb_completed);
@@ -601,7 +525,8 @@ int main(int argc, char** argv)
         out.pushKV("native", UniValue{});
     }
 
-    out.pushKV("oracle", RunOracle(f, problem, oracle && track == "kernel"));
+    // No oracle on this side: see the `--oracle` comment above.
+    out.pushKV("oracle", UniValue{});
     std::cout << out.write() << "\n";
     return 0;
 }

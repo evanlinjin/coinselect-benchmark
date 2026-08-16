@@ -6,21 +6,18 @@
 //! fixture in and result out, so `../bench.py` can score both with one formula.
 //!
 //! Tracks:
-//! - `kernel`: `Changeless<LowestFee>` branch and bound, no change output allowed.
-//!   Isolates traversal and pruning against Core's `SelectCoinsBnB`.
 //! - `wallet`: `LowestFee` branch and bound (change is the metric's own decision),
 //!   falling back to single random draw, mirroring how a wallet would drive this crate.
+//!   The only track: the pinned revision has no changeless metric, so there is nothing
+//!   left to run against Core's `SelectCoinsBnB` in isolation.
 
 use std::time::{Duration, Instant};
 
 use bdk_coin_select::{
     float::Ordf32, metrics::LowestFee, AncestorToBump, BnbMetric, CoinSelector, Drain, DrainWeights,
-    FeeRate, Input, SelectionProblem, Target, TargetFee, TargetOutputs, TX_FIXED_FIELD_WEIGHT,
+    FeeRate, Input, SelectionProblem, SelectionView, Target, TargetFee, TargetOutputs,
+    TX_FIXED_FIELD_WEIGHT,
 };
-#[cfg(not(feature = "lowest-fee-changeless"))]
-use bdk_coin_select::metrics::Changeless;
-#[cfg(feature = "lowest-fee-changeless")]
-use bdk_coin_select::metrics::LowestFeeChangeless;
 use serde::Serialize;
 
 mod fixture;
@@ -134,7 +131,7 @@ struct Args {
 
 fn parse_args() -> Args {
     let mut fixture = None;
-    let mut track = "kernel".to_string();
+    let mut track = "wallet".to_string();
     let mut repeat = 5usize;
     let mut warmup = 1usize;
     let mut deadline_us = None;
@@ -202,9 +199,8 @@ fn parse_args() -> Args {
 
 /// Reproduce `BnbIter::seed_greedy_incumbent` and report whether it would actually seed.
 ///
-/// The seed is only adopted when the metric *scores* the greedy prefix, and each metric refuses a
-/// different prefix: `LowestFeeChangeless` refuses one whose excess is large enough that
-/// `LowestFee` would want change, `LowestFee` refuses nothing once funded. This prints which, so
+/// The seed is only adopted when the metric *scores* the greedy prefix, and `LowestFee` refuses
+/// nothing once the prefix is funded. This prints the prefix and what the metric made of it, so
 /// the "greedy incumbent" claim can be checked per fixture instead of assumed.
 fn seed_probe(f: &Fixture, base: &CoinSelector<'_>) {
     let mut greedy = base.clone();
@@ -212,35 +208,14 @@ fn seed_probe(f: &Fixture, base: &CoinSelector<'_>) {
     let funded = greedy.select_until_target_met().is_ok();
     let view = greedy.compute_view();
     let mut lf = lowest_fee(f);
-    let mut cl = changeless_metric(f);
-    let (changeless, lowest, drain, excess) = if funded {
+    let (lowest, drain, excess) = if funded {
         (
-            cl.score(&view).map(|s| s.0),
             lf.score(&view).map(|s| s.0),
             lf.drain(&view).value,
-            greedy.excess(Drain::NONE),
+            view.excess(Drain::NONE),
         )
     } else {
-        (None, None, 0, 0)
-    };
-    // The mirror image: select the *worst* value-per-weight candidates first. Descending order
-    // overshoots by whatever the last big coin brings, which is what makes it changeful; ascending
-    // order overshoots by at most the smallest coin still needed, which is the only greedy prefix
-    // with any chance of landing inside the changeless window.
-    let mut tail = base.clone();
-    tail.sort_candidates_by_descending_value_pwu();
-    let n = f.candidates.len();
-    for i in (0..n).rev() {
-        if tail.is_funded() {
-            break;
-        }
-        tail.select(i);
-    }
-    let tail_view = tail.compute_view();
-    let tail_changeless = if tail.is_funded() {
-        cl.score(&tail_view).map(|s| s.0)
-    } else {
-        None
+        (None, 0, 0)
     };
 
     // Cluster structure decides whether an ancestry-aware cut can differ from a uniform one at all:
@@ -260,9 +235,6 @@ fn seed_probe(f: &Fixture, base: &CoinSelector<'_>) {
         "clusters": sizes.len(),
         "largest_cluster": sizes.values().copied().max().unwrap_or(0),
         "multi_candidate_clusters": sizes.values().filter(|&&s| s > 1).count(),
-        "tail_greedy_inputs": tail.selected_indices().len(),
-        "tail_greedy_excess": tail.excess(Drain::NONE),
-        "tail_changeless_seeds": tail_changeless.is_some(),
         "candidates": f.candidates.len(),
         "greedy_funded": funded,
         "greedy_inputs": greedy.selected_indices().len(),
@@ -270,8 +242,6 @@ fn seed_probe(f: &Fixture, base: &CoinSelector<'_>) {
         "lowest_fee_drain_value": drain,
         "lowest_fee_seeds": lowest.is_some(),
         "lowest_fee_seed_score": lowest,
-        "changeless_seeds": changeless.is_some(),
-        "changeless_seed_score": changeless,
     });
     println!("{}", serde_json::to_string(&out).unwrap());
 }
@@ -357,20 +327,6 @@ fn drain_weights(f: &Fixture) -> DrainWeights {
         spend_weight: f.change.spend_weight,
         n_outputs: 1,
     }
-}
-
-/// The kernel track's metric: minimise fee over changeless selections.
-///
-/// Earlier revisions express this by wrapping `LowestFee` in the generic `Changeless<M>`
-/// constraint; later ones replace that with a dedicated `LowestFeeChangeless` carrying a
-/// changeless-specific bound. Same objective either way, so the track compares like with like.
-#[cfg(not(feature = "lowest-fee-changeless"))]
-fn changeless_metric(f: &Fixture) -> Changeless<LowestFee> {
-    Changeless(lowest_fee(f))
-}
-#[cfg(feature = "lowest-fee-changeless")]
-fn changeless_metric(f: &Fixture) -> LowestFeeChangeless {
-    LowestFeeChangeless::from(lowest_fee(f))
 }
 
 fn lowest_fee(f: &Fixture) -> LowestFee {
@@ -554,12 +510,15 @@ fn cap_pool<'a>(
             order.swap(i, (rng() % (i as u64 + 1)) as usize);
         }
         // How far down the shuffled order fundability actually reaches. Taking a prefix at least
-        // this long is enough, because it contains the funding set itself.
-        let mut scratch = cs.clone();
+        // this long is enough, because it contains the funding set itself. One `SelectionView`,
+        // updated in place: `add` is the incremental form of selecting, so the whole walk costs
+        // what recomputing the aggregates once used to.
+        let scratch = cs.clone();
+        let mut view = scratch.compute_view();
         let mut need = n;
         for (k, &i) in order.iter().enumerate() {
-            scratch.select(i);
-            if scratch.is_funded() {
+            view.add(i);
+            if view.is_funded() {
                 need = k + 1;
                 break;
             }
@@ -578,27 +537,33 @@ fn cap_pool<'a>(
     // best `JITTER_K` remaining by value-per-weight rather than always the very best. The set stays
     // about as small as the strict greedy prefix — which is what keeps the pool inside `max_n` —
     // but its membership varies per sample, so no candidate is pinned into every pool.
-    let keep = if prefix.starts_with("jittered") {
+    let keep: Vec<usize> = if prefix.starts_with("jittered") {
         const JITTER_K: usize = 4;
         let mut rng = seeded_rng(f.seed ^ salt.wrapping_mul(0x51_7C_C1_B7_27_22_0A_95));
-        let mut chosen = cs.clone();
+        let chosen = cs.clone();
+        // Again one view carried across the loop; the picks are tracked here because a view's
+        // hypothetical `add` deliberately leaves the selector's own selected set alone.
+        let mut view = chosen.compute_view();
+        let mut picked = Vec::new();
         let mut avail: Vec<usize> = cs.candidates().map(|(i, _)| i).collect();
-        while !chosen.is_funded() && !avail.is_empty() {
+        while !view.is_funded() && !avail.is_empty() {
             let k = JITTER_K.min(avail.len());
-            chosen.select(avail.remove((rng() % k as u64) as usize));
+            let i = avail.remove((rng() % k as u64) as usize);
+            view.add(i);
+            picked.push(i);
         }
-        chosen.selected_indices().clone()
+        picked
     } else {
         let mut greedy = cs.clone();
         let _ = greedy.select_until_target_met();
-        greedy.selected_indices().clone()
+        greedy.selected_indices().iter().collect()
     };
 
     // Descending value-per-weight order, so a candidate's position here is its pwu rank.
     let rest: Vec<usize> = cs
         .candidates()
         .map(|(i, _)| i)
-        .filter(|i| !keep.contains(*i))
+        .filter(|i| !keep.contains(i))
         .collect();
     let mut rng = seeded_rng(f.seed ^ salt.wrapping_mul(0x9E37_79B9_7F4A_7C15));
     let problem = base.problem();
@@ -623,7 +588,7 @@ fn cap_pool<'a>(
                 cluster_key.entry(cluster[i]).or_insert_with(&mut rng);
             }
             if policy == "cluster" {
-                for i in keep.iter() {
+                for &i in &keep {
                     cluster_key.insert(cluster[i], u64::MAX);
                 }
             }
@@ -633,7 +598,7 @@ fn cap_pool<'a>(
         }
         "shared" => {
             let mut covered = std::collections::HashSet::new();
-            for i in keep.iter() {
+            for &i in &keep {
                 covered.extend(problem.drags_in(i).iter());
             }
             rest.iter()
@@ -748,17 +713,17 @@ fn selected_ids(f: &Fixture, cs: &CoinSelector<'_>) -> Vec<String> {
         .collect()
 }
 
-fn native(cs: &CoinSelector<'_>, drain: Drain, score: Option<Ordf32>) -> Native {
-    let target = cs.target();
+fn native(view: &SelectionView<'_>, drain: Drain, score: Option<Ordf32>) -> Native {
+    let target = view.target();
     Native {
         score: score.map(|s| s.0),
         drain_value: drain.value,
-        child_weight: cs.weight(target.outputs, drain.weights),
-        child_fee: cs.fee(target.value(), drain.value),
-        ancestor_bump: cs.ancestor_bump(),
-        ancestor_bump_lower_bound: cs.ancestor_bump_lower_bound(),
-        excess: cs.excess(drain),
-        implied_feerate_sat_per_vb: cs
+        child_weight: view.weight(target.outputs, drain.weights),
+        child_fee: view.fee(target.value(), drain.value),
+        ancestor_bump: view.ancestor_bump(),
+        ancestor_bump_lower_bound: view.ancestor_bump_lower_bound(),
+        excess: view.excess(drain),
+        implied_feerate_sat_per_vb: view
             .implied_feerate(target.outputs, drain)
             .map(|r| r.as_sat_vb()),
     }
@@ -858,10 +823,6 @@ fn main() {
     }
 
     let (objective, algorithm) = match args.track.as_str() {
-        "kernel" => (
-            "minimise child fee, changeless (Changeless<LowestFee>)",
-            "bnb/changeless-lowest-fee",
-        ),
         "wallet" => (
             "minimise long-term fee, change at the metric's discretion (LowestFee)",
             "bnb/lowest-fee+srd-fallback",
@@ -882,16 +843,7 @@ fn main() {
         // Pool capping is inside the timed region: it is work the wallet would be doing. With
         // `--restarts`, each draw is an independent sample of the pool and the best answer across
         // draws wins — a capped search is cheap enough to run many times.
-        // A macro, not a closure: the returned `Search` borrows from the pool's lifetime, which a
-        // closure cannot express.
-        macro_rules! full {
-            ($pool:expr) => {
-                match args.track.as_str() {
-                    "kernel" => search($pool, changeless_metric(&f), budget, deadline),
-                    _ => search($pool, lowest_fee(&f), budget, deadline),
-                }
-            };
-        }
+        //
         // `--cap-on-budget` uses the full search's own budget signal as the trigger: if it
         // exhausted the tree it already holds the optimum and capping could only throw candidates
         // the optimum needs away, so keep it. Only a search that ran out of budget gets capped.
@@ -904,10 +856,7 @@ fn main() {
                 Some(us) => Some(start + Duration::from_micros(us / 2)),
                 None => deadline,
             };
-            let r = match args.track.as_str() {
-                "kernel" => search(&base, changeless_metric(&f), budget, probe_deadline),
-                _ => search(&base, lowest_fee(&f), budget, probe_deadline),
-            };
+            let r = search(&base, lowest_fee(&f), budget, probe_deadline);
             if r.exhausted {
                 max_n = None;
             }
@@ -916,7 +865,7 @@ fn main() {
         let mut result = match max_n {
             None => match prior {
                 Some(r) => r,
-                None => full!(&base),
+                None => search(&base, lowest_fee(&f), budget, deadline),
             },
             Some(max_n) => {
                 // The budget-exhausted full search, when there was one, is just another draw: its
@@ -936,10 +885,7 @@ fn main() {
                         while used < phase_budget {
                             let per = $per_draw.min(phase_budget - used).max(1);
                             let pool = cap_pool(&f, &base, $max_n, &args.ban_policy, &args.prefix, $salt + draw);
-                            let r = match args.track.as_str() {
-                                "kernel" => search(&pool, changeless_metric(&f), per, deadline),
-                                _ => search(&pool, lowest_fee(&f), per, deadline),
-                            };
+                            let r = search(&pool, lowest_fee(&f), per, deadline);
                             used += r.rounds.max(1);
                             let better = match (&best, &r.score) {
                                 (_, None) => false,
@@ -985,12 +931,7 @@ fn main() {
                         while m < f.candidates.len() && spent < budget / 2 {
                             let pool =
                                 cap_pool(&f, &base, m, &args.ban_policy, &args.prefix, salt_base + m as u64);
-                            let r = match args.track.as_str() {
-                                "kernel" => {
-                                    search(&pool, changeless_metric(&f), probe_cap, deadline)
-                                }
-                                _ => search(&pool, lowest_fee(&f), probe_cap, deadline),
-                            };
+                            let r = search(&pool, lowest_fee(&f), probe_cap, deadline);
                             spent += r.rounds;
                             let exhausted = r.exhausted;
                             let better = match (&best, &r.score) {
@@ -1017,10 +958,10 @@ fn main() {
                 out
             }
         };
-        // Fall back to single random draw exactly as a wallet would: wallet track only, and only
-        // when branch and bound came back empty.
+        // Fall back to single random draw exactly as a wallet would: only when branch and bound
+        // came back empty.
         let mut srd_drain = None;
-        if args.track == "wallet" && result.selection.is_none() {
+        if result.selection.is_none() {
             let mut cs = base.clone();
             if let Ok(drain) = cs.select_srd(
                 drain_weights(&f),
@@ -1046,23 +987,21 @@ fn main() {
         None => algorithm.to_string(),
     };
 
-    let oracle = match args.track.as_str() {
-        "kernel" => run_oracle(&f, &problem, changeless_metric(&f), args.oracle),
-        _ => run_oracle(&f, &problem, lowest_fee(&f), args.oracle),
-    };
+    let oracle = run_oracle(&f, &problem, lowest_fee(&f), args.oracle);
 
     let (ok, error, selected, native_out) = match &result.selection {
         Some(cs) => {
+            // One view for both the metric's change decision and the native figures.
+            let cs_view = cs.compute_view();
             let drain = match srd_drain {
                 Some(drain) => drain,
-                None if args.track == "kernel" => Drain::NONE,
-                None => lowest_fee(&f).drain(view!(cs)),
+                None => lowest_fee(&f).drain(&cs_view),
             };
             (
                 true,
                 None,
                 selected_ids(&f, cs),
-                Some(native(cs, drain, result.score)),
+                Some(native(&cs_view, drain, result.score)),
             )
         }
         None => (
