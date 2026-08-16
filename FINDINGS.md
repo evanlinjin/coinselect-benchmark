@@ -113,11 +113,14 @@ more on a 0.131 BTC send, two and a half times the fee. It is the clearest open 
 matrix, and a regression a reviewer should weigh against the large-pool wins.
 
 [`ANCESTOR-BOUND-PLAN.md`](ANCESTOR-BOUND-PLAN.md) named `subsidizing_ancestry_50` and `_100` as its
-sharpest targets, from independent evidence on the old traversal. The ceiling it proposes was built
-and measured, but is **not** in the pinned revision: its only call site was the changeless window
-cut, which went with the changeless metrics. Wiring it into `LowestFee` instead looks unsound as
-described — an upper bound on the bump cannot raise a lower bound on the fee — so these fixtures
-have no fix in hand.
+sharpest targets, and **the ceiling it proposes has already been built and measured — it does not
+fix them.** It was a byte-identical no-op on all 42 wallet fixtures under both traversals, because
+`LowestFee` never consults it: its only call site was the changeless window cut, which went with the
+changeless metrics. It converted `_50` on the retired kernel track only. Wiring it into `LowestFee`
+instead is unsound as described — an upper bound on the bump cannot raise a lower bound on the fee,
+and the branches where it could tighten are the ones whose surplus term is already zero. See that
+plan's §9 and §10. **These two fixtures have no fix in hand**, and what defeats depth-first here is
+not ancestor-bound looseness.
 
 ## 4. Outcomes against Core
 
