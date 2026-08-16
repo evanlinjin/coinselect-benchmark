@@ -81,6 +81,7 @@ excess — which is the second reason that family is there.
 | `patches/` | One patch to Core adding benchmark hooks — a node counter and an optional wall-clock deadline — explained in [`patches/README.md`](patches/README.md). No bound, ordering or scoring rule is ever patched. |
 | `results/` | Generated. `SUMMARY.md` is the readable report, `results.csv` the full matrix, and `compare/` holds revision A/B runs. |
 | `FINDINGS.md` | A snapshot of what the current results show, with the revisions they came from. |
+| `ARCHIVED-FINDINGS.md` | Results this harness measured but can no longer reproduce, with the commit and pins to reproduce them from history. |
 | `ANCESTOR-BOUND-PLAN.md` | A design for an ancestor-bump ceiling — the prune both other plans turn out to need. |
 | `DFS-PLAN.md` | A design for replacing the priority-queue traversal with depth-first search, argued from those results. |
 | `SAMPLING-PLAN.md` | A design for retrying a budget-limited search on randomly sampled subsets of the pool. |
