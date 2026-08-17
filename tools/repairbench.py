@@ -41,7 +41,8 @@ for name in names:
     path = f"fixtures/scale/{name}.json"
     fixture = bench.load_fixture(path)
     core, _ = run(CORE, path)
-    plain, _ = run(CS, path, ["--budget", "4000000000"])
+    # `--repair` now defaults to what `run_bnb` gives it, so the baseline has to ask for zero.
+    plain, _ = run(CS, path, ["--budget", "4000000000", "--repair", "0"])
     fixed, log = run(CS, path, ["--budget", "4000000000", "--repair", budget])
     c, a, b = fee(fixture, core), fee(fixture, plain), fee(fixture, fixed)
     swaps = log.strip().splitlines()[-1] if "repair:" in log else "no swap taken"

@@ -7,7 +7,7 @@
  },
  "coin_select": {
   "repo": "file:///home/evanlinjin/Git/coin-select",
-  "rev": "cfb6472ec68a432dbacfd4965b59dddcc20f62ef",
+  "rev": "2bc05623c72bffa9f72eb69a937b2eccfaa39164",
   "describes": "experiment/repair-pass: a local repair pass over the finished selection where ancestry is shared, on top of evanlinjin#5's iterative deepening, evanlinjin#4's flat per-node cost, and PRs #76, #75 and #73",
   "why": "the ancestor-aware selection work this benchmark exists to measure, with everything the benchmark has since argued for applied: depth-first traversal (#73), per-candidate ancestor sets stored flat rather than as one dense bitset each (#75), a second greedy prefix ordered by (value - own bump) / weight kept whenever the metric scores it better (#76), a per-node cost that no longer grows with the pool (evanlinjin#4), iterative deepening on the bound (evanlinjin#5), and a repair pass that swaps out coins paying for an unconfirmed ancestor alone (experiment/repair-pass). The last three are unmerged drafts, which is the point of pinning them: this matrix is the evidence for them, so it should be run against them. `Changeless` and `LowestFeeChangeless` are still gone with #73, so the harness runs the wallet track alone. NOTE: the repair-pass rev is not pushed yet - the signing key needs a physical touch - so this points at the local clone rather than GitHub. Repoint it at https://github.com/evanlinjin/coin-select.git once the branch is pushed."
  }
