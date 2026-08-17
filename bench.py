@@ -631,10 +631,8 @@ def build_summary(fixtures, records, problems, notes):
     w("survive. Every package-quality number below is recomputed by the harness from the fixture")
     w("and the selected candidate ids, not taken from either runner, so the two columns are")
     w("scored by the same formula.\n")
-    # Two files called SUMMARY.md is a trap; say which one this is rather than let a reader work
-    # it out from the contents.
-    w("This reports the **pinned** revision. The hand-written [`SUMMARY.md`](../SUMMARY.md) in the")
-    w("repository root is a different document: what is being tried to move these numbers.\n")
+    w("This reports the **pinned** revision. [`FINDINGS.md`](../FINDINGS.md) says what these numbers")
+    w("mean, and [`EXPERIMENTS.md`](../EXPERIMENTS.md) what is being tried to move them.\n")
 
     w("## Revisions and environment\n")
     w(f"- Bitcoin Core: `{PINS['bitcoin_core']['rev']}` ({PINS['bitcoin_core']['describes']})")

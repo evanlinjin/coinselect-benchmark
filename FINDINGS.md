@@ -7,13 +7,17 @@ report and `results/results.csv` the full matrix behind everything below.
 - Bitcoin Core `9be056a8a72b624dae9623b2f7bded92c2a21c91` (v31.1), coin-selection algorithms
   unmodified apart from the benchmark hooks in `patches/` (a node counter and an optional
   wall-clock deadline, neither active in this run's default node-budget mode)
-- coin-select `e93d1f982c3d548613b0d1b5510f80967b2e057e` ([PR #76][pr76]) — a second, ancestry-aware
-  greedy seed, on top of [PR #75][pr75]'s sparsely stored per-candidate ancestor sets, on top of
-  [PR #73][pr73]'s depth-first branch and bound with the changeless metrics removed. **Neither of
-  the two additions moves this matrix at all**: all 84 rows are identical across the #73, #75 and
-  #76 pins in every column but wall clock, verified field by field. Findings 1 to 5 are therefore
-  unaffected by both, and finding 6 — which needs pools an order of magnitude larger than anything
-  checked in — is the whole of what they buy
+- coin-select `ecdbbc93cf8e029f3716f4f8b0b6c42aa965dcd0` ([evanlinjin#5][ev5]) — iterative deepening
+  on the bound, on by default where a problem has unconfirmed ancestors, on top of
+  [evanlinjin#4][ev4]'s flat per-node cost, [PR #76][pr76]'s ancestry-aware second greedy seed,
+  [PR #75][pr75]'s sparsely stored ancestor sets, and [PR #73][pr73]'s depth-first branch and bound
+  with the changeless metrics removed.
+
+  **The last two are unmerged drafts, and pinning them is deliberate**: this matrix is the evidence
+  for them, so it is run against them. #75 and #76 move no row of it at all — all 84 are identical
+  across the #73, #75 and #76 pins in every column but wall clock — and what they buy shows up only
+  in finding 6. evanlinjin#4 likewise changes no answer, only the cost of reaching it. evanlinjin#5
+  is the one that moves results, and finding 3 is the diagnosis it came from
 - 42 fixtures: 8 families x 20/50/100/200, three shapes also at 500/1000/2000, plus the smoke
   fixture; one track, 100,000-round budget
 - 2 warm-up runs and 9 measured runs per case, median reported
@@ -27,7 +31,7 @@ applied to both engines' selections.
 [`ARCHIVED-FINDINGS.md`](ARCHIVED-FINDINGS.md) holds results this harness measured but can no longer
 reproduce, with the commit and pins to reproduce them from history.
 
-[`SUMMARY.md`](SUMMARY.md) is the other half of the picture: this file says what the **pinned**
+[`EXPERIMENTS.md`](EXPERIMENTS.md) is the other half of the picture: this file says what the **pinned**
 revision does, that one logs what is being tried to move it. Two of those attempts are now open as
 stacked draft PRs and change several conclusions below — each is cross-referenced where it lands.
 
@@ -50,10 +54,12 @@ still requiring a bump, so this is a measurement rather than an assumption.
 
 | | coin-select | Bitcoin Core |
 | --- | --- | --- |
-| median wall clock | 1075 us | 1179 us |
-| budget exhausted | 16 of 42 | 35 of 42 |
+| budget exhausted | 13 of 42 | 35 of 42 |
 | returned no solution | **0 of 42** | 0 of 42 |
-| peak RSS | **2.6 - 3.5 MB** | ~19 MB (process baseline) |
+| peak RSS | **2.7 - 3.4 MB** | ~19 MB (process baseline) |
+
+(Median wall clock is 695 us against 1,413 us, but that column does not reproduce — see the note
+under "At a glance" in `results/SUMMARY.md` — so it is not the point being made here.)
 
 Peak RSS is flat at three megabytes across the whole matrix, from the 8-candidate smoke fixture to
 2000 candidates. The previous best-first traversal ran from 2.9 MB to 23 MB at the same round cap,
@@ -212,23 +218,28 @@ consults the bound where it cheaply can — `descend()` evaluates both children 
 one — so the remaining gap is node *expansion* order, which is what best-first buys with its
 frontier. Iterative deepening on the bound is the standard way to buy it back at depth-first memory.
 
-**That has since been tested, and it works.** Deepening turns this fixture's 47,520 into 24,500 —
-past Core's 29,690 — and the same change is worth -6.63% of total package fee across the matrix.
-It is not in this pin; it is [`SUMMARY.md`](SUMMARY.md) attempt 2, and
-[evanlinjin#5](https://github.com/evanlinjin/coin-select/pull/5).
+**That has since been tested, it works, and it is in this pin.** Deepening turns this fixture's
+47,520 into 24,500 — past Core's 29,690 — and is worth -6.63% of total package fee across the
+matrix. The diagnosis above is what it was built from, so it is kept in full even though the
+numbers quoted in it describe the traversal before the fix: the 11,912-against-5,088 stall is why
+[evanlinjin#5][ev5] exists. [`EXPERIMENTS.md`](EXPERIMENTS.md) attempt 2 has the measurements, and
+what it costs on the three large mixed pools where it loses.
 
 ## 4. Outcomes against Core
 
 | | coin-select | Bitcoin Core |
 | --- | --- | --- |
-| cheaper package | **38 of 42** | 3 of 42 |
-| lower waste | 16 of 42 | **23 of 42** |
+| cheaper package | **41 of 42** | 0 of 42 |
+| lower waste | 19 of 42 | **20 of 42** |
 
-The fee row is **41 of 42** with [evanlinjin#5](https://github.com/evanlinjin/coin-select/pull/5),
-which is not in this pin. The 42nd is a tie at a proven optimum rather than a loss: the oracle
-enumerates all 2^20 subsets of `high_feerate_20` and coin-select returns the best one with the tree
-exhausted, while Core reaches a different selection costing the same. See
-[`SUMMARY.md`](SUMMARY.md).
+**Core no longer wins the fee column anywhere**, and the fixture coin-select does not win is not a
+loss: on `high_feerate_20` the oracle enumerates all 2^20 subsets and coin-select returns the best
+one with the tree exhausted, while Core reaches a different selection costing exactly the same. It
+is a tie at a proven optimum.
+
+At the [#76][pr76] pin this read 38 to 3. The three Core took — `nested_ancestry_200`,
+`subsidizing_ancestry_100` and `subsidizing_ancestry_50` — are the three finding 3 diagnoses, and
+[evanlinjin#5][ev5] is what turned them over.
 
 Each engine wins its own objective more often than not, which is what should happen. Read the fee
 column with care: Core's portfolio minimises waste, and its knapsack and single-random-draw paths
@@ -240,12 +251,14 @@ every one of its own selections, which is what makes the cross-scoring trustwort
 
 ## 5. Capping the pool helps depth-first *more* than it helped best-first
 
-> **Superseded for the wallet track.** Re-measured with deepening on
-> ([evanlinjin#5](https://github.com/evanlinjin/coin-select/pull/5)), sampling is equal or worse at
-> every budget from 1 ms to 100 ms on the four fixtures it used to rescue — including
-> `subsidizing_ancestry_50`, whose exact optimum it was the only thing to recover. Deepening reaches
-> the same answers by searching rather than by re-rolling. The numbers below still describe this pin,
-> which does not deepen.
+> **Superseded by the pin.** These numbers were measured before deepening
+> ([evanlinjin#5][ev5]) was in it. Re-measured with deepening on, sampling is equal or worse at every
+> budget from 1 ms to 100 ms on the four fixtures it used to rescue — including
+> `subsidizing_ancestry_50`, whose exact optimum it was previously the only thing to recover.
+> Deepening reaches the same answers by searching rather than by re-rolling, so `--escalate` has
+> nothing left to add on this track. The finding is kept because it was true of the traversal it was
+> measured against, and because the mechanism is the interesting part: what sampling bought was never
+> randomness, it was escaping a bad incumbent.
 
 
 When the search runs out of budget, retrying it on randomly sampled subsets of the candidates and
@@ -510,3 +523,5 @@ attribute a change to a particular commit; past runs are kept in `results/compar
 [pr74]: https://github.com/bitcoindevkit/coin-select/pull/74
 [pr75]: https://github.com/bitcoindevkit/coin-select/pull/75
 [pr76]: https://github.com/bitcoindevkit/coin-select/pull/76
+[ev4]: https://github.com/evanlinjin/coin-select/pull/4
+[ev5]: https://github.com/evanlinjin/coin-select/pull/5

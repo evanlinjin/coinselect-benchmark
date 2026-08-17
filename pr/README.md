@@ -1,7 +1,7 @@
 # Draft PR bodies for the coin-select branches
 
 Two changes, each on top of the last, neither pushed — the signing key is on a smartcard that needs a
-physical touch. The measurements behind them are in [`../SUMMARY.md`](../SUMMARY.md).
+physical touch. The measurements behind them are in [`../EXPERIMENTS.md`](../EXPERIMENTS.md).
 
 | file | branch | head | base |
 | --- | --- | --- | --- |

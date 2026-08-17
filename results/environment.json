@@ -1,5 +1,5 @@
 {
- "host": "Linux-7.1.7-x86_64-with-glibc2.42",
+ "host": "Linux-7.1.8-x86_64-with-glibc2.42",
  "cpu": "x86_64",
  "cpu_count": 24,
  "cxx": "g++ (GCC) 15.2.0",
@@ -12,7 +12,7 @@
  "core_patches": [
   "core-bench-hooks.patch"
  ],
- "coin_select_rev": "e93d1f982c3d548613b0d1b5510f80967b2e057e",
+ "coin_select_rev": "ecdbbc93cf8e029f3716f4f8b0b6c42aa965dcd0",
  "pins": {
   "bitcoin_core": {
    "repo": "https://github.com/bitcoin/bitcoin.git",
@@ -22,9 +22,9 @@
   },
   "coin_select": {
    "repo": "https://github.com/evanlinjin/coin-select.git",
-   "rev": "e93d1f982c3d548613b0d1b5510f80967b2e057e",
-   "describes": "PR #76: a second, ancestry-aware greedy seed, on top of PR #75's sparse per-candidate ancestor sets and PR #73's depth-first branch and bound with the changeless metrics removed",
-   "why": "the ancestor-aware selection work this benchmark exists to measure, traversed depth-first (#73), with the per-candidate ancestor sets stored flat rather than as one dense bitset each (#75), and with a second greedy prefix ordered by (value - own bump) / weight kept whenever the metric scores it better (#76). #75 is what makes the scale tier in `bench.py scale` runnable at all: the dense form cost candidates x ancestors bits and the same in time to walk, putting a 200,000-candidate pool at 1.3 GB and 464 ms of setup before the first node. #76 is what the scale tier then found: past a hundred thousand candidates the search never improves on its seed, so the ancestry-blind sort order is the entire answer. It changes nothing on this 42-fixture matrix \u2014 all 42 selections are identical to #75's \u2014 and is pinned so the matrix stands as the evidence for that. `Changeless` and `LowestFeeChangeless` are still gone with #73, so the harness runs the wallet track alone"
+   "rev": "ecdbbc93cf8e029f3716f4f8b0b6c42aa965dcd0",
+   "describes": "evanlinjin#5: iterative deepening on the bound, on by default where the problem has unconfirmed ancestors, on top of evanlinjin#4's flat per-node cost and PRs #76, #75 and #73",
+   "why": "the ancestor-aware selection work this benchmark exists to measure, with everything the benchmark has since argued for applied: depth-first traversal (#73), per-candidate ancestor sets stored flat rather than as one dense bitset each (#75), a second greedy prefix ordered by (value - own bump) / weight kept whenever the metric scores it better (#76), a per-node cost that no longer grows with the pool (evanlinjin#4), and iterative deepening on the bound (evanlinjin#5). The last two are unmerged drafts, which is the point of pinning them: this matrix is the evidence for them, so it should be run against them. `Changeless` and `LowestFeeChangeless` are still gone with #73, so the harness runs the wallet track alone"
   }
  }
 }

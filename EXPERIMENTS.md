@@ -3,17 +3,16 @@
 A running log of one question: can `bdk_coin_select` beat Bitcoin Core's wallet coin selection on
 **every** fixture, on **solution fee**, on **work to find the answer**, and on **wall clock**?
 
-**Not [`results/SUMMARY.md`](results/SUMMARY.md)**, which unluckily shares a name. That one is
-written by `bench.py report` and overwritten on every run; delete it and it comes back. This one is
-hand-maintained and cumulative, and deleting it loses work.
+Three documents describe this benchmark and it is worth knowing which is which:
 
-| | `results/SUMMARY.md` | this file |
+| | written by | subject |
 | --- | --- | --- |
-| written by | `bench.py report` | hand |
-| subject | what the **pinned** revision measured | what is being **tried** to move it |
-| contents | the 42-fixture matrix, cross-scores, oracle checks | profiles, hypotheses, sweeps, dead ends |
+| [`results/SUMMARY.md`](results/SUMMARY.md) | `bench.py report`, overwritten every run | the numbers the **pinned** revision produced |
+| [`FINDINGS.md`](FINDINGS.md) | hand | what those numbers **mean** |
+| this file | hand | what is being **tried** to move them |
 
-[`FINDINGS.md`](FINDINGS.md) sits between them: prose conclusions about the pinned revision.
+This one is cumulative — it keeps the attempts that failed, because the reason an idea did not work
+is usually worth more than the idea.
 
 Reproduce any row with `python3 bench.py all --oracle`; the per-arm numbers come from the
 instrumentation described under [Method](#method).
@@ -25,6 +24,9 @@ each diff is only its own commits:
 | --- | --- | --- | --- |
 | [evanlinjin#4][pr4] | `experiment/cheap-nodes` | `ba58982` | the branch behind [#76][pr76] |
 | [evanlinjin#5][pr5] | `experiment/deepen-on-bound` | `ecdbbc9` | `experiment/cheap-nodes` |
+
+**Both are now the harness pin**, so `results/SUMMARY.md` and [`FINDINGS.md`](FINDINGS.md) describe
+the stack with them in. That is the point of pinning drafts: this matrix is the evidence for them.
 
 Both have been through a full code review (see [what review changed](#what-review-changed)); the
 heads above are post-review. Bodies are checked in under [`pr/`](pr/).
