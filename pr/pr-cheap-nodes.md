@@ -1,4 +1,8 @@
-Draft, on top of #76 (which is on top of #75, on #73). One commit.
+Draft. One commit, stacked on `experiment/ancestry-aware-seed` — the branch behind
+[bitcoindevkit#76](https://github.com/bitcoindevkit/coin-select/pull/76), which is itself on
+[#75](https://github.com/bitcoindevkit/coin-select/pull/75) and
+[#73](https://github.com/bitcoindevkit/coin-select/pull/73). The base is set to that branch rather
+than `master`, so the diff here is only this change.
 
 **Identical selections and identical round counts on all 42 benchmark fixtures.** This is a pure cost
 reduction, not a change of answer — which is the property that should make it cheap to review.

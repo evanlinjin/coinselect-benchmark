@@ -1,4 +1,6 @@
-Draft, on top of the cheap-nodes PR. Three commits.
+Draft. Three commits, stacked on `experiment/cheap-nodes` — review that one first, since the tuning
+here depends on it. The base is set to that branch rather than `master`, so the diff is only this
+change.
 
 **This changes what every caller of `CoinSelector::bnb_solutions` gets**, hence `feat!`. The plain
 dive remains available as `bnb_solutions_dive_only`.
