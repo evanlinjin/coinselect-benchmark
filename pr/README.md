@@ -1,7 +1,6 @@
 # Draft PR bodies for the coin-select branches
 
-Three changes, each on top of the last, none pushed — the signing key is on a smartcard that needs a
-physical touch. The measurements behind them are in [`../EXPERIMENTS.md`](../EXPERIMENTS.md) and
+Three changes, each on top of the last, all pushed to `evanlinjin/coin-select`. The measurements behind them are in [`../EXPERIMENTS.md`](../EXPERIMENTS.md) and
 [`../STRATEGIES.md`](../STRATEGIES.md).
 
 | file | branch | head | base |
@@ -10,16 +9,12 @@ physical touch. The measurements behind them are in [`../EXPERIMENTS.md`](../EXP
 | [`pr-deepen.md`](pr-deepen.md) | `experiment/deepen-on-bound` | `ecdbbc9` | `ba58982` |
 | [`pr-repair.md`](pr-repair.md) | `experiment/repair-pass` | `887c4da` | `ecdbbc9` |
 
-`../pins.json` points at `experiment/repair-pass` through the local clone rather than GitHub, because
-that branch is not pushed. Repoint it at `https://github.com/evanlinjin/coin-select.git` once it is.
+`../pins.json` pins `experiment/repair-pass`, so the matrix in `../results/SUMMARY.md` is the evidence
+for all three.
 
-To push and open them:
+To open them:
 
 ```sh
-cd /home/evanlinjin/Git/coin-select-fast   && git push -u me experiment/cheap-nodes
-cd /home/evanlinjin/Git/coin-select-deepen && git push -u me experiment/deepen-on-bound
-cd /home/evanlinjin/Git/coin-select-repair && git push -u me experiment/repair-pass
-
 gh pr create --repo bitcoindevkit/coin-select --draft --base master \
   --head evanlinjin:experiment/cheap-nodes \
   --title "perf: stop re-walking the decided prefix at every node" \
@@ -39,5 +34,5 @@ gh pr create --repo bitcoindevkit/coin-select --draft --base master \
 Each PR's `--base master` is what GitHub needs to open them; review them in stack order, since each
 branch contains the ones below it.
 
-All three commits are unsigned (`--no-gpg-sign`) for the same reason; re-sign before pushing if the
-repository requires it.
+The commits are unsigned (`--no-gpg-sign`), because the signing key is on a smartcard that needs a
+physical touch; re-sign if the repository requires it.
