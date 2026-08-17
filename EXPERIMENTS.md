@@ -55,6 +55,11 @@ start, when am I ahead of Core?**
 | [#76][pr76], the current pin | 38 / 42 | 31 / 31 | 37 / 42 |
 | \+ cheap nodes (attempt 1) | 38 / 42 | 31 / 31 | 37 / 42 |
 | \+ deepening (attempt 2) | **41 / 42** | **31 / 31** | **38 / 42** |
+| \+ repair (attempt 3) | **41 / 42** | **31 / 31** | **38 / 42** |
+
+Attempt 3 does not move the 42-fixture matrix, which was already at its ceiling — it moves the scale
+tier, where coin-select now takes **all 11 fixtures at 20,000 and 200,000 candidates**, including the
+three Core held.
 
 Work is out of 31 rather than 42 because Core reports no node count on the other eleven — it answered
 them with `KnapsackSolver` or a single random draw, neither of which counts nodes.
@@ -332,6 +337,41 @@ Writing it took three tries, and the failures were informative. A pool where eac
 own parent is too easy — the dive solves it. What reproduces the pathology is the fixture generator's
 actual shape: coins sharing a **fat underpaying root**, so what a coin costs depends on which others
 are already selected, which is precisely what a per-candidate sort key cannot see.
+
+---
+
+## Attempt 3 — repair the answer where ancestry is shared
+
+Extending the scale tier so every family runs at 20,000 candidates found three fixtures Core still
+won, and `tools/whyscale.py` showed the ancestor bump was 73–101% of every gap: coin-select takes one
+fewer input and a lighter child, then gives it back dragging in a parent nobody else pays for. The
+control is `private_ancestry_20000` — same shape and size, but each ancestor reachable from one
+candidate — where both engines report an identical bump over identical parents. The losses are
+specifically *shared* ancestry.
+
+`CoinSelector::repair` swaps out a selected coin that is the only one paying for some ancestor,
+taking an unselected coin that drags in nothing new, keeping swaps the metric scores better. Across
+all 52 fixtures it improves 10 and worsens none; the best is `wallet_mixed_200000` at −68.7%.
+
+**What the emulation had to prove first.** `tools/repair.py` climbed on the harness's package fee,
+which is what both engines are scored on but not what `LowestFee` minimises — the metric also charges
+for spending the change output later. The in-crate version climbs on the metric's own score and lands
+on the same three answers to the satoshi, so the emulation had not been the more permissive of the
+two.
+
+**Two rewrites for cost, neither changing an answer.** The first version rebuilt the replacement set
+and the view on every accepted swap: 264 ms on 200,000 candidates, more than the search it was meant
+to be a cheap addition to. Hoisting the pool-sized work out of the loop took it to 15 ms; partitioning
+the replacement list rather than sorting it — only its first few hundred entries are ever read — to
+12 ms against a 113 ms search.
+
+**Four alternatives measured and rejected**, recorded in [`STRATEGIES.md`](STRATEGIES.md) with their
+numbers rather than deleted. Dynamic re-keying and Core's effective-value ordering both produce the
+*identical* prefix at 20,000 candidates, so neither adds anything to the seed portfolio. Cluster
+granularity — the one idea that would change the crate's representation — has no headroom to justify
+it: 100× more swaps of the existing pass find nothing further. Gating PR #76's seed on density would
+save under a millisecond of a 100 ms budget, at the size where the seed is inert, while risking the
+one fixture where removing it still costs 63%.
 
 ---
 

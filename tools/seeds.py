@@ -77,8 +77,66 @@ def keys(f):
     }
 
 
+def dynamic_prefix(f):
+    """Greedy, re-keying every step as ancestry gets paid for.
+
+    Once a coin on a shared parent is selected the bump is already paid, so every other coin on
+    that parent is cheaper than its static key says. No fixed sort over individual coins can say
+    that, which is the whole reason the search loses on shared ancestry — so this is the cheapest
+    thing that can: recompute each candidate's *marginal* bump against the union so far, and take
+    the best value-per-weight at that moment.
+    """
+    rate = f["feerate_sat_per_vb"]
+    by_txid = {a["txid"]: a for a in f["ancestors"]}
+    parents = {a["txid"]: a["parents"] for a in f["ancestors"]}
+
+    memo = {}
+
+    def closure(t):
+        if t not in memo:
+            seen, stack = set(), [t]
+            while stack:
+                x = stack.pop()
+                if x is None or x not in by_txid or x in seen:
+                    continue
+                seen.add(x)
+                stack.extend(parents[x])
+            memo[t] = seen
+        return memo[t]
+
+    def bump(w, fee):
+        return max(0, math.ceil(w * rate / 4.0) - fee)
+
+    rest = list(f["candidates"])
+    union, sel, value, aw, af = set(), [], 0, 0, 0
+    while rest:
+        here = bump(aw, af)
+        best_i, best_k = None, None
+        for i, c in enumerate(rest):
+            dw = df = 0
+            for t in closure(c["residing_txid"]):
+                if t not in union:
+                    dw += by_txid[t]["weight"]
+                    df += by_txid[t]["fee"]
+            k = (c["value"] - (bump(aw + dw, af + df) - here)) / c["input_weight"]
+            if best_k is None or k > best_k:
+                best_i, best_k = i, k
+        c = rest.pop(best_i)
+        sel.append(c["id"])
+        value += c["value"]
+        for t in closure(c["residing_txid"]):
+            if t not in union:
+                union.add(t)
+                aw += by_txid[t]["weight"]
+                af += by_txid[t]["fee"]
+        w = bench.child_weight(f, sel, with_change=False)
+        if value - f["target"]["value"] - math.ceil(math.ceil(w / 4.0) * rate) - bump(aw, af) >= 0:
+            return sel
+    return None
+
+
 for name in sys.argv[1:]:
-    p = f"fixtures/{name}.json"
+    p = name if name.endswith(".json") else f"fixtures/{name}.json"
     f = bench.load_fixture(p)
     c = json.loads(subprocess.run([CORE, "--fixture", p, "--track", "wallet", "--repeat", "3",
                                    "--warmup", "1"], capture_output=True, text=True).stdout)
@@ -93,4 +151,12 @@ for name in sys.argv[1:]:
         fee = bench.evaluate(f, sel, 0)["package_fee"]
         best = fee if best is None else min(best, fee)
         print(f"  {label:26s} {fee:>10,} {len(sel):>4} inputs {'  BEATS CORE' if fee < cf else ''}")
+    sel = dynamic_prefix(f)
+    if sel is None:
+        print(f"  {'re-keyed each step':26s} cannot fund the target")
+    else:
+        fee = bench.evaluate(f, sel, 0)["package_fee"]
+        best = min(best, fee)
+        print(f"  {'re-keyed each step':26s} {fee:>10,} {len(sel):>4} inputs "
+              f"{'  BEATS CORE' if fee < cf else ''}")
     print(f"  {'best of the portfolio':26s} {best:>10,} {'  BEATS CORE' if best < cf else '  still short'}")

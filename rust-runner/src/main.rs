@@ -140,6 +140,13 @@ struct Args {
     escalate: bool,
     /// How the pool is guaranteed to be able to fund the target: `greedy` or `random`.
     prefix: String,
+    /// Swap evaluations the post-search repair pass may spend. Zero disables it.
+    ///
+    /// Defaults to what `CoinSelector::run_bnb` gives it, so the matrix measures the crate's own
+    /// default rather than a harness-only setting. The track drives `bnb_solutions` directly,
+    /// which cannot repair — being an iterator over improvements rather than a finished answer —
+    /// so the runner has to apply it the way `run_bnb` would.
+    repair: usize,
 }
 
 fn parse_args() -> Args {
@@ -160,6 +167,7 @@ fn parse_args() -> Args {
     let mut budget = None;
     let mut escalate = false;
     let mut prefix = "greedy".to_string();
+    let mut repair = CoinSelector::DEFAULT_REPAIR_SWAPS;
     let mut it = std::env::args().skip(1);
     while let Some(arg) = it.next() {
         match arg.as_str() {
@@ -179,6 +187,7 @@ fn parse_args() -> Args {
             "--epsilon-probe" => epsilon_probe = true,
             "--escalate" => escalate = true,
             "--prefix" => prefix = it.next().expect("--prefix needs a value"),
+            "--repair" => repair = it.next().expect("--repair needs a value").parse().unwrap(),
             "--budget" => budget = Some(it.next().expect("--budget needs a value").parse().unwrap()),
             "--sample-seed" => {
                 sample_seed = it.next().expect("--sample-seed needs a value").parse().unwrap()
@@ -207,6 +216,7 @@ fn parse_args() -> Args {
         budget,
         escalate,
         prefix,
+        repair,
     }
 }
 
@@ -994,6 +1004,13 @@ fn main() {
                 out
             }
         };
+        // Inside the timed region: a wallet that ran this would pay for it.
+        if let Some(cs) = &mut result.selection {
+            if let Some(score) = cs.repair(&mut lowest_fee(&f), args.repair) {
+                eprintln!("repair: score {:?} -> {score}", result.score);
+                result.score = Some(score);
+            }
+        }
         // Fall back to single random draw exactly as a wallet would: only when branch and bound
         // came back empty.
         let mut srd_drain = None;
