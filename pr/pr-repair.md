@@ -1,3 +1,12 @@
+Draft. **The last three commits**, stacked on `experiment/deepen-on-bound`
+([#78](https://github.com/bitcoindevkit/coin-select/pull/78)), which is on `experiment/cheap-nodes`
+([#77](https://github.com/bitcoindevkit/coin-select/pull/77)).
+
+GitHub will not take a base branch that only exists in the fork, so this is opened against `master`
+and the diff shown includes everything below it. The change to review here is the top three commits.
+
+---
+
 Branch and bound decides candidates one at a time in a fixed order, so no sort key it uses can
 express *"this coin is cheap only because that other coin is already selected"*. Shared ancestry is
 exactly that: the first coin off an unconfirmed parent pays the whole bump and every later one off

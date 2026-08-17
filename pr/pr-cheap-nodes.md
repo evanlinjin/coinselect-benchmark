@@ -1,8 +1,15 @@
-Draft. One commit, stacked on `experiment/ancestry-aware-seed` — the branch behind
+Draft. **One commit**, stacked on `experiment/ancestry-aware-seed` — the branch behind
 [bitcoindevkit#76](https://github.com/bitcoindevkit/coin-select/pull/76), which is itself on
 [#75](https://github.com/bitcoindevkit/coin-select/pull/75) and
-[#73](https://github.com/bitcoindevkit/coin-select/pull/73). The base is set to that branch rather
-than `master`, so the diff here is only this change.
+[#73](https://github.com/bitcoindevkit/coin-select/pull/73).
+
+GitHub will not take a base branch that only exists in the fork, so this is opened against `master`
+and the diff shown therefore includes #73, #75 and #76 as well. The change to review here is the last
+commit alone.
+
+The rest of the stack: this, then
+[deepen on the bound](https://github.com/bitcoindevkit/coin-select/pull/78), then
+[repair the finished selection](https://github.com/bitcoindevkit/coin-select/pull/79).
 
 **Identical selections and identical round counts on all 42 benchmark fixtures.** This is a pure cost
 reduction, not a change of answer — which is the property that should make it cheap to review.

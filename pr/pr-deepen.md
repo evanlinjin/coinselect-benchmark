@@ -1,6 +1,10 @@
-Draft. Three commits, stacked on `experiment/cheap-nodes` — review that one first, since the tuning
-here depends on it. The base is set to that branch rather than `master`, so the diff is only this
-change.
+Draft. **The last three commits**, stacked on `experiment/cheap-nodes`
+([#77](https://github.com/bitcoindevkit/coin-select/pull/77)) — review that one first, since the
+tuning here depends on it.
+
+GitHub will not take a base branch that only exists in the fork, so this is opened against `master`
+and the diff shown includes everything below it. The change to review here is the top three commits.
+[#79](https://github.com/bitcoindevkit/coin-select/pull/79) sits on top of this one.
 
 **This changes what every caller of `CoinSelector::bnb_solutions` gets**, hence `feat!`. The plain
 dive remains available as `bnb_solutions_dive_only`.
