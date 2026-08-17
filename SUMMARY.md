@@ -3,23 +3,31 @@
 A running log of one question: can `bdk_coin_select` beat Bitcoin Core's wallet coin selection on
 **every** fixture, on **solution fee**, on **work to find the answer**, and on **wall clock**?
 
-Not to be confused with [`results/SUMMARY.md`](results/SUMMARY.md), which is machine-written by
-`bench.py report` and rewritten on every run. This file is hand-maintained and cumulative:
-[`FINDINGS.md`](FINDINGS.md) says what the current pin does, this says what is being tried to move it.
+**Not [`results/SUMMARY.md`](results/SUMMARY.md)**, which unluckily shares a name. That one is
+written by `bench.py report` and overwritten on every run; delete it and it comes back. This one is
+hand-maintained and cumulative, and deleting it loses work.
+
+| | `results/SUMMARY.md` | this file |
+| --- | --- | --- |
+| written by | `bench.py report` | hand |
+| subject | what the **pinned** revision measured | what is being **tried** to move it |
+| contents | the 42-fixture matrix, cross-scores, oracle checks | profiles, hypotheses, sweeps, dead ends |
+
+[`FINDINGS.md`](FINDINGS.md) sits between them: prose conclusions about the pinned revision.
 
 Reproduce any row with `python3 bench.py all --oracle`; the per-arm numbers come from the
 instrumentation described under [Method](#method).
 
-**Where the work lives.** Two local branches, each building on the last, neither pushed yet — the
-signing key is on a smartcard that needs a physical touch:
+**Where the work lives.** Two draft PRs in the fork, stacked — each based on the branch below it, so
+each diff is only its own commits:
 
-| branch | head | what it is |
-| --- | --- | --- |
-| `experiment/cheap-nodes` | `ba58982` | attempt 1, on top of [#76][pr76] |
-| `experiment/deepen-on-bound` | `ecdbbc9` | attempt 2, on top of attempt 1 |
+| PR | branch | head | based on |
+| --- | --- | --- | --- |
+| [evanlinjin#4][pr4] | `experiment/cheap-nodes` | `ba58982` | the branch behind [#76][pr76] |
+| [evanlinjin#5][pr5] | `experiment/deepen-on-bound` | `ecdbbc9` | `experiment/cheap-nodes` |
 
-Both have been through a full code review (see [Review](#what-review-changed)); the heads above are
-post-review.
+Both have been through a full code review (see [what review changed](#what-review-changed)); the
+heads above are post-review. Bodies are checked in under [`pr/`](pr/).
 
 ## The axes
 
@@ -97,7 +105,7 @@ new instrumentation (see [Method](#method)) and it is the number reported above.
 
 ## Attempt 1 — make a node cost the same at any pool size
 
-**Status: works, no behaviour change, kept.** Branch `experiment/cheap-nodes`, commit `daad7cc`.
+**Status: works, no behaviour change, kept.** [evanlinjin#4][pr4], head `ba58982`.
 
 ### What the profile said
 
@@ -186,8 +194,8 @@ before building, and worth not building.
 
 ## Attempt 2 — iterative deepening, on by default
 
-**Status: works, wins the fee axis, kept.** Branch `experiment/deepen-on-bound`, head `ae654f3`:
-[PR #74][pr74]'s two commits rebased onto attempt 1, plus making the hybrid the default.
+**Status: works, wins the fee axis, kept.** [evanlinjin#5][pr5], head `ecdbbc9`: [PR #74][pr74]'s
+two commits rebased onto attempt 1, plus making the hybrid the default.
 
 The three genuine fee losses are the same failure three times: depth-first dives on an ancestry-blind
 sort, stalls on a bad incumbent, and prunes against it for the rest of the budget. On
@@ -335,9 +343,7 @@ can shortcut to it. What is left is making the deepening passes reach it sooner.
 
 ## Method
 
-
-
-`tools/scoreboard.py` runs both engines on all 42 fixtures and scores the four axes per fixture. Two
+`tools/scoreboard.py` runs both engines on all 42 fixtures and scores each axis per fixture. Two
 pieces of runner instrumentation were added for it:
 
 - `best_round` — the round that produced the returned selection. Under a budget, `rounds` is just
@@ -351,11 +357,6 @@ Both are now in `results/results.csv`.
 branch-and-bound iterator rounds. These are not the same unit and the comparison is rough; it is
 reported because the goal asks for it, not because the units line up.
 
-[pr73]: https://github.com/bitcoindevkit/coin-select/pull/73
-[pr74]: https://github.com/bitcoindevkit/coin-select/pull/74
-[pr75]: https://github.com/bitcoindevkit/coin-select/pull/75
-[pr76]: https://github.com/bitcoindevkit/coin-select/pull/76
-
 The three scripts live in `tools/`, run from the repository root, and take runner paths as arguments
 so any two arms can be compared:
 
@@ -368,3 +369,10 @@ python3 tools/seeds.py subsidizing_ancestry_50        # emulate greedy prefixes 
 `tools/seeds.py` is the one that is not a scoreboard: it emulates the greedy prefix under a set of
 candidate sort keys in Python, which is how a seed portfolio was ruled out in minutes rather than
 built and measured.
+
+[pr4]: https://github.com/evanlinjin/coin-select/pull/4
+[pr5]: https://github.com/evanlinjin/coin-select/pull/5
+[pr73]: https://github.com/bitcoindevkit/coin-select/pull/73
+[pr74]: https://github.com/bitcoindevkit/coin-select/pull/74
+[pr75]: https://github.com/bitcoindevkit/coin-select/pull/75
+[pr76]: https://github.com/bitcoindevkit/coin-select/pull/76
