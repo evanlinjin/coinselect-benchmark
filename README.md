@@ -87,6 +87,9 @@ excess — which is the second reason that family is there.
 | `patches/` | One patch to Core adding benchmark hooks — a node counter and an optional wall-clock deadline — explained in [`patches/README.md`](patches/README.md). No bound, ordering or scoring rule is ever patched. |
 | `results/` | Generated. `SUMMARY.md` is the readable report, `results.csv` the full matrix, and `compare/` holds revision A/B runs. |
 | `FINDINGS.md` | A snapshot of what the current results show, with the revisions they came from. |
+| `SUMMARY.md` | The other half: what is being tried to move those results, and what it measured. Hand-maintained — not the generated `results/SUMMARY.md`. |
+| `pr/` | Draft PR bodies for the branches `SUMMARY.md` measures, kept with the numbers they cite. |
+| `tools/` | The scoreboards `SUMMARY.md` is built from: `scoreboard.py`, `beat.py`, `seeds.py`. |
 | `ARCHIVED-FINDINGS.md` | Results this harness measured but can no longer reproduce, with the commit and pins to reproduce them from history. |
 | `ANCESTOR-BOUND-PLAN.md` | A design for an ancestor-bump ceiling — the prune both other plans turn out to need. |
 | `DFS-PLAN.md` | A design for replacing the priority-queue traversal with depth-first search, argued from those results. |

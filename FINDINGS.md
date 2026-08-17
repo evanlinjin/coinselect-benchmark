@@ -27,6 +27,10 @@ applied to both engines' selections.
 [`ARCHIVED-FINDINGS.md`](ARCHIVED-FINDINGS.md) holds results this harness measured but can no longer
 reproduce, with the commit and pins to reproduce them from history.
 
+[`SUMMARY.md`](SUMMARY.md) is the other half of the picture: this file says what the **pinned**
+revision does, that one logs what is being tried to move it. Two of those attempts are now open as
+stacked draft PRs and change several conclusions below — each is cross-referenced where it lands.
+
 ## 1. The two engines agree on what ancestry costs
 
 Both fixture adapters are handed the same ancestor set — the transactions that still need bumping at
@@ -206,8 +210,12 @@ is already back to changing nothing. The key is worth what ancestry costs relati
 ordering is otherwise sorting on.) Only the bound sees sets. Note also that the depth-first traversal already
 consults the bound where it cheaply can — `descend()` evaluates both children and takes the better
 one — so the remaining gap is node *expansion* order, which is what best-first buys with its
-frontier. Iterative deepening on the bound is the standard way to buy it back at depth-first memory;
-untested here.
+frontier. Iterative deepening on the bound is the standard way to buy it back at depth-first memory.
+
+**That has since been tested, and it works.** Deepening turns this fixture's 47,520 into 24,500 —
+past Core's 29,690 — and the same change is worth -6.63% of total package fee across the matrix.
+It is not in this pin; it is [`SUMMARY.md`](SUMMARY.md) attempt 2, and
+[evanlinjin#5](https://github.com/evanlinjin/coin-select/pull/5).
 
 ## 4. Outcomes against Core
 
@@ -215,6 +223,12 @@ untested here.
 | --- | --- | --- |
 | cheaper package | **38 of 42** | 3 of 42 |
 | lower waste | 16 of 42 | **23 of 42** |
+
+The fee row is **41 of 42** with [evanlinjin#5](https://github.com/evanlinjin/coin-select/pull/5),
+which is not in this pin. The 42nd is a tie at a proven optimum rather than a loss: the oracle
+enumerates all 2^20 subsets of `high_feerate_20` and coin-select returns the best one with the tree
+exhausted, while Core reaches a different selection costing the same. See
+[`SUMMARY.md`](SUMMARY.md).
 
 Each engine wins its own objective more often than not, which is what should happen. Read the fee
 column with care: Core's portfolio minimises waste, and its knapsack and single-random-draw paths
@@ -225,6 +239,14 @@ The harness's reimplementation of Core's waste formula agrees with the waste Cor
 every one of its own selections, which is what makes the cross-scoring trustworthy.
 
 ## 5. Capping the pool helps depth-first *more* than it helped best-first
+
+> **Superseded for the wallet track.** Re-measured with deepening on
+> ([evanlinjin#5](https://github.com/evanlinjin/coin-select/pull/5)), sampling is equal or worse at
+> every budget from 1 ms to 100 ms on the four fixtures it used to rescue — including
+> `subsidizing_ancestry_50`, whose exact optimum it was the only thing to recover. Deepening reaches
+> the same answers by searching rather than by re-rolling. The numbers below still describe this pin,
+> which does not deepen.
+
 
 When the search runs out of budget, retrying it on randomly sampled subsets of the candidates and
 keeping the best answer — `bench.py run --escalate` — was worth around -5.4% total against the
