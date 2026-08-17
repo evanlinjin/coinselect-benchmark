@@ -15,8 +15,11 @@ signing key is on a smartcard that needs a physical touch:
 
 | branch | head | what it is |
 | --- | --- | --- |
-| `experiment/cheap-nodes` | `daad7cc` | attempt 1, on top of [#76][pr76] |
-| `experiment/deepen-on-bound` | `ae654f3` | attempt 2, on top of attempt 1 |
+| `experiment/cheap-nodes` | `ba58982` | attempt 1, on top of [#76][pr76] |
+| `experiment/deepen-on-bound` | `ecdbbc9` | attempt 2, on top of attempt 1 |
+
+Both have been through a full code review (see [Review](#what-review-changed)); the heads above are
+post-review.
 
 ## The axes
 
@@ -51,7 +54,9 @@ brute-force oracle enumerates all 2^20 subsets and coin-select returns the exact
 tree exhausted. Core lands on a different selection with the same fee. That is a tie at a proven
 optimum, and nothing can beat it.
 
-Total package fee across all 42 fixtures fell **−6.51%**, six fixtures improved, zero regressed.
+Total package fee across all 42 fixtures fell **−6.63%**: seven fixtures improved by 1.8% to 48.4%,
+and three regressed by 0.6% to 3.0%. That trade is discussed under
+[what deepening costs](#what-deepening-costs-and-where).
 
 What is left:
 
@@ -198,17 +203,17 @@ already written.
 
 ### Measured
 
-| fixture | dive only | deepened | Core | |
-| --- | --- | --- | --- | --- |
-| `subsidizing_ancestry_50` | 47,520 | **24,500** | 29,690 | −48.4% |
-| `shared_ancestry_200` | 42,680 | **23,197** | 46,550 | −45.7% |
-| `subsidizing_ancestry_100` | 81,050 | **51,591** | 58,460 | −36.4% |
-| `nested_ancestry_200` | 37,940 | **24,750** | 32,980 | −34.8% |
-| `high_feerate_200` | 72,579 | **68,112** | 101,680 | −6.2% |
-| `shared_ancestry_100` | 16,588 | **15,638** | 18,220 | −5.7% |
+| fixture | n | dive only | deepened | Core | |
+| --- | --- | --- | --- | --- | --- |
+| `subsidizing_ancestry_50` | 50 | 47,520 | **24,500** | 29,690 | −48.4% |
+| `shared_ancestry_200` | 200 | 42,680 | **23,197** | 46,550 | −45.7% |
+| `subsidizing_ancestry_100` | 100 | 81,050 | **51,591** | 58,460 | −36.4% |
+| `nested_ancestry_200` | 200 | 37,940 | **24,275** | 32,980 | −36.0% |
+| `high_feerate_200` | 200 | 72,579 | **66,591** | 101,680 | −8.3% |
+| `shared_ancestry_100` | 100 | 16,588 | **15,638** | 18,220 | −5.7% |
+| `subsidizing_ancestry_200` | 200 | 75,880 | **74,494** | 100,240 | −1.8% |
 
-**−6.51% total, six improved, none regressed.** An existing test asserting an exact round count went
-**62,453 → 2,970** for the same optimal exact-value solution.
+**−6.63% total.**
 
 ### Attempt 1 invalidated this attempt's tuning constant
 
@@ -228,6 +233,34 @@ what the dive is for: reaching *one* complete selection is one root-to-leaf path
 Whether a node-counted floor is the right unit at all is now an open question, and is flagged on the
 PR.
 
+### What deepening costs, and where
+
+The wins and the losses split on pool size with no overlap at all:
+
+| | n | effect |
+| --- | --- | --- |
+| seven fixtures | 50 – 200 | −1.8% to **−48.4%** |
+| `wallet_mixed_500` | 500 | +3.0% |
+| `wallet_mixed_1000` | 1,000 | +0.6% |
+| `wallet_mixed_2000` | 2,000 | +0.8% |
+
+The three losses are not budget starvation. Given ten times the budget the dive keeps improving
+(`wallet_mixed_1000`: 56,633 → 56,162 → 56,140) while deepening sits at 56,950 at every budget from
+100,000 rounds to a full second. **Deepening plateaus and the dive does not.** On a pool that large no
+pass can complete, so re-expansion from the root buys nothing while a dive is still descending into
+parts of the tree nothing has looked at.
+
+Two attempts to fix this by handing back to the dive when deepening stops improving — once with the
+existing stall rule, once with a tighter one — produced **byte-identical results on all 42 fixtures**.
+The rule never fires, because by the time deepening starts, `last_improvement` is already large enough
+that the doubling rule cannot trip inside the budget. Both were reverted rather than shipped: a
+mechanism that provably changes nothing on the whole benchmark is complexity with no evidence behind
+it.
+
+So the trade stands as measured, and the honest version of it is that a pool-size gate would score
+better here and is not worth having. It would be a constant fitted to ten data points from one
+benchmark, in a library that runs on wallets this benchmark has never seen.
+
 ### The trap in the timing metric
 
 `eps = 0.4` scores **better** on "ahead of Core sooner" — 40 of 42 against 38. It gets there by giving
@@ -244,6 +277,51 @@ scoreboard reports fee and timing together and neither is allowed to move alone.
   fixtures. Only "lightest input first" differs, and it is far worse. This is
   [`FINDINGS.md`](FINDINGS.md) finding 3 confirmed from another direction: the answer there is not a
   prefix of *any* candidate ranking, so no static seed, however clever, can reach it.
+
+---
+
+## What review changed
+
+Both branches went through a full code review before this was written up. Neither had a soundness
+bug — the reviewer traced the `decided_before` invariant by induction over the frame stack and the
+deepening termination argument over the threshold schedule, and independently reproduced attempt 1's
+speedups. What review caught was worse than a bug in one case and cheaper in the others.
+
+**The default was regressing every pool without unconfirmed ancestors, and I had claimed it could
+not.** The commit said the hybrid "cannot return a worse selection than the dive alone would have",
+which is true only against a dive *stopped at the handover point* — not against one that keeps
+spending the same budget descending. Over 4,000 randomly generated ancestor-free pools the reviewer
+measured the hybrid worse on 54 and better on **1**, worst case +88%, concentrated in the 2,000 to
+20,000 round band that a wallet with a few dozen UTXOs actually sits in. The 42-fixture benchmark
+could not see it, because the wins are all in the ancestry families.
+
+Fixed by gating deepening on `problem.has_ancestors()`. That is not a tuning choice: deepening exists
+to escape a dive misled by an ancestry-blind sort key, and with no ancestors there is nothing to
+escape. All seven `no_ancestry` fixtures are now byte-identical to the plain dive again, and the
+in-tree test asserting an exact round count went back to its original 62,453 on its own — that
+fixture has no ancestors, so the gate correctly switched deepening off for it.
+
+**The default was only half applied.** `run_bnb` — the method the docs tell callers to prefer — still
+built the old iterator. The benchmark only saw the change because the harness reimplements `run_bnb`
+on top of `bnb_solutions`, and the crate's own criterion benches, which call `run_bnb`, were measuring
+the old code. Both entry points now share one constructor.
+
+**`AtomicU64` broke `#![no_std]` targets without 64-bit atomics** — thumbv6m, riscv32imc and friends —
+in a crate whose `Cargo.toml` says "No dependencies! Please do not add any please!". The module it
+lived in existed only for benchmark instrumentation that nothing reads any more. Deleted.
+
+Also taken: `min_input_weight` on `CoinSelector` was silently getting the slow full-order scan even
+when reached through a view, on the bound's hot path whenever `max_weight` is set — a latent hole in
+attempt 1's flat-cost claim. `candidates_from` narrowed to `pub(crate)`. Two rustdoc warnings, an
+unreachable clamp, a dead `reset_to_root`, a `debug_assert` on `eps`, five public entry points
+collapsed to three, and a CHANGELOG entry so the escape hatch is discoverable.
+
+And the review asked for the one thing the work most needed: an in-tree test for the *reason*
+deepening is the default, instead of leaving the entire justification in an external benchmark.
+Writing it took three tries, and the failures were informative. A pool where each baited coin has its
+own parent is too easy — the dive solves it. What reproduces the pathology is the fixture generator's
+actual shape: coins sharing a **fat underpaying root**, so what a coin costs depends on which others
+are already selected, which is precisely what a per-candidate sort key cannot see.
 
 ---
 
