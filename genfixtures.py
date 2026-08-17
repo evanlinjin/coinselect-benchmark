@@ -50,7 +50,14 @@ LARGE_FAMILIES = ["no_ancestry", "shared_ancestry", "wallet_mixed"]
 # Sizes for the scale tier, which is generated on demand into `fixtures/scale/` rather than checked
 # in: at 200,000 candidates one file is 30 MB, and the fixtures are deterministic from their seed, so
 # checking them in would buy nothing that regenerating does not. `bench.py scale` runs them.
+#
+# 20,000 runs across **every** family, 200,000 only across the three large shapes. The reason is
+# where the two engines actually disagree: every fixture Core still wins is an ancestry shape, and
+# the shapes that make the search work hardest — `subsidizing_ancestry`, `nested_ancestry` — were
+# absent from this tier entirely, so nothing here exercised them past 2,000 candidates. 200,000 is
+# left as a memory and setup-cost probe, which needs one shape of each kind rather than all of them.
 SCALE_SIZES = [20_000, 200_000]
+SCALE_WIDE_SIZE = 20_000
 
 # Bitcoin Core refuses to build a transaction heavier than this, and falls back to it whenever a
 # fixture does not set `max_weight`. The other sizes never come near it; the scale tier would blow
@@ -229,7 +236,17 @@ def fam_subsidizing_ancestry(rng, n):
         # A fat, badly underpaying root, spent by a child paying 4x the target rate and
         # by a sibling paying a tenth of it. Both packages stay below target.
         root_w = round4(rng.randrange(6000, 10000))
-        rich_w = round4(rng.randrange(800, 2000))
+        # The rich tip may not be so light that root+rich reaches the target rate on its own,
+        # or that package is mined and the family stops testing what it is for. Solving
+        #     root_vsize + 4*FEERATE*rich_vsize < FEERATE*(root_vsize + rich_vsize)
+        # for the rich vsize gives the bound below. Left unbounded this fires for any
+        # `rich_w >= 0.3 * root_w`, which the raw draw reaches whenever the root is light — rare
+        # enough to survive 20 groups and certain at 2,000.
+        # Clamped rather than redrawn, so the draw sequence is unchanged and only the values that
+        # actually broke the invariant move. Every checked-in size below 500 is byte-identical.
+        root_vsize = root_w // 4
+        rich_vsize_hi = (root_vsize * (FEERATE - 1) - 1) // (3 * FEERATE)
+        rich_w = min(round4(rng.randrange(800, 2000)), 4 * rich_vsize_hi)
         poor_w = round4(rng.randrange(800, 2000))
         root, rich, poor = f"root{j:02d}", f"rich{j:02d}", f"poor{j:02d}"
         ancs.append(anc(root, root_w, underpaying_fee(root_w, 1)))
@@ -450,14 +467,16 @@ def main():
     if args.scale:
         scale_dir = OUT_DIR / "scale"
         scale_dir.mkdir(exist_ok=True)
-        for fam in LARGE_FAMILIES:
-            for n in SCALE_SIZES:
-                f = build_scale(fam, n)
-                validate(f)
-                path = scale_dir / f"{f['name']}.json"
-                path.write_text(json.dumps(f, indent=1) + "\n")
-                print(f"{path}  {len(f['candidates']):,} candidates, "
-                      f"{len(f['ancestors']):,} ancestors, {path.stat().st_size / 1e6:.1f} MB")
+        wanted = [(fam, SCALE_WIDE_SIZE) for fam in FAMILIES]
+        wanted += [(fam, n) for fam in LARGE_FAMILIES for n in SCALE_SIZES
+                   if n != SCALE_WIDE_SIZE]
+        for fam, n in sorted(wanted):
+            f = build_scale(fam, n)
+            validate(f)
+            path = scale_dir / f"{f['name']}.json"
+            path.write_text(json.dumps(f, indent=1) + "\n")
+            print(f"{path}  {len(f['candidates']):,} candidates, "
+                  f"{len(f['ancestors']):,} ancestors, {path.stat().st_size / 1e6:.1f} MB")
         return 0
 
     fixtures = [build_smoke()]

@@ -31,6 +31,9 @@ applied to both engines' selections.
 [`ARCHIVED-FINDINGS.md`](ARCHIVED-FINDINGS.md) holds results this harness measured but can no longer
 reproduce, with the commit and pins to reproduce them from history.
 
+[`STRATEGIES.md`](STRATEGIES.md) lists every fixture Core still wins — none on this matrix at this
+budget, three on the 20,000-candidate tier — with the decomposition of each and what to try.
+
 [`EXPERIMENTS.md`](EXPERIMENTS.md) is the other half of the picture: this file says what the **pinned**
 revision does, that one logs what is being tried to move it. Two of those attempts are now open as
 stacked draft PRs and change several conclusions below — each is cross-referenced where it lands.

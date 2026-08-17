@@ -88,8 +88,9 @@ excess — which is the second reason that family is there.
 | `results/` | Generated. `SUMMARY.md` is the readable report, `results.csv` the full matrix, and `compare/` holds revision A/B runs. |
 | `FINDINGS.md` | A snapshot of what the current results show, with the revisions they came from. |
 | `EXPERIMENTS.md` | The other half: what is being tried to move those results, and what it measured. Hand-maintained; the generated report is `results/SUMMARY.md`. |
+| `STRATEGIES.md` | Every fixture Core still wins, why, and the queue of what to try — ranked by evidence. |
 | `pr/` | Draft PR bodies for the branches `EXPERIMENTS.md` measures, kept with the numbers they cite. |
-| `tools/` | The scoreboards `EXPERIMENTS.md` is built from: `scoreboard.py`, `beat.py`, `seeds.py`. |
+| `tools/` | The scoreboards `EXPERIMENTS.md` and `STRATEGIES.md` are built from: `scoreboard.py`, `beat.py`, `seeds.py`, `whyscale.py`, `repair.py`. |
 | `ARCHIVED-FINDINGS.md` | Results this harness measured but can no longer reproduce, with the commit and pins to reproduce them from history. |
 | `ANCESTOR-BOUND-PLAN.md` | A design for an ancestor-bump ceiling — the prune both other plans turn out to need. |
 | `DFS-PLAN.md` | A design for replacing the priority-queue traversal with depth-first search, argued from those results. |
