@@ -365,6 +365,24 @@ to be a cheap addition to. Hoisting the pool-sized work out of the loop took it 
 the replacement list rather than sorting it — only its first few hundred entries are ever read — to
 12 ms against a 113 ms search.
 
+**What review changed, again.** The branch was reviewed before write-up and the review found the same
+*class* of problem as the last one: a regression the 42 fixtures cannot see, because every fixture
+starts from an empty selection. `repair` is the only thing in the crate that deselects — branch and
+bound and `select_srd` only ever add — so `run_bnb` had always returned a superset of what the caller
+had selected, which is how a required input is expressed, and this broke it. The commit claimed "the
+selection this leaves is never worse than the one it was given", which was true of the *score* and
+false of the *result*: a lower score reached by evicting a required input is worse. The gate did not
+contain it either, since `has_shared_ancestors` is a problem-level predicate while the outgoing set
+is built from `drags_in`, private ancestors included.
+
+Review also found that the search's transient bans were truncating the replacement pool — the
+returned selector carries the exclusion frames' bans from the path to that node — so how much of the
+pool the pass could see depended on where the last improvement landed. Not a wrong answer, but it
+made the measured benefit partly an artifact, since the fixtures with the largest gains are the ones
+returning the ban-free greedy seed. And `free.retain` per accepted swap was pool-sized work back
+inside the loop, invisible on fixtures that take few swaps and worth 5.7x on one built so they land.
+No fee figure moved when all of it was fixed.
+
 **Four alternatives measured and rejected**, recorded in [`STRATEGIES.md`](STRATEGIES.md) with their
 numbers rather than deleted. Dynamic re-keying and Core's effective-value ordering both produce the
 *identical* prefix at 20,000 candidates, so neither adds anything to the seed portfolio. Cluster

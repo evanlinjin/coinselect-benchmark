@@ -8,7 +8,7 @@ physical touch. The measurements behind them are in [`../EXPERIMENTS.md`](../EXP
 | --- | --- | --- | --- |
 | [`pr-cheap-nodes.md`](pr-cheap-nodes.md) | `experiment/cheap-nodes` | `ba58982` | coin-select PR #76 (`e93d1f9`) |
 | [`pr-deepen.md`](pr-deepen.md) | `experiment/deepen-on-bound` | `ecdbbc9` | `ba58982` |
-| [`pr-repair.md`](pr-repair.md) | `experiment/repair-pass` | `2bc0562` | `ecdbbc9` |
+| [`pr-repair.md`](pr-repair.md) | `experiment/repair-pass` | `887c4da` | `ecdbbc9` |
 
 `../pins.json` points at `experiment/repair-pass` through the local clone rather than GitHub, because
 that branch is not pushed. Repoint it at `https://github.com/evanlinjin/coin-select.git` once it is.

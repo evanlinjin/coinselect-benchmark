@@ -29,11 +29,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1042242,
-    "wall_ns_median": 1050557,
-    "wall_ns_max": 1066507
+    "wall_ns_min": 1040433,
+    "wall_ns_median": 1052807,
+    "wall_ns_max": 1064568
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 2,
     "selected_value": 16916342,
@@ -97,11 +97,11 @@
    ],
    "rounds": 486,
    "best_round": 0,
-   "best_ns": 4909,
+   "best_ns": 7274,
    "trajectory": [
     {
      "round": 0,
-     "ns": 4909,
+     "ns": 7274,
      "drain_value": 157558,
      "selected": [
       "c009",
@@ -117,11 +117,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 88195,
-    "wall_ns_median": 90439,
-    "wall_ns_max": 116418
+    "wall_ns_min": 138260,
+    "wall_ns_median": 140313,
+    "wall_ns_max": 146245
    },
-   "peak_rss_kb": 2804,
+   "peak_rss_kb": 2784,
    "native": {
     "score": 4270.0,
     "drain_value": 157558,
@@ -196,11 +196,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 381735,
-    "wall_ns_median": 390802,
-    "wall_ns_max": 414246
+    "wall_ns_min": 383490,
+    "wall_ns_median": 391465,
+    "wall_ns_max": 419357
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 35,
     "selected_value": 4904335,
@@ -262,11 +262,11 @@
    ],
    "rounds": 49,
    "best_round": 0,
-   "best_ns": 2535,
+   "best_ns": 2485,
    "trajectory": [
     {
      "round": 0,
-     "ns": 2535,
+     "ns": 2485,
      "drain_value": 3240632,
      "selected": [
       "c002",
@@ -280,11 +280,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 20027,
-    "wall_ns_median": 25137,
-    "wall_ns_max": 28483
+    "wall_ns_min": 23605,
+    "wall_ns_median": 23995,
+    "wall_ns_max": 27191
    },
-   "peak_rss_kb": 2808,
+   "peak_rss_kb": 2776,
    "native": {
     "score": 2910.0,
     "drain_value": 3240632,
@@ -363,11 +363,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 2057002,
-    "wall_ns_median": 2076218,
-    "wall_ns_max": 2096647
+    "wall_ns_min": 2110401,
+    "wall_ns_median": 2155686,
+    "wall_ns_max": 2303795
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 2,
     "selected_value": 21625022,
@@ -433,11 +433,11 @@
    ],
    "rounds": 3709,
    "best_round": 0,
-   "best_ns": 14327,
+   "best_ns": 16180,
    "trajectory": [
     {
      "round": 0,
-     "ns": 14327,
+     "ns": 16180,
      "drain_value": 1124058,
      "selected": [
       "c045",
@@ -455,11 +455,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 910164,
-    "wall_ns_median": 910937,
-    "wall_ns_max": 922739
+    "wall_ns_min": 913886,
+    "wall_ns_median": 918003,
+    "wall_ns_max": 925317
    },
-   "peak_rss_kb": 2828,
+   "peak_rss_kb": 2836,
    "native": {
     "score": 5630.0,
     "drain_value": 1124058,
@@ -536,11 +536,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1173097,
-    "wall_ns_median": 1216368,
-    "wall_ns_max": 1820129
+    "wall_ns_min": 1207917,
+    "wall_ns_median": 1312995,
+    "wall_ns_max": 1740237
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 0,
     "selected_value": 5708660,
@@ -602,11 +602,11 @@
    ],
    "rounds": 19,
    "best_round": 0,
-   "best_ns": 6983,
+   "best_ns": 4198,
    "trajectory": [
     {
      "round": 0,
-     "ns": 6983,
+     "ns": 4198,
      "drain_value": 1349326,
      "selected": [
       "c015",
@@ -620,11 +620,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 16962,
-    "wall_ns_median": 18404,
-    "wall_ns_max": 40466
+    "wall_ns_min": 9298,
+    "wall_ns_median": 10340,
+    "wall_ns_max": 12884
    },
-   "peak_rss_kb": 2780,
+   "peak_rss_kb": 2776,
    "native": {
     "score": 2910.0,
     "drain_value": 1349326,
@@ -702,11 +702,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1265029,
-    "wall_ns_median": 1283564,
-    "wall_ns_max": 1304484
+    "wall_ns_min": 1260556,
+    "wall_ns_median": 1261478,
+    "wall_ns_max": 1283038
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 20407,
     "selected_value": 26110297,
@@ -773,11 +773,11 @@
    ],
    "rounds": 2603,
    "best_round": 139,
-   "best_ns": 48561,
+   "best_ns": 31439,
    "trajectory": [
     {
      "round": 0,
-     "ns": 17653,
+     "ns": 5821,
      "drain_value": 1942032,
      "selected": [
       "c017",
@@ -791,7 +791,7 @@
     },
     {
      "round": 139,
-     "ns": 48561,
+     "ns": 31439,
      "drain_value": 778863,
      "selected": [
       "c017",
@@ -810,11 +810,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 467947,
-    "wall_ns_median": 684222,
-    "wall_ns_max": 694681
+    "wall_ns_min": 463631,
+    "wall_ns_median": 479260,
+    "wall_ns_max": 540275
    },
-   "peak_rss_kb": 2812,
+   "peak_rss_kb": 2840,
    "native": {
     "score": 22300.0,
     "drain_value": 778863,
@@ -884,11 +884,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 473366,
-    "wall_ns_median": 483345,
-    "wall_ns_max": 504134
+    "wall_ns_min": 317135,
+    "wall_ns_median": 321674,
+    "wall_ns_max": 336292
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 5674,
     "selected_value": 4481021,
@@ -950,11 +950,11 @@
    ],
    "rounds": 15,
    "best_round": 13,
-   "best_ns": 9057,
+   "best_ns": 5100,
    "trajectory": [
     {
      "round": 0,
-     "ns": 2705,
+     "ns": 1533,
      "drain_value": 1533102,
      "selected": [
       "c005",
@@ -963,7 +963,7 @@
     },
     {
      "round": 13,
-     "ns": 9057,
+     "ns": 5100,
      "drain_value": 276101,
      "selected": [
       "c009",
@@ -977,11 +977,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 10149,
-    "wall_ns_median": 11922,
-    "wall_ns_max": 14978
+    "wall_ns_min": 5701,
+    "wall_ns_median": 6482,
+    "wall_ns_max": 8346
    },
-   "peak_rss_kb": 2776,
+   "peak_rss_kb": 2780,
    "native": {
     "score": 9500.0,
     "drain_value": 276101,
@@ -1057,11 +1057,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1029628,
-    "wall_ns_median": 1045928,
-    "wall_ns_max": 1093107
+    "wall_ns_min": 1550891,
+    "wall_ns_median": 1554678,
+    "wall_ns_max": 1565699
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 88054,
     "selected_value": 23635712,
@@ -1136,11 +1136,11 @@
    ],
    "rounds": 79399,
    "best_round": 78256,
-   "best_ns": 13960947,
+   "best_ns": 14840767,
    "trajectory": [
     {
      "round": 0,
-     "ns": 17683,
+     "ns": 17433,
      "drain_value": 1691979,
      "selected": [
       "c010",
@@ -1155,7 +1155,7 @@
     },
     {
      "round": 200,
-     "ns": 54943,
+     "ns": 60414,
      "drain_value": 0,
      "selected": [
       "c004",
@@ -1191,7 +1191,7 @@
     },
     {
      "round": 201,
-     "ns": 63939,
+     "ns": 72817,
      "drain_value": 0,
      "selected": [
       "c004",
@@ -1227,7 +1227,7 @@
     },
     {
      "round": 290,
-     "ns": 81572,
+     "ns": 91071,
      "drain_value": 0,
      "selected": [
       "c004",
@@ -1263,7 +1263,7 @@
     },
     {
      "round": 376,
-     "ns": 97973,
+     "ns": 108073,
      "drain_value": 0,
      "selected": [
       "c000",
@@ -1299,7 +1299,7 @@
     },
     {
      "round": 567,
-     "ns": 132378,
+     "ns": 143760,
      "drain_value": 0,
      "selected": [
       "c004",
@@ -1335,7 +1335,7 @@
     },
     {
      "round": 637,
-     "ns": 145973,
+     "ns": 157776,
      "drain_value": 0,
      "selected": [
       "c004",
@@ -1371,7 +1371,7 @@
     },
     {
      "round": 703,
-     "ns": 158917,
+     "ns": 170891,
      "drain_value": 0,
      "selected": [
       "c004",
@@ -1407,7 +1407,7 @@
     },
     {
      "round": 777,
-     "ns": 173284,
+     "ns": 185819,
      "drain_value": 0,
      "selected": [
       "c004",
@@ -1443,7 +1443,7 @@
     },
     {
      "round": 1074,
-     "ns": 227676,
+     "ns": 242395,
      "drain_value": 0,
      "selected": [
       "c004",
@@ -1479,7 +1479,7 @@
     },
     {
      "round": 1254,
-     "ns": 266980,
+     "ns": 282991,
      "drain_value": 0,
      "selected": [
       "c004",
@@ -1514,7 +1514,7 @@
     },
     {
      "round": 4914,
-     "ns": 936043,
+     "ns": 969059,
      "drain_value": 0,
      "selected": [
       "c010",
@@ -1538,7 +1538,7 @@
     },
     {
      "round": 16323,
-     "ns": 2909769,
+     "ns": 3047280,
      "drain_value": 0,
      "selected": [
       "c010",
@@ -1562,7 +1562,7 @@
     },
     {
      "round": 17790,
-     "ns": 3162382,
+     "ns": 3318509,
      "drain_value": 0,
      "selected": [
       "c004",
@@ -1586,7 +1586,7 @@
     },
     {
      "round": 27478,
-     "ns": 5128765,
+     "ns": 5175976,
      "drain_value": 0,
      "selected": [
       "c013",
@@ -1609,7 +1609,7 @@
     },
     {
      "round": 27479,
-     "ns": 5133354,
+     "ns": 5180003,
      "drain_value": 0,
      "selected": [
       "c013",
@@ -1632,7 +1632,7 @@
     },
     {
      "round": 28634,
-     "ns": 5335823,
+     "ns": 5393764,
      "drain_value": 0,
      "selected": [
       "c013",
@@ -1654,7 +1654,7 @@
     },
     {
      "round": 78256,
-     "ns": 13960947,
+     "ns": 14840767,
      "drain_value": 0,
      "selected": [
       "c013",
@@ -1681,11 +1681,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 13585784,
-    "wall_ns_median": 13913228,
-    "wall_ns_max": 15202072
+    "wall_ns_min": 14271979,
+    "wall_ns_median": 14472486,
+    "wall_ns_max": 15086498
    },
-   "peak_rss_kb": 2836,
+   "peak_rss_kb": 2864,
    "native": {
     "score": 65586.0,
     "drain_value": 0,
@@ -1759,11 +1759,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 134081,
-    "wall_ns_median": 147747,
-    "wall_ns_max": 187702
+    "wall_ns_min": 86242,
+    "wall_ns_median": 100859,
+    "wall_ns_max": 131607
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 14360,
     "selected_value": 11002200,
@@ -1827,11 +1827,11 @@
    ],
    "rounds": 288,
    "best_round": 282,
-   "best_ns": 85810,
+   "best_ns": 91121,
    "trajectory": [
     {
      "round": 0,
-     "ns": 4759,
+     "ns": 4578,
      "drain_value": 104062,
      "selected": [
       "c005",
@@ -1841,7 +1841,7 @@
     },
     {
      "round": 51,
-     "ns": 17843,
+     "ns": 18725,
      "drain_value": 1275,
      "selected": [
       "c001",
@@ -1854,7 +1854,7 @@
     },
     {
      "round": 52,
-     "ns": 21320,
+     "ns": 22181,
      "drain_value": 5290,
      "selected": [
       "c001",
@@ -1867,7 +1867,7 @@
     },
     {
      "round": 87,
-     "ns": 31328,
+     "ns": 32130,
      "drain_value": 0,
      "selected": [
       "c001",
@@ -1880,7 +1880,7 @@
     },
     {
      "round": 134,
-     "ns": 43802,
+     "ns": 44463,
      "drain_value": 0,
      "selected": [
       "c001",
@@ -1893,7 +1893,7 @@
     },
     {
      "round": 194,
-     "ns": 60192,
+     "ns": 60704,
      "drain_value": 1161,
      "selected": [
       "c001",
@@ -1905,7 +1905,7 @@
     },
     {
      "round": 195,
-     "ns": 62437,
+     "ns": 63018,
      "drain_value": 8405,
      "selected": [
       "c001",
@@ -1917,7 +1917,7 @@
     },
     {
      "round": 217,
-     "ns": 68608,
+     "ns": 69270,
      "drain_value": 11723,
      "selected": [
       "c001",
@@ -1929,7 +1929,7 @@
     },
     {
      "round": 282,
-     "ns": 85810,
+     "ns": 91121,
      "drain_value": 457984,
      "selected": [
       "c001",
@@ -1945,11 +1945,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 90128,
-    "wall_ns_median": 91591,
-    "wall_ns_max": 98335
+    "wall_ns_min": 90029,
+    "wall_ns_median": 91452,
+    "wall_ns_max": 115076
    },
-   "peak_rss_kb": 2780,
+   "peak_rss_kb": 2772,
    "native": {
     "score": 17780.0,
     "drain_value": 457984,
@@ -2029,11 +2029,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 2729963,
-    "wall_ns_median": 2741685,
-    "wall_ns_max": 3365413
+    "wall_ns_min": 1964658,
+    "wall_ns_median": 2147801,
+    "wall_ns_max": 2724715
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 13650,
     "selected_value": 21313277,
@@ -2098,11 +2098,11 @@
    ],
    "rounds": 1109,
    "best_round": 1072,
-   "best_ns": 313276,
+   "best_ns": 214623,
    "trajectory": [
     {
      "round": 0,
-     "ns": 8766,
+     "ns": 6141,
      "drain_value": 1202521,
      "selected": [
       "c028",
@@ -2114,7 +2114,7 @@
     },
     {
      "round": 101,
-     "ns": 46507,
+     "ns": 32751,
      "drain_value": 2157,
      "selected": [
       "c016",
@@ -2130,7 +2130,7 @@
     },
     {
      "round": 201,
-     "ns": 73497,
+     "ns": 51767,
      "drain_value": 0,
      "selected": [
       "c028",
@@ -2147,7 +2147,7 @@
     },
     {
      "round": 481,
-     "ns": 149500,
+     "ns": 105027,
      "drain_value": 0,
      "selected": [
       "c028",
@@ -2164,7 +2164,7 @@
     },
     {
      "round": 1072,
-     "ns": 313276,
+     "ns": 214623,
      "drain_value": 282092,
      "selected": [
       "c007",
@@ -2181,11 +2181,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 322864,
-    "wall_ns_median": 327293,
-    "wall_ns_max": 343062
+    "wall_ns_min": 222918,
+    "wall_ns_median": 230222,
+    "wall_ns_max": 395142
    },
-   "peak_rss_kb": 2792,
+   "peak_rss_kb": 2816,
    "native": {
     "score": 4950.0,
     "drain_value": 282092,
@@ -2267,11 +2267,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 572012,
-    "wall_ns_median": 585707,
-    "wall_ns_max": 603551
+    "wall_ns_min": 575120,
+    "wall_ns_median": 583756,
+    "wall_ns_max": 603252
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 16609,
     "selected_value": 2693386,
@@ -2332,11 +2332,11 @@
    ],
    "rounds": 2,
    "best_round": 0,
-   "best_ns": 2625,
+   "best_ns": 1573,
    "trajectory": [
     {
      "round": 0,
-     "ns": 2625,
+     "ns": 1573,
      "drain_value": 208796,
      "selected": [
       "c004"
@@ -2349,11 +2349,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 4328,
-    "wall_ns_median": 4589,
-    "wall_ns_max": 7634
+    "wall_ns_min": 2174,
+    "wall_ns_median": 2254,
+    "wall_ns_max": 3476
    },
-   "peak_rss_kb": 2768,
+   "peak_rss_kb": 2772,
    "native": {
     "score": 2230.0,
     "drain_value": 208796,
@@ -2436,11 +2436,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 833902,
-    "wall_ns_median": 839091,
-    "wall_ns_max": 877153
+    "wall_ns_min": 856047,
+    "wall_ns_median": 879440,
+    "wall_ns_max": 1256007
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 19242,
     "selected_value": 37072937,
@@ -2517,11 +2517,11 @@
    ],
    "rounds": 100000,
    "best_round": 69867,
-   "best_ns": 13754550,
+   "best_ns": 15546221,
    "trajectory": [
     {
      "round": 0,
-     "ns": 15830,
+     "ns": 20970,
      "drain_value": 2205946,
      "selected": [
       "c002",
@@ -2538,7 +2538,7 @@
     },
     {
      "round": 26582,
-     "ns": 5499991,
+     "ns": 5702123,
      "drain_value": 965,
      "selected": [
       "c002",
@@ -2563,7 +2563,7 @@
     },
     {
      "round": 26779,
-     "ns": 5539775,
+     "ns": 5743331,
      "drain_value": 0,
      "selected": [
       "c002",
@@ -2589,7 +2589,7 @@
     },
     {
      "round": 26818,
-     "ns": 5550936,
+     "ns": 5755043,
      "drain_value": 0,
      "selected": [
       "c002",
@@ -2614,7 +2614,7 @@
     },
     {
      "round": 27177,
-     "ns": 5622220,
+     "ns": 5828571,
      "drain_value": 0,
      "selected": [
       "c002",
@@ -2639,7 +2639,7 @@
     },
     {
      "round": 28643,
-     "ns": 5904869,
+     "ns": 6114668,
      "drain_value": 0,
      "selected": [
       "c002",
@@ -2664,7 +2664,7 @@
     },
     {
      "round": 29995,
-     "ns": 6162912,
+     "ns": 6385065,
      "drain_value": 0,
      "selected": [
       "c002",
@@ -2689,7 +2689,7 @@
     },
     {
      "round": 33683,
-     "ns": 6878923,
+     "ns": 7107181,
      "drain_value": 0,
      "selected": [
       "c002",
@@ -2714,7 +2714,7 @@
     },
     {
      "round": 63971,
-     "ns": 12626017,
+     "ns": 13827475,
      "drain_value": 0,
      "selected": [
       "c002",
@@ -2738,7 +2738,7 @@
     },
     {
      "round": 69867,
-     "ns": 13754550,
+     "ns": 15546221,
      "drain_value": 0,
      "selected": [
       "c002",
@@ -2767,11 +2767,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 18999453,
-    "wall_ns_median": 19358035,
-    "wall_ns_max": 19467480
+    "wall_ns_min": 19797390,
+    "wall_ns_median": 20061285,
+    "wall_ns_max": 21454341
    },
-   "peak_rss_kb": 2904,
+   "peak_rss_kb": 2892,
    "native": {
     "score": 22664.0,
     "drain_value": 0,
@@ -2849,11 +2849,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1209936,
-    "wall_ns_median": 1729459,
-    "wall_ns_max": 2574842
+    "wall_ns_min": 1248193,
+    "wall_ns_median": 1267729,
+    "wall_ns_max": 1638756
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 14779,
     "selected_value": 15039458,
@@ -2917,11 +2917,11 @@
    ],
    "rounds": 1130,
    "best_round": 1087,
-   "best_ns": 322133,
+   "best_ns": 225604,
    "trajectory": [
     {
      "round": 0,
-     "ns": 4739,
+     "ns": 3406,
      "drain_value": 3409975,
      "selected": [
       "c016",
@@ -2932,7 +2932,7 @@
     },
     {
      "round": 247,
-     "ns": 80060,
+     "ns": 57869,
      "drain_value": 13700,
      "selected": [
       "c003",
@@ -2946,7 +2946,7 @@
     },
     {
      "round": 863,
-     "ns": 260247,
+     "ns": 181040,
      "drain_value": 2163,
      "selected": [
       "c003",
@@ -2958,7 +2958,7 @@
     },
     {
      "round": 1087,
-     "ns": 322133,
+     "ns": 225604,
      "drain_value": 172282,
      "selected": [
       "c011",
@@ -2974,9 +2974,9 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 329958,
-    "wall_ns_median": 336751,
-    "wall_ns_max": 342512
+    "wall_ns_min": 235512,
+    "wall_ns_median": 239460,
+    "wall_ns_max": 246913
    },
    "peak_rss_kb": 2776,
    "native": {
@@ -3062,11 +3062,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1543942,
-    "wall_ns_median": 1546396,
-    "wall_ns_max": 1555162
+    "wall_ns_min": 1073695,
+    "wall_ns_median": 1091409,
+    "wall_ns_max": 1590596
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 0,
     "selected_value": 13189420,
@@ -3130,11 +3130,11 @@
    ],
    "rounds": 2212,
    "best_round": 0,
-   "best_ns": 3046,
+   "best_ns": 3156,
    "trajectory": [
     {
      "round": 0,
-     "ns": 3046,
+     "ns": 3156,
      "drain_value": 2203804,
      "selected": [
       "c026",
@@ -3150,11 +3150,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 409136,
-    "wall_ns_median": 410088,
-    "wall_ns_max": 432871
+    "wall_ns_min": 418495,
+    "wall_ns_median": 421882,
+    "wall_ns_max": 435337
    },
-   "peak_rss_kb": 2780,
+   "peak_rss_kb": 2788,
    "native": {
     "score": 4270.0,
     "drain_value": 2203804,
@@ -3525,11 +3525,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 2433428,
-    "wall_ns_median": 2456120,
-    "wall_ns_max": 3855361
+    "wall_ns_min": 2491376,
+    "wall_ns_median": 2537933,
+    "wall_ns_max": 2565185
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 0,
     "selected_value": 186075580,
@@ -3633,11 +3633,11 @@
    ],
    "rounds": 100000,
    "best_round": 64661,
-   "best_ns": 12263418,
+   "best_ns": 12540729,
    "trajectory": [
     {
      "round": 0,
-     "ns": 49713,
+     "ns": 52709,
      "drain_value": 21284,
      "selected": [
       "c004",
@@ -3687,7 +3687,7 @@
     },
     {
      "round": 64661,
-     "ns": 12263418,
+     "ns": 12540729,
      "drain_value": 0,
      "selected": [
       "c004",
@@ -3743,9 +3743,9 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 17770252,
-    "wall_ns_median": 17834652,
-    "wall_ns_max": 18886451
+    "wall_ns_min": 19099931,
+    "wall_ns_median": 19357815,
+    "wall_ns_max": 19733330
    },
    "peak_rss_kb": 3040,
    "native": {
@@ -3826,11 +3826,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 398457,
-    "wall_ns_median": 416940,
-    "wall_ns_max": 591799
+    "wall_ns_min": 391374,
+    "wall_ns_median": 570641,
+    "wall_ns_max": 1057705
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 5,
     "selected_value": 3268025,
@@ -3892,11 +3892,11 @@
    ],
    "rounds": 13,
    "best_round": 0,
-   "best_ns": 1032,
+   "best_ns": 941,
    "trajectory": [
     {
      "round": 0,
-     "ns": 1032,
+     "ns": 941,
      "drain_value": 904494,
      "selected": [
       "c000",
@@ -3910,11 +3910,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 5279,
-    "wall_ns_median": 5560,
-    "wall_ns_max": 6994
+    "wall_ns_min": 5099,
+    "wall_ns_median": 5550,
+    "wall_ns_max": 6853
    },
-   "peak_rss_kb": 2756,
+   "peak_rss_kb": 2768,
    "native": {
     "score": 2910.0,
     "drain_value": 904494,
@@ -3996,11 +3996,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 2130881,
-    "wall_ns_median": 2140229,
-    "wall_ns_max": 3142605
+    "wall_ns_min": 2092247,
+    "wall_ns_median": 2098849,
+    "wall_ns_max": 3615256
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 0,
     "selected_value": 34073060,
@@ -4069,11 +4069,11 @@
    ],
    "rounds": 8127,
    "best_round": 0,
-   "best_ns": 6652,
+   "best_ns": 6752,
    "trajectory": [
     {
      "round": 0,
-     "ns": 6652,
+     "ns": 6752,
      "drain_value": 30296,
      "selected": [
       "c038",
@@ -4094,11 +4094,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1560022,
-    "wall_ns_median": 1578246,
-    "wall_ns_max": 1604785
+    "wall_ns_min": 1580988,
+    "wall_ns_median": 1685905,
+    "wall_ns_max": 2101695
    },
-   "peak_rss_kb": 2820,
+   "peak_rss_kb": 2808,
    "native": {
     "score": 7670.0,
     "drain_value": 30296,
@@ -4494,11 +4494,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1354046,
-    "wall_ns_median": 1363614,
-    "wall_ns_max": 1416303
+    "wall_ns_min": 1504785,
+    "wall_ns_median": 2076027,
+    "wall_ns_max": 2503760
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 0,
     "selected_value": 346158580,
@@ -4640,11 +4640,11 @@
    ],
    "rounds": 100000,
    "best_round": 0,
-   "best_ns": 116909,
+   "best_ns": 168727,
    "trajectory": [
     {
      "round": 0,
-     "ns": 116909,
+     "ns": 168727,
      "drain_value": 31610,
      "selected": [
       "c052",
@@ -4738,11 +4738,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 18224542,
-    "wall_ns_median": 18248657,
-    "wall_ns_max": 18428614
+    "wall_ns_min": 18494735,
+    "wall_ns_median": 19293704,
+    "wall_ns_max": 21119552
    },
-   "peak_rss_kb": 3340,
+   "peak_rss_kb": 3308,
    "native": {
     "score": 57310.0,
     "drain_value": 31610,
@@ -4820,11 +4820,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1016504,
-    "wall_ns_median": 1316064,
-    "wall_ns_max": 1337675
+    "wall_ns_min": 1316441,
+    "wall_ns_median": 1326389,
+    "wall_ns_max": 1364702
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 1,
     "selected_value": 7690341,
@@ -4888,11 +4888,11 @@
    ],
    "rounds": 1191,
    "best_round": 0,
-   "best_ns": 2876,
+   "best_ns": 2104,
    "trajectory": [
     {
      "round": 0,
-     "ns": 2876,
+     "ns": 2104,
      "drain_value": 1211609,
      "selected": [
       "c015",
@@ -4908,11 +4908,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 342211,
-    "wall_ns_median": 345076,
-    "wall_ns_max": 351237
+    "wall_ns_min": 238859,
+    "wall_ns_median": 240402,
+    "wall_ns_max": 296366
    },
-   "peak_rss_kb": 2784,
+   "peak_rss_kb": 2788,
    "native": {
     "score": 4270.0,
     "drain_value": 1211609,
@@ -5017,11 +5017,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 603931,
-    "wall_ns_median": 628327,
-    "wall_ns_max": 1255592
+    "wall_ns_min": 623471,
+    "wall_ns_median": 630073,
+    "wall_ns_max": 651613
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 0,
     "selected_value": 92002700,
@@ -5105,11 +5105,11 @@
    ],
    "rounds": 100000,
    "best_round": 96389,
-   "best_ns": 17535912,
+   "best_ns": 18029271,
    "trajectory": [
     {
      "round": 0,
-     "ns": 18845,
+     "ns": 19176,
      "drain_value": 2032701,
      "selected": [
       "c046",
@@ -5139,7 +5139,7 @@
     },
     {
      "round": 67429,
-     "ns": 12254320,
+     "ns": 12618886,
      "drain_value": 0,
      "selected": [
       "c046",
@@ -5170,7 +5170,7 @@
     },
     {
      "round": 96389,
-     "ns": 17535912,
+     "ns": 18029271,
      "drain_value": 0,
      "selected": [
       "c046",
@@ -5206,11 +5206,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 18141937,
-    "wall_ns_median": 18181070,
-    "wall_ns_max": 18195397
+    "wall_ns_min": 18175426,
+    "wall_ns_median": 18704969,
+    "wall_ns_max": 18757738
    },
-   "peak_rss_kb": 2928,
+   "peak_rss_kb": 2960,
    "native": {
     "score": 16885.0,
     "drain_value": 0,
@@ -5286,11 +5286,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 2609687,
-    "wall_ns_median": 2638632,
-    "wall_ns_max": 2647288
+    "wall_ns_min": 2622803,
+    "wall_ns_median": 2628263,
+    "wall_ns_max": 2632421
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 2,
     "selected_value": 9071982,
@@ -5356,7 +5356,7 @@
    ],
    "rounds": 929,
    "best_round": 720,
-   "best_ns": 199543,
+   "best_ns": 197090,
    "trajectory": [
     {
      "round": 0,
@@ -5372,7 +5372,7 @@
     },
     {
      "round": 101,
-     "ns": 39203,
+     "ns": 38883,
      "drain_value": 943,
      "selected": [
       "c014",
@@ -5385,7 +5385,7 @@
     },
     {
      "round": 336,
-     "ns": 98404,
+     "ns": 97273,
      "drain_value": 0,
      "selected": [
       "c032",
@@ -5399,7 +5399,7 @@
     },
     {
      "round": 369,
-     "ns": 107822,
+     "ns": 106751,
      "drain_value": 0,
      "selected": [
       "c032",
@@ -5413,7 +5413,7 @@
     },
     {
      "round": 373,
-     "ns": 110246,
+     "ns": 109045,
      "drain_value": 0,
      "selected": [
       "c029",
@@ -5427,7 +5427,7 @@
     },
     {
      "round": 720,
-     "ns": 199543,
+     "ns": 197090,
      "drain_value": 0,
      "selected": [
       "c001",
@@ -5445,11 +5445,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 256861,
-    "wall_ns_median": 262672,
-    "wall_ns_max": 264926
+    "wall_ns_min": 253837,
+    "wall_ns_median": 259788,
+    "wall_ns_max": 278653
    },
-   "peak_rss_kb": 2820,
+   "peak_rss_kb": 2796,
    "native": {
     "score": 4637.0,
     "drain_value": 0,
@@ -5524,11 +5524,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 477434,
-    "wall_ns_median": 491250,
-    "wall_ns_max": 526075
+    "wall_ns_min": 337283,
+    "wall_ns_median": 373582,
+    "wall_ns_max": 470083
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 138,
     "selected_value": 6346438,
@@ -5590,11 +5590,11 @@
    ],
    "rounds": 17,
    "best_round": 0,
-   "best_ns": 2655,
+   "best_ns": 1383,
    "trajectory": [
     {
      "round": 0,
-     "ns": 2655,
+     "ns": 1383,
      "drain_value": 1096010,
      "selected": [
       "c000",
@@ -5608,11 +5608,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 10169,
-    "wall_ns_median": 10700,
-    "wall_ns_max": 14156
+    "wall_ns_min": 6111,
+    "wall_ns_median": 6142,
+    "wall_ns_max": 8636
    },
-   "peak_rss_kb": 2772,
+   "peak_rss_kb": 2804,
    "native": {
     "score": 3958.0,
     "drain_value": 1096010,
@@ -5694,11 +5694,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1506872,
-    "wall_ns_median": 1514567,
-    "wall_ns_max": 1535486
+    "wall_ns_min": 1506398,
+    "wall_ns_median": 1516106,
+    "wall_ns_max": 1535943
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 10084,
     "selected_value": 39010144,
@@ -5774,11 +5774,11 @@
    ],
    "rounds": 50537,
    "best_round": 38237,
-   "best_ns": 6658049,
+   "best_ns": 7010288,
    "trajectory": [
     {
      "round": 0,
-     "ns": 13314,
+     "ns": 13725,
      "drain_value": 1668643,
      "selected": [
       "c025",
@@ -5796,7 +5796,7 @@
     },
     {
      "round": 201,
-     "ns": 59381,
+     "ns": 66394,
      "drain_value": 5702,
      "selected": [
       "c022",
@@ -5819,7 +5819,7 @@
     },
     {
      "round": 380,
-     "ns": 91030,
+     "ns": 99647,
      "drain_value": 0,
      "selected": [
       "c022",
@@ -5842,7 +5842,7 @@
     },
     {
      "round": 21592,
-     "ns": 3867312,
+     "ns": 4091760,
      "drain_value": 1748,
      "selected": [
       "c022",
@@ -5864,7 +5864,7 @@
     },
     {
      "round": 21949,
-     "ns": 3926964,
+     "ns": 4154027,
      "drain_value": 0,
      "selected": [
       "c025",
@@ -5887,7 +5887,7 @@
     },
     {
      "round": 24569,
-     "ns": 4372268,
+     "ns": 4617116,
      "drain_value": 0,
      "selected": [
       "c020",
@@ -5910,7 +5910,7 @@
     },
     {
      "round": 25211,
-     "ns": 4480831,
+     "ns": 4735999,
      "drain_value": 0,
      "selected": [
       "c025",
@@ -5933,7 +5933,7 @@
     },
     {
      "round": 31148,
-     "ns": 5469764,
+     "ns": 5773697,
      "drain_value": 0,
      "selected": [
       "c025",
@@ -5956,7 +5956,7 @@
     },
     {
      "round": 38237,
-     "ns": 6658049,
+     "ns": 7010288,
      "drain_value": 0,
      "selected": [
       "c025",
@@ -5984,11 +5984,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 8750709,
-    "wall_ns_median": 8955723,
-    "wall_ns_max": 9003032
+    "wall_ns_min": 9380397,
+    "wall_ns_median": 9496866,
+    "wall_ns_max": 9546740
    },
-   "peak_rss_kb": 2856,
+   "peak_rss_kb": 2852,
    "native": {
     "score": 11420.0,
     "drain_value": 0,
@@ -6065,11 +6065,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 790882,
-    "wall_ns_median": 802723,
-    "wall_ns_max": 828271
+    "wall_ns_min": 800202,
+    "wall_ns_median": 805782,
+    "wall_ns_max": 860806
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 1456,
     "selected_value": 7235116,
@@ -6132,11 +6132,11 @@
    ],
    "rounds": 2082,
    "best_round": 0,
-   "best_ns": 2925,
+   "best_ns": 4358,
    "trajectory": [
     {
      "round": 0,
-     "ns": 2925,
+     "ns": 4358,
      "drain_value": 1109604,
      "selected": [
       "c006",
@@ -6151,11 +6151,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 369782,
-    "wall_ns_median": 373069,
-    "wall_ns_max": 789649
+    "wall_ns_min": 544171,
+    "wall_ns_median": 551805,
+    "wall_ns_max": 559319
    },
-   "peak_rss_kb": 2820,
+   "peak_rss_kb": 2784,
    "native": {
     "score": 5046.0,
     "drain_value": 1109604,
@@ -6232,11 +6232,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1812244,
-    "wall_ns_median": 1813246,
-    "wall_ns_max": 1826010
+    "wall_ns_min": 1831578,
+    "wall_ns_median": 1840484,
+    "wall_ns_max": 2363887
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 10621,
     "selected_value": 15079333,
@@ -6307,11 +6307,11 @@
    ],
    "rounds": 53709,
    "best_round": 51279,
-   "best_ns": 9533966,
+   "best_ns": 9930340,
    "trajectory": [
     {
      "round": 0,
-     "ns": 8005,
+     "ns": 7504,
      "drain_value": 1894023,
      "selected": [
       "c003",
@@ -6323,7 +6323,7 @@
     },
     {
      "round": 5115,
-     "ns": 1009421,
+     "ns": 1024984,
      "drain_value": 10109,
      "selected": [
       "c003",
@@ -6344,7 +6344,7 @@
     },
     {
      "round": 5573,
-     "ns": 1091975,
+     "ns": 1112408,
      "drain_value": 0,
      "selected": [
       "c003",
@@ -6366,7 +6366,7 @@
     },
     {
      "round": 46375,
-     "ns": 8645321,
+     "ns": 8995856,
      "drain_value": 25559,
      "selected": [
       "c009",
@@ -6384,7 +6384,7 @@
     },
     {
      "round": 48186,
-     "ns": 8972364,
+     "ns": 9340322,
      "drain_value": 0,
      "selected": [
       "c002",
@@ -6403,7 +6403,7 @@
     },
     {
      "round": 51031,
-     "ns": 9488110,
+     "ns": 9882250,
      "drain_value": 0,
      "selected": [
       "c009",
@@ -6422,7 +6422,7 @@
     },
     {
      "round": 51032,
-     "ns": 9489082,
+     "ns": 9883211,
      "drain_value": 0,
      "selected": [
       "c009",
@@ -6440,7 +6440,7 @@
     },
     {
      "round": 51279,
-     "ns": 9533966,
+     "ns": 9930340,
      "drain_value": 0,
      "selected": [
       "c009",
@@ -6463,11 +6463,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 9840499,
-    "wall_ns_median": 9996983,
-    "wall_ns_max": 14910976
+    "wall_ns_min": 10247705,
+    "wall_ns_median": 10509446,
+    "wall_ns_max": 10548771
    },
-   "peak_rss_kb": 2812,
+   "peak_rss_kb": 2816,
    "native": {
     "score": 14878.0,
     "drain_value": 0,
@@ -6583,11 +6583,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1338597,
-    "wall_ns_median": 1965601,
-    "wall_ns_max": 2677795
+    "wall_ns_min": 1394067,
+    "wall_ns_median": 1697496,
+    "wall_ns_max": 2770390
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 113867,
     "selected_value": 166371524,
@@ -6691,11 +6691,11 @@
    ],
    "rounds": 100000,
    "best_round": 0,
-   "best_ns": 90680,
+   "best_ns": 100478,
    "trajectory": [
     {
      "round": 0,
-     "ns": 90680,
+     "ns": 100478,
      "drain_value": 620274,
      "selected": [
       "c001",
@@ -6751,11 +6751,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 19427495,
-    "wall_ns_median": 19665190,
-    "wall_ns_max": 19826663
+    "wall_ns_min": 19777453,
+    "wall_ns_median": 20159419,
+    "wall_ns_max": 20384903
    },
-   "peak_rss_kb": 3040,
+   "peak_rss_kb": 3032,
    "native": {
     "score": 136792.0,
     "drain_value": 139678,
@@ -6828,11 +6828,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 366787,
-    "wall_ns_median": 378148,
-    "wall_ns_max": 407904
+    "wall_ns_min": 381667,
+    "wall_ns_median": 403337,
+    "wall_ns_max": 420960
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 2593,
     "selected_value": 1655771,
@@ -6894,11 +6894,11 @@
    ],
    "rounds": 20,
    "best_round": 0,
-   "best_ns": 1664,
+   "best_ns": 2755,
    "trajectory": [
     {
      "round": 0,
-     "ns": 1664,
+     "ns": 2755,
      "drain_value": 181597,
      "selected": [
       "c002",
@@ -6912,11 +6912,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 8626,
-    "wall_ns_median": 9368,
-    "wall_ns_max": 11522
+    "wall_ns_min": 14608,
+    "wall_ns_median": 15799,
+    "wall_ns_max": 20438
    },
-   "peak_rss_kb": 2800,
+   "peak_rss_kb": 2772,
    "native": {
     "score": 4899.0,
     "drain_value": 181597,
@@ -6996,11 +6996,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 2415264,
-    "wall_ns_median": 2424090,
-    "wall_ns_max": 2430392
+    "wall_ns_min": 2448887,
+    "wall_ns_median": 2462803,
+    "wall_ns_max": 2476529
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 31084,
     "selected_value": 30979432,
@@ -7077,11 +7077,11 @@
    ],
    "rounds": 100000,
    "best_round": 43757,
-   "best_ns": 8760346,
+   "best_ns": 9076106,
    "trajectory": [
     {
      "round": 0,
-     "ns": 14888,
+     "ns": 22141,
      "drain_value": 1498718,
      "selected": [
       "c002",
@@ -7098,7 +7098,7 @@
     },
     {
      "round": 43757,
-     "ns": 8760346,
+     "ns": 9076106,
      "drain_value": 0,
      "selected": [
       "c003",
@@ -7127,11 +7127,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 18891951,
-    "wall_ns_median": 19143913,
-    "wall_ns_max": 19200960
+    "wall_ns_min": 19440120,
+    "wall_ns_median": 20148319,
+    "wall_ns_max": 20258867
    },
-   "peak_rss_kb": 2844,
+   "peak_rss_kb": 2848,
    "native": {
     "score": 21069.0,
     "drain_value": 0,
@@ -7291,11 +7291,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 2071400,
-    "wall_ns_median": 3025486,
-    "wall_ns_max": 3654955
+    "wall_ns_min": 3029988,
+    "wall_ns_median": 3042731,
+    "wall_ns_max": 3095520
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 205683,
     "selected_value": 372195124,
@@ -7446,11 +7446,11 @@
    ],
    "rounds": 100000,
    "best_round": 0,
-   "best_ns": 273553,
+   "best_ns": 253887,
    "trajectory": [
     {
      "round": 0,
-     "ns": 273553,
+     "ns": 253887,
      "drain_value": 154143,
      "selected": [
       "c011",
@@ -7553,9 +7553,9 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 20616181,
-    "wall_ns_median": 20816897,
-    "wall_ns_max": 22136929
+    "wall_ns_min": 20674516,
+    "wall_ns_median": 21257330,
+    "wall_ns_max": 21590636
    },
    "peak_rss_kb": 3308,
    "native": {
@@ -7631,11 +7631,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1736322,
-    "wall_ns_median": 1750328,
-    "wall_ns_max": 1754506
+    "wall_ns_min": 1296974,
+    "wall_ns_median": 1737060,
+    "wall_ns_max": 2597936
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 0,
     "selected_value": 6352620,
@@ -7700,11 +7700,11 @@
    ],
    "rounds": 230,
    "best_round": 50,
-   "best_ns": 19637,
+   "best_ns": 19286,
    "trajectory": [
     {
      "round": 0,
-     "ns": 4569,
+     "ns": 4408,
      "drain_value": 776921,
      "selected": [
       "c014",
@@ -7714,7 +7714,7 @@
     },
     {
      "round": 50,
-     "ns": 19637,
+     "ns": 19286,
      "drain_value": 0,
      "selected": [
       "c014",
@@ -7731,9 +7731,9 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 71213,
-    "wall_ns_median": 71504,
-    "wall_ns_max": 78387
+    "wall_ns_min": 66916,
+    "wall_ns_median": 68739,
+    "wall_ns_max": 75492
    },
    "peak_rss_kb": 2788,
    "native": {
@@ -7825,11 +7825,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1095813,
-    "wall_ns_median": 1557627,
-    "wall_ns_max": 2235247
+    "wall_ns_min": 1097641,
+    "wall_ns_median": 1469859,
+    "wall_ns_max": 1582059
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 65698,
     "selected_value": 81423786,
@@ -7909,11 +7909,11 @@
    ],
    "rounds": 100000,
    "best_round": 0,
-   "best_ns": 96411,
+   "best_ns": 43522,
    "trajectory": [
     {
      "round": 0,
-     "ns": 96411,
+     "ns": 43522,
      "drain_value": 1007287,
      "selected": [
       "c008",
@@ -7945,11 +7945,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 20929548,
-    "wall_ns_median": 21204994,
-    "wall_ns_max": 30270402
+    "wall_ns_min": 21069799,
+    "wall_ns_median": 21400440,
+    "wall_ns_max": 22660734
    },
-   "peak_rss_kb": 2912,
+   "peak_rss_kb": 2904,
    "native": {
     "score": 71253.0,
     "drain_value": 722117,
@@ -8021,11 +8021,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 108363,
-    "wall_ns_median": 119424,
-    "wall_ns_max": 150152
+    "wall_ns_min": 53180,
+    "wall_ns_median": 63129,
+    "wall_ns_max": 273163
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 3304,
     "selected_value": 408000,
@@ -8087,11 +8087,11 @@
    ],
    "rounds": 25,
    "best_round": 16,
-   "best_ns": 4048,
+   "best_ns": 6262,
    "trajectory": [
     {
      "round": 0,
-     "ns": 722,
+     "ns": 1102,
      "drain_value": 200670,
      "selected": [
       "c003",
@@ -8100,7 +8100,7 @@
     },
     {
      "round": 10,
-     "ns": 2425,
+     "ns": 3747,
      "drain_value": 19580,
      "selected": [
       "c002",
@@ -8110,7 +8110,7 @@
     },
     {
      "round": 11,
-     "ns": 2876,
+     "ns": 4428,
      "drain_value": 12390,
      "selected": [
       "c002",
@@ -8120,7 +8120,7 @@
     },
     {
      "round": 16,
-     "ns": 4048,
+     "ns": 6262,
      "drain_value": 24970,
      "selected": [
       "c000",
@@ -8134,11 +8134,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 6141,
-    "wall_ns_median": 18445,
-    "wall_ns_max": 35296
+    "wall_ns_min": 9418,
+    "wall_ns_median": 9648,
+    "wall_ns_max": 13155
    },
-   "peak_rss_kb": 2796,
+   "peak_rss_kb": 2792,
    "native": {
     "score": 5610.0,
     "drain_value": 24970,
@@ -8217,11 +8217,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1164320,
-    "wall_ns_median": 1169861,
-    "wall_ns_max": 1188385
+    "wall_ns_min": 1167792,
+    "wall_ns_median": 1170016,
+    "wall_ns_max": 1204110
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 20107,
     "selected_value": 8744236,
@@ -8288,11 +8288,11 @@
    ],
    "rounds": 100000,
    "best_round": 25618,
-   "best_ns": 4700013,
+   "best_ns": 4906660,
    "trajectory": [
     {
      "round": 0,
-     "ns": 7214,
+     "ns": 10119,
      "drain_value": 316920,
      "selected": [
       "c023",
@@ -8306,7 +8306,7 @@
     },
     {
      "round": 78,
-     "ns": 23064,
+     "ns": 28423,
      "drain_value": 866,
      "selected": [
       "c039",
@@ -8321,7 +8321,7 @@
     },
     {
      "round": 8659,
-     "ns": 1623521,
+     "ns": 1690212,
      "drain_value": 0,
      "selected": [
       "c004",
@@ -8335,7 +8335,7 @@
     },
     {
      "round": 25618,
-     "ns": 4700013,
+     "ns": 4906660,
      "drain_value": 0,
      "selected": [
       "c013",
@@ -8354,11 +8354,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 18143480,
-    "wall_ns_median": 18216516,
-    "wall_ns_max": 18250401
+    "wall_ns_min": 18810809,
+    "wall_ns_median": 19243481,
+    "wall_ns_max": 19522945
    },
-   "peak_rss_kb": 2792,
+   "peak_rss_kb": 2848,
    "native": {
     "score": 19006.0,
     "drain_value": 0,
@@ -8439,11 +8439,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 370123,
-    "wall_ns_median": 378459,
-    "wall_ns_max": 395170
+    "wall_ns_min": 546436,
+    "wall_ns_median": 548500,
+    "wall_ns_max": 571833
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 25270,
     "selected_value": 4202854,
@@ -8504,11 +8504,11 @@
    ],
    "rounds": 18,
    "best_round": 0,
-   "best_ns": 3286,
+   "best_ns": 1763,
    "trajectory": [
     {
      "round": 0,
-     "ns": 3286,
+     "ns": 1763,
      "drain_value": 422734,
      "selected": [
       "c001"
@@ -8521,9 +8521,9 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 14798,
-    "wall_ns_median": 15298,
-    "wall_ns_max": 18535
+    "wall_ns_min": 9128,
+    "wall_ns_median": 9508,
+    "wall_ns_max": 11502
    },
    "peak_rss_kb": 2808,
    "native": {
@@ -8605,11 +8605,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 2316449,
-    "wall_ns_median": 2326136,
-    "wall_ns_max": 3134080
+    "wall_ns_min": 2352626,
+    "wall_ns_median": 2356994,
+    "wall_ns_max": 2616932
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 40951,
     "selected_value": 33226418,
@@ -8679,11 +8679,11 @@
    ],
    "rounds": 100000,
    "best_round": 76551,
-   "best_ns": 13685721,
+   "best_ns": 14058178,
    "trajectory": [
     {
      "round": 0,
-     "ns": 15669,
+     "ns": 21450,
      "drain_value": 225167,
      "selected": [
       "c016",
@@ -8698,7 +8698,7 @@
     },
     {
      "round": 76551,
-     "ns": 13685721,
+     "ns": 14058178,
      "drain_value": 0,
      "selected": [
       "c016",
@@ -8720,11 +8720,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 17661136,
-    "wall_ns_median": 17841915,
-    "wall_ns_max": 17893401
+    "wall_ns_min": 18164355,
+    "wall_ns_median": 18367617,
+    "wall_ns_max": 21679173
    },
-   "peak_rss_kb": 2888,
+   "peak_rss_kb": 2852,
    "native": {
     "score": 26132.0,
     "drain_value": 0,
@@ -8802,11 +8802,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1736702,
-    "wall_ns_median": 1756540,
-    "wall_ns_max": 1759034
+    "wall_ns_min": 1727061,
+    "wall_ns_median": 1742400,
+    "wall_ns_max": 1817331
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 6154,
     "selected_value": 13102494,
@@ -8871,11 +8871,11 @@
    ],
    "rounds": 64794,
    "best_round": 50438,
-   "best_ns": 9495925,
+   "best_ns": 10129644,
    "trajectory": [
     {
      "round": 0,
-     "ns": 3507,
+     "ns": 3757,
      "drain_value": 1060645,
      "selected": [
       "c009",
@@ -8885,7 +8885,7 @@
     },
     {
      "round": 384,
-     "ns": 91411,
+     "ns": 95539,
      "drain_value": 5062,
      "selected": [
       "c035",
@@ -8895,7 +8895,7 @@
     },
     {
      "round": 483,
-     "ns": 111529,
+     "ns": 116399,
      "drain_value": 3651,
      "selected": [
       "c009",
@@ -8905,7 +8905,7 @@
     },
     {
      "round": 50438,
-     "ns": 9495925,
+     "ns": 10129644,
      "drain_value": 370545,
      "selected": [
       "c006",
@@ -8922,11 +8922,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 12071157,
-    "wall_ns_median": 12099290,
-    "wall_ns_max": 15437062
+    "wall_ns_min": 12345402,
+    "wall_ns_median": 12796370,
+    "wall_ns_max": 12976417
    },
-   "peak_rss_kb": 2824,
+   "peak_rss_kb": 2776,
    "native": {
     "score": 5088.0,
     "drain_value": 370545,
@@ -9004,11 +9004,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 2572218,
-    "wall_ns_median": 2585833,
-    "wall_ns_max": 2593818
+    "wall_ns_min": 1863428,
+    "wall_ns_median": 2573551,
+    "wall_ns_max": 2676233
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 1,
     "selected_value": 18088041,
@@ -9074,11 +9074,11 @@
    ],
    "rounds": 4127,
    "best_round": 4038,
-   "best_ns": 757148,
+   "best_ns": 930076,
    "trajectory": [
     {
      "round": 0,
-     "ns": 6352,
+     "ns": 38202,
      "drain_value": 55568,
      "selected": [
       "c011",
@@ -9090,7 +9090,7 @@
     },
     {
      "round": 101,
-     "ns": 26991,
+     "ns": 105688,
      "drain_value": 8692,
      "selected": [
       "c011",
@@ -9105,7 +9105,7 @@
     },
     {
      "round": 102,
-     "ns": 29896,
+     "ns": 116949,
      "drain_value": 2247,
      "selected": [
       "c011",
@@ -9120,7 +9120,7 @@
     },
     {
      "round": 103,
-     "ns": 31409,
+     "ns": 122229,
      "drain_value": 12700,
      "selected": [
       "c006",
@@ -9135,7 +9135,7 @@
     },
     {
      "round": 132,
-     "ns": 37901,
+     "ns": 144531,
      "drain_value": 0,
      "selected": [
       "c011",
@@ -9150,7 +9150,7 @@
     },
     {
      "round": 173,
-     "ns": 46698,
+     "ns": 172965,
      "drain_value": 0,
      "selected": [
       "c006",
@@ -9165,7 +9165,7 @@
     },
     {
      "round": 235,
-     "ns": 61786,
+     "ns": 198913,
      "drain_value": 0,
      "selected": [
       "c007",
@@ -9179,7 +9179,7 @@
     },
     {
      "round": 398,
-     "ns": 92093,
+     "ns": 230743,
      "drain_value": 0,
      "selected": [
       "c000",
@@ -9193,7 +9193,7 @@
     },
     {
      "round": 4038,
-     "ns": 757148,
+     "ns": 930076,
      "drain_value": 18567,
      "selected": [
       "c011",
@@ -9211,11 +9211,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 778318,
-    "wall_ns_median": 900286,
-    "wall_ns_max": 1613522
+    "wall_ns_min": 952708,
+    "wall_ns_median": 1163774,
+    "wall_ns_max": 1370483
    },
-   "peak_rss_kb": 2816,
+   "peak_rss_kb": 2808,
    "native": {
     "score": 5430.0,
     "drain_value": 18567,
@@ -9331,11 +9331,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1464463,
-    "wall_ns_median": 1484671,
-    "wall_ns_max": 1494949
+    "wall_ns_min": 1022519,
+    "wall_ns_median": 1232914,
+    "wall_ns_max": 1790410
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 47901,
     "selected_value": 176787252,
@@ -9474,11 +9474,11 @@
    ],
    "rounds": 100000,
    "best_round": 6845,
-   "best_ns": 1528793,
+   "best_ns": 1624239,
    "trajectory": [
     {
      "round": 0,
-     "ns": 112130,
+     "ns": 154390,
      "drain_value": 1155370,
      "selected": [
       "c034",
@@ -9532,7 +9532,7 @@
     },
     {
      "round": 1001,
-     "ns": 297176,
+     "ns": 346020,
      "drain_value": 716,
      "selected": [
       "c015",
@@ -9618,7 +9618,7 @@
     },
     {
      "round": 1002,
-     "ns": 307977,
+     "ns": 357992,
      "drain_value": 2948,
      "selected": [
       "c015",
@@ -9704,7 +9704,7 @@
     },
     {
      "round": 1003,
-     "ns": 316953,
+     "ns": 367600,
      "drain_value": 1901,
      "selected": [
       "c015",
@@ -9790,7 +9790,7 @@
     },
     {
      "round": 1004,
-     "ns": 325449,
+     "ns": 376116,
      "drain_value": 2209,
      "selected": [
       "c015",
@@ -9876,7 +9876,7 @@
     },
     {
      "round": 1005,
-     "ns": 390431,
+     "ns": 442351,
      "drain_value": 2612,
      "selected": [
       "c015",
@@ -9962,7 +9962,7 @@
     },
     {
      "round": 2444,
-     "ns": 665236,
+     "ns": 724530,
      "drain_value": 0,
      "selected": [
       "c015",
@@ -10048,7 +10048,7 @@
     },
     {
      "round": 2445,
-     "ns": 680614,
+     "ns": 739969,
      "drain_value": 0,
      "selected": [
       "c015",
@@ -10134,7 +10134,7 @@
     },
     {
      "round": 4080,
-     "ns": 994081,
+     "ns": 1060731,
      "drain_value": 0,
      "selected": [
       "c015",
@@ -10220,7 +10220,7 @@
     },
     {
      "round": 6845,
-     "ns": 1528793,
+     "ns": 1624239,
      "drain_value": 0,
      "selected": [
       "c015",
@@ -10311,11 +10311,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 20648992,
-    "wall_ns_median": 20792040,
-    "wall_ns_max": 21647793
+    "wall_ns_min": 20929274,
+    "wall_ns_median": 21118660,
+    "wall_ns_max": 27912493
    },
-   "peak_rss_kb": 3084,
+   "peak_rss_kb": 3116,
    "native": {
     "score": 56950.0,
     "drain_value": 0,
@@ -10387,11 +10387,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 429524,
-    "wall_ns_median": 442919,
-    "wall_ns_max": 492493
+    "wall_ns_min": 298500,
+    "wall_ns_median": 308388,
+    "wall_ns_max": 354265
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 519,
     "selected_value": 4215809,
@@ -10453,11 +10453,11 @@
    ],
    "rounds": 5,
    "best_round": 0,
-   "best_ns": 1533,
+   "best_ns": 1552,
    "trajectory": [
     {
      "round": 0,
-     "ns": 1533,
+     "ns": 1552,
      "drain_value": 336220,
      "selected": [
       "c008",
@@ -10471,11 +10471,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 3356,
-    "wall_ns_median": 3607,
-    "wall_ns_max": 5089
+    "wall_ns_min": 2875,
+    "wall_ns_median": 2996,
+    "wall_ns_max": 4839
    },
-   "peak_rss_kb": 2768,
+   "peak_rss_kb": 2760,
    "native": {
     "score": 2910.0,
     "drain_value": 336220,
@@ -10554,11 +10554,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1321354,
-    "wall_ns_median": 1324982,
-    "wall_ns_max": 1361931
+    "wall_ns_min": 1322783,
+    "wall_ns_median": 1327713,
+    "wall_ns_max": 1343612
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 6917,
     "selected_value": 29711967,
@@ -10628,11 +10628,11 @@
    ],
    "rounds": 18707,
    "best_round": 18395,
-   "best_ns": 3703786,
+   "best_ns": 3446299,
    "trajectory": [
     {
      "round": 0,
-     "ns": 69961,
+     "ns": 13015,
      "drain_value": 3238639,
      "selected": [
       "c032",
@@ -10647,7 +10647,7 @@
     },
     {
      "round": 201,
-     "ns": 191178,
+     "ns": 52699,
      "drain_value": 5172,
      "selected": [
       "c022",
@@ -10666,7 +10666,7 @@
     },
     {
      "round": 202,
-     "ns": 200535,
+     "ns": 54893,
      "drain_value": 1833,
      "selected": [
       "c022",
@@ -10685,7 +10685,7 @@
     },
     {
      "round": 203,
-     "ns": 232766,
+     "ns": 65473,
      "drain_value": 1825,
      "selected": [
       "c022",
@@ -10704,7 +10704,7 @@
     },
     {
      "round": 429,
-     "ns": 363461,
+     "ns": 109115,
      "drain_value": 0,
      "selected": [
       "c022",
@@ -10723,7 +10723,7 @@
     },
     {
      "round": 533,
-     "ns": 424505,
+     "ns": 133070,
      "drain_value": 0,
      "selected": [
       "c011",
@@ -10742,7 +10742,7 @@
     },
     {
      "round": 645,
-     "ns": 491160,
+     "ns": 162305,
      "drain_value": 0,
      "selected": [
       "c022",
@@ -10761,7 +10761,7 @@
     },
     {
      "round": 7050,
-     "ns": 1699352,
+     "ns": 1351016,
      "drain_value": 0,
      "selected": [
       "c022",
@@ -10779,7 +10779,7 @@
     },
     {
      "round": 16635,
-     "ns": 3384378,
+     "ns": 3115729,
      "drain_value": 0,
      "selected": [
       "c022",
@@ -10797,7 +10797,7 @@
     },
     {
      "round": 16862,
-     "ns": 3429643,
+     "ns": 3162266,
      "drain_value": 325302,
      "selected": [
       "c022",
@@ -10813,7 +10813,7 @@
     },
     {
      "round": 16863,
-     "ns": 3430865,
+     "ns": 3163538,
      "drain_value": 329340,
      "selected": [
       "c022",
@@ -10829,7 +10829,7 @@
     },
     {
      "round": 18395,
-     "ns": 3703786,
+     "ns": 3446299,
      "drain_value": 0,
      "selected": [
       "c022",
@@ -10851,11 +10851,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 3378116,
-    "wall_ns_median": 3772475,
-    "wall_ns_max": 4972483
+    "wall_ns_min": 3473089,
+    "wall_ns_median": 3488327,
+    "wall_ns_max": 3510550
    },
-   "peak_rss_kb": 2864,
+   "peak_rss_kb": 2844,
    "native": {
     "score": 7321.0,
     "drain_value": 0,
@@ -11014,11 +11014,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 6672146,
-    "wall_ns_median": 6788995,
-    "wall_ns_max": 6839780
+    "wall_ns_min": 7018134,
+    "wall_ns_median": 7039483,
+    "wall_ns_max": 7057727
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 104474,
     "selected_value": 368254043,
@@ -11208,11 +11208,11 @@
    ],
    "rounds": 100000,
    "best_round": 6364,
-   "best_ns": 1700385,
+   "best_ns": 1766426,
    "trajectory": [
     {
      "round": 0,
-     "ns": 242254,
+     "ns": 272431,
      "drain_value": 3812823,
      "selected": [
       "c003",
@@ -11313,7 +11313,7 @@
     },
     {
      "round": 2001,
-     "ns": 611335,
+     "ns": 653487,
      "drain_value": 2577,
      "selected": [
       "c003",
@@ -11450,7 +11450,7 @@
     },
     {
      "round": 2002,
-     "ns": 628537,
+     "ns": 675708,
      "drain_value": 3477,
      "selected": [
       "c003",
@@ -11587,7 +11587,7 @@
     },
     {
      "round": 2003,
-     "ns": 645238,
+     "ns": 694473,
      "drain_value": 3322,
      "selected": [
       "c003",
@@ -11724,7 +11724,7 @@
     },
     {
      "round": 2004,
-     "ns": 784770,
+     "ns": 840137,
      "drain_value": 3251,
      "selected": [
       "c003",
@@ -11861,7 +11861,7 @@
     },
     {
      "round": 4911,
-     "ns": 1341603,
+     "ns": 1403204,
      "drain_value": 0,
      "selected": [
       "c003",
@@ -11998,7 +11998,7 @@
     },
     {
      "round": 4912,
-     "ns": 1357112,
+     "ns": 1419164,
      "drain_value": 0,
      "selected": [
       "c003",
@@ -12135,7 +12135,7 @@
     },
     {
      "round": 4913,
-     "ns": 1388791,
+     "ns": 1452526,
      "drain_value": 0,
      "selected": [
       "c003",
@@ -12272,7 +12272,7 @@
     },
     {
      "round": 6363,
-     "ns": 1669206,
+     "ns": 1734335,
      "drain_value": 0,
      "selected": [
       "c003",
@@ -12409,7 +12409,7 @@
     },
     {
      "round": 6364,
-     "ns": 1700385,
+     "ns": 1766426,
      "drain_value": 0,
      "selected": [
       "c003",
@@ -12551,11 +12551,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 20760351,
-    "wall_ns_median": 20790197,
-    "wall_ns_max": 25557696
+    "wall_ns_min": 21009195,
+    "wall_ns_median": 21143406,
+    "wall_ns_max": 21296203
    },
-   "peak_rss_kb": 3476,
+   "peak_rss_kb": 3460,
    "native": {
     "score": 98454.0,
     "drain_value": 0,
@@ -12629,11 +12629,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 1156677,
-    "wall_ns_median": 1162367,
-    "wall_ns_max": 1167667
+    "wall_ns_min": 1665998,
+    "wall_ns_median": 1674864,
+    "wall_ns_max": 1692487
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 0,
     "selected_value": 7155550,
@@ -12695,11 +12695,11 @@
    ],
    "rounds": 54,
    "best_round": 0,
-   "best_ns": 7073,
+   "best_ns": 4268,
    "trajectory": [
     {
      "round": 0,
-     "ns": 7073,
+     "ns": 4268,
      "drain_value": 1705646,
      "selected": [
       "c028",
@@ -12713,11 +12713,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 36047,
-    "wall_ns_median": 37310,
-    "wall_ns_max": 45084
+    "wall_ns_min": 18625,
+    "wall_ns_median": 19627,
+    "wall_ns_max": 25107
    },
-   "peak_rss_kb": 2796,
+   "peak_rss_kb": 2816,
    "native": {
     "score": 2910.0,
     "drain_value": 1705646,
@@ -12811,11 +12811,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 6299608,
-    "wall_ns_median": 6630768,
-    "wall_ns_max": 9466269
+    "wall_ns_min": 6436651,
+    "wall_ns_median": 6464304,
+    "wall_ns_max": 7543148
    },
-   "peak_rss_kb": 19232,
+   "peak_rss_kb": 18880,
    "native": {
     "waste": 16715,
     "selected_value": 85005985,
@@ -12904,11 +12904,11 @@
    ],
    "rounds": 100000,
    "best_round": 80826,
-   "best_ns": 16273178,
+   "best_ns": 16740643,
    "trajectory": [
     {
      "round": 0,
-     "ns": 40737,
+     "ns": 40687,
      "drain_value": 2947939,
      "selected": [
       "c019",
@@ -12940,7 +12940,7 @@
     },
     {
      "round": 501,
-     "ns": 132699,
+     "ns": 135936,
      "drain_value": 4023,
      "selected": [
       "c025",
@@ -12977,7 +12977,7 @@
     },
     {
      "round": 502,
-     "ns": 137478,
+     "ns": 140845,
      "drain_value": 4800,
      "selected": [
       "c025",
@@ -13014,7 +13014,7 @@
     },
     {
      "round": 503,
-     "ns": 141626,
+     "ns": 145063,
      "drain_value": 4285,
      "selected": [
       "c025",
@@ -13051,7 +13051,7 @@
     },
     {
      "round": 504,
-     "ns": 154369,
+     "ns": 158238,
      "drain_value": 4225,
      "selected": [
       "c025",
@@ -13088,7 +13088,7 @@
     },
     {
      "round": 806,
-     "ns": 214522,
+     "ns": 220665,
      "drain_value": 0,
      "selected": [
       "c025",
@@ -13125,7 +13125,7 @@
     },
     {
      "round": 1154,
-     "ns": 281137,
+     "ns": 289544,
      "drain_value": 0,
      "selected": [
       "c025",
@@ -13162,7 +13162,7 @@
     },
     {
      "round": 2205,
-     "ns": 498053,
+     "ns": 513745,
      "drain_value": 0,
      "selected": [
       "c025",
@@ -13198,7 +13198,7 @@
     },
     {
      "round": 2870,
-     "ns": 621364,
+     "ns": 640994,
      "drain_value": 0,
      "selected": [
       "c025",
@@ -13234,7 +13234,7 @@
     },
     {
      "round": 80826,
-     "ns": 16273178,
+     "ns": 16740643,
      "drain_value": 0,
      "selected": [
       "c025",
@@ -13275,11 +13275,11 @@
    "timing": {
     "repeats": 5,
     "warmup": 1,
-    "wall_ns_min": 19656914,
-    "wall_ns_median": 19686590,
-    "wall_ns_max": 25607719
+    "wall_ns_min": 20122760,
+    "wall_ns_median": 20295144,
+    "wall_ns_max": 20530656
    },
-   "peak_rss_kb": 2968,
+   "peak_rss_kb": 2936,
    "native": {
     "score": 20561.0,
     "drain_value": 0,

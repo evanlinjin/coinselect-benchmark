@@ -5,7 +5,7 @@ version = 4
 [[package]]
 name = "bdk_coin_select"
 version = "0.5.0"
-source = "git+file:///home/evanlinjin/Git/coin-select?rev=2bc05623c72bffa9f72eb69a937b2eccfaa39164#2bc05623c72bffa9f72eb69a937b2eccfaa39164"
+source = "git+file:///home/evanlinjin/Git/coin-select?rev=887c4dab47a853cc32ee223cca363c84e01ab115#887c4dab47a853cc32ee223cca363c84e01ab115"
 
 [[package]]
 name = "coinselect-bench-runner"

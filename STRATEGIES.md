@@ -114,8 +114,10 @@ Across all 52 fixtures at a 100 ms budget it **improves 10 and worsens none**:
 | `subsidizing_ancestry_20000` | 5,357,280 | **5,238,610** | −2.2% |
 | `shared_ancestry_2000` | 301,090 | **296,360** | −1.6% |
 
-Every one of the three scale losses becomes a win with about 10% to spare. It cannot make anything
-worse by construction — only improving swaps are kept — and `tools/randomsweep.py` checks that
+Every one of the three scale losses becomes a win with about 10% to spare. It cannot score worse by
+construction — only improving swaps are kept — though review showed that is a claim about the score
+and not about the result: it deselects, which nothing else in the crate does, and it had to be taught
+not to evict an input the caller required. Beyond that, `tools/randomsweep.py` checks that
 against pools the fixture set does not contain, since the last review of this stack found a
 regression the 42 fixtures could not see: **2,800 randomly seeded pools, no regression, every
 repaired selection passing the verifier**. A first version of that check ran under a wall-clock

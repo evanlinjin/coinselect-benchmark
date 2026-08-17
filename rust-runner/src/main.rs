@@ -14,7 +14,8 @@
 use std::time::{Duration, Instant};
 
 use bdk_coin_select::{
-    float::Ordf32, metrics::LowestFee, AncestorToBump, BnbMetric, CoinSelector, Drain, DrainWeights,
+    float::Ordf32, metrics::LowestFee, AncestorToBump, Bitset, BnbMetric, CoinSelector, Drain,
+    DrainWeights,
     FeeRate, Input, SelectionProblem, SelectionView, Target, TargetFee, TargetOutputs,
     TX_FIXED_FIELD_WEIGHT,
 };
@@ -1006,7 +1007,8 @@ fn main() {
         };
         // Inside the timed region: a wallet that ran this would pay for it.
         if let Some(cs) = &mut result.selection {
-            if let Some(score) = cs.repair(&mut lowest_fee(&f), args.repair) {
+            // Nothing is preselected here, so nothing is protected from a swap.
+            if let Some(score) = cs.repair(&mut lowest_fee(&f), args.repair, &Bitset::default()) {
                 eprintln!("repair: score {:?} -> {score}", result.score);
                 result.score = Some(score);
             }

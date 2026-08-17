@@ -38,11 +38,21 @@ Take a selected coin that is the only one paying for some ancestor, try replacin
 unselected coin that drags in nothing new, and keep the swap when the metric scores it better. Repeat
 until nothing improves or the swap ceiling is reached.
 
-Only improving swaps are kept, so **the selection this leaves is never worse than the one it was
+Only improving swaps are kept, so **the score this leaves is never worse than the one it was
 given**. It is a hill climb and stops at a local optimum, not a proof of anything.
 
-Gated on `has_shared_ancestors`: with each ancestor reachable from one candidate there is nothing
-set-dependent for the order to have got wrong, and the pass would be a pure cost.
+**This is the one thing in the crate that deselects**, which is the part that needs care rather than
+the swapping. Everything else — branch and bound, `select_srd` — only ever adds, so `run_bnb` has
+always returned a superset of what the caller had selected, and that is how a required ("must spend")
+input is expressed. `repair` therefore takes the protected set explicitly, and `run_bnb` passes the
+selection it was handed. It also restores the caller's ban set first: the selector comes back
+mid-traversal carrying every ban the exclusion frames on the path to that node applied, and those are
+search state, not caller intent.
+
+Gated on `has_shared_ancestors`, and then on whether *this selection* actually holds a coin that is
+the sole payer for an ancestor. The first alone is not enough: it is a property of the problem and is
+true as soon as one unconfirmed parent has two spendable outputs, which is the everyday shape of a
+wallet that made a payment with change.
 
 `run_bnb` runs it. `bnb_solutions` cannot — it is an iterator over improvements rather than a
 finished answer — so callers driving that directly call `repair` themselves, which is what the
@@ -85,32 +95,56 @@ five regressions in 700 pools — all five vanished on a round budget, and one o
 with no shared ancestry at all, where the pass returns immediately without looking at anything. Under
 a deadline the two arms search different numbers of rounds, so it was measuring the scheduler.
 
+## What review changed
+
+The branch was reviewed before this was written up, and the review found the same *class* of problem
+as the last one in this stack: a regression the 42 fixtures cannot see, because every fixture starts
+from an empty selection.
+
+**`run_bnb` was dropping caller-preselected inputs.** On a four-coin pool where the required input is
+the sole payer for its parent, `run_bnb` returned a cheaper selection without it — silently. The
+claim above originally read "the *selection* this leaves is never worse", which was true of the score
+and false of the result: a lower score reached by evicting an input the caller required is worse, not
+better. Fixed by passing the protected set, and by the regression test in `tests/ancestor.rs`.
+
+The gate did not confine the damage either. `has_shared_ancestors` is a problem-level predicate while
+the outgoing set is built from `drags_in`, which includes *private* ancestors — so one shared parent
+anywhere in the pool exposed every privately-parented required coin.
+
+**The search's transient bans were truncating the replacement pool**, so how much of it the pass
+could see depended on where the last improvement happened to be found. Not a wrong answer, but it
+made the measured benefit partly an artifact: the fixtures showing the largest gains are the ones
+that return the ban-free greedy seed.
+
+Also taken: an early-out for a selection holding no sole payer; the head-sizing comment claimed a
+bound that is not true, since a swapped-in coin joins the selection and can be swapped out later;
+`REPAIR_REPLACEMENTS_PER_PASS` made private, since nothing takes it as an argument; and the
+round-trip test now says what it actually establishes.
+
+Every fee figure above is unchanged by the fixes.
+
 ## Cost
 
-Everything that scales with the pool happens once, before the loop. Getting there took two goes:
+Everything that scales with the pool happens once, before the loop. Getting there took three goes:
 
-| version | 200,000 candidates | answers |
+| version | 200,000 candidates, 1,000 swaps | answers |
 | --- | --- | --- |
 | rebuild replacement set + view per accepted swap | 264 ms | — |
-| pool-sized work hoisted out of the loop | 15 ms | byte-identical |
-| partition the replacement list instead of sorting it | **12 ms** | byte-identical |
+| pool-sized work hoisted out of the loop | — | byte-identical |
+| partition the replacement list instead of sorting it | 49.6 ms | byte-identical |
+| skip taken replacements instead of compacting the list | **8.7 ms** | byte-identical |
 
-The first was more expensive than the search it was meant to be a cheap addition to. The last one is
-because only the head of the replacement list is ever read — a pass looks at 40 of it, and the front
-advances only as swaps consume entries — so sorting 200,000 entries to read a few hundred was 3 ms
-wasted.
+The first was more expensive than the search it was meant to be a cheap addition to. The last was
+found by review: `free.retain` per accepted swap was pool-sized work back inside the loop, which is
+exactly what hoisting it out was for. It does not show on the benchmark's fixtures, which take few
+swaps — on those the pass is **12 ms against a 113 ms search at 200,000 candidates and 1.1 ms against
+100 ms at 20,000** — and it is 5.7× on a pool built so the swaps actually land.
 
-As it stands: **12 ms against a 113 ms search at 200,000 candidates, 1.1 ms against 100 ms at
-20,000**, and zero where the gate declines.
-
-## The two constants
-
-`REPAIR_REPLACEMENTS_PER_PASS = 40` — replacements considered per pass, read best-value first, so the
-tail is coins that cannot cover what the swap gives up anyway.
+## The constant
 
 `DEFAULT_REPAIR_SWAPS = 1_000` — a ceiling on the cost, not a target. 1,000, 20,000 and 100,000
 return byte-identical selections on every scale fixture, and the most any fixture actually took was
-892.
+892. Public so a caller driving `bnb_solutions` can match what `run_bnb` does.
 
 ## What this is not
 
