@@ -74,6 +74,17 @@ Every selection in that run is re-derived from the fixture by the harness: each 
 target feerate once its ancestor union is counted, each stays inside `max_weight`, and each runner's
 own bump figures match an independent recomputation.
 
+**And the fixtures are not the only evidence.** The last review of this stack found a regression on
+thousands of randomly generated pools that the fixture set could not see, so the same check was run
+here: every ancestry family regenerated at every small size under 100 different seeds, the pass off
+and on, under a fixed round budget. **2,800 pools, no regression, and every repaired selection passes
+the verifier.**
+
+That check needed a control of its own. A first version ran under a wall-clock deadline and reported
+five regressions in 700 pools — all five vanished on a round budget, and one of them was on a pool
+with no shared ancestry at all, where the pass returns immediately without looking at anything. Under
+a deadline the two arms search different numbers of rounds, so it was measuring the scheduler.
+
 ## Cost
 
 Everything that scales with the pool happens once, before the loop. Getting there took two goes:

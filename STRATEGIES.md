@@ -115,7 +115,13 @@ Across all 52 fixtures at a 100 ms budget it **improves 10 and worsens none**:
 | `shared_ancestry_2000` | 301,090 | **296,360** | −1.6% |
 
 Every one of the three scale losses becomes a win with about 10% to spare. It cannot make anything
-worse by construction — only improving swaps are kept.
+worse by construction — only improving swaps are kept — and `tools/randomsweep.py` checks that
+against pools the fixture set does not contain, since the last review of this stack found a
+regression the 42 fixtures could not see: **2,800 randomly seeded pools, no regression, every
+repaired selection passing the verifier**. A first version of that check ran under a wall-clock
+deadline and reported five regressions, all of which vanished on a round budget — one of them on a
+pool with no shared ancestry, where the pass returns immediately. Under a deadline the two arms
+search different numbers of rounds, so it was measuring the scheduler.
 
 **The precondition this had, and how it was discharged.** The Python emulation minimised the
 harness's package fee, which is what both engines are scored on but *not* what `LowestFee` minimises
